@@ -29,6 +29,14 @@
 
     namespace boost { namespace phoenix
     {
+        namespace detail
+        {
+            ////////////////////////////////////////////////////////////////////////////////////////
+            struct evaluator;
+        }
+
+        using detail::evaluator;
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<typename Tag, typename Void = void>
         struct extension;
@@ -36,10 +44,8 @@
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<typename Value, typename Void = void>
         struct terminal_extension
-          : proto::_expr
-        {
-            typedef void phoenix_terminal_extension_not_specialized_;
-        };
+          : proto::_value
+        {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<typename Value, typename Void = void>
@@ -59,42 +65,25 @@
         namespace detail
         {
             ////////////////////////////////////////////////////////////////////////////////////////
-            struct evaluator;
-        }
-
-        using detail::evaluator;
-
-        namespace detail
-        {
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            template<typename Value, typename Void = void>
-            struct has_terminal_extension
-              : mpl::true_
-            {};
-
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            template<typename Value>
-            struct has_terminal_extension<
-                Value
-              , typename terminal_extension<Value>::phoenix_terminal_extension_not_specialized_
-            >
-              : mpl::false_
-            {};
-
-            ////////////////////////////////////////////////////////////////////////////////////////
             // True when a lambda expression can be applied with no arguments and
             // without an active exception object
             struct is_nullary
-              : proto::or_<
-                    proto::when<
-                        proto::terminal<proto::_>
-                      , is_terminal_nullary<proto::_value>()
+              : proto::switch_<struct is_nullary_cases>
+            {};
+
+            struct is_nullary_cases
+            {
+                template<typename Tag>
+                struct case_
+                  : proto::otherwise<
+                        proto::fold<proto::_, mpl::true_(), mpl::and_<proto::_state, is_nullary>()>
                     >
-                  , proto::when<
-                        proto::_
-                      , proto::fold<proto::_, mpl::true_(), mpl::and_<proto::_state, is_nullary>()>
-                    >
-                >
+                {};
+            };
+
+            template<>
+            struct is_nullary_cases::case_<proto::tag::terminal>
+              : proto::otherwise<is_terminal_nullary<proto::_value>()>
             {};
 
             struct evaluator;
@@ -303,16 +292,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<>
         struct extension<proto::tag::terminal, void>
-          : proto::or_<
-                // If the handling of a particular terminal type has been
-                // overridden, invoke the specified handler.
-                proto::when<
-                    proto::if_<detail::has_terminal_extension<proto::_value>()>
-                  , proto::lazy<terminal_extension<proto::_value> >
-                >
-                // Otherwise, just return the value of the terminal.
-              , proto::otherwise<proto::_value>
-            >
+          : proto::otherwise<proto::lazy<terminal_extension<proto::_value> > >
         {};
 
     }}
