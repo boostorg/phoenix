@@ -3,7 +3,7 @@
     Copyright (c) 2005-2007 Joel de Guzman
     Copyright (c) 2007 Hartmut Kaiser
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
@@ -127,11 +127,11 @@ namespace
         int search[] = {1,2,4};
 
         BOOST_TEST(
-            mismatch(arg1, arg2)(array, search) == 
+            mismatch(arg1, arg2)(array, search) ==
             std::make_pair(array + 2, search + 2));
         int search2[] = {1,2,1,1};
         BOOST_TEST(
-            mismatch(arg1, arg2, mod_2_comparison())(array, search2) 
+            mismatch(arg1, arg2, mod_2_comparison())(array, search2)
             == std::make_pair(array + 3, search2 + 3));
 
         return;
@@ -212,26 +212,26 @@ namespace
         using namespace boost::phoenix::arg_names;
         int array[] = {1,2,2,3};
         const std::set<int> test_set(array, array + 4);
-        BOOST_TEST(equal_range(arg1, 2)(array).first == 
+        BOOST_TEST(equal_range(arg1, 2)(array).first ==
                    array + 1);
-        BOOST_TEST(equal_range(arg1, 2)(array).second == 
+        BOOST_TEST(equal_range(arg1, 2)(array).second ==
                    array + 3);
 
-        BOOST_TEST(equal_range(arg1, 2)(test_set).first == 
+        BOOST_TEST(equal_range(arg1, 2)(test_set).first ==
                    test_set.equal_range(2).first);
-        BOOST_TEST(equal_range(arg1, 2)(test_set).second == 
+        BOOST_TEST(equal_range(arg1, 2)(test_set).second ==
                    test_set.equal_range(2).second);
 
         int array2[] = {3,2,2,1};
         const std::set<int, std::greater<int> > test_set2(array2, array2 + 4);
-        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(array2).first == 
+        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(array2).first ==
                    array2 + 1);
-        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(array2).second == 
+        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(array2).second ==
                    array2 + 3);
 
-        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(test_set2).first == 
+        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(test_set2).first ==
                    test_set2.equal_range(2).first);
-        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(test_set2).second == 
+        BOOST_TEST(boost::phoenix::equal_range(arg1, 2, std::greater<int>())(test_set2).second ==
                    test_set2.equal_range(2).second);
 
         return;

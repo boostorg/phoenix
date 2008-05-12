@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
@@ -35,7 +35,7 @@ main()
             (x) == x
         );
     }
-    
+
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -64,10 +64,10 @@ main()
     {
         int x = 1, y = 10;
         BOOST_TEST(
-            let(_x = _1) 
+            let(_x = _1)
             [
                 _x +
-                    let(_x = _2) 
+                    let(_x = _2)
                     [
                         -_x
                     ]
@@ -75,7 +75,7 @@ main()
             (x, y) == x + -y
         );
     }
-    
+
     {
         int x = 999;
         BOOST_TEST(
@@ -85,23 +85,23 @@ main()
             ]
             (x) == 999 + 888
         );
-        
-        BOOST_TEST(x == 888 + 999);    
+
+        BOOST_TEST(x == 888 + 999);
     }
 
     {
         int x = 999;
         BOOST_TEST(
-            let(_x = val(_1)) // _x holds x by value 
+            let(_x = val(_1)) // _x holds x by value
             [
                 val(_x += 888)
             ]
             (x) == x + 888
         );
-        
-        BOOST_TEST(x == 999);    
+
+        BOOST_TEST(x == 999);
     }
-    
+
     {
         BOOST_TEST(
             let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
@@ -111,7 +111,7 @@ main()
             () == 1 + 2 + 3 + 4 + 5
         );
     }
-    
+
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST
     {
         // disallow this:
@@ -119,7 +119,7 @@ main()
         (_a + _b)(i);
     }
 #endif
-    
+
     {
         // show that we can return a local from an outer scope
         int y = 0;
@@ -140,7 +140,7 @@ main()
         int& j = let(_a = arg1)[ _a ](i);
         BOOST_TEST(&i == &j);
     }
-    
+
     return boost::report_errors();
 }
 

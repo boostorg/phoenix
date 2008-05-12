@@ -2,7 +2,7 @@
     Copyright (c) 2005-2007 Dan Marsden
     Copyright (c) 2005-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
@@ -32,7 +32,7 @@ namespace
         BOOST_TEST(array[0] == 2);
         BOOST_TEST(array[1] == 3);
         BOOST_TEST(array[2] == 1);
-        
+
         return;
     }
 
@@ -46,7 +46,7 @@ namespace
         BOOST_TEST(array2[0] == 2);
         BOOST_TEST(array2[1] == 3);
         BOOST_TEST(array2[2] == 1);
-        
+
         return;
     }
 
@@ -66,7 +66,7 @@ namespace
         BOOST_TEST(first != third && second != third);
         return;
     }
-    
+
     void partition_test()
     {
         using namespace boost::phoenix;
@@ -138,7 +138,7 @@ namespace
         BOOST_TEST(array[0] == 3);
         BOOST_TEST(array[1] == 2);
         BOOST_TEST(array[2] == 1);
-        
+
         return;
     }
 

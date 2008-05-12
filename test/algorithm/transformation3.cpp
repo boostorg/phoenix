@@ -2,7 +2,7 @@
     Copyright (c) 2005-2007 Dan Marsden
     Copyright (c) 2005-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
@@ -89,7 +89,7 @@ namespace
         int array4[] = {4,3,2};
         int output2[4];
         BOOST_TEST(boost::phoenix::set_union(arg1, arg2, arg3, std::greater<int>())
-                   (array3, array4, output2) == 
+                   (array3, array4, output2) ==
                    output2 + 4);
         int expected_result2[] = {4,3,2,1};
         BOOST_TEST(std::equal(output2, output2 + 4, expected_result2));
@@ -111,7 +111,7 @@ namespace
         int array4[] = {4,3,2};
         int output2[2];
         BOOST_TEST(boost::phoenix::set_intersection(arg1, arg2, arg3, std::greater<int>())
-                   (array3, array4, output2) == 
+                   (array3, array4, output2) ==
                    output2 + 2);
         int expected_result2[] = {3,2};
         BOOST_TEST(std::equal(output2, output2 + 2, expected_result2));
@@ -133,7 +133,7 @@ namespace
         int array4[] = {4,3,2};
         int output2[1];
         BOOST_TEST(boost::phoenix::set_difference(arg1, arg2, arg3, std::greater<int>())
-                   (array3, array4, output2) == 
+                   (array3, array4, output2) ==
                    output2 + 1);
         int expected_result2[] = {1};
         BOOST_TEST(std::equal(output2, output2 + 1, expected_result2));
@@ -155,7 +155,7 @@ namespace
         int array4[] = {4,3,2};
         int output2[2];
         BOOST_TEST(boost::phoenix::set_symmetric_difference(arg1, arg2, arg3, std::greater<int>())
-                   (array3, array4, output2) == 
+                   (array3, array4, output2) ==
                    output2 + 2);
         int expected_result2[] = {4,1};
         BOOST_TEST(std::equal(output2, output2 + 2, expected_result2));

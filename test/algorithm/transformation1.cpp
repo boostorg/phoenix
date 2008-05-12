@@ -2,7 +2,7 @@
     Copyright (c) 2005-2007 Dan Marsden
     Copyright (c) 2005-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
@@ -92,7 +92,7 @@ namespace
         using namespace boost::phoenix::arg_names;
         int array[] = {1,2,3};
         BOOST_TEST(
-            transform(arg1, arg2, increment())(array, array) == 
+            transform(arg1, arg2, increment())(array, array) ==
             array + 3);
         BOOST_TEST(array[0] == 2);
         BOOST_TEST(array[1] == 3);
@@ -100,7 +100,7 @@ namespace
 
         int array2[] = {1,2,3};
         BOOST_TEST(
-            boost::phoenix::transform(arg1, arg2, arg3, std::plus<int>())(array, array2, array) == 
+            boost::phoenix::transform(arg1, arg2, arg3, std::plus<int>())(array, array2, array) ==
             array +3);
         BOOST_TEST(array[0] == 2 + 1);
         BOOST_TEST(array[1] == 3 + 2);
@@ -298,12 +298,12 @@ namespace
         BOOST_TEST(unique(arg1, mod_2_comparison())(array2) == array2 + 2);
         BOOST_TEST(array2[0] == 1);
         BOOST_TEST(array2[1] == 2);
-        
+
         BOOST_TEST(unique(arg1, mod_2_comparison())(test_list2) == test_list2.end());
         std::list<int>::const_iterator jt(test_list2.begin());
         BOOST_TEST(*jt++ == 1);
         BOOST_TEST(*jt++ == 2);
-        
+
         return;
     }
 
@@ -323,7 +323,7 @@ namespace
         BOOST_TEST(unique_copy(arg1, arg2, mod_2_comparison())(array2, out2) == out2 + 2);
         BOOST_TEST(out2[0] == 1);
         BOOST_TEST(out2[1] == 2);
-        
+
         return;
     }
 

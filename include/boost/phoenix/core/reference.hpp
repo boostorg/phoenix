@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef BOOST_PHOENIX_REFERENCE_HPP_EAN_2008_05_10
@@ -12,23 +12,15 @@
 
 namespace boost { namespace phoenix
 {
-    namespace detail
-    {
-        struct domain;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename T>
     struct reference
-      : proto::extends<typename proto::terminal<T &>::type, reference<T>, detail::domain>
+      : proto::terminal<T &>::type
     {
         explicit reference(T &t)
-          : proto::extends<typename proto::terminal<T &>::type, reference<T>, detail::domain>(
-                proto::terminal<T &>::type::make(t)
-            )
+          : proto::terminal<T &>::type(proto::terminal<T &>::type::make(t))
         {}
 
-        // For backwards compatibility
         operator actor<reference<T> >() const
         {
             actor<reference<T> > that = {*this};
@@ -38,20 +30,18 @@ namespace boost { namespace phoenix
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename T>
-    actor<typename proto::terminal<T &>::type> const
+    actor<reference<T> > const
     ref(T &t)
     {
-        actor<typename proto::terminal<T &>::type> that = {{t}};
-        return that;
+        return reference<T>(t);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename T>
-    actor<typename proto::terminal<T const &>::type> const
+    actor<reference<T const> > const
     cref(T const &t)
     {
-        actor<typename proto::terminal<T const &>::type> that = {{t}};
-        return that;
+        return reference<T const>(t);
     }
 
 }}

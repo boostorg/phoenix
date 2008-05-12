@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef BOOST_PHOENIX_IF_HPP_EAN_2008_05_09
@@ -9,34 +9,15 @@
 
 #include <boost/ref.hpp>
 #include <boost/mpl/void.hpp>
-#include <boost/proto/proto.hpp>
+#include <boost/phoenix/core/actor.hpp>
 
 #ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable: 4355) // 'this' : used in base member initializer list
+# pragma warning(push)
+# pragma warning(disable: 4355) // 'this' : used in base member initializer list
 #endif
 
 namespace boost { namespace phoenix
 {
-    template<typename Tag, typename Void>
-    struct extension;
-
-    namespace actorns_
-    {
-        template<typename Expr>
-        struct actor;
-    }
-    
-    using actorns_::actor;
-
-    namespace detail
-    {
-        struct domain;
-        struct evaluator;
-    }
-    
-    using detail::evaluator;
-
     ////////////////////////////////////////////////////////////////////////////////////////////
     namespace tag
     {
@@ -190,7 +171,7 @@ namespace boost { namespace phoenix
           , detail::if_evaluator
         >
     {};
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<>
     struct extension<tag::else_, void>
@@ -199,11 +180,11 @@ namespace boost { namespace phoenix
           , detail::if_else_evaluator
         >
     {};
-        
+
 }}
 
 #ifdef _MSC_VER
-#pragma warning(pop)
+# pragma warning(pop)
 #endif
 
 #endif

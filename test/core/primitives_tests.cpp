@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
@@ -50,7 +50,7 @@ main()
     BOOST_TEST(cref(i)() == 4);
     BOOST_TEST(i == 4);
     BOOST_TEST(ref(++i)() == 5);
-    BOOST_TEST(i == 5);    
+    BOOST_TEST(i == 5);
 
     //  should not compile:
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST

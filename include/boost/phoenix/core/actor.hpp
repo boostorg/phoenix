@@ -2,7 +2,7 @@
     /*=============================================================================
         Copyright (c) 2001-2007 Joel de Guzman
 
-        Distributed under the Boost Software License, Version 1.0. (See accompanying 
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
     ==============================================================================*/
     #ifndef BOOST_PHOENIX_ACTOR_HPP_EAN_2008_05_09
@@ -43,18 +43,6 @@
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<typename Value, typename Void = void>
-        struct is_terminal_extended
-          : mpl::true_
-        {};
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Value>
-        struct is_terminal_extended<Value, typename terminal_extension<Value>::phoenix_terminal_extension_not_specialized_>
-          : mpl::false_
-        {};
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Value, typename Void = void>
         struct is_terminal_nullary
           : mpl::true_
         {};
@@ -65,7 +53,7 @@
             template<typename Expr>
             struct actor;
         }
-        
+
         using actorns_::actor;
 
         namespace detail
@@ -73,11 +61,26 @@
             ////////////////////////////////////////////////////////////////////////////////////////
             struct evaluator;
         }
-        
+
         using detail::evaluator;
 
         namespace detail
         {
+            ////////////////////////////////////////////////////////////////////////////////////////////
+            template<typename Value, typename Void = void>
+            struct has_terminal_extension
+              : mpl::true_
+            {};
+
+            ////////////////////////////////////////////////////////////////////////////////////////////
+            template<typename Value>
+            struct has_terminal_extension<
+                Value
+              , typename terminal_extension<Value>::phoenix_terminal_extension_not_specialized_
+            >
+              : mpl::false_
+            {};
+
             ////////////////////////////////////////////////////////////////////////////////////////
             // True when a lambda expression can be applied with no arguments and
             // without an active exception object
@@ -127,7 +130,7 @@
                     >::type
                 type;
             };
-            
+
             template<typename T, std::size_t N>
             struct storage<T[N]>
             {
@@ -140,7 +143,7 @@
             {
                 template<typename Sig>
                 struct result;
-                
+
                 template<typename This, typename Expr>
                 struct result<This(Expr)>
                 {
@@ -152,16 +155,14 @@
                 {
                     typedef
                         actor<
-                            proto::expr<
-                                proto::tag::terminal
-                              , proto::term<typename storage<T>::type>
-                            >
+                            proto::expr<proto::tag::terminal, proto::term<typename storage<T>::type> >
                         >
                     type;
                 };
 
                 template<typename Expr>
-                actor<Expr> operator()(Expr const &expr) const
+                actor<Expr> const
+                operator()(Expr const &expr) const
                 {
                     actor<Expr> that = {expr};
                     return that;
@@ -169,11 +170,8 @@
 
                 template<typename T>
                 actor<
-                    proto::expr<
-                        proto::tag::terminal
-                      , proto::term<typename storage<T>::type>
-                    >
-                >
+                    proto::expr<proto::tag::terminal, proto::term<typename storage<T>::type> >
+                > const
                 operator()(proto::expr<proto::tag::terminal, proto::term<T &> > const &expr) const
                 {
                     actor<
@@ -189,7 +187,7 @@
             ////////////////////////////////////////////////////////////////////////////////////////
             struct domain
               : proto::domain<generator>
-            {};        
+            {};
 
             ////////////////////////////////////////////////////////////////////////////////////////
             template<typename Sig>
@@ -219,7 +217,7 @@
             BOOST_PP_REPEAT_FROM_TO(1, BOOST_PP_INC(PHOENIX_LIMIT), M0, ~)
             #undef M0
         }
-        
+
         namespace actorns_
         {
             ////////////////////////////////////////////////////////////////////////////////////////
@@ -244,7 +242,7 @@
                 }
 
                 #define M0(Z, N, _) ((0))
-                
+
                 #define M1(Z, N, _) ((0)(1))
 
                 #define M2(R, PRODUCT) M3(R, BOOST_PP_SEQ_SIZE(PRODUCT), PRODUCT)
@@ -309,7 +307,7 @@
                 // If the handling of a particular terminal type has been
                 // overridden, invoke the specified handler.
                 proto::when<
-                    proto::if_<is_terminal_extended<proto::_value>()>
+                    proto::if_<detail::has_terminal_extension<proto::_value>()>
                   , proto::lazy<terminal_extension<proto::_value> >
                 >
                 // Otherwise, just return the value of the terminal.
@@ -324,7 +322,7 @@
 #else
 
     #if BOOST_PP_ITERATION() <= PHOENIX_PERFECT_FORWARD_LIMIT
-    
+
         BOOST_PP_SEQ_FOR_EACH_PRODUCT(
             M2,
             BOOST_PP_REPEAT(BOOST_PP_ITERATION(), M1, ~)
@@ -337,7 +335,7 @@
             BOOST_PP_REPEAT(PHOENIX_PERFECT_FORWARD_LIMIT, M1, ~)
             BOOST_PP_REPEAT(BOOST_PP_SUB(BOOST_PP_ITERATION(), PHOENIX_PERFECT_FORWARD_LIMIT), M0, ~)
         )
-        
+
     #endif
 
 #endif

@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef PHOENIX_CORE_LIMITS_HPP
@@ -47,7 +47,7 @@
 # define BOOST_MPL_LIMIT_METAFUNCTION_ARITY PHOENIX_LIMIT
 #endif
 
-// this include will bring in mpl::vectorN and 
+// this include will bring in mpl::vectorN and
 // fusion::tupleN where N is PHOENIX_ACTOR_LIMIT
 #include <boost/fusion/include/vector.hpp>
 

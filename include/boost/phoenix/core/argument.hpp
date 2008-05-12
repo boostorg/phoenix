@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef BOOST_PHOENIX_ARGUMENT_HPP_EAN_2008_05_10
@@ -38,22 +38,20 @@ namespace boost { namespace phoenix
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename Int, typename Callable = proto::callable>
         struct at : proto::callable
         {
             template<class Sig>
             struct result;
 
-            template<class This, class Cont, class Int>
-            struct result<This(Cont, Int)>
-              : fusion::result_of::at<
-                    typename remove_reference<Cont>::type
-                  , typename remove_reference<Int>::type
-                >
+            template<class This, class Cont>
+            struct result<This(Cont)>
+              : fusion::result_of::at<typename remove_reference<Cont>::type, Int>
             {};
 
-            template<typename Cont, typename Int>
+            template<typename Cont>
             typename fusion::result_of::at<Cont, Int>::type
-            operator ()(Cont &cont, Int const &) const
+            operator ()(Cont &cont) const
             {
                 return fusion::at<Int>(cont);
             }
@@ -85,7 +83,7 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename Int, typename Void>
     struct is_terminal_nullary;
-    
+
     template<typename Int>
     struct is_terminal_nullary<detail::argument<Int>, void>
       : mpl::false_
@@ -97,7 +95,7 @@ namespace boost { namespace phoenix
 
     template<typename Int>
     struct terminal_extension<detail::argument<Int>, void>
-      : proto::call<detail::at(proto::_data, proto::_value)>
+      : proto::call<detail::at<Int>(proto::_data)>
     {};
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +109,7 @@ namespace boost { namespace phoenix
         actor<argument<1> > const _2    = {{{{}}}};
         actor<argument<2> > const _3    = {{{{}}}};
     }
-    
+
 }}
 
 #endif
