@@ -71,6 +71,7 @@
               : proto::switch_<struct is_nullary_cases>
             {};
 
+            ////////////////////////////////////////////////////////////////////////////////////////
             struct is_nullary_cases
             {
                 template<typename Tag>
@@ -86,10 +87,8 @@
               : proto::otherwise<is_terminal_nullary<proto::_value>()>
             {};
 
-            struct evaluator;
-
             ////////////////////////////////////////////////////////////////////////////////////////
-            struct cases
+            struct evaluator_cases
             {
                 template<typename Tag>
                 struct case_
@@ -99,7 +98,7 @@
 
             ////////////////////////////////////////////////////////////////////////////////////////
             struct evaluator
-              : proto::switch_<cases>
+              : proto::switch_<evaluator_cases>
             {};
 
             ////////////////////////////////////////////////////////////////////////////////////////

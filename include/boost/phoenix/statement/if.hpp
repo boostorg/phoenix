@@ -56,6 +56,7 @@ namespace boost { namespace phoenix
             }
 
         private:
+            else_generator &operator =(else_generator const &);
             Expr const &if_;
         };
 
@@ -102,6 +103,7 @@ namespace boost { namespace phoenix
             }
 
         private:
+            if_generator &operator =(if_generator const &);
             Cond const &cond;
         };
 
@@ -114,7 +116,7 @@ namespace boost { namespace phoenix
             {
                 typedef void result_type;
 
-                result_type operator()(
+                void operator()(
                     typename impl::expr_param expr
                   , typename impl::state_param state
                   , typename impl::data_param data
@@ -137,7 +139,7 @@ namespace boost { namespace phoenix
             {
                 typedef void result_type;
 
-                result_type operator()(
+                void operator()(
                     typename impl::expr_param expr
                   , typename impl::state_param state
                   , typename impl::data_param data
@@ -158,7 +160,8 @@ namespace boost { namespace phoenix
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename Expr>
-    detail::if_generator<Expr> const if_(Expr const &expr)
+    detail::if_generator<Expr> const
+    if_(Expr const &expr)
     {
         return detail::if_generator<Expr>(expr);
     }
