@@ -62,31 +62,31 @@
 
         using actorns_::actor;
 
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // True when a lambda expression can be applied with no arguments and
+        // without an active exception object
+        struct is_nullary
+          : proto::switch_<struct is_nullary_cases>
+        {};
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        struct is_nullary_cases
+        {
+            template<typename Tag>
+            struct case_
+              : proto::otherwise<
+                    proto::fold<proto::_, mpl::true_(), mpl::and_<proto::_state, is_nullary>()>
+                >
+            {};
+        };
+
+        template<>
+        struct is_nullary_cases::case_<proto::tag::terminal>
+          : proto::otherwise<is_terminal_nullary<proto::_value>()>
+        {};
+
         namespace detail
         {
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // True when a lambda expression can be applied with no arguments and
-            // without an active exception object
-            struct is_nullary
-              : proto::switch_<struct is_nullary_cases>
-            {};
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            struct is_nullary_cases
-            {
-                template<typename Tag>
-                struct case_
-                  : proto::otherwise<
-                        proto::fold<proto::_, mpl::true_(), mpl::and_<proto::_state, is_nullary>()>
-                    >
-                {};
-            };
-
-            template<>
-            struct is_nullary_cases::case_<proto::tag::terminal>
-              : proto::otherwise<is_terminal_nullary<proto::_value>()>
-            {};
-
             ////////////////////////////////////////////////////////////////////////////////////////
             struct evaluator_cases
             {
