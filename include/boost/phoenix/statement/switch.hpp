@@ -212,24 +212,21 @@
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<
             typename Expr, typename State, typename Data
-          , typename A0
-            BOOST_PP_COMMA_IF(N)
-            BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(N), typename A)
+          , typename Args
+            BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)
         >
         void do_switch(
             Expr &expr, State &state, Data &data
-          , proto::expr<proto::tag::comma, A0, 2> const &a0
-            BOOST_PP_COMMA_IF(N)
-            BOOST_PP_ENUM_SHIFTED_BINARY_PARAMS(BOOST_PP_INC(N), A, const &a)
+          , proto::expr<proto::tag::comma, Args, 2> const &cases
+            BOOST_PP_ENUM_TRAILING_BINARY_PARAMS(N, A, const &a)
         )
         {
             // Fan out the arguments
             detail::do_switch(
                 expr, state, data
-              , a0.child0.proto_base()
-              , a0.child1.proto_base()
-                BOOST_PP_COMMA_IF(N)
-                BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(N), a)
+              , cases.child0.proto_base()
+              , cases.child1.proto_base()
+                BOOST_PP_ENUM_TRAILING_PARAMS(N, a)
             );
         }
 
