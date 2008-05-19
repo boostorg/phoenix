@@ -4,12 +4,21 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OPERATOR_HPP
-#define PHOENIX_OPERATOR_HPP
+#ifndef PHOENIX_FUNCTION_FUNCTION_HPP
+#define PHOENIX_FUNCTION_FUNCTION_HPP
 
-#include <boost/phoenix/version.hpp>
-#include <boost/phoenix/operator/if_else.hpp>
-#include <boost/phoenix/operator/io.hpp>
-//#include <boost/phoenix/operator/member.hpp>
+#include <boost/phoenix/core/actor.hpp>
+#include <boost/proto/proto.hpp>
+
+namespace boost { namespace phoenix
+{
+
+    template<typename Fun>
+    struct function
+    {
+        BOOST_PROTO_EXTENDS(typename proto::terminal<Fun>::type, function<Fun>, detail::domain)
+    };
+
+}}
 
 #endif

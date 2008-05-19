@@ -11,7 +11,6 @@
 #include <boost/phoenix/statement/do_while.hpp>
 #include <boost/phoenix/statement/for.hpp>
 #include <boost/phoenix/statement/if.hpp>
-//#include <boost/phoenix/statement/sequence.hpp>
 #include <boost/phoenix/statement/switch.hpp>
 #include <boost/phoenix/statement/while.hpp>
 #include <boost/phoenix/statement/throw.hpp>
