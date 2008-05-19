@@ -8,15 +8,9 @@
     #ifndef BOOST_PHOENIX_SWITCH_HPP_EAN_2008_05_10
     #define BOOST_PHOENIX_SWITCH_HPP_EAN_2008_05_10
 
-    #include <boost/ref.hpp>
-    #include <boost/mpl/int.hpp>
-    #include <boost/mpl/assert.hpp>
-    #include <boost/mpl/equal_to.hpp>
-    #include <boost/mpl/next_prior.hpp>
     #include <boost/preprocessor.hpp>
     #include <boost/proto/proto.hpp>
     #include <boost/phoenix/core/actor.hpp>
-    #include <boost/fusion/include/as_vector.hpp>
 
     #ifdef _MSC_VER
     # pragma warning(push)
