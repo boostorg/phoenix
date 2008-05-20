@@ -9,6 +9,11 @@
 # bring in rules for testing
 import testing ;
 
+project
+    : requirements
+        <define>BOOST_MPL_LIMIT_METAFUNCTION_ARITY=10
+    ;
+
 local multi-threading = <library>/boost/thread//boost_thread 
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
