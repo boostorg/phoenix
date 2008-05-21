@@ -26,11 +26,19 @@ using namespace std;
 
     struct sqr
     {
-        template <typename Arg>
-        struct result
+        template <typename Sig>
+        struct result;
+        
+        template <typename This, typename Arg>
+        struct result<This(Arg)>
         {
             typedef Arg type;
         };
+
+        template <typename This, typename Arg>
+        struct result<This(Arg &)>
+          : result<This(Arg)>
+        {};
 
         template <typename Arg>
         Arg operator()(Arg n) const
@@ -41,11 +49,19 @@ using namespace std;
 
     struct fact
     {
-        template <typename Arg>
-        struct result
+        template <typename Sig>
+        struct result;
+        
+        template <typename This, typename Arg>
+        struct result<This(Arg)>
         {
             typedef Arg type;
         };
+
+        template <typename This, typename Arg>
+        struct result<This(Arg &)>
+          : result<This(Arg)>
+        {};
 
         template <typename Arg>
         Arg operator()(Arg n) const
@@ -56,11 +72,19 @@ using namespace std;
 
     struct power
     {
-        template <typename Arg1, typename Arg2>
-        struct result
+        template <typename Sig>
+        struct result;
+        
+        template <typename This, typename Arg1, typename Arg2>
+        struct result<This(Arg1, Arg2)>
         {
             typedef Arg1 type;
         };
+
+        template <typename This, typename Arg1, typename Arg2>
+        struct result<This(Arg1 &, Arg2)>
+          : result<This(Arg1, Arg2)>
+        {};
 
         template <typename Arg1, typename Arg2>
         Arg1 operator()(Arg1 a, Arg2 b) const
@@ -71,11 +95,19 @@ using namespace std;
 
     struct add
     {
-        template <typename Arg1, typename Arg2, typename Arg3, typename Arg4>
-        struct result
+        template <typename Sig>
+        struct result;
+        
+        template <typename This, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
+        struct result<This(Arg1, Arg2, Arg3, Arg4)>
         {
             typedef Arg1 type;
         };
+
+        template <typename This, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
+        struct result<This(Arg1 &, Arg2, Arg3, Arg4)>
+          : result<This(Arg1, Arg2, Arg3, Arg4)>
+        {};
 
         template <typename Arg1, typename Arg2, typename Arg3, typename Arg4>
         Arg1 operator()(Arg1 a, Arg2 b, Arg3 c, Arg4 d) const
