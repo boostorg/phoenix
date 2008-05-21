@@ -30,14 +30,12 @@ namespace boost { namespace phoenix
     }
 
     template<typename T, typename U>
-    actor<
-        typename proto::result_of::make_expr<
-            proto::tag::function
-          , proto::default_domain
-          , detail::static_cast_<T>
-          , U
-        >::type
-    > const
+    typename proto::result_of::make_expr<
+        proto::tag::function
+      , detail::domain
+      , detail::static_cast_<T>
+      , U const &
+    >::type const
     static_cast_(U const &u)
     {
         detail::static_cast_<T> cast;

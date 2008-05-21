@@ -11,20 +11,32 @@
 
     #include <boost/preprocessor.hpp>
     #include <boost/mpl/if.hpp>
+    #include <boost/mpl/and.hpp>
+    #include <boost/mpl/not.hpp>
     #include <boost/proto/proto.hpp>
     #include <boost/phoenix/core/actor.hpp>
+    #include <boost/phoenix/core/reference.hpp>
     #include <boost/type_traits/is_member_pointer.hpp>
 
     namespace boost { namespace phoenix
     {
+        namespace detail
+        {
+            template<typename Fun, typename T>
+            struct by_ref
+              : mpl::and_<
+                    is_member_pointer<Fun>
+                  , mpl::not_<proto::is_expr<T> >
+                >
+            {};
+        }
+
         template<typename Fun>
-        actor<
-            typename proto::result_of::make_expr<
-                proto::tag::function
-              , proto::default_domain
-              , Fun
-            >::type
-        > const
+        typename proto::result_of::make_expr<
+            proto::tag::function
+          , detail::domain
+          , Fun const &
+        >::type const
         bind(Fun const &fun)
         {
             return proto::implicit_expr(fun);
@@ -48,20 +60,18 @@
             BOOST_PP_COMMA_IF(BOOST_PP_DEC(N))
             BOOST_PP_ENUM_SHIFTED_PARAMS(N, typename A)
         >
-        actor<
-            typename proto::result_of::make_expr<
-                proto::tag::function
-              , proto::default_domain
-              , Fun
-              , typename mpl::if_<
-                    is_member_pointer<Fun>
-                  , A0 &
-                  , A0
-                >::type
-                BOOST_PP_COMMA_IF(BOOST_PP_DEC(N))
-                BOOST_PP_ENUM_SHIFTED_PARAMS(N, A)
+        typename proto::result_of::make_expr<
+            proto::tag::function
+          , detail::domain
+          , Fun const &
+          , typename mpl::if_<
+                detail::by_ref<Fun, A0>
+              , actor<typename proto::terminal<A0 &>::type>
+              , A0 &
             >::type
-        > const
+            BOOST_PP_COMMA_IF(BOOST_PP_DEC(N))
+            BOOST_PP_ENUM_SHIFTED_BINARY_PARAMS(N, A, const & BOOST_PP_INTERCEPT)
+        >::type const
         bind(
             Fun const &fun
           , A0 &a0
@@ -78,20 +88,18 @@
             BOOST_PP_COMMA_IF(BOOST_PP_DEC(N))
             BOOST_PP_ENUM_SHIFTED_PARAMS(N, typename A)
         >
-        actor<
-            typename proto::result_of::make_expr<
-                proto::tag::function
-              , proto::default_domain
-              , Fun
-              , typename mpl::if_<
-                    is_member_pointer<Fun>
-                  , A0 const &
-                  , A0
-                >::type
-                BOOST_PP_COMMA_IF(BOOST_PP_DEC(N))
-                BOOST_PP_ENUM_SHIFTED_PARAMS(N, A)
+        typename proto::result_of::make_expr<
+            proto::tag::function
+          , detail::domain
+          , Fun const &
+          , typename mpl::if_<
+                detail::by_ref<Fun, A0>
+              , actor<typename proto::terminal<A0 const &>::type>
+              , A0 const &
             >::type
-        > const
+            BOOST_PP_COMMA_IF(BOOST_PP_DEC(N))
+            BOOST_PP_ENUM_SHIFTED_BINARY_PARAMS(N, A, const & BOOST_PP_INTERCEPT)
+        >::type const
         bind(
             Fun const &fun
           , A0 const &a0 
