@@ -20,7 +20,7 @@ namespace boost { namespace phoenix
         struct reinterpret_cast_
         {
             typedef T result_type;
-            
+
             template<typename U>
             T operator()(U &u) const
             {

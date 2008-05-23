@@ -21,7 +21,7 @@
             struct construct
             {
                 typedef T result_type;
-                
+
                 T operator()() const
                 {
                     return T();

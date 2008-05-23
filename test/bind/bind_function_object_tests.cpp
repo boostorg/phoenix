@@ -28,7 +28,7 @@ using namespace std;
     {
         template <typename Sig>
         struct result;
-        
+
         template <typename This, typename Arg>
         struct result<This(Arg)>
         {
@@ -51,7 +51,7 @@ using namespace std;
     {
         template <typename Sig>
         struct result;
-        
+
         template <typename This, typename Arg>
         struct result<This(Arg)>
         {
@@ -74,7 +74,7 @@ using namespace std;
     {
         template <typename Sig>
         struct result;
-        
+
         template <typename This, typename Arg1, typename Arg2>
         struct result<This(Arg1, Arg2)>
         {
@@ -97,7 +97,7 @@ using namespace std;
     {
         template <typename Sig>
         struct result;
-        
+
         template <typename This, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
         struct result<This(Arg1, Arg2, Arg3, Arg4)>
         {

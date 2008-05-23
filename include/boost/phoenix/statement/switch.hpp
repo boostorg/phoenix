@@ -59,14 +59,14 @@
             struct Case
               : proto::switch_<struct CaseCases>
             {};
-            
+
             struct CaseCases
             {
                 template<typename Tag>
                 struct case_
                   : proto::not_<proto::_>
                 {};
-                
+
                 template<int Label>
                 struct case_<tag::case_<Label> >
                   : proto::unary_expr<proto::_, evaluator>
@@ -76,7 +76,7 @@
             struct Default
               : proto::unary_expr<tag::default_, evaluator>
             {};
-            
+
             struct CasesNoDefault
               : proto::or_<
                     Case
@@ -196,13 +196,13 @@
         #define M0(Z, N, DATA)                                                                      \
             proto::expr<tag::case_<BOOST_PP_CAT(L, N)>, BOOST_PP_CAT(A, N), 1> const &BOOST_PP_CAT(a, N)\
             /**/
-        
+
         #define M1(Z, N, DATA)                                                                      \
             case BOOST_PP_CAT(L, N):                                                                \
                 evaluator()(BOOST_PP_CAT(a, N).child0, state, data);                                \
                 break;                                                                              \
             /**/
-            
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<
             typename Expr, typename State, typename Data
@@ -268,7 +268,7 @@
 
         #undef M0
         #undef M1
-        
+
     #undef N
 
 #endif

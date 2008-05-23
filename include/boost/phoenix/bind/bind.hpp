@@ -102,7 +102,7 @@
         >::type const
         bind(
             Fun const &fun
-          , A0 const &a0 
+          , A0 const &a0
             BOOST_PP_COMMA_IF(BOOST_PP_DEC(N))
             BOOST_PP_ENUM_SHIFTED_BINARY_PARAMS(N, A, const &a)
         )

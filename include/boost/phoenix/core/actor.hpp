@@ -177,6 +177,8 @@
               : proto::domain<generator>
             {};
 
+            typedef mpl::void_ const &initial_state_type;
+
             ////////////////////////////////////////////////////////////////////////////////////////
             template<typename Sig>
             struct result;
@@ -185,7 +187,7 @@
             struct result<This()>
               : mpl::if_c<
                     result_of<is_nullary(This &)>::type::value
-                  , result_of<evaluator(This &, mpl::void_ const &, fusion::vector0 &)>
+                  , result_of<evaluator(This &, initial_state_type, fusion::vector0 &)>
                   , mpl::identity<void>
                 >::type
             {};
@@ -196,7 +198,7 @@
               : result_of<                                                                              \
                     evaluator(                                                                          \
                         This &                                                                          \
-                      , mpl::void_ const &                                                              \
+                      , initial_state_type                                                              \
                       , BOOST_PP_CAT(fusion::vector, N)<BOOST_PP_ENUM_PARAMS_Z(Z, N, A)> &              \
                     )                                                                                   \
                 >                                                                                       \

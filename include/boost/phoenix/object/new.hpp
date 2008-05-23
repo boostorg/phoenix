@@ -21,7 +21,7 @@
             struct new_
             {
                 typedef T *result_type;
-                
+
                 T *operator()() const
                 {
                     return new T;

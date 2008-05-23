@@ -30,13 +30,13 @@ using namespace std;
     {
         template <typename Sig>
         struct result;
-        
+
         template <typename This, typename Arg>
         struct result<This(Arg)>
         {
             typedef Arg type;
         };
-        
+
         template <typename This, typename Arg>
         struct result<This(Arg &)>
           : result<This(Arg)>
@@ -55,13 +55,13 @@ using namespace std;
     {
         template <typename Sig>
         struct result;
-        
+
         template <typename This, typename Arg>
         struct result<This(Arg)>
         {
             typedef Arg type;
         };
-        
+
         template <typename This, typename Arg>
         struct result<This(Arg &)>
           : result<This(Arg)>
@@ -80,13 +80,13 @@ using namespace std;
     {
         template <typename Sig>
         struct result;
-        
+
         template <typename This, typename Arg1, typename Arg2>
         struct result<This(Arg1, Arg2)>
         {
             typedef Arg1 type;
         };
-        
+
         template <typename This, typename Arg1, typename Arg2>
         struct result<This(Arg1 &, Arg2)>
           : result<This(Arg1, Arg2)>
