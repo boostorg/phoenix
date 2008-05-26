@@ -35,15 +35,22 @@ namespace boost { namespace phoenix
     namespace detail
     {
         ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar>
         struct Try
-          : proto::unary_expr<tag::try_, evaluator>
+          : proto::unary_expr<tag::try_, evaluator<SubGrammar> >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar>
+        struct CatchCases;
+        
+        ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar>
         struct Catch
-          : proto::switch_<struct CatchCases>
+          : proto::switch_<CatchCases<SubGrammar> >
         {};
 
+        template<typename SubGrammar>
         struct CatchCases
         {
             template<typename Tag>
@@ -53,13 +60,22 @@ namespace boost { namespace phoenix
 
             template<typename E>
             struct case_<tag::catch_<E> >
-              : proto::binary_expr<tag::catch_<E>, proto::or_<Try, Catch>, evaluator>
+              : proto::binary_expr<
+                    tag::catch_<E>
+                  , proto::or_<Try<SubGrammar>, Catch<SubGrammar> >
+                  , evaluator<SubGrammar>
+                >
             {};
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar>
         struct CatchAll
-          : proto::binary_expr<tag::catch_all, proto::or_<Try, Catch>, evaluator>
+          : proto::binary_expr<
+                tag::catch_all
+              , proto::or_<Try<SubGrammar>, Catch<SubGrammar> >
+              , evaluator<SubGrammar>
+            >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -154,8 +170,9 @@ namespace boost { namespace phoenix
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar, typename X = proto::callable>
         struct catch_all_evaluator
-          : proto::transform<catch_all_evaluator>
+          : proto::transform<catch_all_evaluator<SubGrammar> >
         {
             template<typename Expr, typename State, typename Data>
             struct impl
@@ -171,20 +188,20 @@ namespace boost { namespace phoenix
                 {
                     try
                     {
-                        evaluator()(proto::child_c<0>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<0>(expr), state, data);
                     }
                     catch(...)
                     {
-                        evaluator()(proto::child_c<1>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<1>(expr), state, data);
                     }
                 }
             };
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        template<typename E>
+        template<typename E, typename SubGrammar, typename X = proto::callable>
         struct catch_evaluator
-          : proto::transform<catch_evaluator<E> >
+          : proto::transform<catch_evaluator<E, SubGrammar> >
         {
             template<typename Expr, typename State, typename Data>
             struct impl
@@ -200,11 +217,11 @@ namespace boost { namespace phoenix
                 {
                     try
                     {
-                        evaluator()(proto::child_c<0>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<0>(expr), state, data);
                     }
                     catch(E const &)
                     {
-                        evaluator()(proto::child_c<1>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<1>(expr), state, data);
                     }
                 }
             };
@@ -215,21 +232,30 @@ namespace boost { namespace phoenix
     detail::try_generator const try_ = {};
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::try_>
-      : proto::when<proto::not_<proto::_>, evaluator(proto::_child)>
+    template<typename SubGrammar>
+    struct extension<tag::try_, SubGrammar>
+      : proto::when<
+            proto::not_<proto::_>                   // try without a catch is not valid ...
+          , evaluator<SubGrammar>(proto::_child)    // ... but here is how to evaluate a
+        >                                           //     try that is part of a catch.
     {};
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::catch_all>
-      : proto::when<detail::CatchAll, detail::catch_all_evaluator>
+    template<typename SubGrammar>
+    struct extension<tag::catch_all, SubGrammar>
+      : proto::when<
+            detail::CatchAll<SubGrammar>
+          , detail::catch_all_evaluator<SubGrammar>
+        >
     {};
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    template<typename E>
-    struct extension<tag::catch_<E> >
-      : proto::when<detail::Catch, detail::catch_evaluator<E> >
+    template<typename E, typename SubGrammar>
+    struct extension<tag::catch_<E>, SubGrammar>
+      : proto::when<
+            detail::Catch<SubGrammar>
+          , detail::catch_evaluator<E, SubGrammar>
+        >
     {};
 
 }}

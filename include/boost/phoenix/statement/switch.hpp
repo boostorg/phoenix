@@ -56,10 +56,15 @@
             };
 
             // Define the grammar for valid switch statements
+            template<typename SubGrammar>
+            struct CaseCases;
+
+            template<typename SubGrammar>
             struct Case
-              : proto::switch_<struct CaseCases>
+              : proto::switch_<CaseCases<SubGrammar> >
             {};
 
+            template<typename SubGrammar>
             struct CaseCases
             {
                 template<typename Tag>
@@ -69,33 +74,37 @@
 
                 template<int Label>
                 struct case_<tag::case_<Label> >
-                  : proto::unary_expr<proto::_, evaluator>
+                  : proto::unary_expr<proto::_, evaluator<SubGrammar> >
                 {};
             };
 
+            template<typename SubGrammar>
             struct Default
-              : proto::unary_expr<tag::default_, evaluator>
+              : proto::unary_expr<tag::default_, evaluator<SubGrammar> >
             {};
 
+            template<typename SubGrammar>
             struct CasesNoDefault
               : proto::or_<
-                    Case
-                  , proto::comma<CasesNoDefault, Case>
+                    Case<SubGrammar>
+                  , proto::comma<CasesNoDefault<SubGrammar>, Case<SubGrammar> >
                 >
             {};
 
+            template<typename SubGrammar>
             struct CasesWithDefault
               : proto::or_<
-                    Default
-                  , proto::comma<CasesNoDefault, Default>
+                    Default<SubGrammar>
+                  , proto::comma<CasesNoDefault<SubGrammar>, Default<SubGrammar> >
                 >
             {};
 
+            template<typename SubGrammar>
             struct Switch
               : proto::binary_expr<
                     tag::switch_
-                  , evaluator
-                  , proto::or_<CasesNoDefault, CasesWithDefault>
+                  , evaluator<SubGrammar>
+                  , proto::or_<CasesNoDefault<SubGrammar>, CasesWithDefault<SubGrammar> >
                 >
             {};
 
@@ -104,8 +113,9 @@
 
             ////////////////////////////////////////////////////////////////////////////////////////
             // Proto transform that evaluates switch(condition)[ case_<0>(expr), case_<1>(expr), ... ]
+            template<typename SubGrammar, typename X = proto::callable>
             struct switch_evaluator
-              : proto::transform<switch_evaluator>
+              : proto::transform<switch_evaluator<SubGrammar> >
             {
                 template<typename Expr, typename State, typename Data>
                 struct impl
@@ -119,14 +129,13 @@
                       , typename impl::data_param data
                     ) const
                     {
-                        detail::do_switch(
+                        detail::do_switch<SubGrammar>(
                             expr.proto_base().child0, state, data
                           , expr.proto_base().child1.proto_base()
                         );
                     }
                 };
             };
-
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,23 +170,25 @@
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<>
-        struct extension<tag::switch_, void>
+        template<typename SubGrammar>
+        struct extension<tag::switch_, SubGrammar>
           : proto::when<
-                detail::Switch
-              , detail::switch_evaluator
+                detail::Switch<SubGrammar>
+              , detail::switch_evaluator<SubGrammar>
             >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<int Label>
-        struct is_nullary_cases::case_<tag::case_<Label> >
+        // Don't try to evaluate the return type of case_<1>(expr)()
+        template<int Label, typename SubGrammar>
+        struct is_nullary_extension<tag::case_<Label>, SubGrammar>
           : proto::otherwise<mpl::false_()>
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<>
-        struct is_nullary_cases::case_<tag::default_>
+        // Don't try to evaluate the return type of default(expr)()
+        template<typename SubGrammar>
+        struct is_nullary_extension<tag::default_, SubGrammar>
           : proto::otherwise<mpl::false_()>
         {};
 
@@ -199,13 +210,14 @@
 
         #define M1(Z, N, DATA)                                                                      \
             case BOOST_PP_CAT(L, N):                                                                \
-                evaluator()(BOOST_PP_CAT(a, N).child0, state, data);                                \
+                evaluator<SubGrammar>()(BOOST_PP_CAT(a, N).child0, state, data);                    \
                 break;                                                                              \
             /**/
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<
-            typename Expr, typename State, typename Data
+            typename SubGrammar
+          , typename Expr, typename State, typename Data
           , typename Args
             BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)
         >
@@ -216,7 +228,7 @@
         )
         {
             // Fan out the arguments
-            detail::do_switch(
+            detail::do_switch<SubGrammar>(
                 expr, state, data
               , cases.child0.proto_base()
               , cases.child1.proto_base()
@@ -226,7 +238,8 @@
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<
-            typename Expr, typename State, typename Data
+            typename SubGrammar
+          , typename Expr, typename State, typename Data
             BOOST_PP_ENUM_TRAILING_PARAMS(N, int L)
             BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)
           , int BOOST_PP_CAT(L, N), typename BOOST_PP_CAT(A, N)
@@ -237,7 +250,7 @@
           , proto::expr<tag::case_<BOOST_PP_CAT(L, N)>, BOOST_PP_CAT(A, N), 1> const &BOOST_PP_CAT(a, N)
         )
         {
-            switch(evaluator()(expr, state, data))
+            switch(evaluator<SubGrammar>()(expr, state, data))
             {
                 BOOST_PP_REPEAT(BOOST_PP_INC(N), M1, ~)
                 default:;
@@ -246,7 +259,8 @@
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<
-            typename Expr, typename State, typename Data
+            typename SubGrammar
+          , typename Expr, typename State, typename Data
             BOOST_PP_ENUM_TRAILING_PARAMS(N, int L)
             BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)
           , typename BOOST_PP_CAT(A, N)
@@ -257,11 +271,11 @@
           , proto::expr<tag::default_, BOOST_PP_CAT(A, N), 1> const &BOOST_PP_CAT(a, N)
         )
         {
-            switch(evaluator()(expr, state, data))
+            switch(evaluator<SubGrammar>()(expr, state, data))
             {
                 BOOST_PP_REPEAT(N, M1, ~)
                 default:
-                    evaluator()(BOOST_PP_CAT(a, N).child0, state, data);
+                    evaluator<SubGrammar>()(BOOST_PP_CAT(a, N).child0, state, data);
                     break;
             }
         }

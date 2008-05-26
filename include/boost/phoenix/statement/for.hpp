@@ -54,7 +54,8 @@ namespace boost { namespace phoenix
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Proto transform that evaluates for_(x,y,z)[expr]
-        struct for_evaluator : proto::transform<for_evaluator>
+        template<typename SubGrammar, typename X = proto::callable>
+        struct for_evaluator : proto::transform<for_evaluator<SubGrammar> >
         {
             template<typename Expr, typename State, typename Data>
             struct impl : proto::transform_impl<Expr, State, Data>
@@ -67,11 +68,11 @@ namespace boost { namespace phoenix
                   , typename impl::data_param data
                 ) const
                 {
-                    for(evaluator()(proto::child_c<0>(expr), state, data)
-                      ; evaluator()(proto::child_c<1>(expr), state, data)
-                      ; evaluator()(proto::child_c<2>(expr), state, data))
+                    for(evaluator<SubGrammar>()(proto::child_c<0>(expr), state, data)
+                      ; evaluator<SubGrammar>()(proto::child_c<1>(expr), state, data)
+                      ; evaluator<SubGrammar>()(proto::child_c<2>(expr), state, data))
                     {
-                        evaluator()(proto::child_c<3>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<3>(expr), state, data);
                     }
                 }
             };
@@ -87,11 +88,17 @@ namespace boost { namespace phoenix
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::for_, void>
+    template<typename SubGrammar>
+    struct extension<tag::for_, SubGrammar>
       : proto::when<
-            proto::nary_expr<tag::for_, evaluator, evaluator, evaluator, evaluator>
-          , detail::for_evaluator
+            proto::nary_expr<
+                tag::for_
+              , evaluator<SubGrammar>
+              , evaluator<SubGrammar>
+              , evaluator<SubGrammar>
+              , evaluator<SubGrammar>
+            >
+          , detail::for_evaluator<SubGrammar>
         >
     {};
 

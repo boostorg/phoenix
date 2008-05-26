@@ -10,12 +10,14 @@
 
     #include <iosfwd>
     #include <boost/phoenix/core/limits.hpp>
+    #include <boost/assert.hpp>
     #include <boost/config.hpp>
     #include <boost/mpl/if.hpp>
     #include <boost/mpl/or.hpp>
     #include <boost/mpl/and.hpp>
     #include <boost/mpl/bool.hpp>
     #include <boost/mpl/void.hpp>
+    #include <boost/mpl/assert.hpp>
     #include <boost/mpl/identity.hpp>
     #include <boost/proto/proto.hpp>
     #include <boost/type_traits/is_abstract.hpp>
@@ -32,23 +34,24 @@
         namespace detail
         {
             ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar = proto::not_<proto::_>, typename X = proto::callable>
             struct evaluator;
         }
 
         using detail::evaluator;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Tag, typename Void = void>
+        template<typename Tag, typename SubGrammar>
         struct extension;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Value, typename Void = void>
+        template<typename Value, typename SubGrammar>
         struct terminal_extension
-          : proto::_value
+          : proto::otherwise<proto::_value>
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Value, typename Void = void>
+        template<typename Value, typename SubGrammar>
         struct is_terminal_nullary
           : mpl::true_
         {};
@@ -62,43 +65,94 @@
 
         using actorns_::actor;
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar>
+        struct is_nullary_cases;
+        
         ////////////////////////////////////////////////////////////////////////////////////////
         // True when a lambda expression can be applied with no arguments and
         // without an active exception object
+        template<typename SubGrammar = proto::not_<proto::_>, typename X = proto::callable>
         struct is_nullary
-          : proto::switch_<struct is_nullary_cases>
+          : proto::and_<
+                evaluator<SubGrammar> // only valid expressions can be evaluated as "nullary"
+              , proto::or_<
+                    SubGrammar
+                  , proto::switch_<is_nullary_cases<SubGrammar> >
+                >
+            >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename Tag, typename SubGrammar>
+        struct is_nullary_extension
+          : proto::otherwise<
+                proto::fold<
+                    proto::_
+                  , mpl::true_()
+                  , mpl::and_<proto::_state, is_nullary<SubGrammar> >()
+                >
+            >
+        {};
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar>
         struct is_nullary_cases
         {
-            template<typename Tag>
+        private:
+            template<typename T>
+            struct is_terminal_nullary_local
+              : is_terminal_nullary<T, SubGrammar>
+            {};
+
+        public:
+            template<typename Tag, typename X = void>
             struct case_
-              : proto::otherwise<
-                    proto::fold<proto::_, mpl::true_(), mpl::and_<proto::_state, is_nullary>()>
-                >
+              : is_nullary_extension<Tag, SubGrammar>
+            {};
+
+            template<typename X>
+            struct case_<proto::tag::terminal, X>
+              : proto::otherwise<is_terminal_nullary_local<proto::_value>()>
             {};
         };
-
-        template<>
-        struct is_nullary_cases::case_<proto::tag::terminal>
-          : proto::otherwise<is_terminal_nullary<proto::_value>()>
-        {};
 
         namespace detail
         {
             ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar>
             struct evaluator_cases
             {
-                template<typename Tag>
+            private:
+                template<typename Value>
+                struct terminal_extension_local
+                  : terminal_extension<Value, SubGrammar>
+                {};
+                
+            public:
+                template<typename Tag, typename X = void>
                 struct case_
-                  : phoenix::extension<Tag>
+                  : phoenix::extension<Tag, SubGrammar>
+                {};
+
+                template<typename X>
+                struct case_<proto::tag::terminal, X>
+                  : proto::when<
+                        proto::if_<
+                            proto::matches<proto::_, terminal_extension_local<proto::_value>()>()
+                        >
+                      , proto::lazy<terminal_extension_local<proto::_value> >
+                    >
                 {};
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar, typename Callable>
             struct evaluator
-              : proto::switch_<evaluator_cases>
+              : proto::or_<
+                    SubGrammar
+                  , proto::switch_<evaluator_cases<SubGrammar> >
+                >
             {};
 
             ////////////////////////////////////////////////////////////////////////////////////////
@@ -186,8 +240,8 @@
             template<typename This>
             struct result<This()>
               : mpl::if_c<
-                    result_of<is_nullary(This &)>::type::value
-                  , result_of<evaluator(This &, initial_state_type, fusion::vector0 &)>
+                    result_of<is_nullary<>(This &)>::type::value
+                  , result_of<evaluator<>(This &, initial_state_type, fusion::vector0 &)>
                   , mpl::identity<void>
                 >::type
             {};
@@ -196,7 +250,7 @@
             template<typename This BOOST_PP_ENUM_TRAILING_PARAMS_Z(Z, N, typename A)>                   \
             struct result<This(BOOST_PP_ENUM_PARAMS_Z(Z, N, A))>                                        \
               : result_of<                                                                              \
-                    evaluator(                                                                          \
+                    evaluator<>(                                                                        \
                         This &                                                                          \
                       , initial_state_type                                                              \
                       , BOOST_PP_CAT(fusion::vector, N)<BOOST_PP_ENUM_PARAMS_Z(Z, N, A)> &              \
@@ -207,6 +261,16 @@
             BOOST_PP_REPEAT_FROM_TO(1, BOOST_PP_INC(PHOENIX_LIMIT), M0, ~)
             #undef M0
         }
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        struct INVALID_LAMBDA_EXPRESSION
+          : mpl::false_
+        {};
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        struct VALID_LAMBDA_EXPRESSION
+          : mpl::true_
+        {};
 
         namespace actorns_
         {
@@ -226,9 +290,8 @@
                 typename result<Expr const()>::type
                 operator()() const
                 {
-                    BOOST_MPL_ASSERT((proto::matches<Expr, evaluator>));
                     fusion::vector0 args;
-                    return evaluator()(*this, mpl::void_(), args);
+                    return this->evaluate(args);
                 }
 
                 #define M0(Z, N, _) ((0))
@@ -242,10 +305,9 @@
                     typename result<Expr const(BOOST_PP_SEQ_FOR_EACH_I_R(R, M5, ~, PRODUCT))>::type             \
                     operator ()(BOOST_PP_SEQ_FOR_EACH_I_R(R, M4, ~, PRODUCT)) const                             \
                     {                                                                                           \
-                        BOOST_MPL_ASSERT((proto::matches<Expr, evaluator>));                                    \
                         BOOST_PP_CAT(fusion::vector, SIZE)<BOOST_PP_SEQ_FOR_EACH_I_R(R, M5, ~, PRODUCT)> args   \
                             (BOOST_PP_SEQ_FOR_EACH_I_R(R, M6, ~, PRODUCT));                                     \
-                        return evaluator()(*this, mpl::void_(), args);                                          \
+                        return this->evaluate(args);                                                            \
                     }                                                                                           \
                     /**/
 
@@ -277,23 +339,52 @@
                 #undef M4
                 #undef M5
                 #undef M6
+                
+            private:
+                template<typename Args>
+                typename result_of<evaluator<>(Expr const &, detail::initial_state_type, Args &)>::type
+                evaluate(Args &args) const
+                {
+                    typedef typename
+                        mpl::if_<
+                            proto::matches<Expr, evaluator<> >
+                          , VALID_LAMBDA_EXPRESSION
+                          , INVALID_LAMBDA_EXPRESSION
+                        >::type
+                    IS_VALID_LAMBDA_EXPRESSION;
+
+                    // If your compile breaks here, your lambda expression doesn't validate against
+                    // the Phoenix lambda grammar. Go back and check your expression for well-formedness.
+                    BOOST_MPL_ASSERT((IS_VALID_LAMBDA_EXPRESSION));
+
+                    return this->evaluate(args, IS_VALID_LAMBDA_EXPRESSION());
+                }
+
+                template<typename Args>
+                typename result_of<evaluator<>(Expr const &, detail::initial_state_type, Args &)>::type
+                evaluate(Args &args, mpl::true_) const
+                {
+                    return evaluator<>()(this->proto_base(), mpl::void_(), args);
+                }
+
+                template<typename Args>
+                typename result_of<evaluator<>(Expr const &, detail::initial_state_type, Args &)>::type
+                evaluate(Args &args, mpl::false_) const
+                {
+                    BOOST_ASSERT(false);
+                    throw "never called";
+                }
             };
 
         } // namespace actorns_
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Tag, typename Void>
+        template<typename Tag, typename SubGrammar>
         struct extension
           : proto::when<
-                proto::nary_expr<proto::_, proto::vararg<evaluator> >
-              , proto::_default<evaluator>
+                proto::nary_expr<proto::_, proto::vararg<evaluator<SubGrammar> > >
+              , proto::_default<evaluator<SubGrammar> >
             >
-        {};
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        template<>
-        struct extension<proto::tag::terminal, void>
-          : proto::otherwise<proto::lazy<terminal_extension<proto::_value> > >
         {};
 
     }}

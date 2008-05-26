@@ -81,21 +81,21 @@ namespace boost { namespace phoenix
     actor<argument<I> > const argument<I,_>::argI = {{{{}}}};
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<typename Int, typename Void>
+    template<typename Value, typename SubGrammar>
     struct is_terminal_nullary;
 
-    template<typename Int>
-    struct is_terminal_nullary<detail::argument<Int>, void>
+    template<typename Int, typename SubGrammar>
+    struct is_terminal_nullary<detail::argument<Int>, SubGrammar>
       : mpl::false_
     {};
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<typename Int, typename Void>
+    template<typename Value, typename SubGrammar>
     struct terminal_extension;
 
-    template<typename Int>
-    struct terminal_extension<detail::argument<Int>, void>
-      : proto::call<detail::at<Int>(proto::_data)>
+    template<typename Int, typename SubGrammar>
+    struct terminal_extension<detail::argument<Int>, SubGrammar>
+      : proto::otherwise<detail::at<Int>(proto::_data)>
     {};
 
     ////////////////////////////////////////////////////////////////////////////////////////////

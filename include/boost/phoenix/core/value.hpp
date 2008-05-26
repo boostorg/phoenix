@@ -71,11 +71,11 @@ namespace boost { namespace phoenix
     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::byval>
+    template<typename SubGrammar>
+    struct extension<tag::byval, SubGrammar>
       : proto::when<
-            proto::unary_expr<tag::byval, evaluator>
-          , remove_reference<evaluator(proto::_child)>(evaluator(proto::_child))
+            proto::unary_expr<tag::byval, evaluator<SubGrammar> >
+          , remove_reference<evaluator<SubGrammar>(proto::_child)>(evaluator<SubGrammar>(proto::_child))
         >
     {};
 

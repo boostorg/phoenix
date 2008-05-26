@@ -109,7 +109,8 @@ namespace boost { namespace phoenix
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Proto transform that evaluates if_(condition)[ expression ]
-        struct if_evaluator : proto::transform<if_evaluator>
+        template<typename SubGrammar, typename X = proto::callable>
+        struct if_evaluator : proto::transform<if_evaluator<SubGrammar> >
         {
             template<typename Expr, typename State, typename Data>
             struct impl : proto::transform_impl<Expr, State, Data>
@@ -122,9 +123,9 @@ namespace boost { namespace phoenix
                   , typename impl::data_param data
                 ) const
                 {
-                    if(evaluator()(proto::left(expr), state, data))
+                    if(evaluator<SubGrammar>()(proto::left(expr), state, data))
                     {
-                        evaluator()(proto::right(expr), state, data);
+                        evaluator<SubGrammar>()(proto::right(expr), state, data);
                     }
                 }
             };
@@ -132,7 +133,8 @@ namespace boost { namespace phoenix
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Proto transform that evaluates if_(condition)[ expression ].else_[ expression ]
-        struct if_else_evaluator : proto::transform<if_else_evaluator>
+        template<typename SubGrammar, typename X = proto::callable>
+        struct if_else_evaluator : proto::transform<if_else_evaluator<SubGrammar> >
         {
             template<typename Expr, typename State, typename Data>
             struct impl : proto::transform_impl<Expr, State, Data>
@@ -145,13 +147,13 @@ namespace boost { namespace phoenix
                   , typename impl::data_param data
                 ) const
                 {
-                    if(evaluator()(proto::child_c<0>(expr), state, data))
+                    if(evaluator<SubGrammar>()(proto::child_c<0>(expr), state, data))
                     {
-                        evaluator()(proto::child_c<1>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<1>(expr), state, data);
                     }
                     else
                     {
-                        evaluator()(proto::child_c<2>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<2>(expr), state, data);
                     }
                 }
             };
@@ -167,20 +169,20 @@ namespace boost { namespace phoenix
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::if_, void>
+    template<typename SubGrammar>
+    struct extension<tag::if_, SubGrammar>
       : proto::when<
-            proto::binary_expr<tag::if_, evaluator, evaluator>
-          , detail::if_evaluator
+            proto::binary_expr<tag::if_, evaluator<SubGrammar>, evaluator<SubGrammar> >
+          , detail::if_evaluator<SubGrammar>
         >
     {};
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::else_, void>
+    template<typename SubGrammar>
+    struct extension<tag::else_, SubGrammar>
       : proto::when<
-            proto::nary_expr<tag::else_, evaluator, evaluator, evaluator>
-          , detail::if_else_evaluator
+            proto::nary_expr<tag::else_, evaluator<SubGrammar>, evaluator<SubGrammar>, evaluator<SubGrammar> >
+          , detail::if_else_evaluator<SubGrammar>
         >
     {};
 

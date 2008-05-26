@@ -54,7 +54,7 @@
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
-            template<typename State, typename Data>
+            template<typename State, typename Data, typename SubGrammar>
             struct initialize_locals
             {
                 explicit initialize_locals(State state, Data data)
@@ -76,7 +76,7 @@
                     typedef
                         fusion::pair<
                             First
-                          , typename boost::result_of<evaluator(Second, State, Data)>::type
+                          , typename boost::result_of<evaluator<SubGrammar>(Second, State, Data)>::type
                         >
                     type;
                 };
@@ -84,17 +84,17 @@
                 template<typename First, typename Second>
                 fusion::pair<
                     First
-                  , typename boost::result_of<evaluator(Second, State, Data)>::type
+                  , typename boost::result_of<evaluator<SubGrammar>(Second, State, Data)>::type
                 > const
                 operator()(fusion::pair<First, Second> const &p) const
                 {
                     typedef
                         fusion::pair<
                             First
-                          , typename boost::result_of<evaluator(Second, State, Data)>::type
+                          , typename boost::result_of<evaluator<SubGrammar>(Second, State, Data)>::type
                         >
                     pair_type;
-                    return pair_type(evaluator()(p.second, this->state, this->data));
+                    return pair_type(evaluator<SubGrammar>()(p.second, this->state, this->data));
                 }
 
             private:
@@ -103,7 +103,7 @@
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
-            template<typename Map, typename State, typename Data>
+            template<typename Map, typename State, typename Data, typename SubGrammar>
             struct scope
             {
                 typedef typename remove_reference<State>::type state_type;
@@ -112,7 +112,7 @@
                     fusion::result_of::as_map<typename
                         fusion::result_of::transform<
                             typename remove_reference<Map>::type
-                          , initialize_locals<State, Data>
+                          , initialize_locals<State, Data, SubGrammar>
                         >::type
                     >::type
                 locals_type;
@@ -120,7 +120,7 @@
                 scope(Map map, State state, Data data)
                   : state(state)
                   , data(data)
-                  , locals(fusion::as_map(fusion::transform(map, initialize_locals<State, Data>(state, data))))
+                  , locals(fusion::as_map(fusion::transform(map, initialize_locals<State, Data, SubGrammar>(state, data))))
                 {}
 
                 State state;                // outer state
@@ -129,15 +129,16 @@
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar, typename X = proto::callable>
             struct make_scope
-              : proto::transform<make_scope>
+              : proto::transform<make_scope<SubGrammar> >
             {
                 template<typename Expr, typename State, typename Data>
                 struct impl
                   : proto::transform_impl<Expr, State, Data>
                 {
                     typedef typename proto::result_of::value<Expr>::type map_type;
-                    typedef scope<map_type, typename impl::state_param, Data> result_type;
+                    typedef scope<map_type, typename impl::state_param, Data, SubGrammar> result_type;
 
                     result_type operator()(
                         typename impl::expr_param expr
@@ -150,17 +151,94 @@
                 };
             };
 
-            ////////////////////////////////////////////////////////////////////////////////////////
-            struct is_let_init_nullary
+            template<typename SubGrammar>
+            struct with_grammar
             {
-                template<typename Sig>
-                struct result;
+                ////////////////////////////////////////////////////////////////////////////////////
+                template<typename Map>
+                struct with_locals
+                {
+                    // The grammar for valid lambda expressions changes within the body of a let()
+                    // expression. In particular, the local variables declared in the let() call
+                    // become valid terminals in the let() body.
+                    typedef
+                        evaluator<
+                            proto::or_<
+                                // If the current expression is a local variable declared in
+                                // a let() call ...
+                                proto::when<
+                                    proto::and_<
+                                        proto::terminal<detail::local_variable<proto::_> >
+                                      , proto::if_<
+                                            fusion::result_of::has_key<
+                                                Map
+                                              , detail::local_variable_tag<proto::_value>
+                                            >()
+                                        >
+                                    >
+                                    // ... evaluate it using the local variable evaluator
+                                  , proto::lazy<
+                                        detail::local_variable_evaluator<
+                                            detail::local_variable_tag<proto::_value>
+                                        >
+                                    >
+                                >
+                                // Otherwise, defer handling of the current expression to the
+                                // currently active sub-grammar. This will also handle local
+                                // variables declared in outer let() expressions.
+                              , SubGrammar
+                            >
+                        >
+                    type;
+                };
 
-                template<typename This, typename Elem, typename State>
-                struct result<This(Elem &, State &)>
-                  : mpl::and_<
-                        State
-                      , typename result_of<is_nullary(typename fusion::result_of::second<Elem>::type)>::type
+                ////////////////////////////////////////////////////////////////////////////////////
+                struct let_extension
+                  : proto::when<
+                        proto::and_<
+                            proto::binary_expr<tag::let_, proto::terminal<proto::_>, proto::_>
+                          , proto::if_<
+                                proto::matches<
+                                    proto::_right
+                                  , with_locals<proto::_value(proto::_left)>()
+                                >()
+                            >
+                        >
+                      , proto::lazy<
+                            with_locals<proto::_value(proto::_left)>(
+                                proto::_right
+                              , detail::make_scope<SubGrammar>(proto::_left)
+                              , proto::_data
+                            )
+                        >
+                    >
+                {};
+
+                ////////////////////////////////////////////////////////////////////////////////////
+                struct is_nullary
+                  : phoenix::is_nullary<SubGrammar>
+                {};
+
+                ////////////////////////////////////////////////////////////////////////////////////
+                struct is_nullary_fun
+                {
+                    template<typename Sig>
+                    struct result;
+
+                    template<typename This, typename Elem, typename State>
+                    struct result<This(Elem &, State &)>
+                      : mpl::and_<State, result_of<is_nullary(typename Elem::second_type)> >
+                    {};
+                };
+
+                ////////////////////////////////////////////////////////////////////////////////////
+                struct is_nullary_extension
+                  : proto::otherwise<
+                        fusion::result_of::fold<
+                            proto::_value(proto::_left)
+                          , proto::call<is_nullary(proto::_right)>
+                          , proto::make<is_nullary_fun>
+                        >()
                     >
                 {};
             };
@@ -169,26 +247,17 @@
         ////////////////////////////////////////////////////////////////////////////////////////////
         // Evaluate a let() expression by evaluating the body with a state that contains
         // a map of the local variables and a reference to the enclosing scope.
-        template<>
-        struct extension<tag::let_, void>
-          : proto::when<
-                proto::binary_expr<tag::let_, proto::terminal<proto::_>, evaluator>
-              , evaluator(proto::_right, detail::make_scope(proto::_left), proto::_data)
-            >
+        template<typename SubGrammar>
+        struct extension<tag::let_, SubGrammar>
+          : detail::with_grammar<SubGrammar>::let_extension
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         // BUGBUG this isn't quite right. It gets the answer wrong for
         // let(_a = 1)[ _a += arg1 ]
-        template<>
-        struct is_nullary_cases::case_<tag::let_>
-          : proto::otherwise<
-                fusion::result_of::fold<
-                    proto::_value(proto::_left)
-                  , mpl::true_()
-                  , detail::is_let_init_nullary()
-                >()
-            >
+        template<typename SubGrammar>
+        struct is_nullary_extension<tag::let_, SubGrammar>
+          : detail::with_grammar<SubGrammar>::is_nullary_extension
         {};
 
         #define BOOST_PP_ITERATION_PARAMS_1 (3, (1, PHOENIX_LIMIT, <boost/phoenix/scope/let.hpp>))

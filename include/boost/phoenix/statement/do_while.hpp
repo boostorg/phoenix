@@ -75,7 +75,8 @@ namespace boost { namespace phoenix
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Proto transform that evaluates do_[ body ].while_( condition )
-        struct do_while_evaluator : proto::transform<do_while_evaluator>
+        template<typename SubGrammar, typename X = proto::callable>
+        struct do_while_evaluator : proto::transform<do_while_evaluator<SubGrammar> >
         {
             template<typename Expr, typename State, typename Data>
             struct impl : proto::transform_impl<Expr, State, Data>
@@ -90,9 +91,9 @@ namespace boost { namespace phoenix
                 {
                     do
                     {
-                        evaluator()(proto::child_c<0>(expr), state, data);
+                        evaluator<SubGrammar>()(proto::child_c<0>(expr), state, data);
                     }
-                    while(evaluator()(proto::child_c<1>(expr), state, data));
+                    while(evaluator<SubGrammar>()(proto::child_c<1>(expr), state, data));
                 }
             };
         };
@@ -102,11 +103,11 @@ namespace boost { namespace phoenix
     detail::do_generator const do_ = {};
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::do_while_, void>
+    template<typename SubGrammar>
+    struct extension<tag::do_while_, SubGrammar>
       : proto::when<
-            proto::nary_expr<tag::do_while_, evaluator, evaluator>
-          , detail::do_while_evaluator
+            proto::nary_expr<tag::do_while_, evaluator<SubGrammar>, evaluator<SubGrammar> >
+          , detail::do_while_evaluator<SubGrammar>
         >
     {};
 

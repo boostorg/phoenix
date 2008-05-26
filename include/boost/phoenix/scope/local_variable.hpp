@@ -23,6 +23,13 @@ namespace boost { namespace phoenix
         {
             typedef Tag tag_type;
         };
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        template<typename Local>
+        struct local_variable_tag
+        {
+            typedef typename Local::tag_type type;
+        };
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         // Find a variable in the immediately enclosing scope
@@ -98,15 +105,10 @@ namespace boost { namespace phoenix
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    template<typename Tag>
-    struct terminal_extension<detail::local_variable<Tag> >
-      : detail::local_variable_evaluator<Tag>
-    {};
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    template<typename Tag>
-    struct is_terminal_nullary<detail::local_variable<Tag> >
-      : mpl::false_
+    // Bare local variables (outside of a let() or lambda()) are not valid lambda expressions.
+    template<typename Tag, typename SubGrammar>
+    struct terminal_extension<detail::local_variable<Tag>, SubGrammar>
+      : proto::not_<proto::_>
     {};
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

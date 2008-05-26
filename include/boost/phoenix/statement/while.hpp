@@ -48,7 +48,8 @@ namespace boost { namespace phoenix
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Proto transform that evaluates if_(condition)[ expression ]
-        struct while_evaluator : proto::transform<while_evaluator>
+        template<typename SubGrammar, typename X = proto::callable>
+        struct while_evaluator : proto::transform<while_evaluator<SubGrammar> >
         {
             template<typename Expr, typename State, typename Data>
             struct impl : proto::transform_impl<Expr, State, Data>
@@ -61,9 +62,9 @@ namespace boost { namespace phoenix
                   , typename impl::data_param data
                 ) const
                 {
-                    while(evaluator()(proto::left(expr), state, data))
+                    while(evaluator<SubGrammar>()(proto::left(expr), state, data))
                     {
-                        evaluator()(proto::right(expr), state, data);
+                        evaluator<SubGrammar>()(proto::right(expr), state, data);
                     }
                 }
             };
@@ -79,11 +80,11 @@ namespace boost { namespace phoenix
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    template<>
-    struct extension<tag::while_, void>
+    template<typename SubGrammar>
+    struct extension<tag::while_, SubGrammar>
       : proto::when<
-            proto::binary_expr<tag::while_, evaluator, evaluator>
-          , detail::while_evaluator
+            proto::binary_expr<tag::while_, evaluator<SubGrammar>, evaluator<SubGrammar> >
+          , detail::while_evaluator<SubGrammar>
         >
     {};
 
