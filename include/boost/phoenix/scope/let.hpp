@@ -12,6 +12,10 @@
     #include <boost/preprocessor.hpp>
     #include <boost/fusion/include/map.hpp>
     #include <boost/fusion/include/fold.hpp>
+    #include <boost/fusion/include/pair.hpp>
+    #include <boost/fusion/include/as_map.hpp>
+    #include <boost/fusion/include/at_key.hpp>
+    #include <boost/fusion/include/transform.hpp>
     #include <boost/phoenix/scope/local_variable.hpp>
 
     namespace boost { namespace phoenix
@@ -50,19 +54,100 @@
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
-            template<typename Map, typename State>
-            struct scope
+            template<typename State, typename Data>
+            struct initialize_locals
             {
-                scope(Map const &map, State const &state)
-                  : map(map)
-                  , state(state)
+                explicit initialize_locals(State state, Data data)
+                  : state(state)
+                  , data(data)
                 {}
 
-                typedef Map const map_type;
-                typedef State const state_type;
+                template<typename Sig>
+                struct result;
 
-                Map const &map;        // local variables map
-                State const &state;    // outer state
+                template<typename This, typename That>
+                struct result<This(That &)>
+                  : result<This(That)>
+                {};
+
+                template<typename This, typename First, typename Second>
+                struct result<This(fusion::pair<First, Second>)>
+                {
+                    typedef
+                        fusion::pair<
+                            First
+                          , typename boost::result_of<evaluator(Second, State, Data)>::type
+                        >
+                    type;
+                };
+
+                template<typename First, typename Second>
+                fusion::pair<
+                    First
+                  , typename boost::result_of<evaluator(Second, State, Data)>::type
+                > const
+                operator()(fusion::pair<First, Second> const &p) const
+                {
+                    typedef
+                        fusion::pair<
+                            First
+                          , typename boost::result_of<evaluator(Second, State, Data)>::type
+                        >
+                    pair_type;
+                    return pair_type(evaluator()(p.second, this->state, this->data));
+                }
+
+            private:
+                State state;
+                Data data;
+            };
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename Map, typename State, typename Data>
+            struct scope
+            {
+                typedef typename remove_reference<State>::type state_type;
+
+                typedef typename
+                    fusion::result_of::as_map<typename
+                        fusion::result_of::transform<
+                            typename remove_reference<Map>::type
+                          , initialize_locals<State, Data>
+                        >::type
+                    >::type
+                locals_type;
+
+                scope(Map map, State state, Data data)
+                  : state(state)
+                  , data(data)
+                  , locals(fusion::as_map(fusion::transform(map, initialize_locals<State, Data>(state, data))))
+                {}
+
+                State state;                // outer state
+                Data data;                  // outer data
+                mutable locals_type locals; // Local variables
+            };
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            struct make_scope
+              : proto::transform<make_scope>
+            {
+                template<typename Expr, typename State, typename Data>
+                struct impl
+                  : proto::transform_impl<Expr, State, Data>
+                {
+                    typedef typename proto::result_of::value<Expr>::type map_type;
+                    typedef scope<map_type, typename impl::state_param, Data> result_type;
+
+                    result_type operator()(
+                        typename impl::expr_param expr
+                      , typename impl::state_param state
+                      , typename impl::data_param data
+                    ) const
+                    {
+                        return result_type(proto::value(expr), state, data);
+                    }
+                };
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
@@ -88,16 +173,7 @@
         struct extension<tag::let_, void>
           : proto::when<
                 proto::binary_expr<tag::let_, proto::terminal<proto::_>, evaluator>
-              , evaluator(
-                    proto::_right
-                  , proto::make<
-                        detail::scope<proto::_value(proto::_left), proto::_state>(
-                            proto::_value(proto::_left)
-                          , proto::_state
-                        )
-                    >
-                  , proto::_data
-                )
+              , evaluator(proto::_right, detail::make_scope(proto::_left), proto::_data)
             >
         {};
 

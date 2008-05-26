@@ -8,6 +8,7 @@
 #ifndef BOOST_PHOENIX_SCOPE_LOCAL_VARIABLE_HPP_EAN_2008_05_21
 #define BOOST_PHOENIX_SCOPE_LOCAL_VARIABLE_HPP_EAN_2008_05_21
 
+#include <boost/ref.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/fusion/include/map.hpp>
 
@@ -28,30 +29,32 @@ namespace boost { namespace phoenix
         template<
             typename Tag
           , typename State
-          , typename Map = typename State::map_type
-          , typename Elem = typename fusion::result_of::at_key<Map, Tag>::type
+          , bool HasKey = fusion::result_of::has_key<typename State::locals_type, Tag>::type::value
         >
-        struct lookup
+        struct find_local
         {
-            typedef Elem result_type;
+            typedef typename
+                fusion::result_of::at_key<typename State::locals_type, Tag>::type
+            result_type;
 
             result_type operator()(State &state) const
             {
-                return fusion::at_key<Tag>(state.map);
+                return fusion::at_key<Tag>(state.locals);
             }
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         // Find a variable in an outer scope
-        template<typename Tag, typename State, typename Map>
-        struct lookup<Tag, State, Map, fusion::void_ const &>
+        template<typename Tag, typename State>
+        struct find_local<Tag, State, false>
         {
-            typedef typename State::state_type that_state;
-            typedef typename lookup<Tag, that_state>::result_type result_type;
+            typedef typename
+                find_local<Tag, typename State::state_type>::result_type
+            result_type;
 
             result_type operator()(State &state) const
             {
-                return lookup<Tag, that_state>()(state.state);
+                return find_local<Tag, typename State::state_type>()(state.state);
             }
         };
 
@@ -64,15 +67,8 @@ namespace boost { namespace phoenix
             struct impl
               : proto::transform_impl<Expr, State, Data>
             {
-                typedef typename impl::state this_state;
-                typedef typename state::state_type that_state;
-
                 typedef
-                    typename lookup<Tag, this_state>::result_type
-                local_var_init;
-
-                typedef
-                    typename result_of<evaluator(local_var_init, that_state &, Data)>::type
+                    typename find_local<Tag, typename impl::state>::result_type
                 result_type;
 
                 result_type operator()(
@@ -81,7 +77,7 @@ namespace boost { namespace phoenix
                   , typename impl::data_param data
                 ) const
                 {
-                    return evaluator()(lookup<Tag, this_state>()(state), state.state, data);
+                    return find_local<Tag, typename impl::state>()(state);
                 }
             };
         };

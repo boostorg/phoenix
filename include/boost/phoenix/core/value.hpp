@@ -11,9 +11,16 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/reference.hpp>
+#include <boost/type_traits/remove_reference.hpp>
 
 namespace boost { namespace phoenix
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    namespace tag
+    {
+        struct byval {};
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename T>
     struct value
@@ -53,6 +60,24 @@ namespace boost { namespace phoenix
     {
         return reference<T const[N]>(t);
     }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    template<typename Expr>
+    actor<typename proto::unary_expr<tag::byval, actor<Expr> const &>::type> const
+    val(actor<Expr> const &expr)
+    {
+        actor<typename proto::unary_expr<tag::byval, actor<Expr> const &>::type> that = {{expr}};
+        return that;
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    template<>
+    struct extension<tag::byval>
+      : proto::when<
+            proto::unary_expr<tag::byval, evaluator>
+          , remove_reference<evaluator(proto::_child)>(evaluator(proto::_child))
+        >
+    {};
 
 }}
 
