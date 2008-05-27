@@ -27,12 +27,24 @@ namespace boost { namespace phoenix
       : proto::terminal<T>::type
     {
         explicit value(T const &t)
-          : proto::terminal<T>::type(proto::terminal<T>::type::make(t))
+          : proto::terminal<T>::type(
+                proto::terminal<T>::type::make(t)
+            )
+        {}
+
+        value(value<T> const volatile &that)
+          : proto::terminal<T>::type(
+                proto::terminal<T>::type::make(
+                    const_cast<T const &>(that.child0)
+                )
+            )
         {}
 
         operator actor<value<T> >() const
         {
-            actor<value<T> > that = {*this};
+            // work around strange infinite recursion issue on gcc
+            value<T> const volatile &vthis = *this;
+            actor<value<T> > that = {vthis};
             return that;
         }
     };

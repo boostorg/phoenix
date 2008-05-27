@@ -18,12 +18,22 @@ namespace boost { namespace phoenix
       : proto::terminal<T &>::type
     {
         explicit reference(T &t)
-          : proto::terminal<T &>::type(proto::terminal<T &>::type::make(t))
+          : proto::terminal<T &>::type(
+                proto::terminal<T &>::type::make(t)
+            )
+        {}
+
+        reference(reference<T> const volatile &that)
+          : proto::terminal<T &>::type(
+                proto::terminal<T &>::type::make(that.child0)
+            )
         {}
 
         operator actor<reference<T> >() const
         {
-            actor<reference<T> > that = {*this};
+            // work around strange infinite recursion issue on gcc
+            reference<T> const volatile &vthis = *this;
+            actor<reference<T> > that = {vthis};
             return that;
         }
     };

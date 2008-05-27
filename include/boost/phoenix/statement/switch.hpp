@@ -202,7 +202,7 @@
 
 #else
 
-    #define N BOOST_PP_ITERATION()
+    #define N BOOST_PP_SUB(PHOENIX_LIMIT, BOOST_PP_ITERATION())
 
         #define M0(Z, N, DATA)                                                                      \
             proto::expr<tag::case_<BOOST_PP_CAT(L, N)>, BOOST_PP_CAT(A, N), 1> const &BOOST_PP_CAT(a, N)\

@@ -151,6 +151,7 @@
                 };
             };
 
+            ////////////////////////////////////////////////////////////////////////////////////////
             template<typename SubGrammar>
             struct with_grammar
             {
@@ -253,8 +254,6 @@
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        // BUGBUG this isn't quite right. It gets the answer wrong for
-        // let(_a = 1)[ _a += arg1 ]
         template<typename SubGrammar>
         struct is_nullary_extension<tag::let_, SubGrammar>
           : detail::with_grammar<SubGrammar>::is_nullary_extension
