@@ -114,59 +114,32 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////////////////////////
     namespace local_names
     {
-        struct _a_key {};
-        struct _b_key {};
-        struct _c_key {};
-        struct _d_key {};
-        struct _e_key {};
-        struct _f_key {};
-        struct _g_key {};
-        struct _h_key {};
-        struct _i_key {};
-        struct _j_key {};
-        struct _k_key {};
-        struct _l_key {};
-        struct _m_key {};
-        struct _n_key {};
-        struct _o_key {};
-        struct _p_key {};
-        struct _q_key {};
-        struct _r_key {};
-        struct _s_key {};
-        struct _t_key {};
-        struct _u_key {};
-        struct _v_key {};
-        struct _w_key {};
-        struct _x_key {};
-        struct _y_key {};
-        struct _z_key {};
-    
-        actor<local_variable<_a_key> > const _a = {{{{}}}};
-        actor<local_variable<_b_key> > const _b = {{{{}}}};
-        actor<local_variable<_c_key> > const _c = {{{{}}}};
-        actor<local_variable<_d_key> > const _d = {{{{}}}};
-        actor<local_variable<_e_key> > const _e = {{{{}}}};
-        actor<local_variable<_f_key> > const _f = {{{{}}}};
-        actor<local_variable<_g_key> > const _g = {{{{}}}};
-        actor<local_variable<_h_key> > const _h = {{{{}}}};
-        actor<local_variable<_i_key> > const _i = {{{{}}}};
-        actor<local_variable<_j_key> > const _j = {{{{}}}};
-        actor<local_variable<_k_key> > const _k = {{{{}}}};
-        actor<local_variable<_l_key> > const _l = {{{{}}}};
-        actor<local_variable<_m_key> > const _m = {{{{}}}};
-        actor<local_variable<_n_key> > const _n = {{{{}}}};
-        actor<local_variable<_o_key> > const _o = {{{{}}}};
-        actor<local_variable<_p_key> > const _p = {{{{}}}};
-        actor<local_variable<_q_key> > const _q = {{{{}}}};
-        actor<local_variable<_r_key> > const _r = {{{{}}}};
-        actor<local_variable<_s_key> > const _s = {{{{}}}};
-        actor<local_variable<_t_key> > const _t = {{{{}}}};
-        actor<local_variable<_u_key> > const _u = {{{{}}}};
-        actor<local_variable<_v_key> > const _v = {{{{}}}};
-        actor<local_variable<_w_key> > const _w = {{{{}}}};
-        actor<local_variable<_x_key> > const _x = {{{{}}}};
-        actor<local_variable<_y_key> > const _y = {{{{}}}};
-        actor<local_variable<_z_key> > const _z = {{{{}}}};
+        actor<local_variable<struct _a_key> > const _a = {{{{}}}};
+        actor<local_variable<struct _b_key> > const _b = {{{{}}}};
+        actor<local_variable<struct _c_key> > const _c = {{{{}}}};
+        actor<local_variable<struct _d_key> > const _d = {{{{}}}};
+        actor<local_variable<struct _e_key> > const _e = {{{{}}}};
+        actor<local_variable<struct _f_key> > const _f = {{{{}}}};
+        actor<local_variable<struct _g_key> > const _g = {{{{}}}};
+        actor<local_variable<struct _h_key> > const _h = {{{{}}}};
+        actor<local_variable<struct _i_key> > const _i = {{{{}}}};
+        actor<local_variable<struct _j_key> > const _j = {{{{}}}};
+        actor<local_variable<struct _k_key> > const _k = {{{{}}}};
+        actor<local_variable<struct _l_key> > const _l = {{{{}}}};
+        actor<local_variable<struct _m_key> > const _m = {{{{}}}};
+        actor<local_variable<struct _n_key> > const _n = {{{{}}}};
+        actor<local_variable<struct _o_key> > const _o = {{{{}}}};
+        actor<local_variable<struct _p_key> > const _p = {{{{}}}};
+        actor<local_variable<struct _q_key> > const _q = {{{{}}}};
+        actor<local_variable<struct _r_key> > const _r = {{{{}}}};
+        actor<local_variable<struct _s_key> > const _s = {{{{}}}};
+        actor<local_variable<struct _t_key> > const _t = {{{{}}}};
+        actor<local_variable<struct _u_key> > const _u = {{{{}}}};
+        actor<local_variable<struct _v_key> > const _v = {{{{}}}};
+        actor<local_variable<struct _w_key> > const _w = {{{{}}}};
+        actor<local_variable<struct _x_key> > const _x = {{{{}}}};
+        actor<local_variable<struct _y_key> > const _y = {{{{}}}};
+        actor<local_variable<struct _z_key> > const _z = {{{{}}}};
     }
 
 }}
