@@ -16,7 +16,8 @@ namespace boost { namespace phoenix
     template<typename Fun>
     struct function
     {
-        BOOST_PROTO_EXTENDS(typename proto::terminal<Fun>::type, function<Fun>, detail::domain)
+        typedef typename proto::terminal<Fun>::type base_type;
+        BOOST_PROTO_EXTENDS(base_type, function<Fun>, detail::domain)
     };
 
 }}

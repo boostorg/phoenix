@@ -68,31 +68,22 @@
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<typename SubGrammar>
         struct is_nullary_cases;
-        
+
         ////////////////////////////////////////////////////////////////////////////////////////
         // True when a lambda expression can be applied with no arguments and
         // without an active exception object
         template<typename SubGrammar = proto::not_<proto::_>, typename X = proto::callable>
         struct is_nullary
-          : proto::and_<
-                evaluator<SubGrammar> // only valid expressions can be evaluated as "nullary"
-              , proto::or_<
-                    SubGrammar
-                  , proto::switch_<is_nullary_cases<SubGrammar> >
-                >
+          : proto::or_<
+                SubGrammar
+              , proto::switch_<is_nullary_cases<SubGrammar> >
             >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////
         template<typename Tag, typename SubGrammar>
         struct is_nullary_extension
-          : proto::otherwise<
-                proto::fold<
-                    proto::_
-                  , mpl::true_()
-                  , mpl::and_<proto::_state, is_nullary<SubGrammar> >()
-                >
-            >
+          : proto::nary_expr<Tag, proto::vararg<is_nullary<SubGrammar> > >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +104,7 @@
 
             template<typename X>
             struct case_<proto::tag::terminal, X>
-              : proto::otherwise<is_terminal_nullary_local<proto::_value>()>
+              : proto::if_<is_terminal_nullary_local<proto::_value>()>
             {};
         };
 
@@ -128,7 +119,7 @@
                 struct terminal_extension_local
                   : terminal_extension<Value, SubGrammar>
                 {};
-                
+
             public:
                 template<typename Tag, typename X = void>
                 struct case_
@@ -240,7 +231,7 @@
             template<typename This>
             struct result<This()>
               : mpl::if_c<
-                    result_of<is_nullary<>(This &)>::type::value
+                    proto::matches<This, proto::and_<evaluator<>, is_nullary<> > >::type::value
                   , result_of<evaluator<>(This &, initial_state_type, fusion::vector0 &)>
                   , mpl::identity<void>
                 >::type
@@ -261,12 +252,12 @@
             BOOST_PP_REPEAT_FROM_TO(1, BOOST_PP_INC(PHOENIX_LIMIT), M0, ~)
             #undef M0
         }
-        
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         struct INVALID_LAMBDA_EXPRESSION
           : mpl::false_
         {};
-        
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         struct VALID_LAMBDA_EXPRESSION
           : mpl::true_
@@ -290,8 +281,9 @@
                 typename result<Expr const()>::type
                 operator()() const
                 {
+                    typedef typename result<Expr const()>::type result_type;
                     fusion::vector0 args;
-                    return this->evaluate(args);
+                    return this->evaluate<result_type>(args);
                 }
 
                 #define M0(Z, N, _) ((0))
@@ -305,9 +297,12 @@
                     typename result<Expr const(BOOST_PP_SEQ_FOR_EACH_I_R(R, M5, ~, PRODUCT))>::type             \
                     operator ()(BOOST_PP_SEQ_FOR_EACH_I_R(R, M4, ~, PRODUCT)) const                             \
                     {                                                                                           \
+                        typedef typename                                                                        \
+                            result<Expr const(BOOST_PP_SEQ_FOR_EACH_I_R(R, M5, ~, PRODUCT))>::type              \
+                        result_type;                                                                            \
                         BOOST_PP_CAT(fusion::vector, SIZE)<BOOST_PP_SEQ_FOR_EACH_I_R(R, M5, ~, PRODUCT)> args   \
                             (BOOST_PP_SEQ_FOR_EACH_I_R(R, M6, ~, PRODUCT));                                     \
-                        return this->evaluate(args);                                                            \
+                        return this->evaluate<result_type>(args);                                               \
                     }                                                                                           \
                     /**/
 
@@ -339,11 +334,10 @@
                 #undef M4
                 #undef M5
                 #undef M6
-                
+
             private:
-                template<typename Args>
-                typename result_of<evaluator<>(Expr const &, detail::initial_state_type, Args &)>::type
-                evaluate(Args &args) const
+                template<typename Result, typename Args>
+                Result evaluate(Args &args) const
                 {
                     typedef typename
                         mpl::if_<
@@ -357,19 +351,17 @@
                     // the Phoenix lambda grammar. Go back and check your expression for well-formedness.
                     BOOST_MPL_ASSERT((IS_VALID_LAMBDA_EXPRESSION));
 
-                    return this->evaluate(args, IS_VALID_LAMBDA_EXPRESSION());
+                    return this->evaluate<Result>(args, IS_VALID_LAMBDA_EXPRESSION());
                 }
 
-                template<typename Args>
-                typename result_of<evaluator<>(Expr const &, detail::initial_state_type, Args &)>::type
-                evaluate(Args &args, mpl::true_) const
+                template<typename Result, typename Args>
+                Result evaluate(Args &args, mpl::true_) const
                 {
                     return evaluator<>()(this->proto_base(), mpl::void_(), args);
                 }
 
-                template<typename Args>
-                typename result_of<evaluator<>(Expr const &, detail::initial_state_type, Args &)>::type
-                evaluate(Args &args, mpl::false_) const
+                template<typename Result, typename Args>
+                Result evaluate(Args &args, mpl::false_) const
                 {
                     BOOST_ASSERT(false);
                     throw "never called";

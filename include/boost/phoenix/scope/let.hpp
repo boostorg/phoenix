@@ -216,8 +216,9 @@
                 {};
 
                 ////////////////////////////////////////////////////////////////////////////////////
+                template<typename Expr>
                 struct is_nullary
-                  : phoenix::is_nullary<SubGrammar>
+                  : proto::matches<Expr, phoenix::is_nullary<SubGrammar> >
                 {};
 
                 ////////////////////////////////////////////////////////////////////////////////////
@@ -228,16 +229,16 @@
 
                     template<typename This, typename Elem, typename State>
                     struct result<This(Elem &, State &)>
-                      : mpl::and_<State, result_of<is_nullary(typename Elem::second_type)> >
+                      : mpl::and_<State, is_nullary<typename Elem::second_type> >
                     {};
                 };
 
                 ////////////////////////////////////////////////////////////////////////////////////
                 struct is_nullary_extension
-                  : proto::otherwise<
+                  : proto::if_<
                         fusion::result_of::fold<
                             proto::_value(proto::_left)
-                          , proto::call<is_nullary(proto::_right)>
+                          , is_nullary<proto::_right>()
                           , proto::make<is_nullary_fun>
                         >()
                     >
