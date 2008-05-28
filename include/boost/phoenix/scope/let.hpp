@@ -57,7 +57,7 @@
             template<typename State, typename Data, typename SubGrammar>
             struct initialize_locals
             {
-                explicit initialize_locals(State state, Data data)
+                initialize_locals(State state, Data data)
                   : state(state)
                   , data(data)
                 {}

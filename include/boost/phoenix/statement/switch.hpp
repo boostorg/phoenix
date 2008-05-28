@@ -179,17 +179,17 @@
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        // Don't try to evaluate the return type of case_<1>(expr)()
+        // case_<N>(x) expressions are not valid lambdas outside of a switch_
         template<int Label, typename SubGrammar>
-        struct is_nullary_extension<tag::case_<Label>, SubGrammar>
-          : proto::otherwise<mpl::false_()>
+        struct extension<tag::case_<Label>, SubGrammar>
+          : proto::not_<proto::_>
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        // Don't try to evaluate the return type of default(expr)()
+        // default_(x) expressions are not valid lambdas outside of a switch_
         template<typename SubGrammar>
-        struct is_nullary_extension<tag::default_, SubGrammar>
-          : proto::otherwise<mpl::false_()>
+        struct extension<tag::default_, SubGrammar>
+          : proto::not_<proto::_>
         {};
 
     }}
