@@ -36,7 +36,7 @@ test-suite phoenix_operator :
     [ run operator/misc_binary_tests.cpp ]
     [ run operator/self_tests.cpp ]
     [ run operator/unary_tests.cpp ]
-#    [ run operator/member.cpp ]
+    [ run operator/member.cpp ]
     ;
 
 test-suite phoenix_object :
@@ -78,10 +78,10 @@ test-suite phoenix_container :
     ;
 
 test-suite phoenix_scope :
-    [ run scope/lambda_tests.cpp ]
+#    [ run scope/lambda_tests.cpp ]
     [ run scope/let_tests.cpp ]
-    [ run scope/dynamic_tests.cpp ]
-    [ run scope/bug_000008.cpp : : : $(multi-threading) ]
+#    [ run scope/dynamic_tests.cpp ]
+#    [ run scope/bug_000008.cpp : : : $(multi-threading) ]
     ;
 
 test-suite phoenix_algorithm :
