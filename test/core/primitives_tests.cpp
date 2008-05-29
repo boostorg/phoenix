@@ -37,8 +37,7 @@ main()
     cout << val("Hello,")() << val(' ')() << val("World")() << endl;
     BOOST_TEST(val(3)() == 3);
     BOOST_TEST(val("Hello, world")() == std::string("Hello, world"));
-    // WTF?
-    //BOOST_TEST(val(_1)(i1) == i1);
+    BOOST_TEST(val(_1)(i1) == i1);
 
     //  should not compile:
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST
