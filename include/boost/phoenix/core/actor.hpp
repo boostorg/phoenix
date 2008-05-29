@@ -223,6 +223,8 @@
             {};
 
             typedef mpl::void_ const &initial_state_type;
+            
+            typedef proto::detail::any any;
 
             ////////////////////////////////////////////////////////////////////////////////////////
             template<typename Sig>
@@ -240,13 +242,17 @@
             #define M0(Z, N, DATA)                                                                      \
             template<typename This BOOST_PP_ENUM_TRAILING_PARAMS_Z(Z, N, typename A)>                   \
             struct result<This(BOOST_PP_ENUM_PARAMS_Z(Z, N, A))>                                        \
-              : result_of<                                                                              \
-                    evaluator<>(                                                                        \
-                        This &                                                                          \
-                      , initial_state_type                                                              \
-                      , BOOST_PP_CAT(fusion::vector, N)<BOOST_PP_ENUM_PARAMS_Z(Z, N, A)> &              \
-                    )                                                                                   \
-                >                                                                                       \
+              : mpl::if_c<                                                                              \
+                    proto::matches<This, evaluator<> >::type::value                                     \
+                  , result_of<                                                                          \
+                        evaluator<>(                                                                    \
+                            This &                                                                      \
+                          , initial_state_type                                                          \
+                          , BOOST_PP_CAT(fusion::vector, N)<BOOST_PP_ENUM_PARAMS_Z(Z, N, A)> &          \
+                        )                                                                               \
+                    >                                                                                   \
+                  , mpl::identity<any>                                                                  \
+                >::type                                                                                 \
             {};                                                                                         \
             /**/
             BOOST_PP_REPEAT_FROM_TO(1, BOOST_PP_INC(PHOENIX_LIMIT), M0, ~)
