@@ -22,6 +22,11 @@ namespace boost { namespace phoenix
         struct local_variable
         {
             typedef Tag tag_type;
+
+            friend std::ostream &operator<<(std::ostream &sout, local_variable const &)
+            {
+                return sout << typeid(local_variable).name();
+            }
         };
         
         ////////////////////////////////////////////////////////////////////////////////////////////

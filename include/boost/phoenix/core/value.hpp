@@ -24,18 +24,18 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename T>
     struct value
-      : proto::terminal<T>::type
+      : proto::extends<typename proto::terminal<T>::type, value<T> >
     {
         explicit value(T const &t)
-          : proto::terminal<T>::type(
+          : proto::extends<typename proto::terminal<T>::type, value<T> >(
                 proto::terminal<T>::type::make(t)
             )
         {}
 
         value(value<T> const volatile &that)
-          : proto::terminal<T>::type(
+          : proto::extends<typename proto::terminal<T>::type, value<T> >(
                 proto::terminal<T>::type::make(
-                    const_cast<T const &>(that.child0)
+                    proto::value(const_cast<value<T> const &>(that))
                 )
             )
         {}

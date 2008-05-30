@@ -15,17 +15,19 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////////////////////
     template<typename T>
     struct reference
-      : proto::terminal<T &>::type
+      : proto::extends<typename proto::terminal<T &>::type, reference<T> >
     {
         explicit reference(T &t)
-          : proto::terminal<T &>::type(
+          : proto::extends<typename proto::terminal<T &>::type, reference<T> >(
                 proto::terminal<T &>::type::make(t)
             )
         {}
 
         reference(reference<T> const volatile &that)
-          : proto::terminal<T &>::type(
-                proto::terminal<T &>::type::make(that.child0)
+          : proto::extends<typename proto::terminal<T &>::type, reference<T> >(
+                proto::terminal<T &>::type::make(
+                    proto::value(const_cast<reference<T> const &>(that))
+                )
             )
         {}
 

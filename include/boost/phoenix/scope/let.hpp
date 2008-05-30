@@ -49,7 +49,7 @@
                     return proto::implicit_expr(this->map, body);
                 }
 
-            private:
+            protected:
                 typename proto::terminal<Map>::type map;
             };
 
@@ -76,7 +76,7 @@
                     typedef
                         fusion::pair<
                             First
-                          , typename boost::result_of<evaluator<SubGrammar>(Second, State, Data)>::type
+                          , typename boost::result_of<evaluator<SubGrammar>(Second const &, State, Data)>::type
                         >
                     type;
                 };
@@ -84,17 +84,18 @@
                 template<typename First, typename Second>
                 fusion::pair<
                     First
-                  , typename boost::result_of<evaluator<SubGrammar>(Second, State, Data)>::type
+                  , typename boost::result_of<evaluator<SubGrammar>(Second const &, State, Data)>::type
                 > const
                 operator()(fusion::pair<First, Second> const &p) const
                 {
                     typedef
                         fusion::pair<
                             First
-                          , typename boost::result_of<evaluator<SubGrammar>(Second, State, Data)>::type
+                          , typename boost::result_of<evaluator<SubGrammar>(Second const &, State, Data)>::type
                         >
                     pair_type;
-                    return pair_type(evaluator<SubGrammar>()(p.second, this->state, this->data));
+                    pair_type that(evaluator<SubGrammar>()(p.second, this->state, this->data));
+                    return that;
                 }
 
             private:
@@ -122,6 +123,11 @@
                   , data(data)
                   , locals(fusion::as_map(fusion::transform(map, initialize_locals<State, Data, SubGrammar>(state, data))))
                 {}
+                
+                friend std::ostream &operator<<(std::ostream &sout, scope const &)
+                {
+                    return sout << typeid(scope).name();
+                }
 
                 State state;                // outer state
                 Data data;                  // outer data
@@ -277,7 +283,7 @@
                 proto::expr<                                                                        \
                     proto::tag::assign                                                              \
                   , proto::list2<                                                                   \
-                        actor<local_variable<BOOST_PP_CAT(T, N)> > const &                          \
+                        actor<local_variable<BOOST_PP_CAT(T, N)> >                                  \
                       , BOOST_PP_CAT(A, N)                                                          \
                     >                                                                               \
                 >                                                                                   \

@@ -34,7 +34,10 @@
         namespace detail
         {
             ////////////////////////////////////////////////////////////////////////////////////////
-            template<typename SubGrammar = proto::not_<proto::_>, typename X = proto::callable>
+            typedef proto::not_<proto::_> no_sub_grammar;
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar = no_sub_grammar, typename X = proto::callable>
             struct evaluator;
         }
 
@@ -66,18 +69,24 @@
         using actorns_::actor;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename SubGrammar>
+        template<typename SubGrammar = detail::no_sub_grammar>
         struct is_nullary_cases;
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // True when a lambda expression can be applied with no arguments and
         // without an active exception object
-        template<typename SubGrammar = proto::not_<proto::_>, typename X = proto::callable>
+        template<typename SubGrammar = detail::no_sub_grammar, typename X = proto::callable>
         struct is_nullary
           : proto::or_<
                 SubGrammar
               , proto::switch_<is_nullary_cases<SubGrammar> >
             >
+        {};
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        template<>
+        struct is_nullary<>
+          : proto::switch_<is_nullary_cases<> >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +120,7 @@
         namespace detail
         {
             ////////////////////////////////////////////////////////////////////////////////////////
-            template<typename SubGrammar>
+            template<typename SubGrammar = detail::no_sub_grammar>
             struct evaluator_cases
             {
             private:
@@ -144,6 +153,12 @@
                     SubGrammar
                   , proto::switch_<evaluator_cases<SubGrammar> >
                 >
+            {};
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<>
+            struct evaluator<>
+              : proto::switch_<evaluator_cases<> >
             {};
 
             ////////////////////////////////////////////////////////////////////////////////////////
@@ -180,7 +195,7 @@
                 template<typename This, typename Expr>
                 struct result<This(Expr)>
                 {
-                    typedef actor<Expr> type;
+                    typedef actor<typename proto::by_value_generator::result<void(Expr)>::type> type;
                 };
 
                 template<typename This, typename T>
@@ -194,10 +209,11 @@
                 };
 
                 template<typename Expr>
-                actor<Expr> const
+                actor<typename proto::by_value_generator::result<void(Expr)>::type> const
                 operator()(Expr const &expr) const
                 {
-                    actor<Expr> that = {expr};
+                    actor<typename proto::by_value_generator::result<void(Expr)>::type> that 
+                        = {proto::by_value_generator()(expr)};
                     return that;
                 }
 
