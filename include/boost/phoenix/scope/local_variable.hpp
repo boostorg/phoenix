@@ -22,18 +22,6 @@ namespace boost { namespace phoenix
         struct local_variable
         {
             typedef Tag tag_type;
-
-            friend std::ostream &operator<<(std::ostream &sout, local_variable const &)
-            {
-                return sout << typeid(local_variable).name();
-            }
-        };
-        
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Local>
-        struct local_variable_tag
-        {
-            typedef typename Local::tag_type type;
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,8 +33,8 @@ namespace boost { namespace phoenix
         >
         struct find_local
         {
-            typedef typename
-                fusion::result_of::at_key<typename State::locals_type, Tag>::type
+            typedef
+                typename fusion::result_of::at_key<typename State::locals_type, Tag>::type
             result_type;
 
             result_type operator()(State &state) const
@@ -60,8 +48,8 @@ namespace boost { namespace phoenix
         template<typename Tag, typename State>
         struct find_local<Tag, State, false>
         {
-            typedef typename
-                find_local<Tag, typename State::state_type>::result_type
+            typedef
+                typename find_local<Tag, typename State::state_type>::result_type
             result_type;
 
             result_type operator()(State &state) const
@@ -71,25 +59,26 @@ namespace boost { namespace phoenix
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename Tag, typename Callable = proto::callable>
         struct local_variable_evaluator
-          : proto::transform<local_variable_evaluator<Tag> >
+          : proto::transform<local_variable_evaluator>
         {
             template<typename Expr, typename State, typename Data>
             struct impl
               : proto::transform_impl<Expr, State, Data>
             {
+                typedef typename impl::expr expr;
+                typedef typename expr::proto_child0::tag_type tag_type;
                 typedef
-                    typename find_local<Tag, typename impl::state>::result_type
+                    typename find_local<tag_type, typename impl::state>::result_type
                 result_type;
 
                 result_type operator()(
-                    typename impl::expr_param expr
+                    typename impl::expr_param
                   , typename impl::state_param state
-                  , typename impl::data_param data
+                  , typename impl::data_param
                 ) const
                 {
-                    return find_local<Tag, typename impl::state>()(state);
+                    return find_local<tag_type, typename impl::state>()(state);
                 }
             };
         };

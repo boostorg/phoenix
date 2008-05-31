@@ -88,14 +88,12 @@
                 > const
                 operator()(fusion::pair<First, Second> const &p) const
                 {
-                    typedef
-                        fusion::pair<
-                            First
-                          , typename boost::result_of<evaluator<SubGrammar>(Second const &, State, Data)>::type
-                        >
-                    pair_type;
-                    pair_type that(evaluator<SubGrammar>()(p.second, this->state, this->data));
-                    return that;
+                    return fusion::pair<
+                        First
+                      , typename boost::result_of<evaluator<SubGrammar>(Second const &, State, Data)>::type
+                    >(
+                        evaluator<SubGrammar>()(p.second, this->state, this->data)
+                    );
                 }
 
             private:
@@ -123,11 +121,6 @@
                   , data(data)
                   , locals(fusion::as_map(fusion::transform(map, initialize_locals<State, Data, SubGrammar>(state, data))))
                 {}
-                
-                friend std::ostream &operator<<(std::ostream &sout, scope const &)
-                {
-                    return sout << typeid(scope).name();
-                }
 
                 State state;                // outer state
                 Data data;                  // outer data
@@ -158,6 +151,23 @@
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename Map, typename Callable = proto::callable>
+            struct is_local_variable : proto::transform<is_local_variable<Map> >
+            {
+                template<typename Expr, typename, typename>
+                struct impl
+                {
+                    typedef mpl::false_ result_type;
+                };
+                
+                template<typename Tag, typename State, typename Data>
+                struct impl<proto::expr<proto::tag::terminal, proto::term<local_variable<Tag> > >, State, Data>
+                {
+                    typedef typename fusion::result_of::has_key<Map, Tag>::type result_type;
+                };
+            };
+
+            ////////////////////////////////////////////////////////////////////////////////////////
             template<typename SubGrammar>
             struct with_grammar
             {
@@ -174,21 +184,9 @@
                                 // If the current expression is a local variable declared in
                                 // a let() call ...
                                 proto::when<
-                                    proto::and_<
-                                        proto::terminal<detail::local_variable<proto::_> >
-                                      , proto::if_<
-                                            fusion::result_of::has_key<
-                                                Map
-                                              , detail::local_variable_tag<proto::_value>
-                                            >()
-                                        >
-                                    >
+                                    proto::if_<is_local_variable<Map> >
                                     // ... evaluate it using the local variable evaluator
-                                  , proto::lazy<
-                                        detail::local_variable_evaluator<
-                                            detail::local_variable_tag<proto::_value>
-                                        >
-                                    >
+                                  , local_variable_evaluator
                                 >
                                 // Otherwise, defer handling of the current expression to the
                                 // currently active sub-grammar. This will also handle local

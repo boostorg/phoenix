@@ -63,7 +63,7 @@
             struct LocalVariable
               : proto::when<
                     proto::terminal<local_variable<proto::_> >
-                  , proto::lazy<local_variable_evaluator<local_variable_tag<proto::_value> > >
+                  , local_variable_evaluator
                 >
             {};
 
@@ -117,6 +117,12 @@
                   , proto::_data
                 )
             >
+        {};
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        template<typename SubGrammar>
+        struct is_nullary_extension<tag::lambda_, SubGrammar>
+          : proto::_
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
