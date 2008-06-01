@@ -115,15 +115,13 @@
                         >::type
                     >::type
                 locals_type;
-
+                
                 scope(Map map, State state, Data data)
                   : state(state)
-                  , data(data)
                   , locals(fusion::as_map(fusion::transform(map, initialize_locals<State, Data, SubGrammar>(state, data))))
                 {}
 
-                State state;                // outer state
-                Data data;                  // outer data
+                state_type state;           // outer state
                 mutable locals_type locals; // Local variables
             };
 

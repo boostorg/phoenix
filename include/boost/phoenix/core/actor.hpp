@@ -39,6 +39,31 @@
             ////////////////////////////////////////////////////////////////////////////////////////
             template<typename SubGrammar = no_sub_grammar, typename X = proto::callable>
             struct evaluator;
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            struct terminal_evaluator : proto::transform<terminal_evaluator>
+            {
+                template<typename Expr, typename State, typename Data>
+                struct impl : proto::transform_impl<Expr, State, Data>
+                {
+                    typedef
+                        typename impl::expr
+                    expr;
+                    
+                    typedef
+                        typename expr::proto_child0
+                    result_type;
+
+                    result_type operator ()(
+                        typename impl::expr_param expr
+                      , typename impl::state_param
+                      , typename impl::data_param
+                    ) const
+                    {
+                        return expr.proto_base().child0;
+                    }
+                };
+            };
         }
 
         using detail::evaluator;
@@ -50,7 +75,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<typename Value, typename SubGrammar>
         struct terminal_extension
-          : proto::otherwise<proto::_value>
+          : proto::otherwise<detail::terminal_evaluator>
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////

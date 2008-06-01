@@ -34,6 +34,7 @@ namespace boost { namespace phoenix
         struct find_local
         {
             typedef
+                //typename fusion::result_of::value_at_key<typename State::locals_type, Tag>::type
                 typename fusion::result_of::at_key<typename State::locals_type, Tag>::type
             result_type;
 
