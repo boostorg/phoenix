@@ -78,7 +78,7 @@ test-suite phoenix_container :
     ;
 
 test-suite phoenix_scope :
-#    [ run scope/lambda_tests.cpp ]
+    [ run scope/lambda_tests.cpp ]
     [ run scope/let_tests.cpp ]
 #    [ run scope/dynamic_tests.cpp ]
 #    [ run scope/bug_000008.cpp : : : $(multi-threading) ]

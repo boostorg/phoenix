@@ -21,7 +21,7 @@ namespace boost { namespace phoenix
 {
     struct for_each_impl
     {
-        template <typename C, typename F>
+        template <typename Sig>
         struct result
         {
             typedef void type;
@@ -34,11 +34,11 @@ namespace boost { namespace phoenix
         }
     };
 
-    function<for_each_impl> const for_each = for_each_impl();
+    function<for_each_impl> const for_each = {};
 
     struct push_back_impl
     {
-        template <typename C, typename T>
+        template <typename Sig>
         struct result
         {
             typedef void type;
@@ -51,7 +51,7 @@ namespace boost { namespace phoenix
         }
     };
 
-    function<push_back_impl> const push_back = push_back_impl();
+    function<push_back_impl> const push_back = {};
 }}
 
 using namespace boost::phoenix;
@@ -170,7 +170,8 @@ main()
     }
 
     {
-        int x = (let(_a = lambda[val(1)])[_a])()();
+        //int x = (let(_a = lambda[val(1)])[_a])()();
+        int x = (let(_a = lambda[val(1)])[val(_a)])()();
         BOOST_TEST(x == 1);
     }
 
