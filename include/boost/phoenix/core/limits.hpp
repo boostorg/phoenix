@@ -7,6 +7,8 @@
 #ifndef PHOENIX_CORE_LIMITS_HPP
 #define PHOENIX_CORE_LIMITS_HPP
 
+#include <boost/preprocessor/selection/min.hpp>
+
 #if !defined(PHOENIX_LIMIT)
 # define PHOENIX_LIMIT 10
 #endif
@@ -32,7 +34,7 @@
 #endif
 
 #if !defined(BOOST_PROTO_MAX_FUNCTION_CALL_ARITY)
-# define BOOST_PROTO_MAX_FUNCTION_CALL_ARITY 6
+# define BOOST_PROTO_MAX_FUNCTION_CALL_ARITY BOOST_PP_MIN(PHOENIX_LIMIT, 6)
 #endif
 
 #if defined(BOOST_PROTO_MAX_ARITY)
