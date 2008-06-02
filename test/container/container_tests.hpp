@@ -9,7 +9,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
-#include <boost/spirit/phoenix/stl/container/container.hpp>
+#include <boost/phoenix/stl/container/container.hpp>
 
 #include <iostream>
 #include <typeinfo>

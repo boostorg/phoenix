@@ -8,6 +8,7 @@
 #define BOOST_PHOENIX_ARGUMENT_HPP_EAN_2008_05_10
 
 #include <iosfwd>
+#include <boost/preprocessor.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/next_prior.hpp>
@@ -101,13 +102,26 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////////////////////
     namespace arg_names
     {
+    //  Phoenix style names    
         actor<argument<0> > const arg1  = {{{{}}}};
         actor<argument<1> > const arg2  = {{{{}}}};
         actor<argument<2> > const arg3  = {{{{}}}};
 
+    //  BLL style names
         actor<argument<0> > const _1    = {{{{}}}};
         actor<argument<1> > const _2    = {{{{}}}};
         actor<argument<2> > const _3    = {{{{}}}};
+
+    //  Bring in the rest or the Phoenix style arguments (arg4 .. argN+1)
+    //  and BLL style arguments (_4 .. _N+1), using PP
+        #define PHOENIX_DECLARE_ARG(Z, N, DATA)                                                     \
+        actor<argument<N> > const BOOST_PP_CAT(arg, BOOST_PP_INC(N))  = {{{{}}}};                   \
+        actor<argument<N> > const BOOST_PP_CAT(_, BOOST_PP_INC(N))  = {{{{}}}};                     \
+        /**/
+            
+        BOOST_PP_REPEAT_FROM_TO(3, PHOENIX_ARG_LIMIT, PHOENIX_DECLARE_ARG, _)
+        
+        #undef PHOENIX_DECLARE_ARG
     }
 
 }}

@@ -12,6 +12,7 @@ import testing ;
 project
     : requirements
         <define>BOOST_MPL_LIMIT_METAFUNCTION_ARITY=10
+        <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
     ;
 
 local multi-threading = <library>/boost/thread//boost_thread
