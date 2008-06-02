@@ -148,6 +148,33 @@
                 };
             };
 
+            #define LET_EXPR(Map, Right)                                                            \
+                proto::expr<                                                                        \
+                    tag::let_                                                                       \
+                  , proto::list2<actor<proto::expr<proto::tag::terminal, proto::term<Map> > >,Right>\
+                >                                                                                   \
+                /**/
+
+            #define LOCAL_VAR(Tag)                                                                  \
+                proto::expr<proto::tag::terminal, proto::term<local_variable<Tag> > >               \
+                /**/
+
+            #define SUB_GRAMMAR(SubGrammar, Map)                                                    \
+                proto::or_<                                                                         \
+                    /* If the current expression is a local variable declared in*/                  \
+                    /* a let() call ...*/                                                           \
+                    proto::when<                                                                    \
+                        proto::if_<is_local_variable<Map> >                                         \
+                        /* ... evaluate it using the local variable evaluator*/                     \
+                      , local_variable_evaluator                                                    \
+                    >                                                                               \
+                    /* Otherwise, defer handling of the current expression to the*/                 \
+                    /* currently active sub-grammar. This will also handle local*/                  \
+                    /* variables declared in outer let() expressions.*/                             \
+                  , SubGrammar                                                                      \
+                >                                                                                   \
+                /**/
+
             ////////////////////////////////////////////////////////////////////////////////////////
             template<typename Map, typename Callable = proto::callable>
             struct is_local_variable : proto::transform<is_local_variable<Map> >
@@ -157,13 +184,93 @@
                 {
                     typedef mpl::false_ result_type;
                 };
-                
+
                 template<typename Tag, typename State, typename Data>
-                struct impl<proto::expr<proto::tag::terminal, proto::term<local_variable<Tag> > >, State, Data>
+                struct impl<LOCAL_VAR(Tag), State, Data>
                 {
                     typedef typename fusion::result_of::has_key<Map, Tag>::type result_type;
                 };
             };
+
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //template<typename SubGrammar, typename Callable = proto::callable>
+            //struct is_let_expression
+            //  : proto::transform<is_let_expression<SubGrammar> >
+            //{
+            //    template<typename Expr, typename, typename>
+            //    struct impl
+            //    {
+            //        typedef mpl::false_ result_type;
+            //    };
+
+            //    template<typename Map, typename Right, typename State, typename Data>
+            //    struct impl<LET_EXPR(Map, Right), State, Data>
+            //    {
+            //        typedef
+            //            proto::or_<proto::if_<is_local_variable<Map> >, SubGrammar>
+            //        sub_grammar;
+
+            //        typedef
+            //            proto::matches<Right, evaluator<SUB_GRAMMAR(SubGrammar, Map) > >
+            //        result_type;
+            //    };
+
+            //    template<typename Map, typename Right, typename State, typename Data>
+            //    struct impl<LET_EXPR(Map, Right) &, State, Data>
+            //      : impl<LET_EXPR(Map, Right), State, Data>
+            //    {};
+
+            //    template<typename Map, typename Right, typename State, typename Data>
+            //    struct impl<LET_EXPR(Map, Right) const &, State, Data>
+            //      : impl<LET_EXPR(Map, Right), State, Data>
+            //    {};
+            //};
+
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //template<typename SubGrammar, typename Callable = proto::callable>
+            //struct evaluate_let_expression
+            //  : proto::transform<evaluate_let_expression<SubGrammar> >
+            //{
+            //    template<typename Expr, typename State, typename Data>
+            //    struct impl
+            //      : proto::transform_impl<Expr, State, Data>
+            //    {
+            //        typedef
+            //            typename impl::expr
+            //        expr;
+
+            //        typedef
+            //            typename expr::proto_child0::proto_base_expr::proto_child0
+            //        map_type;
+            //        
+            //        typedef
+            //            scope<map_type, typename impl::state_param, Data, SubGrammar>
+            //        scope_type;
+
+            //        typedef
+            //            typename evaluator<SUB_GRAMMAR(SubGrammar, map_type) >::template impl<
+            //                typename expr::proto_child1
+            //              , scope_type
+            //              , Data
+            //            >
+            //        evaluator_impl;
+
+            //        typedef typename evaluator_impl::result_type result_type;
+            //        
+            //        result_type operator()(
+            //            typename impl::expr_param expr
+            //          , typename impl::state_param state
+            //          , typename impl::data_param data
+            //        ) const
+            //        {
+            //            return evaluator_impl()(
+            //                expr.proto_base().child1
+            //              , scope_type(expr.proto_base().child0.proto_base().child0, state, data)
+            //              , data
+            //            );
+            //        }
+            //    };
+            //};
 
             ////////////////////////////////////////////////////////////////////////////////////////
             template<typename SubGrammar>
@@ -246,6 +353,10 @@
                     >
                 {};
             };
+
+            #undef LET_EXPR
+            #undef LOCAL_VAR
+            #undef SUB_GRAMMAR
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,6 +365,10 @@
         template<typename SubGrammar>
         struct extension<tag::let_, SubGrammar>
           : detail::with_grammar<SubGrammar>::let_extension
+          //: proto::when<
+          //      proto::if_<detail::is_let_expression<SubGrammar> >
+          //    , detail::evaluate_let_expression<SubGrammar>
+          //  >
         {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////
