@@ -28,6 +28,7 @@
     #include <boost/preprocessor.hpp>
     #include <boost/utility/result_of.hpp>
     #include <boost/fusion/include/vector.hpp>
+    #include <boost/phoenix/core/as_actor.hpp>
 
     namespace boost { namespace phoenix
     {
@@ -187,64 +188,25 @@
             {};
 
             ////////////////////////////////////////////////////////////////////////////////////////
-            // These terminal types are always stored by reference
-            template<typename Value>
-            struct storage
-            {
-                typedef
-                    typename mpl::eval_if_c<
-                        mpl::or_<
-                            is_abstract<Value>
-                          , is_function<Value>
-                          , is_base_of<std::ios_base, Value>
-                        >::type::value
-                      , add_reference<Value>
-                      , remove_const<Value>
-                    >::type
-                type;
-            };
-
-            template<typename T, std::size_t N>
-            struct storage<T[N]>
-            {
-                typedef T (&type)[N];
-            };
-
-            ////////////////////////////////////////////////////////////////////////////////////////
             // Store terminals by value, unless they are streams, arrays, functions or abstract types.
             struct generator
             {
                 template<typename Sig>
                 struct result;
 
-                template<typename This, typename Expr>
-                struct result<This(Expr)>
-                {
-                    typedef actor<typename proto::by_value_generator::result<void(Expr)>::type> type;
-                };
-
                 template<typename This, typename T>
                 struct result<This(proto::expr<proto::tag::terminal, proto::term<T &> >)>
                 {
                     typedef
                         actor<
-                            proto::expr<proto::tag::terminal, proto::term<typename storage<T>::type> >
+                            proto::expr<proto::tag::terminal, proto::term<typename storage<T>::type>, 0>
                         >
                     type;
                 };
 
-                template<typename Expr>
-                actor<typename proto::by_value_generator::result<void(Expr)>::type> const
-                operator()(Expr const &expr) const
-                {
-                    actor<typename proto::by_value_generator::result<void(Expr)>::type> that 
-                        = {proto::by_value_generator()(expr)};
-                    return that;
-                }
-
                 template<typename T>
                 actor<
-                    proto::expr<proto::tag::terminal, proto::term<typename storage<T>::type> >
+                    proto::expr<proto::tag::terminal, proto::term<typename storage<T>::type>, 0>
                 > const
                 operator()(proto::expr<proto::tag::terminal, proto::term<T &> > const &expr) const
                 {
@@ -256,6 +218,37 @@
                     > that = {{expr.child0}};
                     return that;
                 }
+
+                #if 1
+                template<typename This, typename Expr>
+                struct result<This(Expr)>
+                {
+                    typedef actor<typename proto::by_value_generator::result<void(Expr)>::type> type;
+                };
+
+                template<typename Expr>
+                actor<typename proto::by_value_generator::result<void(Expr)>::type> const
+                operator()(Expr const &expr) const
+                {
+                    actor<typename proto::by_value_generator::result<void(Expr)>::type> that 
+                        = {proto::by_value_generator()(expr)};
+                    return that;
+                }
+                #else
+                template<typename This, typename Expr>
+                struct result<This(Expr)>
+                {
+                    typedef actor<Expr> type;
+                };
+                
+                template<typename Expr>
+                actor<Expr> const
+                operator()(Expr const &expr) const
+                {
+                    actor<Expr> that = {expr};
+                    return that;
+                }
+                #endif
             };
 
             ////////////////////////////////////////////////////////////////////////////////////////
@@ -298,6 +291,39 @@
             /**/
             BOOST_PP_REPEAT_FROM_TO(1, BOOST_PP_INC(PHOENIX_LIMIT), M0, ~)
             #undef M0
+        
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename Result, typename Expr, typename Args>
+            Result evaluate(Expr &expr, Args &args, mpl::true_)
+            {
+                return evaluator<>()(expr.proto_base(), mpl::void_(), args);
+            }
+
+            template<typename Result, typename Expr, typename Args>
+            Result evaluate(Expr &, Args &, mpl::false_)
+            {
+                BOOST_ASSERT(false);
+                throw "never called";
+            }
+        
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename Result, typename Expr, typename Args>
+            Result evaluate(Expr &expr, Args &args)
+            {
+                typedef typename
+                    mpl::if_<
+                        proto::matches<Expr, evaluator<> >
+                      , VALID_LAMBDA_EXPRESSION
+                      , INVALID_LAMBDA_EXPRESSION
+                    >::type
+                IS_VALID_LAMBDA_EXPRESSION;
+
+                // If your compile breaks here, your lambda expression doesn't validate against
+                // the Phoenix lambda grammar. Go back and check your expression for well-formedness.
+                BOOST_MPL_ASSERT((IS_VALID_LAMBDA_EXPRESSION));
+
+                return detail::evaluate<Result>(expr, args, IS_VALID_LAMBDA_EXPRESSION());
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -317,20 +343,66 @@
             struct actor
             {
                 BOOST_PROTO_BASIC_EXTENDS(Expr, actor<Expr>, detail::domain)
-                BOOST_PROTO_EXTENDS_ASSIGN()
-                BOOST_PROTO_EXTENDS_SUBSCRIPT()
 
                 template<typename Sig>
                 struct result
                   : detail::result<Sig>
                 {};
+                
+                template<typename A>
+                actor<
+                    proto::expr<
+                        proto::tag::assign
+                      , proto::list2<
+                            actor<Expr>
+                          , typename as_actor<A const>::type
+                        >
+                    >
+                > const
+                operator =(A const &a) const
+                {
+                    actor<
+                        proto::expr<
+                            proto::tag::assign
+                          , proto::list2<
+                                actor<Expr>
+                              , typename as_actor<A const>::type
+                            >
+                        >
+                    > that = {{*this, as_actor<A const>::convert(a)}};
+                    return that;
+                }
+
+                template<typename A>
+                actor<
+                    proto::expr<
+                        proto::tag::subscript
+                      , proto::list2<
+                            actor<Expr>
+                          , typename as_actor<A const>::type
+                        >
+                    >
+                > const
+                operator [](A const &a) const
+                {
+                    actor<
+                        proto::expr<
+                            proto::tag::subscript
+                          , proto::list2<
+                                actor<Expr>
+                              , typename as_actor<A const>::type
+                            >
+                        >
+                    > that = {{*this, as_actor<A const>::convert(a)}};
+                    return that;
+                }
 
                 typename result<Expr const()>::type
                 operator()() const
                 {
                     typedef typename result<Expr const()>::type result_type;
                     fusion::vector0 args;
-                    return this->evaluate<result_type>(args);
+                    return detail::evaluate<result_type>(*this, args);
                 }
 
                 #define M0(Z, N, _) ((0))
@@ -349,7 +421,7 @@
                         result_type;                                                                            \
                         BOOST_PP_CAT(fusion::vector, SIZE)<BOOST_PP_SEQ_FOR_EACH_I_R(R, M5, ~, PRODUCT)> args   \
                             (BOOST_PP_SEQ_FOR_EACH_I_R(R, M6, ~, PRODUCT));                                     \
-                        return this->evaluate<result_type>(args);                                               \
+                        return detail::evaluate<result_type>(*this, args);                                      \
                     }                                                                                           \
                     /**/
 
@@ -381,38 +453,6 @@
                 #undef M4
                 #undef M5
                 #undef M6
-
-            private:
-                template<typename Result, typename Args>
-                Result evaluate(Args &args) const
-                {
-                    typedef typename
-                        mpl::if_<
-                            proto::matches<Expr, evaluator<> >
-                          , VALID_LAMBDA_EXPRESSION
-                          , INVALID_LAMBDA_EXPRESSION
-                        >::type
-                    IS_VALID_LAMBDA_EXPRESSION;
-
-                    // If your compile breaks here, your lambda expression doesn't validate against
-                    // the Phoenix lambda grammar. Go back and check your expression for well-formedness.
-                    BOOST_MPL_ASSERT((IS_VALID_LAMBDA_EXPRESSION));
-
-                    return this->evaluate<Result>(args, IS_VALID_LAMBDA_EXPRESSION());
-                }
-
-                template<typename Result, typename Args>
-                Result evaluate(Args &args, mpl::true_) const
-                {
-                    return evaluator<>()(this->proto_base(), mpl::void_(), args);
-                }
-
-                template<typename Result, typename Args>
-                Result evaluate(Args &args, mpl::false_) const
-                {
-                    BOOST_ASSERT(false);
-                    throw "never called";
-                }
             };
 
         } // namespace actorns_

@@ -1,84 +1,131 @@
-/*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+#ifndef BOOST_PP_IS_ITERATING
+    /*=============================================================================
+        Copyright (c) 2001-2007 Joel de Guzman
+        Copyright (c) 2008      Eric Niebler
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-==============================================================================*/
-#ifndef PHOENIX_OPERATOR_MEMBER_HPP_EAN_2008_05_28
-#define PHOENIX_OPERATOR_MEMBER_HPP_EAN_2008_05_28
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+    ==============================================================================*/
+    #ifndef PHOENIX_OPERATOR_MEMBER_HPP_EAN_2008_05_28
+    #define PHOENIX_OPERATOR_MEMBER_HPP_EAN_2008_05_28
 
-#include <boost/ref.hpp>
-#include <boost/type_traits/is_member_object_pointer.hpp>
-#include <boost/type_traits/is_member_function_pointer.hpp>
-#include <boost/phoenix/core/actor.hpp>
-#include <boost/fusion/include/push_front.hpp>
-#include <boost/fusion/include/as_vector.hpp>
-#include <boost/proto/proto.hpp>
+    #include <boost/ref.hpp>
+    #include <boost/preprocessor.hpp>
+    #include <boost/type_traits/is_member_function_pointer.hpp>
+    #include <boost/phoenix/core/actor.hpp>
+    #include <boost/proto/proto.hpp>
 
-namespace boost { namespace phoenix
-{
-    namespace detail
+    #if !defined(PHOENIX_MEMBER_LIMIT)
+    #define PHOENIX_MEMBER_LIMIT BOOST_PP_SUB(PHOENIX_LIMIT, 2)
+    #endif
+
+    namespace boost { namespace phoenix
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        template<typename SubGrammar, typename Callable = proto::callable>
-        struct bind_mem_ptr
-          : proto::transform<bind_mem_ptr<SubGrammar> >
+        namespace detail
         {
-            template<typename Expr, typename State, typename Data>
-            struct impl
-              : proto::transform_impl<Expr, State, Data>
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename Object, typename MemPtr>
+            struct mem_ptr_gen
             {
-                typedef typename
-                    proto::result_of::unpack_expr<
-                        proto::tag::function
-                      , domain
-                      , typename fusion::result_of::as_vector<
-                            typename fusion::result_of::push_front<
-                                typename fusion::result_of::push_front<
-                                    typename impl::data
-                                  , typename proto::result_of::left<Expr>::type
-                                >::type
-                              , typename proto::result_of::right<Expr>::type
-                            >::type
-                        >::type
-                    >::type
-                result_type;
+                mem_ptr_gen(Object const &obj, MemPtr const &ptr)
+                  : obj(obj)
+                  , ptr(ptr)
+                {}
 
-                result_type operator()(
-                    typename impl::expr_param expr
-                  , typename impl::state_param
-                  , typename impl::data_param data
-                ) const
+                ////////////////////////////////////////////////////////////////////////////////////
+                actor<typename proto::function<MemPtr, Object>::type> const
+                operator()() const
                 {
-                    return proto::unpack_expr<proto::tag::function, domain>(
-                        fusion::as_vector(
-                            fusion::push_front(
-                                fusion::push_front(
-                                    data
-                                  , boost::ref(proto::left(expr))
-                                )
-                              , boost::ref(proto::right(expr))
-                            )
+                    typedef
+                        typename proto::function<MemPtr, Object>::type
+                    expr_type;
+
+                    return actor<expr_type>::make(
+                        expr_type::make(
+                            this->ptr
+                          , this->obj
                         )
                     );
                 }
+
+                #define M0(Z, N, DATA)                                                              \
+                    typename as_actor<BOOST_PP_CAT(A, N) const>::type                               \
+                    /**/
+
+                #define M1(Z, N, DATA)                                                              \
+                    as_actor<BOOST_PP_CAT(A, N) const>::convert(BOOST_PP_CAT(a, N))                 \
+                    /**/
+
+                #define BOOST_PP_ITERATION_PARAMS_1                                                 \
+                    (3, (1, PHOENIX_MEMBER_LIMIT, <boost/phoenix/operator/member.hpp>))             \
+                    /**/
+
+                #include BOOST_PP_ITERATE()
+
+                #undef M0
+                #undef M1
+
+            private:
+                Object obj;
+                MemPtr ptr;
             };
-        };
-    }
+        }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    template<typename SubGrammar>
-    struct extension<proto::tag::mem_ptr, SubGrammar>
-      : proto::when<
-            proto::mem_ptr<evaluator<SubGrammar>, proto::terminal<proto::_> >
-          , proto::if_<
-                is_member_function_pointer<proto::_value(proto::_right)>()
-              , detail::bind_mem_ptr<SubGrammar>
-              , proto::_default<evaluator<SubGrammar> >
-            >
-        >
-    {};
+        namespace actorns_
+        {
+            ////////////////////////////////////////////////////////////////////////////////////////
+            // This operator overload is preferred to Proto's when the second parameter
+            // is a member function pointer. If it is a member object pointer, Proto's
+            // default handling will do the right thing.
+            template<typename Object, typename MemPtr>
+            typename enable_if<
+                is_member_function_pointer<MemPtr>
+              , detail::mem_ptr_gen<actor<Object>, typename proto::terminal<MemPtr>::type> const
+            >::type
+            operator->*(actor<Object> const &obj, MemPtr ptr)
+            {
+                typedef typename proto::terminal<MemPtr>::type mem_ptr_type;
+                return detail::mem_ptr_gen<actor<Object>, mem_ptr_type>(obj, mem_ptr_type::make(ptr));
+            }
 
-}}
+        } // namespace actorns_
+
+    }}
+
+    #endif
+
+#else
+
+    #define N BOOST_PP_ITERATION()
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        template<BOOST_PP_ENUM_PARAMS(N, typename A)>
+        actor<
+            typename proto::function<
+                MemPtr
+              , Object
+                BOOST_PP_ENUM_TRAILING(N, M0, ~)
+            >::type
+        > const
+        operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const &a)) const
+        {
+            typedef
+                typename proto::function<
+                    MemPtr
+                  , Object
+                    BOOST_PP_ENUM_TRAILING(N, M0, ~)
+                >::type
+            expr_type;
+
+            return actor<expr_type>::make(
+                expr_type::make(
+                    this->ptr
+                  , this->obj
+                    BOOST_PP_ENUM_TRAILING(N, M1, ~)
+                )
+            );
+        }
+
+    #undef N
 
 #endif
