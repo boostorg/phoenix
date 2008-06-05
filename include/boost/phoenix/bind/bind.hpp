@@ -9,7 +9,14 @@
     #ifndef BOOST_PHOENIX_BIND_BIND_HPP_EAN_2008_05_21
     #define BOOST_PHOENIX_BIND_BIND_HPP_EAN_2008_05_21
 
-    #include <boost/preprocessor.hpp>
+    #include <boost/preprocessor/arithmetic/sub.hpp>
+    #include <boost/preprocessor/arithmetic/dec.hpp>
+    #include <boost/preprocessor/iteration/iterate.hpp>
+    #include <boost/preprocessor/facilities/intercept.hpp>
+    #include <boost/preprocessor/punctuation/comma_if.hpp>
+    #include <boost/preprocessor/repetition/enum_shifted_params.hpp>
+    #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+    #include <boost/preprocessor/repetition/enum_shifted_binary_params.hpp>
     #include <boost/mpl/if.hpp>
     #include <boost/mpl/and.hpp>
     #include <boost/mpl/not.hpp>

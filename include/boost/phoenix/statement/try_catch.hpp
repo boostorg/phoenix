@@ -8,7 +8,6 @@
 #ifndef BOOST_PHOENIX_TRY_CATCH_HPP_EAN_2008_05_18
 #define BOOST_PHOENIX_TRY_CATCH_HPP_EAN_2008_05_18
 
-#include <boost/preprocessor.hpp>
 #include <boost/ref.hpp>
 #include <boost/proto/proto.hpp>
 #include <boost/phoenix/core/actor.hpp>

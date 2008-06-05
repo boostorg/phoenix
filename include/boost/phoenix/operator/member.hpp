@@ -9,8 +9,13 @@
     #ifndef PHOENIX_OPERATOR_MEMBER_HPP_EAN_2008_05_28
     #define PHOENIX_OPERATOR_MEMBER_HPP_EAN_2008_05_28
 
+    #include <boost/preprocessor/cat.hpp>
+    #include <boost/preprocessor/iteration/iterate.hpp>
+    #include <boost/preprocessor/arithmetic/sub.hpp>
+    #include <boost/preprocessor/repetition/enum_params.hpp>
+    #include <boost/preprocessor/repetition/enum_trailing.hpp>
+    #include <boost/preprocessor/repetition/enum_binary_params.hpp>
     #include <boost/ref.hpp>
-    #include <boost/preprocessor.hpp>
     #include <boost/type_traits/is_member_function_pointer.hpp>
     #include <boost/phoenix/core/actor.hpp>
     #include <boost/proto/proto.hpp>

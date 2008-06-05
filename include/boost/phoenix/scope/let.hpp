@@ -9,7 +9,11 @@
     #ifndef BOOST_PHOENIX_SCOPE_LET_HPP_EAN_2008_05_21
     #define BOOST_PHOENIX_SCOPE_LET_HPP_EAN_2008_05_21
 
-    #include <boost/preprocessor.hpp>
+    #include <boost/preprocessor/cat.hpp>
+    #include <boost/preprocessor/iteration/iterate.hpp>
+    #include <boost/preprocessor/repetition/enum.hpp>
+    #include <boost/preprocessor/repetition/enum_params.hpp>
+    #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
     #include <boost/fusion/include/map.hpp>
     #include <boost/fusion/include/fold.hpp>
     #include <boost/fusion/include/pair.hpp>

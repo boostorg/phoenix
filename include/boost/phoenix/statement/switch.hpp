@@ -8,7 +8,16 @@
     #ifndef BOOST_PHOENIX_SWITCH_HPP_EAN_2008_05_10
     #define BOOST_PHOENIX_SWITCH_HPP_EAN_2008_05_10
 
-    #include <boost/preprocessor.hpp>
+    #include <boost/preprocessor/cat.hpp>
+    #include <boost/preprocessor/arithmetic/inc.hpp>
+    #include <boost/preprocessor/arithmetic/sub.hpp>
+    #include <boost/preprocessor/iteration/iterate.hpp>
+    #include <boost/preprocessor/repetition/repeat.hpp>
+    #include <boost/preprocessor/repetition/enum.hpp>
+    #include <boost/preprocessor/repetition/enum_params.hpp>
+    #include <boost/preprocessor/repetition/enum_trailing.hpp>
+    #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+    #include <boost/preprocessor/repetition/enum_trailing_binary_params.hpp>
     #include <boost/proto/proto.hpp>
     #include <boost/phoenix/core/actor.hpp>
 

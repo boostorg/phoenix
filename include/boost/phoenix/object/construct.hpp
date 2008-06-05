@@ -9,6 +9,9 @@
     #ifndef BOOST_PHOENIX_OBJECT_CONSTRUCT_HPP_EAN_2008_05_21
     #define BOOST_PHOENIX_OBJECT_CONSTRUCT_HPP_EAN_2008_05_21
 
+    #include <boost/preprocessor/iteration/iterate.hpp>
+    #include <boost/preprocessor/repetition/enum_params.hpp>
+    #include <boost/preprocessor/repetition/enum_binary_params.hpp>
     #include <boost/proto/proto.hpp>
     #include <boost/phoenix/core/actor.hpp>
 

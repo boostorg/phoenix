@@ -8,7 +8,9 @@
 #define BOOST_PHOENIX_ARGUMENT_HPP_EAN_2008_05_10
 
 #include <iosfwd>
-#include <boost/preprocessor.hpp>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/arithmetic/inc.hpp>
+#include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/next_prior.hpp>

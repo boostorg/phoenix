@@ -25,13 +25,32 @@
     #include <boost/type_traits/is_base_of.hpp>
     #include <boost/type_traits/add_reference.hpp>
     #include <boost/type_traits/remove_const.hpp>
-    #include <boost/preprocessor.hpp>
+    #include <boost/preprocessor/cat.hpp>
+    #include <boost/preprocessor/arithmetic/inc.hpp>
+    #include <boost/preprocessor/arithmetic/sub.hpp>
+    #include <boost/preprocessor/iteration/iterate.hpp>
+    #include <boost/preprocessor/repetition/repeat.hpp>
+    #include <boost/preprocessor/repetition/repeat_from_to.hpp>
+    #include <boost/preprocessor/repetition/enum_params.hpp>
+    #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+    #include <boost/preprocessor/punctuation/comma_if.hpp>
+    #include <boost/preprocessor/seq/size.hpp>
+    #include <boost/preprocessor/seq/for_each_i.hpp>
+    #include <boost/preprocessor/seq/for_each_product.hpp>
     #include <boost/utility/result_of.hpp>
     #include <boost/fusion/include/vector.hpp>
     #include <boost/phoenix/core/as_actor.hpp>
 
     namespace boost { namespace phoenix
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        template<typename Value, typename SubGrammar>
+        struct terminal_extension;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        template<typename Value, typename SubGrammar>
+        struct is_terminal_nullary;
+
         namespace detail
         {
             ////////////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +84,66 @@
                     }
                 };
             };
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar, typename Callable = proto::callable>
+            struct is_terminal_nullary_impl
+              : proto::transform<is_terminal_nullary_impl<SubGrammar> >
+            {
+                template<typename Expr, typename, typename>
+                struct impl
+                {
+                    typedef
+                        typename remove_reference<Expr>::type
+                    expr;
+
+                    typedef
+                        typename expr::proto_child0
+                    value_type;
+                    
+                    typedef
+                        typename is_terminal_nullary<value_type, SubGrammar>::type
+                    result_type;
+                };
+            };
+            
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar, typename Callable = proto::callable>
+            struct is_valid_terminal_impl
+              : proto::transform<is_valid_terminal_impl<SubGrammar> >
+            {
+                template<typename Expr, typename, typename>
+                struct impl
+                {
+                    typedef
+                        typename remove_reference<Expr>::type
+                    expr;
+
+                    typedef
+                        typename expr::proto_child0
+                    value_type;
+
+                    typedef
+                        typename proto::matches<Expr, terminal_extension<value_type, SubGrammar> >::type
+                    result_type;
+                };
+            };
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            template<typename SubGrammar, typename Callable = proto::callable>
+            struct terminal_extension_impl
+              : proto::transform<is_terminal_nullary_impl<SubGrammar> >
+            {
+                typedef proto::if_<is_valid_terminal_impl<SubGrammar> > proto_base_expr;
+                
+                template<typename Expr, typename State, typename Visitor>
+                struct impl
+                  : terminal_extension<
+                        typename remove_reference<Expr>::type::proto_child0
+                      , SubGrammar
+                    >::template impl<Expr, State, Visitor>
+                {};
+            };
         }
 
         using detail::evaluator;
@@ -79,10 +158,30 @@
           : proto::otherwise<detail::terminal_evaluator>
         {};
 
+        template<typename Value, typename SubGrammar>
+        struct terminal_extension<Value const, SubGrammar>
+          : terminal_extension<Value, SubGrammar>
+        {};
+
+        template<typename Value, typename SubGrammar>
+        struct terminal_extension<Value &, SubGrammar>
+          : terminal_extension<Value, SubGrammar>
+        {};
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         template<typename Value, typename SubGrammar>
         struct is_terminal_nullary
           : mpl::true_
+        {};
+
+        template<typename Value, typename SubGrammar>
+        struct is_terminal_nullary<Value const, SubGrammar>
+          : is_terminal_nullary<Value, SubGrammar>
+        {};
+
+        template<typename Value, typename SubGrammar>
+        struct is_terminal_nullary<Value &, SubGrammar>
+          : is_terminal_nullary<Value, SubGrammar>
         {};
 
         namespace actorns_
@@ -125,13 +224,13 @@
         template<typename SubGrammar>
         struct is_nullary_cases
         {
-        private:
-            template<typename T>
-            struct is_terminal_nullary_local
-              : is_terminal_nullary<T, SubGrammar>
-            {};
+        //private:
+        //    template<typename Value>
+        //    struct is_terminal_nullary_local
+        //      : is_terminal_nullary<Value, SubGrammar>
+        //    {};
 
-        public:
+        //public:
             template<typename Tag, typename X = void>
             struct case_
               : is_nullary_extension<Tag, SubGrammar>
@@ -139,7 +238,8 @@
 
             template<typename X>
             struct case_<proto::tag::terminal, X>
-              : proto::if_<is_terminal_nullary_local<proto::_value>()>
+              //: proto::if_<is_terminal_nullary_local<proto::_value>()>
+              : proto::if_<detail::is_terminal_nullary_impl<SubGrammar> >
             {};
         };
 
@@ -149,13 +249,13 @@
             template<typename SubGrammar = detail::no_sub_grammar>
             struct evaluator_cases
             {
-            private:
-                template<typename Value>
-                struct terminal_extension_local
-                  : terminal_extension<Value, SubGrammar>
-                {};
+            //private:
+            //    template<typename Value>
+            //    struct terminal_extension_local
+            //      : terminal_extension<Value, SubGrammar>
+            //    {};
 
-            public:
+            //public:
                 template<typename Tag, typename X = void>
                 struct case_
                   : phoenix::extension<Tag, SubGrammar>
@@ -163,12 +263,13 @@
 
                 template<typename X>
                 struct case_<proto::tag::terminal, X>
-                  : proto::when<
-                        proto::if_<
-                            proto::matches<proto::_, terminal_extension_local<proto::_value>()>()
-                        >
-                      , proto::lazy<terminal_extension_local<proto::_value> >
-                    >
+                  : detail::terminal_extension_impl<SubGrammar>
+                  //: proto::when<
+                  //      proto::if_<
+                  //          proto::matches<proto::_, terminal_extension_local<proto::_value>()>()
+                  //      >
+                  //    , proto::lazy<terminal_extension_local<proto::_value> >
+                  //  >
                 {};
             };
 
