@@ -7,9 +7,6 @@
 #ifndef PHOENIX_CORE_LIMITS_HPP
 #define PHOENIX_CORE_LIMITS_HPP
 
-#include <boost/preprocessor/selection/min.hpp>
-#include <boost/preprocessor/selection/max.hpp>
-
 #if !defined(PHOENIX_LIMIT)
 # define PHOENIX_LIMIT 10
 #endif
@@ -35,7 +32,11 @@
 #endif
 
 #if !defined(BOOST_PROTO_MAX_FUNCTION_CALL_ARITY)
-# define BOOST_PROTO_MAX_FUNCTION_CALL_ARITY BOOST_PP_MIN(PHOENIX_LIMIT, 6)
+# if PHOENIX_LIMIT < 6
+#  define BOOST_PROTO_MAX_FUNCTION_CALL_ARITY PHOENIX_LIMIT
+# else
+#  define BOOST_PROTO_MAX_FUNCTION_CALL_ARITY 6
+# endif
 #endif
 
 #if defined(BOOST_PROTO_MAX_ARITY)
@@ -43,7 +44,11 @@
 #  error BOOST_PROTO_MAX_ARITY must be at least as large as PHOENIX_LIMIT
 # endif
 #else
-# define BOOST_PROTO_MAX_ARITY BOOST_PP_MAX(PHOENIX_LIMIT, 5)
+# if PHOENIX_LIMIT > 5
+#  define BOOST_PROTO_MAX_ARITY PHOENIX_LIMIT
+# else
+#  define BOOST_PROTO_MAX_ARITY 5
+# endif
 #endif
 
 #if defined(BOOST_MPL_LIMIT_METAFUNCTION_ARITY)
@@ -51,7 +56,11 @@
 #  error BOOST_MPL_LIMIT_METAFUNCTION_ARITY must be at least as large as PHOENIX_LIMIT
 # endif
 #else
-# define BOOST_MPL_LIMIT_METAFUNCTION_ARITY BOOST_PP_MAX(PHOENIX_LIMIT, 5)
+# if PHOENIX_LIMIT > 5
+#  define BOOST_MPL_LIMIT_METAFUNCTION_ARITY PHOENIX_LIMIT
+# else
+#  define BOOST_MPL_LIMIT_METAFUNCTION_ARITY 5
+# endif
 #endif
 
 //// this include will bring in mpl::vectorN and

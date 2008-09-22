@@ -46,7 +46,7 @@
         >::type const
         bind(Fun const &fun)
         {
-            return proto::implicit_expr(fun);
+            return proto::make_expr<proto::tag::function, detail::domain>(boost::ref(fun));
         }
 
         #define BOOST_PP_ITERATION_PARAMS_1                                             \

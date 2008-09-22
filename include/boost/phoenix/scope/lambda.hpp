@@ -104,8 +104,8 @@
         struct extension<tag::lambda_, SubGrammar>
           : proto::when<
                 proto::unary_expr<tag::lambda_, evaluator<SubGrammar> >
-              , proto::_make_expr<tag::with_state, detail::domain>(
-                    proto::call<proto::_make_expr<proto::tag::terminal, detail::domain>(proto::_byval(proto::_state))>
+              , proto::functional::make_expr<tag::with_state, detail::domain>(
+                    proto::call<proto::functional::make_expr<proto::tag::terminal, detail::domain>(proto::_byval(proto::_state))>
                   , proto::_child
                 )
             >
