@@ -87,7 +87,9 @@ namespace boost { namespace phoenix
     struct extension<tag::byval, SubGrammar>
       : proto::when<
             proto::unary_expr<tag::byval, evaluator<SubGrammar> >
-          , remove_reference<evaluator<SubGrammar>(proto::_child)>(evaluator<SubGrammar>(proto::_child))
+          , remove_reference<evaluator<SubGrammar>(proto::_child)>(
+                proto::call<evaluator<SubGrammar>(proto::_child)>
+            )
         >
     {};
 

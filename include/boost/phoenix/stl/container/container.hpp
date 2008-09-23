@@ -8,6 +8,8 @@
 #ifndef PHOENIX_STL_CONTAINER_CONTAINER_HPP
 #define PHOENIX_STL_CONTAINER_CONTAINER_HPP
 
+#include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
 #include <boost/phoenix/core/limits.hpp>
 
 #if (PHOENIX_LIMIT < 5)
@@ -329,7 +331,7 @@ namespace boost { namespace phoenix
                 typedef
                     boost::mpl::eval_if<
                         boost::is_same<arg1, typename iterator_of<container>::type>
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1400)
+#if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, <= 313) || (0 == _HAS_STRICT_CONFORMANCE)
                       , iterator_of<container>
 #else
                       , boost::mpl::identity<void>
