@@ -7,6 +7,17 @@
 #ifndef PHOENIX_CORE_HPP
 #define PHOENIX_CORE_HPP
 
-#include <boost/spirit/home/phoenix/version.hpp>
+#include <boost/proto/proto.hpp>
+
+#include <boost/phoenix/version.hpp>
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/as_actor.hpp>
+#include <boost/phoenix/core/is_actor.hpp>
+#include <boost/phoenix/core/argument.hpp>
+#include <boost/phoenix/core/value.hpp>
+#include <boost/phoenix/core/reference.hpp>
+#include <boost/phoenix/core/nothing.hpp>
+//#include <boost/phoenix/core/extension.hpp>
 
 #endif
