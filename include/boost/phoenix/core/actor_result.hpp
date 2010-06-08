@@ -9,19 +9,32 @@
 #define PHOENIX_CORE_ACTOR_RESULT_HPP
 
 #include <boost/phoenix/core/meta_grammar.hpp>
-#include <boost/fusion/container/vector.hpp>
+#include <boost/fusion/container/vector/vector10.hpp>
+#include <boost/utility/result_of.hpp>
+
+#include <boost/mpl/void.hpp>
 
 namespace boost { namespace phoenix
 {
     ////////////////////////////////////////////////////////////////////////////
     // Return type computation 
     ////////////////////////////////////////////////////////////////////////////
-    template<class Sig>
+    template<typename Sig>
     struct actor_result;
 
-    template <template Actor, template A0>
+    template <typename Actor>
+    struct actor_result<Actor()>
+      : boost::result_of<eval_grammar(Actor&, fusion::vector0<>&)>
+    {};
+
+    template <typename Actor, typename A0>
     struct actor_result<Actor(A0)>
-      : boost::result_of<eval_grammar(Actor&, fusion::vector<A0>&)>
+      : boost::result_of<eval_grammar(Actor&, fusion::vector1<A0>&)>
+    {};
+
+    template <typename Actor, typename A0, typename A1>
+    struct actor_result<Actor(A0, A1)>
+      : boost::result_of<eval_grammar(Actor&, fusion::vector2<A0, A1>&)>
     {};
     
     /*... more ...*/

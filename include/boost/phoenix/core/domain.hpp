@@ -8,7 +8,10 @@
 #ifndef PHOENIX_CORE_DOMAIN_HPP
 #define PHOENIX_CORE_DOMAIN_HPP
 
-#include <boost/proto/proto.hpp>
+#include <boost/proto/proto_fwd.hpp>
+#include <boost/proto/domain.hpp>
+#include <boost/proto/generate.hpp>
+#include <boost/proto/matches.hpp>
 
 namespace boost { namespace phoenix
 {
