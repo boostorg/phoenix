@@ -16,7 +16,7 @@ namespace boost { namespace phoenix
 //      Tests if T is an actor. Evaluates to mpl::true_ or mpl::false_
 //
 ///////////////////////////////////////////////////////////////////////////////
-    template <typename T>
+    template <typename T, typename Enable = void>
     struct is_actor : mpl::false_ {};
 
     template <typename Expr>

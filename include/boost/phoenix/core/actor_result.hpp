@@ -19,7 +19,7 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////
     // Return type computation 
     ////////////////////////////////////////////////////////////////////////////
-    template<typename Sig>
+    template <typename Sig, typename Enable = void>
     struct actor_result;
 
     template <typename Actor>

@@ -42,6 +42,7 @@ namespace boost { namespace phoenix
                 , env>::type
             base_type;
         typedef Actor<base_type> result_type;
+        typedef result_type type;
 
         result_type
         operator()() const
@@ -63,6 +64,7 @@ namespace boost { namespace phoenix
                 , A0>::type
             base_type;
         typedef Actor<base_type> result_type;
+        typedef result_type type;
 
         result_type
         operator()( typename call_traits<A0>::param_type a0 ) const
@@ -72,7 +74,8 @@ namespace boost { namespace phoenix
         }
     };
 
-    template<typename F, template<typename> class Actor, typename A0, typename A1>
+    template<typename F, template<typename> class Actor, 
+        typename A0, typename A1>
     struct as_actor<F, Actor, A0, A1>
     {
         typedef
@@ -85,16 +88,20 @@ namespace boost { namespace phoenix
                 , A1>::type
             base_type;
         typedef Actor<base_type> result_type;
+        typedef result_type type;
 
         result_type
-        operator()( typename call_traits<A0>::param_type a0, typename call_traits<A1>::param_type a1 ) const
+        operator()( 
+            typename call_traits<A0>::param_type a0, 
+            typename call_traits<A1>::param_type a1) const
         {
             actor<base_type> const e = {{funcwrap<F>(), env(), a0, a1}};
             return e;
         }
     };
 
-    template<typename F, template<typename> class Actor, typename A0, typename A1, typename A2>
+    template <typename F, template<typename> class Actor, 
+        typename A0, typename A1, typename A2>
     struct as_actor<F, Actor, A0, A1, A2>
     {
         typedef
@@ -108,9 +115,13 @@ namespace boost { namespace phoenix
                 , A2>::type
             base_type;
         typedef Actor<base_type> result_type;
+        typedef result_type type;
 
         result_type
-        operator()( typename call_traits<A0>::param_type a0, typename call_traits<A1>::param_type a1, typename call_traits<A2>::param_type a2) const
+        operator()( 
+            typename call_traits<A0>::param_type a0, 
+            typename call_traits<A1>::param_type a1, 
+            typename call_traits<A2>::param_type a2) const
         {
             actor<base_type> const e = {{funcwrap<F>(), env(), a0, a1, a2}};
             return e;
@@ -120,33 +131,37 @@ namespace boost { namespace phoenix
 }}
 
 /*
-#define BOOST_PP_LOCAL_MACRO( N )                                                                             \
-    namespace boost { namespace phoenix                                                                       \
-    {                                                                                                         \
-        template<typename F, template<typename> class Actor                                                         \
-            BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)>                                                        \
-        struct as_actor<F, Actor BOOST_PP_ENUM_TRAILING_PARAMS(N, A)>                                        \
-        {                                                                                                     \
-            typedef                                                                                           \
-                typename proto::result_of::make_expr<                                                         \
-                      proto::tag::function                                                                    \
-                    , proto::default_domain                                                                   \
-                    , funcwrap< F >                                                                           \
-                    , env BOOST_PP_ENUM_TRAILING_PARAMS(N, A)                                                 \
-                    >::type                                                                                   \
-                base_type;                                                                                    \
-                                                                                                              \
-                typedef Actor<base_type> result_type;                                                         \
-                                                                                                              \
-                result_type                                                                                   \
-                operator()(                                                                                   \
-                    BOOST_PP_ENUM_BINARY_PARAMS(N, typename call_traits< A, >::param_type a)) const           \
-                {                                                                                             \
-                    actor<base_type> const e = {{funcwrap< F >(), env() BOOST_PP_ENUM_TRAILING_PARAMS(N, a)}};\
-                    return e;                                                                                 \
-                }                                                                                             \
-        };                                                                                                    \
-    }}
+#define BOOST_PP_LOCAL_MACRO( N )                                               \
+namespace boost { namespace phoenix                                             \
+{                                                                               \
+    template<typename F, template<typename> class Actor                         \
+        BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)>                           \
+    struct as_actor<F, Actor BOOST_PP_ENUM_TRAILING_PARAMS(N, A)>               \
+    {                                                                           \
+        typedef                                                                 \
+            typename proto::result_of::make_expr<                               \
+                  proto::tag::function                                          \
+                , proto::default_domain                                         \
+                , funcwrap< F >                                                 \
+                , env BOOST_PP_ENUM_TRAILING_PARAMS(N, A)                       \
+                >::type                                                         \
+            base_type;                                                          \
+                                                                                \
+            typedef Actor<base_type> result_type;                               \
+            typedef result_type type;                                           \
+                                                                                \
+            result_type                                                         \
+            operator()(                                                         \
+                BOOST_PP_ENUM_BINARY_PARAMS(N,                                  \
+                    typename call_traits< A, >::param_type a)) const            \
+            {                                                                   \
+                actor<base_type> const e = {{                                   \
+                    funcwrap< F >(), env() BOOST_PP_ENUM_TRAILING_PARAMS(N, a)  \
+                }};                                                             \
+                return e;                                                       \
+            }                                                                   \
+    };                                                                          \
+}}
 
 #define BOOST_PP_LOCAL_LIMITS ( 0, 3 )
 #include BOOST_PP_LOCAL_ITERATE()

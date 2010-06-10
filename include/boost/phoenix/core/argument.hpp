@@ -12,6 +12,7 @@
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/as_actor.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/environment.hpp>
 
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 
@@ -22,41 +23,48 @@
 namespace boost { namespace phoenix
 {
     // function for evaluating argument placeholders like: _1
-    struct argument
+    
+    namespace result_of
     {
-        template<typename N, template<typename> class Actor = actor >
-        struct as_actor : boost::phoenix::as_actor<argument, Actor, N>
-        {};
-
-        template<typename Signature>
-        struct result;
-
-        template<typename This, typename Env, typename N>
-        struct result<This(Env &, N &)>
-            : fusion::result_of::at<
+        template <typename Env, typename N>
+        struct argument
+            : result_of::get_environment_argument<
                 Env, typename boost::result_of<eval_grammar(N)>::type>
         {};
+    }
+    
+    struct argument
+    {
+        template <typename Signature>
+        struct result;
 
-        template<typename Env, typename N>
-        typename boost::result_of<argument(Env &, N &)>::type
-        operator()(Env & env, N &) const
+        template <typename This, typename Env, typename N>
+        struct result<This(Env&, N&)>
+            : result_of::argument<Env, N>
+        {};
+
+        template <typename Env, typename N>
+        typename result_of::argument<Env, N>::type
+        operator()(Env& env, N& n) const
         {
-            return fusion::at<
-                typename boost::result_of<eval_grammar(N)>::type>(env);
+            return get_environment_argument()(env, eval(n));
         }
     };
+    
+    template <typename N>
+    struct make_argument : boost::phoenix::as_actor<argument, actor, N> {};
 
     namespace placeholders
     {
     //  Phoenix style names
-        argument::as_actor<mpl::int_<0> >::result_type const arg1 = {};
-        argument::as_actor<mpl::int_<1> >::result_type const arg2 = {};
-        argument::as_actor<mpl::int_<2> >::result_type const arg3 = {};
+        make_argument<mpl::int_<0> >::type const arg1 = {};
+        make_argument<mpl::int_<1> >::type const arg2 = {};
+        make_argument<mpl::int_<2> >::type const arg3 = {};
 
     //  BLL style names
-        argument::as_actor<mpl::int_<0> >::result_type const _1 = {};
-        argument::as_actor<mpl::int_<1> >::result_type const _2 = {};
-        argument::as_actor<mpl::int_<2> >::result_type const _3 = {};
+        make_argument<mpl::int_<0> >::type const _1 = {};
+        make_argument<mpl::int_<1> >::type const _2 = {};
+        make_argument<mpl::int_<2> >::type const _3 = {};
     }
 
     namespace arg_names
