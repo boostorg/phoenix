@@ -9,7 +9,7 @@
 #define PHOENIX_STATEMENT_IF_HPP
 
 #include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/as_actor.hpp>
+#include <boost/phoenix/core/compose.hpp>
 
 #include <boost/phoenix/support/element_at.hpp>
 
@@ -54,7 +54,7 @@ namespace boost { namespace phoenix
     struct else_gen
     {
         template<typename Else>
-        struct as_actor : phoenix::as_actor<if_else_eval, actor, Cond, Then, Else>
+        struct compose : phoenix::compose<if_else_eval, Cond, Then, Else>
         {};
 
         else_gen(Cond const & cond, Then const & then)
@@ -62,10 +62,10 @@ namespace boost { namespace phoenix
             , then( then ) {}
 
         template<typename Else>
-        typename as_actor< Else >::result_type
+        typename compose< Else >::result_type
         operator[](Else const & else_) const
         {
-            return as_actor< Else >()(cond, then, else_);
+            return compose< Else >()(cond, then, else_);
         }
 
         Cond const & cond;
@@ -95,17 +95,17 @@ namespace boost { namespace phoenix
     struct if_gen
     {
         template<typename Then>
-        struct as_actor : phoenix::as_actor<if_eval, if_actor, Cond, Then>
+        struct compose : phoenix::compose_ex<if_eval, if_actor, Cond, Then>
         {};
 
         if_gen(Cond const & cond)
             : cond( cond ) {}
 
         template<typename Then>
-        typename as_actor<Then>::result_type
+        typename compose<Then>::result_type
         operator[](Then const & then) const
         {
-            return as_actor<Then>()(cond, then);
+            return compose<Then>()(cond, then);
         }
 
         Cond const & cond;

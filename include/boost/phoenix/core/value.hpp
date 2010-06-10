@@ -9,7 +9,7 @@
 #define PHOENIX_CORE_VALUE_HPP
 
 #include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/as_actor.hpp>
+#include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/utility/result_of.hpp>
 
@@ -23,7 +23,7 @@ namespace boost { namespace phoenix
     struct value
     {
         template<typename T>
-        struct as_actor : phoenix::as_actor<value, actor, T>
+        struct compose : phoenix::compose<value, T>
         {};
 
         template<typename Sig>
@@ -43,10 +43,10 @@ namespace boost { namespace phoenix
     };
 
     template<typename T>
-    typename value::as_actor<T>::result_type
+    typename value::compose<T>::result_type
     val(T const & t )
     {
-        return value::as_actor<T>()(t);
+        return value::compose<T>()(t);
     }
 
 }}

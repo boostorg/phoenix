@@ -10,7 +10,7 @@
 #define PHOENIX_CORE_ARGUMENT_HPP
 
 #include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/as_actor.hpp>
+#include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/environment.hpp>
 
@@ -22,8 +22,14 @@
 
 namespace boost { namespace phoenix
 {
-    // function for evaluating argument placeholders like: _1
-    
+    ////////////////////////////////////////////////////////////////////////////
+    //
+    //  argument
+    //
+    //      function for evaluating argument placeholders like: _1
+    //
+    ////////////////////////////////////////////////////////////////////////////
+
     namespace result_of
     {
         template <typename Env, typename N>
@@ -35,7 +41,7 @@ namespace boost { namespace phoenix
     
     struct argument
     {
-        template <typename Signature>
+        template <typename Sig>
         struct result;
 
         template <typename This, typename Env, typename N>
@@ -52,7 +58,7 @@ namespace boost { namespace phoenix
     };
     
     template <typename N>
-    struct make_argument : boost::phoenix::as_actor<argument, actor, N> {};
+    struct make_argument : boost::phoenix::compose<argument, N> {};
 
     namespace placeholders
     {

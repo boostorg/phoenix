@@ -9,7 +9,7 @@
 #define PHOENIX_CORE_REFERENCE_HPP
 
 #include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/as_actor.hpp>
+#include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/utility/result_of.hpp>
 
@@ -23,7 +23,7 @@ namespace boost { namespace phoenix
     struct reference
     {
         template<typename T>
-        struct as_actor : phoenix::as_actor<reference, actor, T &>
+        struct compose : phoenix::compose<reference, T&>
         {};
 
         template<typename Sig>
@@ -43,17 +43,17 @@ namespace boost { namespace phoenix
     };
 
     template<typename T>
-    typename reference::as_actor<T>::result_type
+    typename reference::compose<T>::result_type
     ref(T & t)
     {
-        return reference::as_actor<T>()(t);
+        return reference::compose<T>()(t);
     }
 
     template<typename T>
-    typename reference::as_actor<T const>::result_type
+    typename reference::compose<T const>::result_type
     cref(T & t)
     {
-        return reference::as_actor<T const>()(t);
+        return reference::compose<T const>()(t);
     }
 
 }}

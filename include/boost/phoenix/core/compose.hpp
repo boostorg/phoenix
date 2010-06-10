@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_AS_ACTOR_HPP
-#define PHOENIX_CORE_AS_ACTOR_HPP
+#ifndef PHOENIX_CORE_COMPOSE_HPP
+#define PHOENIX_CORE_COMPOSE_HPP
 
 #include <boost/call_traits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
@@ -25,14 +25,24 @@ namespace boost { namespace phoenix
     // Create an actor (TR1 function) from a proto transform and data type
     // we will associte with it (the actor).
     ////////////////////////////////////////////////////////////////////////////
-    template<typename F, template< typename > class Actor
+
+    template <typename Expr>
+    struct actor;
+    
+    template <typename F, template< typename > class Actor
         , typename A0 = void, typename A1 = void, typename A2 = void, typename A3 = void
         /* ... more ... */
         , typename Dummy = void>
-    struct as_actor;
+    struct compose_ex;
+    
+    template <typename F
+        , typename A0 = void, typename A1 = void, typename A2 = void, typename A3 = void
+    /* ... more ... */
+    , typename Dummy = void>
+    struct compose : compose_ex<F, actor, A0, A1, A2, A3 /** ... more ... **/> {};
 
-    template<typename F, template<typename> class Actor>
-    struct as_actor<F, Actor>
+    template <typename F, template<typename> class Actor>
+    struct compose_ex<F, Actor>
     {
         typedef
             typename proto::result_of::make_expr<
@@ -52,8 +62,8 @@ namespace boost { namespace phoenix
         }
     };
 
-    template<typename F, template<typename> class Actor, typename A0>
-    struct as_actor<F, Actor, A0>
+    template <typename F, template<typename> class Actor, typename A0>
+    struct compose_ex<F, Actor, A0>
     {
         typedef
             typename proto::result_of::make_expr<
@@ -74,9 +84,9 @@ namespace boost { namespace phoenix
         }
     };
 
-    template<typename F, template<typename> class Actor, 
+    template <typename F, template<typename> class Actor, 
         typename A0, typename A1>
-    struct as_actor<F, Actor, A0, A1>
+    struct compose_ex<F, Actor, A0, A1>
     {
         typedef
             typename proto::result_of::make_expr<
@@ -102,7 +112,7 @@ namespace boost { namespace phoenix
 
     template <typename F, template<typename> class Actor, 
         typename A0, typename A1, typename A2>
-    struct as_actor<F, Actor, A0, A1, A2>
+    struct compose_ex<F, Actor, A0, A1, A2>
     {
         typedef
             typename proto::result_of::make_expr<
@@ -134,9 +144,9 @@ namespace boost { namespace phoenix
 #define BOOST_PP_LOCAL_MACRO( N )                                               \
 namespace boost { namespace phoenix                                             \
 {                                                                               \
-    template<typename F, template<typename> class Actor                         \
+    template <typename F, template<typename> class Actor                        \
         BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)>                           \
-    struct as_actor<F, Actor BOOST_PP_ENUM_TRAILING_PARAMS(N, A)>               \
+    struct compose_ex<F, Actor BOOST_PP_ENUM_TRAILING_PARAMS(N, A)>             \
     {                                                                           \
         typedef                                                                 \
             typename proto::result_of::make_expr<                               \
