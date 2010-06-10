@@ -11,8 +11,8 @@
 
 namespace boost { namespace phoenix 
 {
-//    template <typename T, typename Enable = void>
-//    struct is_environment : fusion::is_sequence<T> {};
+    template <typename T, typename Enable = void>
+    struct is_environment : fusion::traits::is_sequence<T> {};
     
     namespace result_of 
     {

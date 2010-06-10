@@ -12,26 +12,24 @@
 
 namespace boost { namespace phoenix
 {
-///////////////////////////////////////////////////////////////////////////////
-//
-//  null_actor
-//
-//      A actor that does nothing (a "bum", if you will :-).
-//
-///////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    //
+    //  null_actor
+    //
+    //      A actor that does nothing (a "bum", if you will :-).
+    //
+    ////////////////////////////////////////////////////////////////////////////
     struct null_actor
     {
         typedef void result_type;
 
         template <typename Env>
-        void
-        eval(Env const&) const
+        void eval(Env const&) const
         {
         }
     };
 
     as_actor<null_actor, actor>::result_type const nothing = {};
-
 }}
 
 #endif
