@@ -33,7 +33,7 @@ namespace boost { namespace phoenix
             : f(f)
         {}
 
-        template<typename Signature>
+        template<typename Sig>
         struct result;
 
         template<typename This>
