@@ -9,7 +9,9 @@
 #define PHOENIX_CORE_ACTOR_HPP
 
 #include <boost/fusion/container/vector/vector10.hpp>
-#include <boost/phoenix/core/actor_result.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/phoenix/core/arity.hpp>
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/proto/extends.hpp>
@@ -19,6 +21,42 @@
 #include <boost/mpl/void.hpp>
 namespace boost { namespace phoenix
 {
+    template <typename Expr>
+    struct actor;
+
+    namespace detail
+    {
+        struct error_expecting_arguments
+        {
+            template <typename T>
+            error_expecting_arguments(T const&) {}
+        };
+    }
+
+    namespace result_of
+    {
+        template <typename Expr, typename A0 = void, typename A1 = void
+            /* ... more ... */
+            , typename Dummy = void>
+        struct actor;
+
+        template <typename Expr>
+        struct actor<Expr>
+        {
+            typedef typename ::boost::phoenix::actor<Expr>::nullary_result type;
+        };
+        
+        template <typename Expr, typename A0>
+        struct actor<Expr, A0>
+            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr>&, fusion::vector1<A0>&)>
+        {};
+        
+        template <typename Expr, typename A0, typename A1>
+        struct actor<Expr, A0, A1>
+            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr>&, fusion::vector2<A0, A1>&)>
+        {};
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     // The actor class. The main thing! In phoenix, everything is an actor
     // This class is responsible for full function evaluation. Partial
@@ -31,30 +69,46 @@ namespace boost { namespace phoenix
         BOOST_PROTO_EXTENDS_ASSIGN()
         BOOST_PROTO_EXTENDS_SUBSCRIPT()
 
+        static const int arity = result_of::arity<Expr>::type::value;
+
+        typedef typename
+            mpl::eval_if_c<
+                arity == 0 // avoid calling result_of::actor when this is true
+              , boost::result_of<eval_grammar(actor<Expr>&, fusion::vector0<>&)>
+              , mpl::identity<detail::error_expecting_arguments>
+            >::type
+            nullary_result;
+
         template <typename Sig>
-        struct result : actor_result<Sig> {};
+        struct result;
 
-        typedef actor<Expr> actor_type;
+        template <typename This>
+        struct result<This()>
+        {
+            typedef nullary_result type;
+        };
 
-        struct dummy {};
+        template <typename This, typename A0>
+        struct result<This(A0)>
+            : result_of::actor<Expr, A0>
+        {};
 
-        //typename boost::result_of<actor_type()>::type
-        //typename actor_result<actor_type()>::type
-        //typename boost::result_of<eval_grammar(actor_type&, fusion::vector0<>&)>::type
-        void
+        template <typename This, typename A0, typename A1>
+        struct result<This(A0, A1)>
+            : result_of::actor<Expr, A0, A1>
+        {};
+
+        nullary_result
         operator()() const
         {
             BOOST_PROTO_ASSERT_MATCHES( *this, eval_grammar );
             fusion::vector0<> args;
 
-            eval(*this, args);
-            //return eval(*this, args);
+            return eval(*this, args);
         }
 
         template <typename A0>
-        //typename boost::result_of<actor_type(A0 const&)>::type
-        typename actor_result<actor_type(A0 const&)>::type
-        //typename boost::result_of<eval_grammar(actor_type&, fusion::vector1<A0>&)>::type
+        typename result_of::actor<Expr, A0 const &>::type
         operator()(A0 const& a0) const
         {
             BOOST_PROTO_ASSERT_MATCHES(*this, eval_grammar);
@@ -64,9 +118,7 @@ namespace boost { namespace phoenix
         }
 
         template <typename A0, typename A1>
-        //typename boost::result_of<actor_type(A0 const&, A1 const&)>::type
-        typename actor_result<actor_type(A0 const&, A1 const&)>::type
-        //typename boost::result_of<eval_grammar(actor_type&, fusion::vector1<A0, A1>&)>::type
+        typename result_of::actor<Expr, A0 const &, A1 const &>::type
         operator()(A0 const& a0, A1 const& a1) const
         {
             BOOST_PROTO_ASSERT_MATCHES(*this, eval_grammar);
@@ -84,8 +136,7 @@ namespace boost { namespace phoenix
     template<typename Expr>
     struct result_of<phoenix::actor<Expr>() >
     {
-        typedef phoenix::actor<Expr> F;
-        typedef typename F::template result<F()>::type type;
+        typedef typename phoenix::actor<Expr>::nullary_result type;
     };
 
 }

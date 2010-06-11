@@ -10,9 +10,6 @@
 
 #include <boost/call_traits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
-#include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/domain.hpp>
-#include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
 #include <boost/preprocessor/iteration/local.hpp>
