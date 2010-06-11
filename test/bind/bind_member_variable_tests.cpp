@@ -32,7 +32,7 @@ namespace test
 template<class T, class F>
 void write_test(F f) {
     T x_;
-    bind(&T::m, f(x_))(0) = 122;
+    bind(&T::m, f(x_))() = 122;
     BOOST_TEST(x_.m == 122);
     bind(&T::m, arg1)(f(x_)) = 123;
     BOOST_TEST(x_.m == 123);
@@ -43,7 +43,7 @@ void read_test(F f) {
     T x_;
     x_.m = 123;
 
-    BOOST_TEST(bind(&T::m, f(x_))(0) == 123);
+    BOOST_TEST(bind(&T::m, f(x_))() == 123);
     BOOST_TEST(bind(&T::m, arg1)(f(x_)) == 123);
 }
 

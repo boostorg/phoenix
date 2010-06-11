@@ -67,7 +67,7 @@ main()
     test::zz zz_;
 
     //bind(&test::x::test, x_)(0); // <- original test, fails due to attempt of copying
-    bind(&test::x::test, ref(x_))(0);
+    bind(&test::x::test, ref(x_))();
     //BOOST_TEST(bind(&test::y::negate, y_, arg1)(a) == -a); // same as above
     BOOST_TEST(bind(&test::y::negate, ref(y_), arg1)(a) == -a);
     //BOOST_TEST(bind(&test::z::plus, arg1, arg2, arg3)(z_, a, b) == a+b);

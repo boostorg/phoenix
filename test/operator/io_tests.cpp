@@ -35,9 +35,9 @@ main()
     (cout << arg1)(msg);
     //(cout << arg1 << endl)(hello);
     //(arg1 << hex)(cout);
-    (cout << val(hello))(0);
+    (cout << val(hello))();
 
-    (cout << val(hello) << world << ", you da man!\n")(0);
+    (cout << val(hello) << world << ", you da man!\n")();
     for_each(v.begin(), v.end(), cout << arg1 << ',');
     (cout << arg1 + 1)(i100);
 

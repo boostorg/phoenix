@@ -23,29 +23,29 @@ main()
         const char* world = " world";
 
 
-        BOOST_TEST((ref(i) = ref(i))(0) == 5);
-        BOOST_TEST((ref(i) = 3)(0) == 3);
+        BOOST_TEST((ref(i) = ref(i))() == 5);
+        BOOST_TEST((ref(i) = 3)() == 3);
         BOOST_TEST(i == 3);
         i = 5;
         int x, y, z;
-        (ref(x) = ref(y) = ref(z) = 10)(0);
+        (ref(x) = ref(y) = ref(z) = 10)();
         BOOST_TEST(x == 10 && y == 10 && z == 10);
-        BOOST_TEST((val(world)[3])(0) == world[3]);
+        BOOST_TEST((val(world)[3])() == world[3]);
 
-        BOOST_TEST((ref(i) += 5)(0) == 10);
-        BOOST_TEST((ref(i) -= 5)(0) == 5);
-        BOOST_TEST((ref(i) *= 5)(0) == 25);
-        BOOST_TEST((ref(i) /= 5)(0) == 5);
-        BOOST_TEST((ref(i) %= 2)(0) == 1);
+        BOOST_TEST((ref(i) += 5)() == 10);
+        BOOST_TEST((ref(i) -= 5)() == 5);
+        BOOST_TEST((ref(i) *= 5)() == 25);
+        BOOST_TEST((ref(i) /= 5)() == 5);
+        BOOST_TEST((ref(i) %= 2)() == 1);
 
-        BOOST_TEST((ref(i) <<= 3)(0) == 8);
-        BOOST_TEST((ref(i) >>= 1)(0) == 4);
-        BOOST_TEST((ref(i) |= 0xFF)(0) == 0xFF);
-        BOOST_TEST((ref(i) &= 0xF0)(0) == 0xF0);
-        BOOST_TEST((ref(i) ^= 0xFFFFFFFF)(0) == int(0xFFFFFF0F));
+        BOOST_TEST((ref(i) <<= 3)() == 8);
+        BOOST_TEST((ref(i) >>= 1)() == 4);
+        BOOST_TEST((ref(i) |= 0xFF)() == 0xFF);
+        BOOST_TEST((ref(i) &= 0xF0)() == 0xF0);
+        BOOST_TEST((ref(i) ^= 0xFFFFFFFF)() == int(0xFFFFFF0F));
 
-        BOOST_TEST((val(5) == val(5))(0));
-        BOOST_TEST((val(5) == 5)(0));
+        BOOST_TEST((val(5) == val(5))());
+        BOOST_TEST((val(5) == 5)());
 
         BOOST_TEST((arg1 + arg2 )(i2, i3) == i2 + i3 );
         BOOST_TEST((arg1 - arg2)(i2, i3) == i2 - i3);
@@ -58,24 +58,24 @@ main()
         BOOST_TEST((arg1 << arg2)(i2, i3) == i2 << i3);
         BOOST_TEST((arg1 >> arg2)(i2, i3) == i2 >> i3);
 
-        BOOST_TEST((val(5) != val(6))(0));
-        BOOST_TEST((val(5) < val(6))(0));
-        BOOST_TEST(!(val(5) > val(6))(0));
-        BOOST_TEST((val(5) < val(6))(0));
-        BOOST_TEST((val(5) <= val(6))(0));
-        BOOST_TEST((val(5) <= val(5))(0));
-        BOOST_TEST((val(7) >= val(6))(0));
-        BOOST_TEST((val(7) >= val(7))(0));
+        BOOST_TEST((val(5) != val(6))());
+        BOOST_TEST((val(5) < val(6))());
+        BOOST_TEST(!(val(5) > val(6))());
+        BOOST_TEST((val(5) < val(6))());
+        BOOST_TEST((val(5) <= val(6))());
+        BOOST_TEST((val(5) <= val(5))());
+        BOOST_TEST((val(7) >= val(6))());
+        BOOST_TEST((val(7) >= val(7))());
 
-        BOOST_TEST((val(false) && val(false))(0) == false);
-        BOOST_TEST((val(true) && val(false))(0) == false);
-        BOOST_TEST((val(false) && val(true))(0) == false);
-        BOOST_TEST((val(true) && val(true))(0) == true);
+        BOOST_TEST((val(false) && val(false))() == false);
+        BOOST_TEST((val(true) && val(false))() == false);
+        BOOST_TEST((val(false) && val(true))() == false);
+        BOOST_TEST((val(true) && val(true))() == true);
 
-        BOOST_TEST((val(false) || val(false))(0) == false);
-        BOOST_TEST((val(true) || val(false))(0) == true);
-        BOOST_TEST((val(false) || val(true))(0) == true);
-        BOOST_TEST((val(true) || val(true))(0) == true);
+        BOOST_TEST((val(false) || val(false))() == false);
+        BOOST_TEST((val(true) || val(false))() == true);
+        BOOST_TEST((val(false) || val(true))() == true);
+        BOOST_TEST((val(true) || val(true))() == true);
     }
 
     {  // From Phoenix 1.1 mixed_binary tests

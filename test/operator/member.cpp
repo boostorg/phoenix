@@ -37,18 +37,18 @@ int main()
     const Test* cptr = &test;
     Test* ptr = &test;
 
-    BOOST_TEST((val(ptr)->*&Test::value)(0) == 1);
-    BOOST_TEST((val(cptr)->*&Test::value)(0) == 1);
+    BOOST_TEST((val(ptr)->*&Test::value)() == 1);
+    BOOST_TEST((val(cptr)->*&Test::value)() == 1);
     BOOST_TEST((arg1->*&Test::value)(cptr) == 1);
 
-    ((val(ptr)->*&Test::value) = 2)(0);
+    ((val(ptr)->*&Test::value) = 2)();
     BOOST_TEST(test.value == 2);
 
-    BOOST_TEST((val(ptr)->*&Test::func)(3)(0) == 3);
+    BOOST_TEST((val(ptr)->*&Test::func)()(3) == 3);
     int i = 33;
     //BOOST_TEST((arg1->*&Test::func)(arg2)(cptr, i) == i);
-    BOOST_TEST((val(cptr)->*&Test::func)(4)(0) == 4);
-    //BOOST_TEST((val(ptr)->*&Test::dunc)(0)() == 10);
+    BOOST_TEST((val(cptr)->*&Test::func)()(4) == 4);
+    BOOST_TEST((val(ptr)->*&Test::dunc)()() == 10);
 
     //BOOST_TEST((arg1->*&Test::func)(5)(ptr) == 5);
     //BOOST_TEST((arg1->*&Test::kunc)()(ptr));

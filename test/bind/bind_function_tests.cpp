@@ -48,7 +48,7 @@ main()
     int a = 123;
     int b = 256;
 
-    bind(test::test)(0);
+    bind(test::test)();
     BOOST_TEST(bind(test::negate, arg1)(a) == -a);
     BOOST_TEST(bind(test::plus, arg1, arg2)(a, b) == a+b);
     //BOOST_TEST(bind(test::plus4, arg1, arg2, 3, 4)(a, b) == a+b+3+4);

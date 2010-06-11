@@ -114,7 +114,7 @@ main()
 
     test()(0);
     BOOST_TEST(sqr(arg1)(i5) == (i5*i5));
-    BOOST_TEST(fact(4)(0) == 24);
+    BOOST_TEST(fact(4)() == 24);
     BOOST_TEST(fact(arg1)(i5) == 120);
     BOOST_TEST((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
     BOOST_TEST((sqr(arg1) + 5)(i5) == ((i5*i5)+5));

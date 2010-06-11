@@ -15,13 +15,13 @@ int
 main()
 {
     {
-        BOOST_TEST(!(val(123) == 456)(0));
-        BOOST_TEST((val(123) != 456)(0));
-        BOOST_TEST(!(val(123) > 456)(0));
-        BOOST_TEST((val(123) < 456)(0));
-        BOOST_TEST(!(val(123) > 456)(0));
-        BOOST_TEST((val(123) <= 123)(0));
-        BOOST_TEST((val(123) >= 123)(0));
+        BOOST_TEST(!(val(123) == 456)());
+        BOOST_TEST((val(123) != 456)());
+        BOOST_TEST(!(val(123) > 456)());
+        BOOST_TEST((val(123) < 456)());
+        BOOST_TEST(!(val(123) > 456)());
+        BOOST_TEST((val(123) <= 123)());
+        BOOST_TEST((val(123) >= 123)());
     }
 
     return boost::report_errors();
