@@ -8,10 +8,16 @@
 #ifndef PHOENIX_STATEMENT_IF_HPP
 #define PHOENIX_STATEMENT_IF_HPP
 
+#include <boost/config.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/compose.hpp>
 
 #include <boost/phoenix/support/element_at.hpp>
+
+#ifdef BOOST_MSVC
+#pragma warning(push)
+#pragma warning(disable: 4355) // 'this' used in base member initializer list
+#endif
 
 namespace boost { namespace phoenix
 {
@@ -119,5 +125,9 @@ namespace boost { namespace phoenix
     }
  
 }}
+
+#ifdef BOOST_MSVC
+#pragma warning(pop)
+#endif
 
 #endif
