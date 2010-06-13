@@ -48,12 +48,12 @@ namespace boost { namespace phoenix
         
         template <typename Expr, typename A0>
         struct actor<Expr, A0>
-            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr>&, fusion::vector1<A0>&)>
+            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr> const &, fusion::vector1<A0>&)>
         {};
         
         template <typename Expr, typename A0, typename A1>
         struct actor<Expr, A0, A1>
-            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr>&, fusion::vector2<A0, A1>&)>
+            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr> const &, fusion::vector2<A0, A1>&)>
         {};
     }
 
@@ -74,7 +74,7 @@ namespace boost { namespace phoenix
         typedef typename
             mpl::eval_if_c<
                 arity == 0 // avoid calling result_of::actor when this is true
-              , boost::result_of<eval_grammar(actor<Expr>&, fusion::vector0<>&)>
+              , boost::result_of<eval_grammar(actor<Expr> const &, fusion::vector0<>&)>
               , mpl::identity<detail::error_expecting_arguments>
             >::type
             nullary_result;

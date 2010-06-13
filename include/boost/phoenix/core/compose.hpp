@@ -25,6 +25,10 @@ namespace boost { namespace phoenix
 
     template <typename Expr>
     struct actor;
+
+    struct default_domain_with_basic_expr
+      : proto::domain<proto::use_basic_expr<proto::default_generator> >
+    {};
     
     template <typename F, template< typename > class Actor
         , typename A0 = void, typename A1 = void, typename A2 = void, typename A3 = void
@@ -44,7 +48,7 @@ namespace boost { namespace phoenix
         typedef
             typename proto::result_of::make_expr<
                   proto::tag::function
-                , proto::default_domain
+                , default_domain_with_basic_expr
                 , funcwrap<F>
                 , env>::type
             base_type;
@@ -65,7 +69,7 @@ namespace boost { namespace phoenix
         typedef
             typename proto::result_of::make_expr<
                   proto::tag::function
-                , proto::default_domain
+                , default_domain_with_basic_expr
                 , funcwrap<F>
                 , env
                 , A0>::type
@@ -88,7 +92,7 @@ namespace boost { namespace phoenix
         typedef
             typename proto::result_of::make_expr<
                   proto::tag::function
-                , proto::default_domain
+                , default_domain_with_basic_expr
                 , funcwrap<F>
                 , env
                 , A0
@@ -114,7 +118,7 @@ namespace boost { namespace phoenix
         typedef
             typename proto::result_of::make_expr<
                   proto::tag::function
-                , proto::default_domain
+                , default_domain_with_basic_expr
                 , funcwrap<F>
                 , env
                 , A0
@@ -148,7 +152,7 @@ namespace boost { namespace phoenix                                             
         typedef                                                                 \
             typename proto::result_of::make_expr<                               \
                   proto::tag::function                                          \
-                , proto::default_domain                                         \
+                , default_domain_with_basic_expr                                         \
                 , funcwrap< F >                                                 \
                 , env BOOST_PP_ENUM_TRAILING_PARAMS(N, A)                       \
                 >::type                                                         \

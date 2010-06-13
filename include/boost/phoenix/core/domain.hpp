@@ -23,11 +23,9 @@ namespace boost { namespace phoenix
         proto::pod_generator<actor>, 
         proto::_, proto::default_domain>
     {
-        /*
         template <typename T>
         struct as_child : as_expr<T>
         {};
-        */
     };
 }}
 
