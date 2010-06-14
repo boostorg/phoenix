@@ -16,44 +16,54 @@
 namespace boost { namespace phoenix
 {
     ////////////////////////////////////////////////////////////////////////////
-    // References
+    //
+    // reference
+    //
+    //      function for evaluating references, e.g. ref(123)
+    //
     ////////////////////////////////////////////////////////////////////////////
+
+    namespace result_of
+    {
+        template <typename Env, typename T>
+        struct reference
+            : boost::result_of<eval_grammar(T&)>
+        {};
+    }
     
-    // function for evaluating references, e.g. ref( 123 )
     struct reference
     {
-        template<typename T>
-        struct compose : phoenix::compose<reference, T&>
-        {};
-
-        template<typename Sig>
+        template <typename Sig>
         struct result;
 
-        template<typename This, typename Env, typename T>
-        struct result<This(Env &, T &)>
-            : boost::result_of<eval_grammar(T &)>
+        template <typename This, typename Env, typename T>
+        struct result<This(Env&, T&)>
+            : result_of::reference<Env, T>
         {};
 
-        template<typename Env, typename T>
-        typename boost::result_of<eval_grammar(T &)>::type
-        operator()(Env & env, T & t) const
+        template <typename Env, typename T>
+        typename result_of::reference<Env, T>::type
+        operator()(Env& env, T& ref) const
         {
-            return eval(t);
+            return eval(ref);
         }
     };
+    
+    template <typename T>
+    struct make_reference : compose<reference, T&> {};
 
-    template<typename T>
-    typename reference::compose<T>::result_type
-    ref(T & t)
+    template <typename T>
+    typename make_reference<T>::type
+    ref(T& t)
     {
-        return reference::compose<T>()(t);
+        return make_reference<T>()(t);
     }
 
     template<typename T>
-    typename reference::compose<T const>::result_type
-    cref(T & t)
+    typename make_reference<T const>::type
+    cref(T& t)
     {
-        return reference::compose<T const>()(t);
+        return make_reference<T const>()(t);
     }
 
 }}
