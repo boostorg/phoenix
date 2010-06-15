@@ -74,10 +74,10 @@ namespace boost { namespace phoenix
         typedef typename
             mpl::eval_if_c<
                 arity == 0 // avoid calling result_of::actor when this is true
-              , boost::result_of<eval_grammar(actor<Expr> const &, fusion::vector0<>&)>
+              , boost::result_of<eval_grammar(Expr const &, fusion::vector0<>&)>
               , mpl::identity<detail::error_expecting_arguments>
             >::type
-            nullary_result;
+        nullary_result;
 
         template <typename Sig>
         struct result;
@@ -104,7 +104,7 @@ namespace boost { namespace phoenix
             BOOST_PROTO_ASSERT_MATCHES( *this, eval_grammar );
             fusion::vector0<> args;
 
-            return eval(*this, args);
+            return eval(this->proto_base(), args);
         }
 
         template <typename A0>
