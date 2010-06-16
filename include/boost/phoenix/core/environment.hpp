@@ -8,6 +8,8 @@
 #define PHOENIX_CORE_ENVIRONMENT_HPP
 
 #include <boost/fusion/support/is_sequence.hpp>
+#include <boost/fusion/container/vector/vector10.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace phoenix 
 {
@@ -38,6 +40,12 @@ namespace boost { namespace phoenix
             return fusion::at_c<N::value>(env);
         }
     };
+    
+//    template <typename Actor, typename Env, typename Enable = void>
+//    struct get_signature<Actor, Env, 
+//        typename enable_if<fusion::traits::is_sequence<T> >::type>
+//    {
+//    };
 }}
 
 #endif

@@ -13,13 +13,15 @@
 
 namespace boost { namespace phoenix
 {
-
     ////////////////////////////////////////////////////////////////////////////
+    //
     // Actors carry specific information with it. Primitive actors may hold
     // simple primitive data, like values (e.g. int). Composites hold a tuple
     // of proto expressions that evaluate to actors (using fusion vector).
     // The following facilities extract the "elements" from an actor. An
     // element is just a proto expression that evaluates to an actor.
+    //
+    ////////////////////////////////////////////////////////////////////////////
     namespace result_of
     {
         // Get the Nth element value type from Expr (N is an integral constant)

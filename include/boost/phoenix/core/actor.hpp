@@ -43,24 +43,38 @@ namespace boost { namespace phoenix
         template <typename Expr>
         struct actor<Expr>
         {
-            typedef typename ::boost::phoenix::actor<Expr>::nullary_result type;
+            static const int arity = result_of::arity<Expr>::type::value;
+
+            typedef typename
+                mpl::eval_if_c<
+                    arity == 0 // avoid calling result_of::actor when this is true
+                  , boost::result_of<eval_grammar(Expr const&, fusion::vector0<>&)>
+                  , mpl::identity<detail::error_expecting_arguments>
+                >::type
+            type;
         };
         
         template <typename Expr, typename A0>
         struct actor<Expr, A0>
-            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr> const &, fusion::vector1<A0>&)>
+            : boost::result_of<eval_grammar(
+                ::boost::phoenix::actor<Expr> const&, fusion::vector1<A0>&)>
         {};
         
         template <typename Expr, typename A0, typename A1>
         struct actor<Expr, A0, A1>
-            : boost::result_of<eval_grammar(::boost::phoenix::actor<Expr> const &, fusion::vector2<A0, A1>&)>
+            : boost::result_of<eval_grammar(
+                ::boost::phoenix::actor<Expr> const&, fusion::vector2<A0, A1>&)>
         {};
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    // The actor class. The main thing! In phoenix, everything is an actor
-    // This class is responsible for full function evaluation. Partial
-    // function evaluation involves creating a hierarchy of actor objects.
+    //
+    //  actor
+    //
+    //      The actor class. The main thing! In phoenix, everything is an actor
+    //      This class is responsible for full function evaluation. Partial
+    //      function evaluation involves creating a hierarchy of actor objects.
+    //
     ////////////////////////////////////////////////////////////////////////////
     template <typename Expr>
     struct actor
@@ -69,24 +83,13 @@ namespace boost { namespace phoenix
         BOOST_PROTO_EXTENDS_ASSIGN()
         BOOST_PROTO_EXTENDS_SUBSCRIPT()
 
-        static const int arity = result_of::arity<Expr>::type::value;
-
-        typedef typename
-            mpl::eval_if_c<
-                arity == 0 // avoid calling result_of::actor when this is true
-              , boost::result_of<eval_grammar(Expr const &, fusion::vector0<>&)>
-              , mpl::identity<detail::error_expecting_arguments>
-            >::type
-        nullary_result;
-
         template <typename Sig>
         struct result;
 
         template <typename This>
         struct result<This()>
-        {
-            typedef nullary_result type;
-        };
+            : result_of::actor<Expr>
+        {};
 
         template <typename This, typename A0>
         struct result<This(A0)>
@@ -98,7 +101,7 @@ namespace boost { namespace phoenix
             : result_of::actor<Expr, A0, A1>
         {};
 
-        nullary_result
+        typename result_of::actor<Expr>::type
         operator()() const
         {
             BOOST_PROTO_ASSERT_MATCHES( *this, eval_grammar );
@@ -133,11 +136,12 @@ namespace boost { namespace phoenix
     };
 }
 
-    template<typename Expr>
-    struct result_of<phoenix::actor<Expr>() >
-    {
-        typedef typename phoenix::actor<Expr>::nullary_result type;
-    };
+//  $$$ Why is this needed??? $$$
+//    template<typename Expr>
+//    struct result_of<phoenix::actor<Expr>() >
+//    {
+//        typedef typename phoenix::actor<Expr>::nullary_result type;
+//    };
 
 }
 
