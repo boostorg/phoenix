@@ -8,12 +8,13 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-using namespace boost::phoenix;
-using namespace std;
+namespace phoenix = boost::phoenix;
 
 int
 main()
 {
+    using phoenix::val;
+
     {
         BOOST_TEST(!(val(123) == 456)());
         BOOST_TEST((val(123) != 456)());

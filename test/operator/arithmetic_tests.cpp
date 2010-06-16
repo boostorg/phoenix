@@ -8,12 +8,14 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-using namespace boost::phoenix;
-using namespace std;
+namespace phoenix = boost::phoenix;
 
 int
 main()
 {
+    using phoenix::ref;
+    using phoenix::val;
+
     {
         int x = 123;
 

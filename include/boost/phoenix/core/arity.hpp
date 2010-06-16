@@ -36,53 +36,23 @@ namespace boost { namespace phoenix
 
     namespace detail
     {
-        struct arity : proto::switch_<struct arity_cases>
-        {};
-        
-        typedef proto::fold<
-            proto::_, 
-            mpl::int_<0>(), 
-            mpl::max<arity, proto::_state>()>
-        arity_fold;
-        
-        typedef proto::when<proto::_, mpl::int_<0>()> arity_default;
-
-        struct arity_cases
-        {
-            template <typename Tag>
-            struct case_
-              : proto::or_<
-                    proto::when<
-                        proto::nary_expr<proto::_, proto::vararg<arity> >
-                      , arity_fold
-                    >
-                  , arity_default
-                >
-            {};
-        };
-
-        template <>
-        struct arity_cases::case_<proto::tag::function>
+        struct arity
           : proto::or_<
-                proto::when<
+                proto::when<proto::terminal<proto::_>, mpl::int_<0>()>
+              , proto::when<
                     proto::function<
                         proto::terminal<funcwrap<argument> >
                       , proto::terminal<env>
-                      , proto::_ >
-                  , mpl::next<proto::_value(proto::_child2)>()>
-              , proto::when<
-                    proto::function<
-                        proto::terminal<funcwrap<proto::_> >
-                      , proto::terminal<env>
-                      , proto::vararg<arity>
+                      , proto::_
                     >
-                  , arity_fold
+                  , mpl::next<proto::_value(proto::_child2)>()
                 >
-              , proto::when<
-                    proto::function<
-                        proto::vararg<arity>
+              , proto::otherwise<
+                    proto::fold<
+                        proto::_
+                      , mpl::int_<0>()
+                      , mpl::max<arity, proto::_state>()
                     >
-                  , arity_fold
                 >
             >
         {};

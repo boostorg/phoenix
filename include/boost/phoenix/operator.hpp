@@ -9,5 +9,7 @@
 
 #include <boost/phoenix/version.hpp>
 #include <boost/phoenix/operator/operator.hpp>
+#include <boost/phoenix/operator/io.hpp>
+#include <boost/phoenix/operator/member.hpp>
 
 #endif

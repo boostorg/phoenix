@@ -8,13 +8,13 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+namespace phoenix = boost::phoenix;
 
 int
 main()
 {
+    using phoenix::arg_names::arg1;
+    using phoenix::arg_names::arg2;
     {
         bool x = false;
         bool y = true;
@@ -26,10 +26,10 @@ main()
 
         // short circuiting:
         int i = 1234;
-        //(arg1 || (arg2 = 4567))(y, i);
+        (arg1 || (arg2 = 4567))(y, i);
         BOOST_TEST(i == 1234);
-        //(arg1 && (arg2 = 4567))(y, i);
-        //BOOST_TEST(i == 4567);
+        (arg1 && (arg2 = 4567))(y, i);
+        BOOST_TEST(i == 4567);
     }
 
     return boost::report_errors();

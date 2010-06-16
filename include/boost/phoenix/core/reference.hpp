@@ -59,7 +59,7 @@ namespace boost { namespace phoenix
         return make_reference<T>()(t);
     }
 
-    template<typename T>
+    template <typename T>
     typename make_reference<T const>::type
     cref(T& t)
     {

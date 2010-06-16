@@ -9,13 +9,16 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+namespace phoenix = boost::phoenix;
 
 int
 main()
 {
+    using phoenix::ref;
+    using phoenix::val;
+    using phoenix::arg_names::arg1;
+    using std::cout;
+
     {
         int x;
         int y;

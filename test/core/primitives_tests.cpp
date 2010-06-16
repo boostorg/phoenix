@@ -35,7 +35,7 @@ main()
 
     //  value
     //cout << val("Hello,")(0) << val(' ')(0) << val("World")(0) << endl;
-    BOOST_TEST(val(3)(0) == 3);
+    BOOST_TEST(val(3)() == 3);
     //BOOST_TEST(val("Hello, world")(0) == std::string("Hello, world"));
     //BOOST_TEST(val(_1)(i1) == i1);
 
@@ -45,10 +45,10 @@ main()
 #endif
 
     //  reference
-    BOOST_TEST(cref(i)(0) == ref(i)(0));
-    BOOST_TEST(cref(i)(0) == 4);
+    BOOST_TEST(cref(i)() == ref(i)());
+    BOOST_TEST(cref(i)() == 4);
     BOOST_TEST(i == 4);
-    BOOST_TEST(ref(++i)(0) == 5);
+    BOOST_TEST(ref(++i)() == 5);
     BOOST_TEST(i == 5);    
 
     //  should not compile:

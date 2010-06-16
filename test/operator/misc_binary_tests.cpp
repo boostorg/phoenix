@@ -10,13 +10,16 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::placeholders;
-using namespace std;
+namespace phoenix = boost::phoenix;
 
 int
 main()
 {
+    using phoenix::ref;
+	 using phoenix::val;
+	 using phoenix::arg_names::arg1;
+	 using phoenix::arg_names::arg2;
+    using std::string;
     {   // From Phoenix 1.1 binary tests
 
         int i2 = 2, i3 = 3, i = 5;

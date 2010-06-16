@@ -32,7 +32,11 @@ namespace boost { namespace phoenix
         
         template<typename Env, typename Cond, typename Then, typename Else>
         void
-        operator()(Env & env, Cond const & cond, Then const & then, Else const & else_) const
+        operator()(
+              Env & env
+            , Cond const & cond
+            , Then const & then
+            , Else const & else_) const
         {
             if( eval( cond, env ) )
                 eval( then, env );
@@ -90,8 +94,8 @@ namespace boost { namespace phoenix
             , else_(element_at_c<0>(*this), element_at_c<1>(*this))
         {}
 
-        typedef typename boost::phoenix::result_of::element_value_at_c<Expr, 0>::type cond_type;
-        typedef typename boost::phoenix::result_of::element_value_at_c<Expr, 1>::type then_type;
+        typedef typename result_of::element_value_at_c<Expr, 0>::type cond_type;
+        typedef typename result_of::element_value_at_c<Expr, 1>::type then_type;
 
         else_gen<cond_type, then_type> else_;
     };
@@ -118,7 +122,7 @@ namespace boost { namespace phoenix
     };
 
     template<typename Cond>
-    if_gen<Cond>
+    if_gen<Cond> const
     if_(Cond const & cond)
     {
         return if_gen<Cond>(cond);

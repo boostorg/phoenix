@@ -5,14 +5,17 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
+
+#if !PHOENIX_IS_ITERATING
+
 #ifndef PHOENIX_CORE_COMPOSE_HPP
 #define PHOENIX_CORE_COMPOSE_HPP
 
 #include <boost/call_traits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
-#include <boost/preprocessor/repetition/enum_binary_params.hpp>
-#include <boost/preprocessor/repetition/enum_trailing_params.hpp>
-#include <boost/preprocessor/iteration/local.hpp>
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/proto/make_expr.hpp>
 
@@ -31,16 +34,14 @@ namespace boost { namespace phoenix
     {};
     
     template <typename F, template< typename > class Actor
-        , typename A0 = void, typename A1 = void, typename A2 = void, typename A3 = void
-        /* ... more ... */
+        , PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)
         , typename Dummy = void>
     struct compose_ex;
     
     template <typename F
-        , typename A0 = void, typename A1 = void, typename A2 = void, typename A3 = void
-    /* ... more ... */
-    , typename Dummy = void>
-    struct compose : compose_ex<F, actor, A0, A1, A2, A3 /** ... more ... **/> {};
+        , PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)
+        , typename Dummy = void>
+    struct compose : compose_ex<F, actor, PHOENIX_A(PHOENIX_COMPOSITE_LIMIT)> {};
 
     template <typename F, template<typename> class Actor>
     struct compose_ex<F, Actor>
@@ -58,124 +59,50 @@ namespace boost { namespace phoenix
         result_type
         operator()() const
         {
-            actor<base_type> const e = {{funcwrap<F>(), env()}};
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}}};
             return e;
         }
     };
 
-    template <typename F, template<typename> class Actor, typename A0>
-    struct compose_ex<F, Actor, A0>
-    {
-        typedef
-            typename proto::result_of::make_expr<
-                  proto::tag::function
-                , default_domain_with_basic_expr
-                , funcwrap<F>
-                , env
-                , A0>::type
-            base_type;
-        typedef Actor<base_type> result_type;
-        typedef result_type type;
-
-        result_type
-        operator()( typename call_traits<A0>::param_type a0 ) const
-        {
-            actor<base_type> const e = {{funcwrap<F>(), env(), a0}};
-            return e;
-        }
-    };
-
-    template <typename F, template<typename> class Actor, 
-        typename A0, typename A1>
-    struct compose_ex<F, Actor, A0, A1>
-    {
-        typedef
-            typename proto::result_of::make_expr<
-                  proto::tag::function
-                , default_domain_with_basic_expr
-                , funcwrap<F>
-                , env
-                , A0
-                , A1>::type
-            base_type;
-        typedef Actor<base_type> result_type;
-        typedef result_type type;
-
-        result_type
-        operator()( 
-            typename call_traits<A0>::param_type a0, 
-            typename call_traits<A1>::param_type a1) const
-        {
-            actor<base_type> const e = {{funcwrap<F>(), env(), a0, a1}};
-            return e;
-        }
-    };
-
-    template <typename F, template<typename> class Actor, 
-        typename A0, typename A1, typename A2>
-    struct compose_ex<F, Actor, A0, A1, A2>
-    {
-        typedef
-            typename proto::result_of::make_expr<
-                  proto::tag::function
-                , default_domain_with_basic_expr
-                , funcwrap<F>
-                , env
-                , A0
-                , A1
-                , A2>::type
-            base_type;
-        typedef Actor<base_type> result_type;
-        typedef result_type type;
-
-        result_type
-        operator()( 
-            typename call_traits<A0>::param_type a0, 
-            typename call_traits<A1>::param_type a1, 
-            typename call_traits<A2>::param_type a2) const
-        {
-            actor<base_type> const e = {{funcwrap<F>(), env(), a0, a1, a2}};
-            return e;
-        }
-    };
+#define PHOENIX_ITERATION_PARAMS                                                \
+    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+    <boost/phoenix/core/compose.hpp>))
+#include PHOENIX_ITERATE()
 
 }}
 
-/*
-#define BOOST_PP_LOCAL_MACRO( N )                                               \
-namespace boost { namespace phoenix                                             \
-{                                                                               \
-    template <typename F, template<typename> class Actor                        \
-        BOOST_PP_ENUM_TRAILING_PARAMS(N, typename A)>                           \
-    struct compose_ex<F, Actor BOOST_PP_ENUM_TRAILING_PARAMS(N, A)>             \
-    {                                                                           \
-        typedef                                                                 \
-            typename proto::result_of::make_expr<                               \
-                  proto::tag::function                                          \
-                , default_domain_with_basic_expr                                         \
-                , funcwrap< F >                                                 \
-                , env BOOST_PP_ENUM_TRAILING_PARAMS(N, A)                       \
-                >::type                                                         \
-            base_type;                                                          \
-                                                                                \
-            typedef Actor<base_type> result_type;                               \
-            typedef result_type type;                                           \
-                                                                                \
-            result_type                                                         \
-            operator()(                                                         \
-                BOOST_PP_ENUM_BINARY_PARAMS(N,                                  \
-                    typename call_traits< A, >::param_type a)) const            \
-            {                                                                   \
-                actor<base_type> const e = {{                                   \
-                    funcwrap< F >(), env() BOOST_PP_ENUM_TRAILING_PARAMS(N, a)  \
-                }};                                                             \
-                return e;                                                       \
-            }                                                                   \
-    };                                                                          \
-}}
+#endif
 
-#define BOOST_PP_LOCAL_LIMITS ( 0, 3 )
-#include BOOST_PP_LOCAL_ITERATE()
-*/
+#else
+
+    template <typename F, template<typename> class Actor, PHOENIX_typename_A>
+    struct compose_ex<F, Actor, PHOENIX_A>
+    {
+        typedef
+            typename proto::result_of::make_expr<
+                  proto::tag::function
+                , default_domain_with_basic_expr
+                , funcwrap<F>
+                , env
+                , PHOENIX_A>::type
+            base_type;
+        typedef Actor<base_type> result_type;
+        typedef result_type type;
+
+        result_type
+        operator()(
+            BOOST_PP_ENUM_BINARY_PARAMS(
+                PHOENIX_ITERATION,
+                typename call_traits< A, >::param_type a)) const
+        {
+#if PHOENIX_ITERATION == 1
+            // silence gcc warnings
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, {a0}}};
+#else
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, PHOENIX_a}};
+#endif
+            return e;
+        }
+    };
 
 #endif

@@ -11,9 +11,9 @@
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/bind.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+namespace phoenix = boost::phoenix;
+using std::cout;
+using std::pow;
 
     struct test
     {
@@ -38,7 +38,6 @@ using namespace std;
         template <typename Arg>
         Arg operator()(Arg n) const
         {
-            std::cout << boost::is_reference< Arg >::value << " <-- Arg is reference :(\n";
             return n * n;
         }
     };
@@ -79,11 +78,13 @@ using namespace std;
         }
     };
 
-    /*
     struct add
     {
-        template <typename Arg1, typename Arg2, typename Arg3, typename Arg4>
-        struct result
+        template<typename Sig>
+        struct result;
+
+        template <typename This, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
+        struct result<This(Arg1&, Arg2&, Arg3&, Arg4&)>
         {
             typedef Arg1 type;
         };
@@ -94,11 +95,16 @@ using namespace std;
             return a + b + c + d;
         }
     };
-    */
 
 int
 main()
 {
+    using phoenix::bind;
+    using phoenix::ref;
+    using phoenix::arg_names::_1;
+    using phoenix::arg_names::arg1;
+    using phoenix::arg_names::arg2;
+
     int i5 = 5;
     double d5 = 5, d3 = 3;
 
@@ -107,8 +113,8 @@ main()
     BOOST_TEST(bind(fact(), 4)() == 24);
     BOOST_TEST(bind(fact(), arg1)(i5) == 120);
     BOOST_TEST((int)bind(power(), arg1, arg2)(d5, d3) == (int)pow(d5, d3));
-    //BOOST_TEST((bind(sqr(), arg1) + 5)(i5) == ((i5*i5)+5));
-    //BOOST_TEST(bind(add(), arg1, arg1, arg1, arg1)(i5) == (5+5+5+5)); // not implemented yet
+    BOOST_TEST((bind(sqr(), arg1) + 5)(i5) == ((i5*i5)+5));
+    BOOST_TEST(bind(add(), arg1, arg1, arg1, arg1)(i5) == (5+5+5+5));
 
     int const ic5 = 5;
     // testing consts
@@ -117,8 +123,8 @@ main()
     // From Steven Watanabe
     sqr s;
     int x = 2;
-    //int result = bind(ref(s), _1)(x);
-    //BOOST_TEST(result == 4);
+    int result = bind(ref(s), _1)(x);
+    BOOST_TEST(result == 4);
 
     return boost::report_errors();
 }

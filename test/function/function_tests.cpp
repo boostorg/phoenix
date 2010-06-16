@@ -87,11 +87,13 @@ using namespace std;
 
     function<pow_impl> power;
 
-    /*
     struct add_impl
     {
-        template <typename Arg1, typename Arg2, typename Arg3, typename Arg4>
-        struct result
+        template<typename Sig>
+        struct result;
+
+        template <typename This, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
+        struct result<This(Arg1&, Arg2&, Arg3&, Arg4&)>
         {
             typedef Arg1 type;
         };
@@ -104,7 +106,6 @@ using namespace std;
     };
 
     function<add_impl> add;
-    */
 
 int
 main()
@@ -112,13 +113,13 @@ main()
     int i5 = 5;
     double d5 = 5, d3 = 3;
 
-    test()(0);
+    test()();
     BOOST_TEST(sqr(arg1)(i5) == (i5*i5));
     BOOST_TEST(fact(4)() == 24);
     BOOST_TEST(fact(arg1)(i5) == 120);
     BOOST_TEST((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
     BOOST_TEST((sqr(arg1) + 5)(i5) == ((i5*i5)+5));
-    //BOOST_TEST(add(arg1, arg1, arg1, arg1)(i5) == (5+5+5+5));
+    BOOST_TEST(add(arg1, arg1, arg1, arg1)(i5) == (5+5+5+5));
 
     int const ic5 = 5;
     // testing consts

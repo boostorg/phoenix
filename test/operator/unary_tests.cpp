@@ -8,13 +8,14 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+namespace phoenix = boost::phoenix;
 
 int
 main()
 {
+    using phoenix::val;
+	 using phoenix::ref;
+	 using phoenix::arg_names::arg1;
     {
         BOOST_TEST((-val(123))() == -123);
         BOOST_TEST((- -val(123))() == 123);

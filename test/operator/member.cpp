@@ -27,11 +27,16 @@ namespace
     };
 }
 
+namespace phoenix = boost::phoenix;
+
 int main()
 {
-    using namespace boost::phoenix;
-    using namespace boost::phoenix::arg_names;
-    using namespace boost;
+    using boost::scoped_ptr;
+    using boost::shared_ptr;
+    using phoenix::val;
+    using phoenix::ref;
+    using phoenix::arg_names::arg1;
+    using phoenix::arg_names::arg2;
 
     Test test = {1};
     const Test* cptr = &test;
@@ -44,44 +49,44 @@ int main()
     ((val(ptr)->*&Test::value) = 2)();
     BOOST_TEST(test.value == 2);
 
-    BOOST_TEST((val(ptr)->*&Test::func)()(3) == 3);
+    BOOST_TEST((val(ptr)->*&Test::func)(3)() == 3);
     int i = 33;
-    //BOOST_TEST((arg1->*&Test::func)(arg2)(cptr, i) == i);
-    BOOST_TEST((val(cptr)->*&Test::func)()(4) == 4);
+    BOOST_TEST((arg1->*&Test::func)(arg2)(cptr, i) == i);
+    BOOST_TEST((val(cptr)->*&Test::func)(4)() == 4);
     BOOST_TEST((val(ptr)->*&Test::dunc)()() == 10);
 
-    //BOOST_TEST((arg1->*&Test::func)(5)(ptr) == 5);
-    //BOOST_TEST((arg1->*&Test::kunc)()(ptr));
+    BOOST_TEST((arg1->*&Test::func)(5)(ptr) == 5);
+    BOOST_TEST((arg1->*&Test::kunc)()(ptr));
 
     shared_ptr<Test> sptr(new Test(test));
 
     BOOST_TEST((arg1->*&Test::value)(sptr) == 2);
-    //BOOST_TEST((arg1->*&Test::func)(6)(sptr) == 6);
+    BOOST_TEST((arg1->*&Test::func)(6)(sptr) == 6);
 
     scoped_ptr<Test> scptr(new Test(test));
 
     BOOST_TEST((arg1->*&Test::value)(scptr) == 2);
-    //BOOST_TEST((arg1->*&Test::func)(7)(scptr) == 7);
+    BOOST_TEST((arg1->*&Test::func)(7)(scptr) == 7);
 
     shared_ptr<const Test> csptr(new Test(test));
 
     BOOST_TEST((arg1->*&Test::value)(csptr) == 2);
-    //BOOST_TEST((arg1->*&Test::func)(8)(csptr) == 8);
+    BOOST_TEST((arg1->*&Test::func)(8)(csptr) == 8);
 
     scoped_ptr<const Test> cscptr(new Test(test));
 
     BOOST_TEST((arg1->*&Test::value)(cscptr) == 2);
-    //BOOST_TEST((arg1->*&Test::func)(9)(cscptr) == 9);
+    BOOST_TEST((arg1->*&Test::func)(9)(cscptr) == 9);
 
     std::auto_ptr<Test> aptr(new Test(test));
 
     BOOST_TEST((arg1->*&Test::value)(aptr) == 2);
-    //BOOST_TEST((arg1->*&Test::func)(10)(aptr) == 10);
+    BOOST_TEST((arg1->*&Test::func)(10)(aptr) == 10);
 
     std::auto_ptr<const Test> captr(new Test(test));
 
     BOOST_TEST((arg1->*&Test::value)(captr) == 2);
-    //BOOST_TEST((arg1->*&Test::func)(11)(captr) == 11);
+    BOOST_TEST((arg1->*&Test::func)(11)(captr) == 11);
 
     return 0;
 }

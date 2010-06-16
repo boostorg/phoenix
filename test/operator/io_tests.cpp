@@ -15,15 +15,22 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-#include <boost/fusion/include/io.hpp>
-
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+namespace phoenix = boost::phoenix;
 
 int
 main()
 {
+    using phoenix::val;
+    using phoenix::arg_names::arg1;
+    using phoenix::arg_names::arg2;
+    using std::cout;
+    using std::endl;
+    using std::hex;
+    using std::for_each;
+    using std::string;
+    using std::stringstream;
+    using std::vector;
+
     int     i100 = 100;
     string hello = "hello";
     const char* world = " world";
@@ -33,22 +40,22 @@ main()
 
     char const* msg = "cout assert\n";
     (cout << arg1)(msg);
-    //(cout << arg1 << endl)(hello);
-    //(arg1 << hex)(cout);
+    (cout << arg1 << endl)(hello);
+    (arg1 << hex)(cout);
     (cout << val(hello))();
 
     (cout << val(hello) << world << ", you da man!\n")();
     for_each(v.begin(), v.end(), cout << arg1 << ',');
     (cout << arg1 + 1)(i100);
 
-    //(cout << arg1 << "this is it, shukz:" << hex << arg2 << endl << endl)(msg, i100);
+    (cout << arg1 << "this is it, shukz:" << hex << arg2 << endl << endl)(msg, i100);
 
     int in;
     int out = 12345;
     stringstream sstr;
     (sstr << arg1)(out);
-    //(sstr >> arg1)(in);
-    //BOOST_TEST(in == out);
+    (sstr >> arg1)(in);
+    BOOST_TEST(in == out);
 
     return boost::report_errors();
 }
