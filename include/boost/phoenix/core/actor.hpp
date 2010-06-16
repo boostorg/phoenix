@@ -8,11 +8,11 @@
 #ifndef PHOENIX_CORE_ACTOR_HPP
 #define PHOENIX_CORE_ACTOR_HPP
 
-#include <boost/fusion/container/vector/vector10.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/phoenix/core/arity.hpp>
 #include <boost/phoenix/core/domain.hpp>
+#include <boost/phoenix/core/environment.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/proto/extends.hpp>
 #include <boost/proto/debug.hpp>
@@ -36,8 +36,8 @@ namespace boost { namespace phoenix
     namespace result_of
     {
         template <typename Expr, typename A0 = void, typename A1 = void
-            /* ... more ... */
-            , typename Dummy = void>
+            /* ... more ... */, 
+            typename Dummy = void>
         struct actor;
 
         template <typename Expr>
@@ -48,7 +48,8 @@ namespace boost { namespace phoenix
             typedef typename
                 mpl::eval_if_c<
                     arity == 0 // avoid calling result_of::actor when this is true
-                  , boost::result_of<eval_grammar(Expr const&, fusion::vector0<>&)>
+                  , boost::result_of<eval_grammar(Expr const&, 
+                        typename make_basic_environment<>::type&)>
                   , mpl::identity<detail::error_expecting_arguments>
                 >::type
             type;
@@ -57,13 +58,15 @@ namespace boost { namespace phoenix
         template <typename Expr, typename A0>
         struct actor<Expr, A0>
             : boost::result_of<eval_grammar(
-                ::boost::phoenix::actor<Expr> const&, fusion::vector1<A0>&)>
+                ::boost::phoenix::actor<Expr> const&, 
+                    typename make_basic_environment<A0>::type&)>
         {};
         
         template <typename Expr, typename A0, typename A1>
         struct actor<Expr, A0, A1>
             : boost::result_of<eval_grammar(
-                ::boost::phoenix::actor<Expr> const&, fusion::vector2<A0, A1>&)>
+                ::boost::phoenix::actor<Expr> const&, 
+                    typename make_basic_environment<A0, A1>::type&)>
         {};
     }
 
@@ -105,7 +108,7 @@ namespace boost { namespace phoenix
         operator()() const
         {
             BOOST_PROTO_ASSERT_MATCHES( *this, eval_grammar );
-            fusion::vector0<> args;
+            typename make_basic_environment<>::type args;
 
             return eval(this->proto_base(), args);
         }
@@ -115,7 +118,7 @@ namespace boost { namespace phoenix
         operator()(A0 const& a0) const
         {
             BOOST_PROTO_ASSERT_MATCHES(*this, eval_grammar);
-            fusion::vector1<A0 const&> args(a0);
+            typename make_basic_environment<A0 const&>::type args(a0);
 
             return eval(*this, args);
         }
@@ -125,7 +128,7 @@ namespace boost { namespace phoenix
         operator()(A0 const& a0, A1 const& a1) const
         {
             BOOST_PROTO_ASSERT_MATCHES(*this, eval_grammar);
-            fusion::vector2<A0 const&, A1 const &> args(a0, a1);
+            typename make_basic_environment<A0 const&, A1 const&>::type args(a0, a1);
 
             std::cout << typeid( eval( *this, args ) ).name() << "\n";
 

@@ -41,11 +41,24 @@ namespace boost { namespace phoenix
         }
     };
     
-//    template <typename Actor, typename Env, typename Enable = void>
-//    struct get_signature<Actor, Env, 
-//        typename enable_if<fusion::traits::is_sequence<T> >::type>
-//    {
-//    };
+    template <typename A0 = void, typename A1 = void
+        /* ... more ... */, 
+        typename Dummy = void>
+    struct make_basic_environment;
+    
+    template <>
+    struct make_basic_environment<>
+        : mpl::identity<fusion::vector0<> > {};
+    
+    template <typename A0>
+    struct make_basic_environment<A0>
+        : mpl::identity<fusion::vector1<A0> > {};
+
+    template <typename A0, typename A1>
+    struct make_basic_environment<A0, A1>
+        : mpl::identity<fusion::vector2<A0, A1> > {};
+    
+    /* ... more ... */
 }}
 
 #endif

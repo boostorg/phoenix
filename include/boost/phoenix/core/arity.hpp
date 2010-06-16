@@ -21,9 +21,10 @@
 
 namespace boost { namespace phoenix
 {
-
     ////////////////////////////////////////////////////////////////////////////
-    // Calculate the arity of an expression using proto transforms
+    //
+    //  Calculate the arity of an expression using proto transforms
+    //
     ////////////////////////////////////////////////////////////////////////////
     
     struct argument;
@@ -39,10 +40,11 @@ namespace boost { namespace phoenix
         {};
         
         typedef proto::fold<
-            proto::_
-          , mpl::int_<0>()
-          , mpl::max<arity, proto::_state>()>
-          arity_fold;
+            proto::_, 
+            mpl::int_<0>(), 
+            mpl::max<arity, proto::_state>()>
+        arity_fold;
+        
         typedef proto::when<proto::_, mpl::int_<0>()> arity_default;
 
         struct arity_cases
@@ -101,7 +103,7 @@ namespace boost { namespace phoenix
     }
 
     template <typename Expr>
-    int arity( Expr const & )
+    int arity(Expr const&)
     {
         return result_of::arity<Expr>::type::value;
     }
