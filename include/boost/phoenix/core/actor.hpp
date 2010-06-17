@@ -20,18 +20,6 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/support/iterate.hpp>
-#include <boost/preprocessor/cat.hpp>
-#include <boost/preprocessor/comparison/less.hpp>
-#include <boost/preprocessor/control/if.hpp>
-#include <boost/preprocessor/facilities/expand.hpp>
-#include <boost/preprocessor/facilities/intercept.hpp>
-#include <boost/preprocessor/repetition/enum_params.hpp>
-#include <boost/preprocessor/repetition/enum_binary_params.hpp>
-#include <boost/preprocessor/seq/enum.hpp>
-#include <boost/preprocessor/seq/fold_right.hpp>
-#include <boost/preprocessor/seq/for_each_i.hpp>
-#include <boost/preprocessor/seq/for_each_product.hpp>
-#include <boost/preprocessor/tuple/rem.hpp>
 #include <boost/proto/extends.hpp>
 #include <boost/proto/debug.hpp>
 #include <boost/utility/result_of.hpp>
@@ -73,13 +61,11 @@ namespace boost { namespace phoenix
             type;
         };
 
-#define PHOENIX_ITERATE_RESULT_OF 1
 #define PHOENIX_ITERATION_PARAMS                                                \
         (4, (1, PHOENIX_ACTOR_LIMIT,                                            \
         <boost/phoenix/core/actor.hpp>,                                         \
         PHOENIX_ITERATE_RESULT_OF))
 #include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_RESULT_OF
 
     }
 
@@ -116,14 +102,11 @@ namespace boost { namespace phoenix
             return eval(this->proto_base(), args);
         }
 
-#define PHOENIX_ITERATE_OPERATOR 2
 #define PHOENIX_ITERATION_PARAMS                                                \
         (4, (1, PHOENIX_ACTOR_LIMIT,                                            \
         <boost/phoenix/core/actor.hpp>,                                         \
         PHOENIX_ITERATE_OPERATOR))
-
 #include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_OPERATOR
 
     };
 }}
