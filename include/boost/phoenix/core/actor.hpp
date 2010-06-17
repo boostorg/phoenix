@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
     Copyright (c) 2010 Eric Niebler
+    Copyright (c) 2010 Thomas Heller
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +12,6 @@
 #ifndef PHOENIX_CORE_ACTOR_HPP
 #define PHOENIX_CORE_ACTOR_HPP
 
-#include <boost/fusion/container/vector/vector10.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/phoenix/core/arity.hpp>
@@ -35,8 +35,8 @@
 #include <boost/proto/extends.hpp>
 #include <boost/proto/debug.hpp>
 #include <boost/utility/result_of.hpp>
-
 #include <boost/mpl/void.hpp>
+
 namespace boost { namespace phoenix
 {
     template <typename Expr>
@@ -126,14 +126,20 @@ namespace boost { namespace phoenix
 #undef PHOENIX_ITERATE_OPERATOR
 
     };
-}
+}}
 
+namespace boost
+{
     // specialize boost::result_of to return the proper result type
-    template<typename Expr>
-    struct result_of<phoenix::actor<Expr>() >
-      : phoenix::result_of::actor<Expr>
+    template <typename Expr>
+    struct result_of<phoenix::actor<Expr>()>
+        : phoenix::result_of::actor<Expr>
     {};
-
+    
+    template <typename Expr>
+    struct result_of<phoenix::actor<Expr> const()>
+        : result_of<phoenix::actor<Expr>()>
+    {};
 }
 
 #endif
