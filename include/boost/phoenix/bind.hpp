@@ -9,5 +9,6 @@
 
 #include <boost/phoenix/version.hpp>
 #include <boost/phoenix/bind/bind.hpp>
+#include <boost/phoenix/bind/bind_member_variable.hpp>
 
 #endif

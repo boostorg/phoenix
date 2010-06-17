@@ -52,7 +52,7 @@ test-suite phoenix_bind :
     [ run bind/bind_function_tests.cpp ] 
     [ run bind/bind_function_object_tests.cpp ]
     [ run bind/bind_member_function_tests.cpp ]
-#    [ run bind/bind_member_variable_tests.cpp ]
+    [ run bind/bind_member_variable_tests.cpp ]
     ;
     
 test-suite phoenix_statement :

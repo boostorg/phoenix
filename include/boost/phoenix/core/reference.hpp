@@ -53,14 +53,14 @@ namespace boost { namespace phoenix
     struct make_reference : compose<reference, T&> {};
 
     template <typename T>
-    typename make_reference<T>::type
+    typename make_reference<T>::type const
     ref(T& t)
     {
         return make_reference<T>()(t);
     }
 
     template <typename T>
-    typename make_reference<T const>::type
+    typename make_reference<T const>::type const
     cref(T& t)
     {
         return make_reference<T const>()(t);

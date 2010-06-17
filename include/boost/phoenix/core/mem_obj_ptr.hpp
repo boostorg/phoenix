@@ -1,0 +1,133 @@
+/*==============================================================================
+    Copyright (c) 2005-2010 Joel de Guzman
+    Copyright (c) 2010 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+==============================================================================*/
+#ifndef PHOENIX_CORE_MEM_OBJ_PTR_HPP
+#define PHOENIX_CORE_MEM_OBJ_PTR_HPP
+
+#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/remove_const.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+
+namespace boost { namespace phoenix
+{
+    ////////////////////////////////////////////////////////////////////////////
+    //
+    // mem_obj_ptr
+    //
+    //         Function to evaluate member object pointers
+    //         To be used in bind and operator->*
+    //
+    ////////////////////////////////////////////////////////////////////////////
+    namespace meta
+    {
+        template <typename T>
+        struct member_type;
+        
+        template <typename Class, typename MemberType>
+        struct member_type<MemberType (Class::*)>
+        {
+            typedef MemberType type;
+        };
+        
+        template <typename Class, typename MemberType>
+        struct member_type<MemberType (Class::* &)>
+        {
+            typedef MemberType type;
+        };
+        
+        template <typename Class, typename MemberType>
+        struct member_type<MemberType (Class::* const&)>
+        {
+            typedef MemberType type;
+        };
+
+        template <typename T> 
+        struct object_type;
+
+        template <typename T>
+        struct object_type<T*>
+        {
+            typedef T type;
+        };
+
+        /*
+        template <typename T>
+        struct object_type<shared_ptr<T> >
+        {
+            typedef T type;
+        };
+        
+        template <typename T>
+        struct object_type<scoped_ptr<T> >
+        {
+            typedef T type;
+        };
+
+        template <typename T>
+        struct object_type<std::auto_ptr<T> >
+        {
+            typedef T type;
+        };
+        */
+    }
+
+    namespace result_of
+    {
+        template <typename Env, typename Object, typename MemPtr>
+        struct mem_obj_ptr
+            : boost::result_of<eval_grammar()>
+        {
+            typedef typename meta::object_type<
+                typename remove_const<
+                    typename remove_reference<
+                        typename boost::result_of<
+                            eval_grammar(Object const&, Env&)>::type
+                        >::type
+                    >::type
+                >::type object_type;
+
+            typedef typename meta::member_type<
+                typename boost::result_of<
+                    eval_grammar(MemPtr const&, Env&)>::type
+                >::type member_type;
+
+            typedef typename add_reference<
+                typename mpl::eval_if<
+                    is_const<object_type>
+                  , add_const<member_type>
+                  , mpl::identity<member_type> >::type
+                >::type type;
+        };
+    }
+
+    struct mem_obj_ptr
+    {
+        template <typename Sig>
+        struct result;
+
+        template <typename This, typename Env, typename Object, typename MemPtr>
+        struct result<This(Env&, Object const&, MemPtr const&)>
+            : result_of::mem_obj_ptr<Env, Object, MemPtr>
+        {};
+
+        template <typename Env, typename Object, typename MemPtr>
+        typename result_of::mem_obj_ptr<Env, Object, MemPtr>::type
+        operator()(Env& env, Object const& obj, MemPtr const& ptr) const
+        {
+            return get_pointer(eval(obj, env))->*eval(ptr, env);
+        }
+    };
+
+    template <typename Object, typename MemPtr>
+    struct make_mem_obj_ptr : compose<mem_obj_ptr, Object, MemPtr> {};
+
+
+}}
+
+#endif

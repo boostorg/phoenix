@@ -16,10 +16,21 @@
 namespace boost { namespace phoenix
 {
     ////////////////////////////////////////////////////////////////////////////
-    // Values
+    //
+    // values
+    //
+    //      function for evaluating values, e.g. val(123)
+    //
     ////////////////////////////////////////////////////////////////////////////
 
-    // function for evaluating values, e.g. val( 123 )
+    namespace result_of
+    {
+        template <typename Env, typename T>
+        struct value
+            : boost::result_of<eval_grammar(T)>
+        {};
+    }
+
     struct value
     {
         template<typename T>
@@ -30,23 +41,26 @@ namespace boost { namespace phoenix
         struct result;
 
         template<typename This, typename Env, typename T>
-        struct result<This(Env &,T &)>
-            : boost::result_of<eval_grammar(T)>
+        struct result<This(Env&,T const&)>
+            : result_of::value<Env, T>
         {};
 
         template<typename Env, typename T>
-        typename boost::result_of<eval_grammar(T)>::type
-        operator()(Env & env, T const & t)
+        typename result_of::value<Env, T>::type
+        operator()(Env& env, T const& t)
         {
             return eval(t);
         }
     };
 
+    template <typename T>
+    struct make_value : compose<value, T> {};
+
     template<typename T>
-    typename value::compose<T>::result_type
+    typename make_value<T>::type const
     val(T const & t )
     {
-        return value::compose<T>()(t);
+        return make_value<T>()(t);
     }
 
 }}

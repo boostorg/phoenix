@@ -22,8 +22,8 @@ namespace boost { namespace phoenix
     // Bind
     ////////////////////////////////////////////////////////////////////////////
     
-    template<typename F>
-    typename boost::result_of<function<F>()>::type
+    template <typename F>
+    typename boost::result_of<function<F>()>::type const
     bind(F f)
     {
         return function<F>(f)();
@@ -40,8 +40,15 @@ namespace boost { namespace phoenix
 
 #else
     
-    template<typename F, PHOENIX_typename_A>
-    typename boost::result_of<function<F>(PHOENIX_A_const_ref)>::type
+    template <typename F, PHOENIX_typename_A>
+#if PHOENIX_ITERATION == 1
+    typename disable_if<
+        is_member_object_pointer<F>
+      , typename boost::result_of<function<F>(A0 const&)>::type const
+      >::type
+#else
+    typename boost::result_of<function<F>(PHOENIX_A_const_ref)>::type const
+#endif
     bind(F f, PHOENIX_A_const_ref_a)
     {
         return function<F>(f)(PHOENIX_a);
