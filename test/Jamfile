@@ -9,11 +9,6 @@
 # bring in rules for testing
 import testing ;
 
-project
-    : requirements
-        <include>../../..
-    ;
-
 local multi-threading = <library>/boost/thread//boost/thread
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 

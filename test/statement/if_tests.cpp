@@ -12,28 +12,28 @@
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/core.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
-
 int
 main()
 {
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::if_;
+    using boost::phoenix::ref;
+    
     int init[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    vector<int> v(init, init+10);
+    std::vector<int> v(init, init+10);
 
-    cout << dec;
+    std::cout << std::dec;
     int x = 0;
 
     for_each(v.begin(), v.end(),
         if_(arg1 > 3 && arg1 <= 8)
         [
-            cout << arg1 << ", ",
+            std::cout << arg1 << ", ",
             ref(x) += arg1
         ]
     );
 
-    cout << endl;
+    std::cout << std::endl;
     BOOST_TEST(x == 4+5+6+7+8);
 
     x = 0;
@@ -43,25 +43,25 @@ main()
     for_each(v.begin(), v.end(),
         if_(arg1 > 5)
         [
-            cout << arg1 << " > 5\n",
+            std::cout << arg1 << " > 5\n",
             ref(x) += arg1
         ]
         .else_
         [
             if_(arg1 == 5)
             [
-                cout << arg1 << " == 5\n",
+                std::cout << arg1 << " == 5\n",
                 ref(z) += arg1
             ]
             .else_
             [
-                cout << arg1 << " < 5\n",
+                std::cout << arg1 << " < 5\n",
                 ref(y) += arg1
             ]
         ]
     );
 
-    cout << endl;
+    std::cout << std::endl;
     BOOST_TEST(x == 6+7+8+9+10);
     BOOST_TEST(y == 1+2+3+4);
     BOOST_TEST(z == 5);
