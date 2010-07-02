@@ -5,9 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-
-#if !PHOENIX_IS_ITERATING
-
 #ifndef PHOENIX_CORE_COMPOSE_HPP
 #define PHOENIX_CORE_COMPOSE_HPP
 
@@ -66,19 +63,8 @@ namespace boost { namespace phoenix
         }
     };
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
-    <boost/phoenix/core/compose.hpp>))
-#include PHOENIX_ITERATE()
-
-}}
-
-#endif
-
-#else
-
-    template <typename F, template<typename> class Actor, PHOENIX_typename_A>
-    struct compose_ex<F, Actor, PHOENIX_A>
+    template <typename F, template<typename> class Actor, typename A0>
+    struct compose_ex<F, Actor, A0>
     {
         typedef
             typename proto::result_of::make_expr<
@@ -86,28 +72,73 @@ namespace boost { namespace phoenix
                 , default_domain_with_basic_expr
                 , funcwrap<F>
                 , env
-                , PHOENIX_A>::type
+                , A0>::type
+            base_type;
+        typedef Actor<base_type> result_type;
+        typedef result_type type;
+
+        result_type const
+        operator()(typename call_traits<A0>::param_type a0) const
+        {
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, a0}};
+            return e;
+        }
+    };
+
+    template <typename F, template<typename> class Actor, typename A0, typename A1>
+    struct compose_ex<F, Actor, A0, A1>
+    {
+        typedef
+            typename proto::result_of::make_expr<
+                  proto::tag::function
+                , default_domain_with_basic_expr
+                , funcwrap<F>
+                , env
+                , A0
+                , A1>::type
+            base_type;
+        typedef Actor<base_type> result_type;
+        typedef result_type type;
+
+        result_type const
+        operator()(typename call_traits<A0>::param_type a0,typename call_traits<A1>::param_type a1) const
+        {
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, a0, a1}};
+            return e;
+        }
+    };
+
+    template <typename F, template<typename> class Actor, typename A0, typename A1, typename A2>
+    struct compose_ex<F, Actor, A0, A1, A2>
+    {
+        typedef
+            typename proto::result_of::make_expr<
+                  proto::tag::function
+                , default_domain_with_basic_expr
+                , funcwrap<F>
+                , env
+                , A0
+                , A1
+                , A2>::type
             base_type;
         typedef Actor<base_type> result_type;
         typedef result_type type;
 
         result_type const
         operator()(
-            BOOST_PP_ENUM_BINARY_PARAMS(
-                PHOENIX_ITERATION,
-                typename call_traits< A, >::param_type a)) const
+            typename call_traits<A0>::param_type a0,
+            typename call_traits<A1>::param_type a1,
+            typename call_traits<A2>::param_type a2) const
         {
-#if PHOENIX_ITERATION == 1
-            // silence gcc warnings
-            //actor<base_type> const e = {{{funcwrap<F>()}, {env()}, {a0}}};
-            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, a0}};
-#elif PHOENIX_ITERATION == 2
-            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, a0, a1}};
-#else
-            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, PHOENIX_a}};
-#endif
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, a0, a1, a2}};
             return e;
         }
     };
 
+    // Bring in the rest
+    #include <boost/phoenix/core/detail/compose_ex.hpp>
+
+}}
+
 #endif
+

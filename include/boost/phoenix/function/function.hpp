@@ -5,9 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-
-#if !PHOENIX_IS_ITERATING
-
 #ifndef PHOENIX_FUNCTION_FUNCTION_HPP
 #define PHOENIX_FUNCTION_FUNCTION_HPP
 
@@ -40,13 +37,31 @@ namespace boost { namespace phoenix
               , F>
         {};
 
-#define PHOENIX_ITERATE_RESULT_OF 1
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (4, (1, PHOENIX_ACTOR_LIMIT,                                                \
-    <boost/phoenix/function/function.hpp>, PHOENIX_ITERATE_RESULT_OF))
-#include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_RESULT_OF
+        template <typename F, typename A0>
+        struct function<F, A0>
+            : proto::result_of::make_expr<
+                proto::tag::function
+              , phoenix_domain
+              , F, A0>
+        {};
 
+        template <typename F, typename A0, typename A1>
+        struct function<F, A0, A1>
+            : proto::result_of::make_expr<
+                proto::tag::function
+              , phoenix_domain
+              , F, A0, A1>
+        {};
+
+        template <typename F, typename A0, typename A1, typename A2>
+        struct function<F, A0, A1, A2>
+            : proto::result_of::make_expr<
+                proto::tag::function
+              , phoenix_domain
+              , F, A0, A1, A2>
+        {};
+
+        #include <boost/phoenix/function/detail/function_result_of.hpp>
     }
 
     // functor which returns our lazy function call extension
@@ -59,26 +74,45 @@ namespace boost { namespace phoenix
           : f(f)
         {}
 
-        template<typename Sig>
+        template <typename Sig>
         struct result;
-
-        template<typename This>
-        struct result<This()>
-            : result_of::function<F>
-        {};
 
         typename result_of::function<F>::type const
         operator()() const
         {
             return proto::make_expr<proto::tag::function, phoenix_domain>(f);
         }
+        
+        template <typename This, typename A0>
+        struct result<This(A0 const&)>
+            : result_of::function<F, A0>
+        {};
 
-#define PHOENIX_ITERATE_OPERATOR 2
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (4, (1, PHOENIX_ACTOR_LIMIT,                                            \
-        <boost/phoenix/function/function.hpp>, PHOENIX_ITERATE_OPERATOR))
-#include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_OPERATOR
+        template <typename A0>
+        typename result_of::function<F, A0>::type const
+        operator()(A0 const& a0) const
+        {
+            return proto::make_expr<
+                proto::tag::function, phoenix_domain>(f, a0);
+        }
+
+        template <typename A0, typename A1>
+        typename result_of::function<F, A0, A1>::type const
+        operator()(A0 const& a0, A1 const& a1) const
+        {
+            return proto::make_expr<
+                proto::tag::function, phoenix_domain>(f, a0, a1);
+        }
+
+        template <typename A0, typename A1, typename A2>
+        typename result_of::function<F, A0, A1, A2>::type const
+        operator()(A0 const& a0, A1 const& a1, A2 const& a2) const
+        {
+            return proto::make_expr<
+                proto::tag::function, phoenix_domain>(f, a0, a1, a2);
+        }
+        
+        #include <boost/phoenix/function/detail/function_operator.hpp>
 
         F f;
     };
@@ -94,34 +128,3 @@ namespace boost { namespace phoenix
 
 #endif
 
-#else
-
-#if BOOST_PP_ITERATION_FLAGS() == PHOENIX_ITERATE_RESULT_OF
-        
-        template <typename F, PHOENIX_typename_A>
-        struct function<F, PHOENIX_A>
-          : proto::result_of::make_expr<
-                proto::tag::function
-              , phoenix_domain
-              , F
-              , PHOENIX_A>
-        {};
-
-#elif BOOST_PP_ITERATION_FLAGS() == PHOENIX_ITERATE_OPERATOR
-
-        template<typename This, PHOENIX_typename_A>
-        struct result<This(PHOENIX_A_const_ref)>
-            : result_of::function<F, PHOENIX_A>
-        {};
-
-        template< PHOENIX_typename_A>
-        typename result_of::function<F, PHOENIX_A>::type const
-        operator()(PHOENIX_A_const_ref_a) const
-        {
-            return proto::make_expr<
-                proto::tag::function, phoenix_domain>(f, PHOENIX_a);
-        }
-
-#endif
-
-#endif
