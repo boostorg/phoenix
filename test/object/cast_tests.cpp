@@ -6,12 +6,10 @@
 ==============================================================================*/
 #include <string>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/object.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+using std::string;
 
 struct T
 {
@@ -36,6 +34,12 @@ struct VU : VT
 int
 main()
 {
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::const_cast_;
+    using boost::phoenix::dynamic_cast_;
+    using boost::phoenix::reinterpret_cast_;
+    using boost::phoenix::static_cast_;
+
     {
         U u;
         BOOST_TEST(arg1(u).foo() == "U");

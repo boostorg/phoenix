@@ -8,6 +8,11 @@
 #define PHOENIX_STATEMENT_HPP
 
 #include <boost/phoenix/version.hpp>
+#include <boost/phoenix/statement/do_while.hpp>
+#include <boost/phoenix/statement/for.hpp>
 #include <boost/phoenix/statement/if.hpp>
+#include <boost/phoenix/statement/throw.hpp>
+#include <boost/phoenix/statement/try_catch.hpp>
+#include <boost/phoenix/statement/while.hpp>
 
 #endif

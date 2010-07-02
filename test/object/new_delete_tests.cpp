@@ -9,15 +9,14 @@
 #include <algorithm>
 #include <boost/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/operator.hpp>
 
 int n = 0;
+
+using std::cout;
+using std::endl;
 
 struct X
 {
@@ -29,6 +28,14 @@ struct X
 int
 main()
 {
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::construct;
+    using boost::phoenix::delete_;
+    using boost::phoenix::new_;
+
+    using std::for_each;
+    using std::vector;
+
     {
         vector<X*> v(10);
 

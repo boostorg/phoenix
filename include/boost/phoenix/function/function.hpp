@@ -14,6 +14,7 @@
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/fusion/sequence/intrinsic/at_c.hpp>
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/utility/result_of.hpp>

@@ -11,8 +11,11 @@
 #include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/type_traits/is_const.hpp>
-#include <boost/type_traits/remove_const.hpp>
+#include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+
+#include <boost/type_traits/remove_reference.hpp>
+
 
 namespace boost { namespace phoenix
 {
@@ -36,7 +39,7 @@ namespace boost { namespace phoenix
         };
         
         template <typename Class, typename MemberType>
-        struct member_type<MemberType (Class::* &)>
+        struct member_type<MemberType (Class::*&)>
         {
             typedef MemberType type;
         };
@@ -49,32 +52,12 @@ namespace boost { namespace phoenix
 
         template <typename T> 
         struct object_type;
-
+        
         template <typename T>
         struct object_type<T*>
         {
             typedef T type;
         };
-
-        /*
-        template <typename T>
-        struct object_type<shared_ptr<T> >
-        {
-            typedef T type;
-        };
-        
-        template <typename T>
-        struct object_type<scoped_ptr<T> >
-        {
-            typedef T type;
-        };
-
-        template <typename T>
-        struct object_type<std::auto_ptr<T> >
-        {
-            typedef T type;
-        };
-        */
     }
 
     namespace result_of
@@ -87,22 +70,25 @@ namespace boost { namespace phoenix
                 typename remove_const<
                     typename remove_reference<
                         typename boost::result_of<
-                            eval_grammar(Object const&, Env&)>::type
+                            eval_grammar(Object const&, Env&)
                         >::type
                     >::type
-                >::type object_type;
+                >::type
+            >::type object_type;
 
             typedef typename meta::member_type<
                 typename boost::result_of<
-                    eval_grammar(MemPtr const&, Env&)>::type
-                >::type member_type;
+                    eval_grammar(MemPtr const&, Env&)
+                >::type
+            >::type member_type;
 
             typedef typename add_reference<
                 typename mpl::eval_if<
                     is_const<object_type>
                   , add_const<member_type>
-                  , mpl::identity<member_type> >::type
-                >::type type;
+                  , mpl::identity<member_type>
+                >::type
+            >::type type;
         };
     }
 
@@ -127,6 +113,59 @@ namespace boost { namespace phoenix
     template <typename Object, typename MemPtr>
     struct make_mem_obj_ptr : compose<mem_obj_ptr, Object, MemPtr> {};
 
+    namespace detail
+    {
+        template <typename RT, typename MP>
+        struct member_variable
+        {
+            template <typename Sig>
+            struct result;
+
+            template <typename This, typename Class>
+            struct result<This(Class)>
+            {
+                typedef typename boost::mpl::if_<
+                    boost::is_const<
+                        typename boost::remove_pointer<
+                            typename boost::remove_reference<Class>::type
+                        >::type
+                    >
+                  , const RT&
+                  , RT&
+                >::type type;
+            };
+
+            member_variable(MP mp)
+                : mp(mp) {}
+
+            template <typename Class>
+            RT& operator()(Class& obj) const
+            {
+                return obj.*mp;
+            };
+
+            template <typename Class>
+            RT& operator()(Class* obj) const
+            {
+                return obj->*mp;
+            };
+
+            template <typename Class>
+            RT const& operator()(Class const& obj) const
+            {
+                return obj.*mp;
+            };
+
+            template <typename Class>
+            RT const& operator()(Class const* obj) const
+            {
+                return obj->*mp;
+            };
+
+            MP mp;
+
+        };
+    }
 
 }}
 

@@ -27,16 +27,12 @@ namespace boost { namespace phoenix
     {
         template <typename Env, typename T>
         struct value
-            : boost::result_of<eval_grammar(T)>
+            : boost::result_of<eval_grammar(T const&)>
         {};
     }
 
     struct value
     {
-        template<typename T>
-        struct compose : phoenix::compose<value, T>
-        {};
-
         template<typename Sig>
         struct result;
 
@@ -60,6 +56,14 @@ namespace boost { namespace phoenix
     typename make_value<T>::type const
     val(T const & t )
     {
+        return make_value<T>()(t);
+    }
+
+    template<typename T>
+    typename make_value<T>::type const
+    val(T & t )
+    {
+        std::cout << "blubber\n";
         return make_value<T>()(t);
     }
 

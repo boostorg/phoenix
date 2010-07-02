@@ -45,6 +45,9 @@ namespace boost { namespace phoenix
         }
     };
 
+    template <typename Cond, typename Then, typename Else>
+    struct make_if_else_s : compose<if_else_eval, Cond, Then, Else> {};
+
     // Function for evaluating lambdas like: if_( foo )[ bar ]
     struct if_eval
     {
@@ -63,19 +66,15 @@ namespace boost { namespace phoenix
     template<typename Cond, typename Then>
     struct else_gen
     {
-        template<typename Else>
-        struct compose : phoenix::compose<if_else_eval, Cond, Then, Else>
-        {};
-
         else_gen(Cond const & cond, Then const & then)
             : cond( cond )
             , then( then ) {}
 
         template<typename Else>
-        typename compose< Else >::result_type
+        typename make_if_else_s<Cond, Then, Else>::type const
         operator[](Else const & else_) const
         {
-            return compose< Else >()(cond, then, else_);
+            return make_if_else_s<Cond, Then, Else>()(cond, then, else_);
         }
 
         Cond const & cond;
@@ -100,22 +99,21 @@ namespace boost { namespace phoenix
         else_gen<cond_type, then_type> else_;
     };
 
+    template <typename Cond, typename Then>
+    struct make_if : compose_ex<if_eval, if_actor, Cond, Then> {};
+
     // Generator for if( cond )[ then ] branch.
     template<typename Cond>
     struct if_gen
     {
-        template<typename Then>
-        struct compose : phoenix::compose_ex<if_eval, if_actor, Cond, Then>
-        {};
-
         if_gen(Cond const & cond)
             : cond( cond ) {}
 
         template<typename Then>
-        typename compose<Then>::result_type
+        typename make_if<Cond, Then>::type const
         operator[](Then const & then) const
         {
-            return compose<Then>()(cond, then);
+            return make_if<Cond, Then>()(cond, then);
         }
 
         Cond const & cond;

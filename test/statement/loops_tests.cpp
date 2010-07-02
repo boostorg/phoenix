@@ -8,17 +8,25 @@
 #include <vector>
 #include <algorithm>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/operator.hpp>
 
 int
 main()
 {
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::do_;
+    using boost::phoenix::for_;
+    using boost::phoenix::ref;
+    using boost::phoenix::val;
+    using boost::phoenix::while_;
+
+    using std::cout;
+    using std::endl;
+    using std::for_each;
+    using std::vector;
+
     int init[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     vector<int> v(init, init+10);
     vector<int> t = v;
@@ -32,7 +40,8 @@ main()
                 cout << arg1 << ", ",
                 ++ref(x)
             ],
-            cout << val("\n")
+            cout << ref("\n")
+            //cout << val("\n")
         )
     );
 
@@ -49,7 +58,8 @@ main()
                 ++ref(x)
             ]
             .while_(arg1--),
-            cout << val("\n")
+            cout << ref("\n")
+            //cout << val("\n")
         )
     );
 
@@ -66,7 +76,8 @@ main()
                 cout << arg1 << ", ",
                 ++ref(x)
             ],
-            cout << val("\n")
+            cout << ref("\n")
+            //cout << val("\n")
         )
     );
 

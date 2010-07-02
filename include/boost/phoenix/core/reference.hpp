@@ -26,8 +26,11 @@ namespace boost { namespace phoenix
     namespace result_of
     {
         template <typename Env, typename T>
-        struct reference
-            : boost::result_of<eval_grammar(T&)>
+        struct reference;
+
+        template <typename Env, typename T>
+        struct reference<Env, T const&>
+            : boost::result_of<eval_grammar(T const&)>
         {};
     }
     
@@ -37,13 +40,13 @@ namespace boost { namespace phoenix
         struct result;
 
         template <typename This, typename Env, typename T>
-        struct result<This(Env&, T&)>
-            : result_of::reference<Env, T>
+        struct result<This(Env&, T const&)>
+            : result_of::reference<Env, T const&>
         {};
 
         template <typename Env, typename T>
-        typename result_of::reference<Env, T>::type
-        operator()(Env& env, T& ref) const
+        typename result_of::reference<Env, T const&>::type
+        operator()(Env& env, T const& ref) const
         {
             return eval(ref);
         }
@@ -51,6 +54,9 @@ namespace boost { namespace phoenix
     
     template <typename T>
     struct make_reference : compose<reference, T&> {};
+    
+    template <typename T>
+    struct make_reference<T const> : compose<reference, T const&> {};
 
     template <typename T>
     typename make_reference<T>::type const
@@ -61,7 +67,7 @@ namespace boost { namespace phoenix
 
     template <typename T>
     typename make_reference<T const>::type const
-    cref(T& t)
+    cref(T const& t)
     {
         return make_reference<T const>()(t);
     }

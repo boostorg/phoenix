@@ -9,17 +9,11 @@
 #include <boost/noncopyable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
-#include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/bind.hpp>
-
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
-namespace phx = boost::phoenix;
 
 namespace test
 {
-    struct x : boost::noncopyable // test non-copyable (hold this by reference)
+    struct x //: boost::noncopyable // test non-copyable (hold this by reference)
     {
         int m;
     };
@@ -29,17 +23,28 @@ namespace test
     };
 }
 
-template<class T, class F>
-void write_test(F f) {
+template <typename T, typename F>
+void
+write_test(F f)
+{
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::bind;
+
     T x_;
+
     bind(&T::m, f(x_))() = 122;
     BOOST_TEST(x_.m == 122);
     bind(&T::m, arg1)(f(x_)) = 123;
     BOOST_TEST(x_.m == 123);
 }
 
-template<class T, class F>
-void read_test(F f) {
+template <typename T, typename F>
+void
+read_test(F f)
+{
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::bind;
+
     T x_;
     x_.m = 123;
 
@@ -49,8 +54,9 @@ void read_test(F f) {
 
 struct identity
 {
-    template<class T>
-    T& operator()(T& t) const
+    template <typename T>
+    T&
+    operator()(T& t) const
     {
         return t;
     }
@@ -58,8 +64,9 @@ struct identity
 
 struct constify
 {
-    template<class T>
-    const T& operator()(const T& t) const
+    template <typename T>
+    T const&
+    operator()(T const& t) const
     {
         return t;
     }
@@ -67,8 +74,9 @@ struct constify
 
 struct add_pointer
 {
-    template<class T>
-    T* const operator()(T& t) const
+    template <typename T>
+    T* const
+    operator()(T& t) const
     {
         return &t;
     }
@@ -76,8 +84,9 @@ struct add_pointer
 
 struct add_const_pointer
 {
-    template<class T>
-    const T* const operator()(const T& t) const
+    template <typename T>
+    const T* const
+    operator()(T const& t) const
     {
         return &t;
     }
@@ -91,13 +100,14 @@ main()
     //write_test<test::xx>(identity());
     write_test<test::xx>(add_pointer());
 
-    //read_test<test::x>(identity());
-    //read_test<test::x>(constify()); // this fails because of capture by value.
+    read_test<test::x>(identity());
+    read_test<test::x>(constify());
     read_test<test::x>(add_pointer());
     read_test<test::x>(add_const_pointer());
-    //read_test<test::xx>(identity());
-    //read_test<test::xx>(constify());// this fails because of capture by value.
+    read_test<test::xx>(identity());
+    read_test<test::xx>(constify());
     read_test<test::xx>(add_pointer());
     read_test<test::xx>(add_const_pointer());
+
     return boost::report_errors();
 }

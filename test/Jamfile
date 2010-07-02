@@ -25,7 +25,7 @@ test-suite phoenix_operator :
     [ run operator/arithmetic_tests.cpp ] 
     [ run operator/bitwise_tests.cpp ]
     [ run operator/comparison_tests.cpp ] 
-#    [ run operator/if_else_tests.cpp ]
+    [ run operator/if_else_tests.cpp ]
     [ run operator/io_tests.cpp ]
     [ run operator/logical_tests.cpp ]
     [ run operator/misc_binary_tests.cpp ]
@@ -34,10 +34,10 @@ test-suite phoenix_operator :
     [ run operator/member.cpp ]
     ;
 
-#test-suite phoenix_object :
-#    [ run object/cast_tests.cpp ] 
-#    [ run object/new_delete_tests.cpp ] 
-#    ;
+test-suite phoenix_object :
+    [ run object/cast_tests.cpp ] 
+    [ run object/new_delete_tests.cpp ] 
+    ;
 
 test-suite phoenix_function :
     [ run function/function_tests.cpp ] 
@@ -52,9 +52,9 @@ test-suite phoenix_bind :
     
 test-suite phoenix_statement :
     [ run statement/if_tests.cpp ] 
-#    [ run statement/loops_tests.cpp ] 
+    [ run statement/loops_tests.cpp ] 
 #    [ run statement/switch_tests.cpp ] 
-#    [ run statement/exceptions.cpp ]
+    [ run statement/exceptions.cpp ]
     ;
         
 #test-suite phoenix_container :

@@ -19,6 +19,8 @@
 #include <boost/proto/tags.hpp>
 #include <boost/proto/make_expr.hpp>
 
+namespace foo { template< typename T > struct wrap{}; }
+
 namespace boost { namespace phoenix
 {
     ////////////////////////////////////////////////////////////////////////////
@@ -56,7 +58,7 @@ namespace boost { namespace phoenix
         typedef Actor<base_type> result_type;
         typedef result_type type;
 
-        result_type
+        result_type const
         operator()() const
         {
             actor<base_type> const e = {{{funcwrap<F>()}, {env()}}};
@@ -89,7 +91,7 @@ namespace boost { namespace phoenix
         typedef Actor<base_type> result_type;
         typedef result_type type;
 
-        result_type
+        result_type const
         operator()(
             BOOST_PP_ENUM_BINARY_PARAMS(
                 PHOENIX_ITERATION,
@@ -97,7 +99,10 @@ namespace boost { namespace phoenix
         {
 #if PHOENIX_ITERATION == 1
             // silence gcc warnings
-            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, {a0}}};
+            //actor<base_type> const e = {{{funcwrap<F>()}, {env()}, {a0}}};
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, a0}};
+#elif PHOENIX_ITERATION == 2
+            actor<base_type> const e = {{{funcwrap<F>()}, {env()}, a0, a1}};
 #else
             actor<base_type> const e = {{{funcwrap<F>()}, {env()}, PHOENIX_a}};
 #endif

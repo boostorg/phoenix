@@ -12,23 +12,18 @@
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/bind.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
-namespace phx = boost::phoenix;
-
 namespace test
 {
-    struct x : boost::noncopyable // test non-copyable (hold this by reference)
+    struct x //: boost::noncopyable // test non-copyable (hold this by reference)
     {
         void
         test() const
         {
-            cout << "Test binding member functions...\n";
+            std::cout << "Test binding member functions...\n";
         }
     };
 
-    struct y : boost::noncopyable // test non-copyable (hold this by reference)
+    struct y //: boost::noncopyable // test non-copyable (hold this by reference)
     {
         int
         negate(int n) const
@@ -37,7 +32,7 @@ namespace test
         }
     };
 
-    struct z : boost::noncopyable // test non-copyable (hold this by reference)
+    struct z //: boost::noncopyable // test non-copyable (hold this by reference)
     {
         int
         plus(int a, int b) const
@@ -46,10 +41,10 @@ namespace test
         }
     };
 
-    struct zz : boost::noncopyable // test non-copyable (hold this by reference)
+    struct zz //: boost::noncopyable // test non-copyable (hold this by reference)
     {
         int
-        plus3(int a, int b, int c)
+        plus3(int a, int b, int c) const
         {
             return a + b + c;
         }
@@ -59,6 +54,12 @@ namespace test
 int
 main()
 {
+    using boost::phoenix::bind;
+    using boost::phoenix::ref;
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::arg_names::arg2;
+    using boost::phoenix::arg_names::arg3;
+
     int a = 123;
     int b = 256;
     test::x x_;
@@ -66,12 +67,10 @@ main()
     test::z z_;
     test::zz zz_;
 
-    //bind(&test::x::test, x_)(0); // <- original test, fails due to attempt of copying
-    bind(&test::x::test, ref(x_))();
-    //BOOST_TEST(bind(&test::y::negate, y_, arg1)(a) == -a); // same as above
-    BOOST_TEST(bind(&test::y::negate, ref(y_), arg1)(a) == -a);
-    //BOOST_TEST(bind(&test::z::plus, arg1, arg2, arg3)(z_, a, b) == a+b);
-    //BOOST_TEST(bind(&test::zz::plus3, zz_, arg1, arg2, arg3)(a, b, a) == a+b+a);
+    bind(&test::x::test, x_)();
+    BOOST_TEST(bind(&test::y::negate, y_, arg1)(a) == -a);
+    BOOST_TEST(bind(&test::z::plus, arg1, arg2, arg3)(z_, a, b) == a+b);
+    BOOST_TEST(bind(&test::zz::plus3, zz_, arg1, arg2, arg3)(a, b, a) == a+b+a);
     BOOST_TEST(bind(&test::y::negate, &y_, 777)(a) == -777);
 
     return boost::report_errors();

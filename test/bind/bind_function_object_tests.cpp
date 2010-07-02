@@ -18,7 +18,9 @@ using std::pow;
     struct test
     {
         typedef void result_type;
-        void operator()() const
+
+        void
+        operator()() const
         {
             cout << "Test lazy functions...\n";
         }
@@ -26,17 +28,18 @@ using std::pow;
 
     struct sqr
     {
-        template<typename Sig>
+        template <typename Sig>
         struct result;
 
-        template<typename This, typename Arg>
+        template <typename This, typename Arg>
         struct result<This(Arg&)>
         {
             typedef Arg type;
         };
 
         template <typename Arg>
-        Arg operator()(Arg n) const
+        Arg
+        operator()(Arg n) const
         {
             return n * n;
         }
@@ -44,17 +47,18 @@ using std::pow;
 
     struct fact
     {
-        template<typename Sig>
+        template <typename Sig>
         struct result;
 
-        template<typename This, typename Arg>
+        template <typename This, typename Arg>
         struct result<This(Arg&)>
         {
             typedef Arg type;
         };
 
         template <typename Arg>
-        Arg operator()(Arg n) const
+        Arg
+        operator()(Arg n) const
         {
             return (n <= 0) ? 1 : n * (*this)(n-1);
         }
@@ -72,7 +76,8 @@ using std::pow;
         };
 
         template <typename Arg1, typename Arg2>
-        Arg1 operator()(Arg1 a, Arg2 b) const
+        Arg1
+        operator()(Arg1 a, Arg2 b) const
         {
             return pow(a, b);
         }
@@ -80,7 +85,7 @@ using std::pow;
 
     struct add
     {
-        template<typename Sig>
+        template <typename Sig>
         struct result;
 
         template <typename This, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
@@ -90,7 +95,8 @@ using std::pow;
         };
 
         template <typename Arg1, typename Arg2, typename Arg3, typename Arg4>
-        Arg1 operator()(Arg1 a, Arg2 b, Arg3 c, Arg4 d) const
+        Arg1
+        operator()(Arg1 a, Arg2 b, Arg3 c, Arg4 d) const
         {
             return a + b + c + d;
         }

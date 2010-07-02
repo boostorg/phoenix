@@ -7,10 +7,12 @@
 #ifndef PHOENIX_CORE_LIMITS_HPP
 #define PHOENIX_CORE_LIMITS_HPP
 
+#include <boost/preprocessor/arithmetic/add.hpp>
+#include <boost/preprocessor/inc.hpp>
 #include <boost/preprocessor/dec.hpp>
 
 #if !defined(PHOENIX_LIMIT)
-# define PHOENIX_LIMIT 5
+# define PHOENIX_LIMIT 10
 #elif (PHOENIX_LIMIT < 5)
 # error "PHOENIX_LIMIT is set too low"
 #endif
@@ -38,14 +40,13 @@
 #endif
 
 #if !defined(PHOENIX_COMPOSITE_LIMIT)
-# define PHOENIX_COMPOSITE_LIMIT 3
-#elif (PHOENIX_COMPOSITE_LIMIT < 3)
+# define PHOENIX_COMPOSITE_LIMIT PHOENIX_LIMIT
+#elif (PHOENIX_COMPOSITE_LIMIT < 5)
 # error "PHOENIX_COMPOSITE_LIMIT is set too low"
 #endif
 
 #if !defined(PHOENIX_MEMBER_LIMIT)
-# define PHOENIX_MEMBER_LIMIT 3
-//BOOST_PP_DEC(BOOST_PP_DEC(PHOENIX_COMPOSITE_LIMIT))
+# define PHOENIX_MEMBER_LIMIT BOOST_PP_DEC(BOOST_PP_DEC(PHOENIX_COMPOSITE_LIMIT))
 #elif (PHOENIX_MEMBER_LIMIT > PHOENIX_COMPOSITE_LIMIT)
 # error "PHOENIX_MEMBER_LIMIT > PHOENIX_COMPOSITE_LIMIT"
 #elif (PHOENIX_MEMBER_LIMIT < 3)
@@ -84,5 +85,18 @@
 // for some reason, this must be included now to make
 // detail/type_deduction.hpp compile. $$$ TODO: Investigate further $$$
 #include <boost/mpl/vector/vector20.hpp>
+
+#if !defined(BOOST_PROTO_MAX_ARITY)
+#define BOOST_PROTO_MAX_ARITY BOOST_PP_INC(PHOENIX_COMPOSITE_LIMIT)
+#ifdef BOOST_MPL_LIMIT_METAFUNCTION_ARITY
+#undef BOOST_MPL_LIMIT_METAFUNCTION_ARITY
+#endif
+#define BOOST_MPL_LIMIT_METAFUNCTION_ARITY BOOST_PP_INC(BOOST_PROTO_MAX_ARITY)
+#elif (BOOST_PROTO_MAX_ARITY < BOOST_PP_INC(PHOENIX_COMPOSE_LIMIT))
+#error "BOOST_PROTO_MAX_ARITY < PHOENIX_COMPOSE_LIMIT + 1"
+#endif
+
+// this include will set the limit for the proto expression arity
+#include <boost/proto/proto_fwd.hpp>
 
 #endif
