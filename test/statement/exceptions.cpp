@@ -75,7 +75,6 @@ int main()
         BOOST_TEST(caught_exception);
     }
 
-/*
     {
         bool caught_correct_exception = false;
         try_
@@ -99,6 +98,5 @@ int main()
 
         BOOST_TEST(caught_correct_exception);
     }
-*/
     return boost::report_errors();
 }
