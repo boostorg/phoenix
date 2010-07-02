@@ -63,7 +63,6 @@ namespace boost { namespace phoenix
     typename make_value<T>::type const
     val(T & t )
     {
-        std::cout << "blubber\n";
         return make_value<T>()(t);
     }
 

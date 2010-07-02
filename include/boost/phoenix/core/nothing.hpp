@@ -26,8 +26,7 @@ namespace boost { namespace phoenix
 
         template <typename Env>
         void eval(Env const&) const
-        {
-        }
+        {}
     };
 
     compose<null_actor>::result_type const nothing = {};

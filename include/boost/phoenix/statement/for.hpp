@@ -66,9 +66,9 @@ namespace boost { namespace phoenix
             return make_for<Init, Cond, Step, Do>()(init, cond, step, do_);
         }
 
-        Init init;
-        Cond cond;
-        Step step;
+        Init const& init;
+        Cond const& cond;
+        Step const& step;
     };
 
     template <typename Init, typename Cond, typename Step>

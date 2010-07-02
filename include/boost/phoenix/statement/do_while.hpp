@@ -51,7 +51,7 @@ namespace boost { namespace phoenix
             return make_do_while<Cond, Do>()(cond, do_);
         }
 
-        Do do_;
+        Do const& do_;
     };
 
     struct do_gen
