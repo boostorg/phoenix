@@ -8,8 +8,8 @@
 #define CONTAINER_TESTS_HPP
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/home/phoenix/stl/container/container.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/stl/container/container.hpp>
 
 #include <iostream>
 #include <typeinfo>
@@ -322,7 +322,7 @@ void test_map_erase(Container c)
     typename Container::value_type const value = *c.begin();
     typename Container::key_type const key = value.first;
     typename Container::size_type const removed =
-      erase(arg1, arg2)(c, key);
+        erase(arg1, arg2)(c, key);
     if (test(removed != 1)) {
         cerr << "Failed " << typeid(Container).name() << " test_map_erase 1\n";
         return;

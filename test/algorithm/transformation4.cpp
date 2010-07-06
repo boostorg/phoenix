@@ -6,8 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/spirit/home/phoenix/stl/algorithm/transformation.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/stl/algorithm/transformation.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <vector>
@@ -18,8 +18,11 @@ namespace
 {
     void heap_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::make_heap;
+        using boost::phoenix::pop_heap;
+        using boost::phoenix::push_heap;
+        using boost::phoenix::sort_heap;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         std::vector<int> vec(array, array + 3);
         boost::phoenix::make_heap(arg1)(vec);
@@ -53,8 +56,8 @@ namespace
 
     void next_permutation_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::next_permutation;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2};
         int expected_result[] = {2,1};
         int expected_result2[] = {1,2};
@@ -74,8 +77,8 @@ namespace
 
     void prev_permutation_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::prev_permutation;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {2,1};
         int expected_result[] = {1,2};
         int expected_result2[] = {2,1};
@@ -95,8 +98,9 @@ namespace
 
     void inner_product_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::inner_product;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int lhs[] = {1,2,3};
         int rhs[] = {4,5,6};
         BOOST_TEST(inner_product(arg1, arg2, 0)
@@ -108,8 +112,9 @@ namespace
 
     void partial_sum_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::partial_sum;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int output[3];
         BOOST_TEST(partial_sum(arg1, arg2)(array, output) == output + 3);
@@ -125,8 +130,9 @@ namespace
 
     void adjacent_difference_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::adjacent_difference;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int output[3];
         BOOST_TEST(adjacent_difference(arg1, arg2)(array, output) == output + 3);

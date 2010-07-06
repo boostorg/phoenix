@@ -57,20 +57,20 @@ test-suite phoenix_statement :
     [ run statement/exceptions.cpp ]
     ;
         
-#test-suite phoenix_container :
-#    [ run container/container_tests1a.cpp ] 
-#    [ run container/container_tests1b.cpp ] 
-#    [ run container/container_tests2a.cpp ] 
-#    [ run container/container_tests2b.cpp ] 
-#    [ run container/container_tests3a.cpp ] 
-#    [ run container/container_tests3b.cpp ] 
-#    [ run container/container_tests4a.cpp ] 
-#    [ run container/container_tests4b.cpp ] 
-#    [ run container/container_tests5a.cpp ] 
-#    [ run container/container_tests5b.cpp ] 
-#    [ run container/container_tests6a.cpp ] 
-#    [ run container/container_tests6b.cpp ] 
-#    ;
+test-suite phoenix_container :
+    [ run container/container_tests1a.cpp ] 
+    [ run container/container_tests1b.cpp ] 
+    [ run container/container_tests2a.cpp ] 
+    [ run container/container_tests2b.cpp ] 
+    [ run container/container_tests3a.cpp ] 
+    [ run container/container_tests3b.cpp ] 
+    [ run container/container_tests4a.cpp ] 
+    [ run container/container_tests4b.cpp ] 
+    [ run container/container_tests5a.cpp ] 
+    [ run container/container_tests5b.cpp ] 
+    [ run container/container_tests6a.cpp ] 
+    [ run container/container_tests6b.cpp ] 
+    ;
 
 #test-suite phoenix_scope :
 #    [ run scope/lambda_tests.cpp ] 
@@ -79,12 +79,12 @@ test-suite phoenix_statement :
 #    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
 #    ;
 
-#test-suite phoenix_algorithm :
-#    [ run algorithm/iteration.cpp ]
-#    [ run algorithm/transformation1.cpp ]
-#    [ run algorithm/transformation2.cpp ]
-#    [ run algorithm/transformation3.cpp ]
-#    [ run algorithm/transformation4.cpp ]
-#    [ run algorithm/querying.cpp ]
-#    [ run algorithm/querying2.cpp ]
-#    ;
+test-suite phoenix_algorithm :
+    [ run algorithm/iteration.cpp ]
+    [ run algorithm/transformation1.cpp ]
+    [ run algorithm/transformation2.cpp ]
+    [ run algorithm/transformation3.cpp ]
+    [ run algorithm/transformation4.cpp ]
+    [ run algorithm/querying.cpp ]
+    [ run algorithm/querying2.cpp ]
+    ;

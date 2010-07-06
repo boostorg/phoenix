@@ -6,8 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/spirit/home/phoenix/stl/algorithm/querying.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/stl/algorithm/querying.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/range.hpp>
@@ -18,8 +18,9 @@ namespace
 {
     void includes_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::includes;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int array2[] = {1,2};
         BOOST_TEST(includes(arg1, arg2)(array, array2));
@@ -36,8 +37,8 @@ namespace
 
     void min_element_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::min_element;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,3,2};
         BOOST_TEST(min_element(arg1)(array) == array);
         BOOST_TEST(boost::phoenix::min_element(arg1, std::greater<int>())(array) == array + 1);
@@ -46,8 +47,8 @@ namespace
 
     void max_element_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::max_element;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,3,2};
         BOOST_TEST(max_element(arg1)(array) == array + 1);
         BOOST_TEST(boost::phoenix::max_element(arg1, std::greater<int>())(array) == array);
@@ -56,8 +57,9 @@ namespace
 
     void lexicographical_compare_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::lexicographical_compare;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int array2[] = {1,2,4};
 

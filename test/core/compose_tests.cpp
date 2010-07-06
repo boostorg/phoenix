@@ -9,7 +9,7 @@
 #include <boost/static_assert.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
 
 using namespace boost::phoenix;
 using namespace boost::phoenix::arg_names;

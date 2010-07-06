@@ -6,8 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/spirit/home/phoenix/stl/algorithm/transformation.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/stl/algorithm/transformation.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <list>
@@ -24,8 +24,8 @@ namespace
 
     void rotate_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::rotate;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         rotate(arg1, array + 1)(array);
         std::cout << array[0] << array[1] << array[2] << std::endl;
@@ -38,8 +38,9 @@ namespace
 
     void rotate_copy_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::rotate_copy;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int array2[3];
         rotate_copy(arg1, array + 1, arg2)(array, array2);
@@ -52,8 +53,8 @@ namespace
 
     void random_shuffle_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::random_shuffle;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         random_shuffle(arg1)(array);
         const int first = array[0];
@@ -69,8 +70,8 @@ namespace
     
     void partition_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::partition;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         int* const end = partition(arg1, even())(array);
         BOOST_TEST(end == array + 1);
@@ -82,8 +83,8 @@ namespace
 
     void stable_partition_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::stable_partition;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         int* const end = stable_partition(arg1, even())(array);
         BOOST_TEST(end == array + 1);
@@ -95,8 +96,8 @@ namespace
 
     void sort_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::sort;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {3,1,2};
         std::list<int> test_list(array, array + 3);
         sort(arg1)(array);
@@ -126,8 +127,8 @@ namespace
 
     void stable_sort_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::stable_sort;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {3,1,2};
         stable_sort(arg1)(array);
         BOOST_TEST(array[0] == 1);
@@ -144,8 +145,8 @@ namespace
 
     void partial_sort_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::partial_sort;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {2,4,1,3};
         partial_sort(arg1, array + 2)(array);
         BOOST_TEST(array[0] == 1);
@@ -159,8 +160,9 @@ namespace
 
     void partial_sort_copy_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::partial_sort_copy;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {2,4,1,3};
         int array2[2];
         partial_sort_copy(arg1, arg2)(array, array2);

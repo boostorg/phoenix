@@ -12,7 +12,7 @@
 #define PHOENIX_OBJECT_DETAIL_NEW_EVAL_HPP
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-        (4, (4, PHOENIX_COMPOSITE_LIMIT,                                        \
+        (3, (4, PHOENIX_COMPOSITE_LIMIT,                                        \
         <boost/phoenix/object/detail/new_eval.hpp>))
 #include PHOENIX_ITERATE()
 

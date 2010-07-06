@@ -6,8 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/spirit/home/phoenix/stl/algorithm/transformation.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/stl/algorithm/transformation.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <list>
@@ -16,8 +16,8 @@ namespace
 {
     void nth_element_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::nth_element;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {5,1,4,3,2};
         nth_element(arg1, array + 2)(array);
         BOOST_TEST(array[0] < 3);
@@ -38,8 +38,10 @@ namespace
 
     void merge_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::merge;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
+        using boost::phoenix::arg_names::arg3;
         int array[] = {1,2,3};
         int array2[] = {2,3,4};
         int output[6];
@@ -60,8 +62,8 @@ namespace
 
     void inplace_merge_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::inplace_merge;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3,2,3,4};
         inplace_merge(arg1, array + 3)(array);
         int expected_result[] = {1,2,2,3,3,4};
@@ -76,8 +78,10 @@ namespace
 
     void set_union_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::set_union;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
+        using boost::phoenix::arg_names::arg3;
         int array[] = {1,2,3};
         int array2[] = {2,3,4};
         int output[4];
@@ -98,8 +102,10 @@ namespace
 
     void set_intersection_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::set_intersection;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
+        using boost::phoenix::arg_names::arg3;
         int array[] = {1,2,3};
         int array2[] = {2,3,4};
         int output[2];
@@ -120,8 +126,10 @@ namespace
 
     void set_difference_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::set_difference;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
+        using boost::phoenix::arg_names::arg3;
         int array[] = {1,2,3};
         int array2[] = {2,3,4};
         int output[1];
@@ -142,8 +150,10 @@ namespace
 
     void set_symmetric_difference_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::set_symmetric_difference;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
+        using boost::phoenix::arg_names::arg3;
         int array[] = {1,2,3};
         int array2[] = {2,3,4};
         int output[2];

@@ -8,9 +8,9 @@
 #include <vector>
 #include <algorithm>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/core.hpp>
 
 using namespace boost::phoenix;
 using namespace boost::phoenix::arg_names;

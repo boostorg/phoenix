@@ -66,6 +66,8 @@ namespace boost { namespace phoenix
         make_argument<mpl::int_<0> >::type const arg1 = {};
         make_argument<mpl::int_<1> >::type const arg2 = {};
         make_argument<mpl::int_<2> >::type const arg3 = {};
+        make_argument<mpl::int_<3> >::type const arg4 = {};
+        make_argument<mpl::int_<4> >::type const arg5 = {};
 
     //  BLL style names
         make_argument<mpl::int_<0> >::type const _1 = {};
@@ -80,6 +82,8 @@ namespace boost { namespace phoenix
         using placeholders::arg1;
         using placeholders::arg2;
         using placeholders::arg3;
+        using placeholders::arg4;
+        using placeholders::arg5;
 
         using placeholders::_1;
         using placeholders::_2;

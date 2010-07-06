@@ -5,9 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-
-#if !PHOENIX_IS_ITERATING
-
 #ifndef PHOENIX_OBJECT_NEW_HPP
 #define PHOENIX_OBJECT_NEW_HPP
 
@@ -69,28 +66,28 @@ namespace boost { namespace phoenix
     typename make_new<T>::type const
     new_()
     {
-        make_new<T>()();
+        return make_new<T>()();
     }
 
     template <typename T, typename A0>
     typename make_new<T, A0>::type const
     new_(A0 const& a0)
     {
-        make_new<T, A0>()(a0);
+        return make_new<T, A0>()(a0);
     }
 
     template <typename T, typename A0, typename A1>
     typename make_new<T, A0, A1>::type const
     new_(A0 const& a0, A1 const& a1)
     {
-        make_new<T, A0>()(a0, a1);
+        return make_new<T, A0, A1>()(a0, a1);
     }
 
     template <typename T, typename A0, typename A1, typename A2>
     typename make_new<T, A0, A1, A2>::type const
     new_(A0 const& a0, A1 const& a1, A2 const& a2)
     {
-        make_new<T, A0>()(a0, a1, a2);
+        return make_new<T, A0, A1, A2>()(a0, a1, a2);
     }
 
     // Bring in the rest

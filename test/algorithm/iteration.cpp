@@ -6,8 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/spirit/home/phoenix/stl/algorithm/iteration.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/stl/algorithm/iteration.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <functional>
@@ -28,8 +28,8 @@ namespace
 
     void for_each_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::for_each;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         BOOST_TEST(for_each(arg1, for_each_tester())(array).value_ == 6);
         BOOST_TEST(array[0] == 2);
@@ -40,8 +40,8 @@ namespace
 
     void accumulate_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::accumulate;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         BOOST_TEST(accumulate(arg1, 0)(array) == 6);
         BOOST_TEST(boost::phoenix::accumulate(arg1, 0, std::minus<int>())(array) == -6);

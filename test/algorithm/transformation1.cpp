@@ -6,8 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/spirit/home/phoenix/stl/algorithm/transformation.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/stl/algorithm/transformation.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <functional>
@@ -35,8 +35,10 @@ namespace
 
     void swap_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::swap;
+        using boost::phoenix::ref;
+        using boost::phoenix::arg_names::_1;
+        using boost::phoenix::arg_names::_2;
         int a = 123;
         int b = 456;
         swap(ref(a), ref(b))();
@@ -50,8 +52,9 @@ namespace
 
     void copy_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::copy;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int output[4];
         BOOST_TEST(
@@ -64,8 +67,9 @@ namespace
 
     void copy_backward_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::copy_backward;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int output[4];
         int* output_end = output + 3;
@@ -88,8 +92,10 @@ namespace
 
     void transform_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::transform;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
+        using boost::phoenix::arg_names::arg3;
         int array[] = {1,2,3};
         BOOST_TEST(
             transform(arg1, arg2, increment())(array, array) == 
@@ -110,8 +116,8 @@ namespace
 
     void replace_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::replace;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         replace(arg1,2,4)(array);
         BOOST_TEST(array[0] == 1);
@@ -122,8 +128,8 @@ namespace
 
     void replace_if_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::replace_if;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         replace_if(arg1, even(), 4)(array);
         BOOST_TEST(array[0] == 1);
@@ -134,8 +140,9 @@ namespace
 
     void replace_copy_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::replace_copy;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int input[] = {1,2,3};
         int output[3];
         replace_copy(arg1, arg2, 2, 4)(input, output);
@@ -147,8 +154,9 @@ namespace
 
     void replace_copy_if_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::replace_copy_if;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int input[] = {1,2,3};
         int output[3];
         replace_copy_if(arg1, arg2, even(), 4)(input, output);
@@ -160,8 +168,8 @@ namespace
 
     void fill_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::fill;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {0,0,0};
         fill(arg1, 1)(array);
         BOOST_TEST(array[0] == 1);
@@ -172,8 +180,8 @@ namespace
 
     void fill_n_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::fill_n;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {0,0,0};
         fill_n(arg1, 2, 1)(array);
         BOOST_TEST(array[0] == 1);
@@ -197,8 +205,8 @@ namespace
 
     void generate_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::generate;
+        using boost::phoenix::arg_names::arg1;
         int array[3];
         generate(arg1, int_seq())(array);
         BOOST_TEST(array[0] == 0);
@@ -209,8 +217,8 @@ namespace
 
     void generate_n_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::generate_n;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {0,0,1};
         generate_n(arg1, 2, int_seq())(array);
         BOOST_TEST(array[0] == 0);
@@ -222,8 +230,8 @@ namespace
 
     void remove_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::remove;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         std::list<int> test_list(array, array + 3);
         BOOST_TEST(boost::phoenix::remove(arg1, 2)(array) == array + 2);
@@ -238,8 +246,8 @@ namespace
 
     void remove_if_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::remove_if;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         std::list<int> test_list(array, array + 3);
         BOOST_TEST(boost::phoenix::remove_if(arg1, even())(array) == array + 2);
@@ -254,8 +262,9 @@ namespace
 
     void remove_copy_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::remove_copy;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int array2[2];
         BOOST_TEST(boost::phoenix::remove_copy(arg1, arg2, 2)(array, array2) == array2 + 2);
@@ -266,8 +275,9 @@ namespace
 
     void remove_copy_if_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::remove_copy_if;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int array2[2];
         BOOST_TEST(boost::phoenix::remove_copy_if(arg1, arg2, even())(array, array2) == array2 + 2);
@@ -278,8 +288,8 @@ namespace
 
     void unique_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::unique;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,2,3};
         std::list<int> test_list(array, array + 4);
         BOOST_TEST(unique(arg1)(array) == array + 3);
@@ -309,8 +319,9 @@ namespace
 
     void unique_copy_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::unique_copy;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,2,3};
         int out[3];
         BOOST_TEST(unique_copy(arg1, arg2)(array, out) == out + 3);
@@ -329,8 +340,8 @@ namespace
 
     void reverse_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::reverse;
+        using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
         std::list<int> test_list(array, array + 3);
         reverse(arg1)(array);
@@ -348,8 +359,9 @@ namespace
 
     void reverse_copy_test()
     {
-        using namespace boost::phoenix;
-        using namespace boost::phoenix::arg_names;
+        using boost::phoenix::reverse_copy;
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
         int array[] = {1,2,3};
         int array2[3];
         reverse_copy(arg1, arg2)(array, array2);
