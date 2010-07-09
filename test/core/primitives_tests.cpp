@@ -10,9 +10,11 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
+using boost::phoenix::cref;
+using boost::phoenix::ref;
+using boost::phoenix::val;
+using boost::phoenix::arg_names::arg1;
+using boost::phoenix::arg_names::arg2;
 
 int
 main()

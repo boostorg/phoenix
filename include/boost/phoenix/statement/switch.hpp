@@ -125,7 +125,8 @@ namespace boost { namespace phoenix
     template <
         typename Cond,
         typename Cases, int N = fusion::result_of::size<Cases>::type::value,
-        bool with_default = detail::is_default<typename fusion::result_of::value_at_c<Cases, N-1>::type >::value>
+        bool with_default = detail::is_default<typename fusion::result_of::value_at_c<Cases, N-1>::type >::value,
+        typename Dummy = void>
     struct make_switch;
 
     // Bring in the rest ....

@@ -22,10 +22,12 @@
         result_type
         operator()(Env& env, Cond const& cond, Case0 const& case0) const
         {
+            /*
             switch(eval(cond, env))
             {
                 case A0::value: eval(case0, env); break;
             }
+            */
         }
     };
 

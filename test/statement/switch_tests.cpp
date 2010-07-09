@@ -41,6 +41,7 @@ main()
 
     cout << endl;
 
+    /*
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
@@ -49,9 +50,11 @@ main()
             default_(cout << ref("<any...>") << endl)
         ]
     );
+    */
 
     cout << endl;
 
+    /*
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
@@ -65,9 +68,11 @@ main()
             case_<4>(cout << ref("<4>") << endl)
         ]
     );
+    */
 
     cout << endl;
 
+    /*
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
@@ -83,6 +88,7 @@ main()
             default_(cout << ref("<over 4>") << endl)
         ]
     );
+    */
 
     return boost::report_errors();
 }

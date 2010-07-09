@@ -18,7 +18,7 @@ local multi-threading = <library>/boost/thread//boost/thread
 
 test-suite phoenix_core :
     [ run core/primitives_tests.cpp ] 
-#    [ run core/compose_tests.cpp ] 
+    [ run core/function_composition.cpp ] 
     ;
 
 test-suite phoenix_operator :

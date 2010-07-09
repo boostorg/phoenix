@@ -12,6 +12,7 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/phoenix/core/arity.hpp>
+#include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/environment.hpp>
 #include <boost/phoenix/core/limits.hpp>
@@ -85,6 +86,9 @@ namespace boost { namespace phoenix
         // Bring in the rest
         #include <boost/phoenix/core/detail/actor_result_of.hpp>
     }
+    
+    template <PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT), typename Dummy = void>
+    struct actor_fun_eval;
 
     ////////////////////////////////////////////////////////////////////////////
     //
@@ -144,6 +148,13 @@ namespace boost { namespace phoenix
             return eval(*this, args);
         }
 
+        template <typename A0>
+        typename compose<actor_fun_eval<actor<Expr>, actor<A0> >, actor<Expr>, actor<A0> >::type const
+        operator()(actor<A0> const& a0) const
+        {
+            return compose<actor_fun_eval<actor<Expr>, actor<A0> >, actor<Expr>, actor<A0> >()(*this, a0);
+        }
+
         template <typename This, typename A0, typename A1>
         struct result<This(A0&, A1&)>
             : result_of::actor<Expr, A0, A1>
@@ -184,9 +195,24 @@ namespace boost { namespace phoenix
         operator()(A0 const& a0, A1 const& a1) const
         {
             BOOST_PROTO_ASSERT_MATCHES( *this, eval_grammar );
-            typename make_basic_environment<A0&, A1&>::type args(a0, a1);
+            typename make_basic_environment<A0 const&, A1 const&>::type args(a0, a1);
             
             return eval(this->proto_base(), args);
+        }
+
+        template <typename A0, typename A1>
+        typename compose<
+            actor_fun_eval<
+                actor<Expr>, actor<A0>, actor<A1>
+            >
+          , actor<Expr>, actor<A0>, actor<A1>
+        >::type const
+        operator()(actor<A0> const& a0, actor<A1> const& a1) const
+        {
+            return compose<
+                actor_fun_eval<actor<Expr>, actor<A0>, actor<A1> >
+              , actor<Expr>, actor<A0>, actor<A1>
+              >()(*this, a0, a1);
         }
 
         template <typename This, typename A0, typename A1, typename A2>
@@ -274,9 +300,97 @@ namespace boost { namespace phoenix
             return eval(*this, args);
         }
 
+        template <typename A0, typename A1, typename A2>
+        typename compose<
+            actor_fun_eval<
+                actor<Expr>, actor<A0>, actor<A1>, actor<A2>
+            >
+          , actor<Expr>, actor<A0>, actor<A1>, actor<A2>
+        >::type const
+        operator()(actor<A0> const& a0, actor<A1> const& a1, actor<A2> const& a2) const
+        {
+            return compose<
+                actor_fun_eval<actor<Expr>, actor<A0>, actor<A1>, actor<A2> >
+              , actor<Expr>, actor<A0>, actor<A1>, actor<A2>
+              >()(*this, a0, a1, a2);
+        }
+
         // Bring in the rest
         #include <boost/phoenix/core/detail/actor_operator.hpp>
     };
+
+    template <typename A0, typename A1>
+    struct actor_fun_eval<A0, A1>
+    {
+        template <typename Env>
+        struct basic_environment
+            : make_basic_environment<
+                typename boost::result_of<eval_grammar(A1 const&, Env&)>::type
+            >
+        {};
+
+        template <typename Sig>
+        struct result;
+
+        template <typename This, typename Env>
+        struct result<This(Env&, A0 const&, A1 const&)>
+        {
+            typedef typename boost::result_of<
+                eval_grammar(A0 const&, typename basic_environment<Env>::type&)
+                >::type
+                type;
+        };
+
+        template <typename Env>
+        typename boost::result_of<
+            eval_grammar(A0 const&, typename basic_environment<Env>::type&)
+            >::type
+        operator()(Env& env, A0 const& a0, A1 const& a1) const
+        {
+            typename basic_environment<Env>::type args(eval(a1, env));
+
+            return eval(a0, args);
+        }
+    };
+
+    template <typename A0, typename A1, typename A2>
+    struct actor_fun_eval<A0, A1, A2>
+    {
+        template <typename Env>
+        struct basic_environment
+            : make_basic_environment<
+                typename boost::result_of<eval_grammar(A1 const&, Env&)>::type
+              , typename boost::result_of<eval_grammar(A2 const&, Env&)>::type
+            >
+        {};
+
+        template <typename Sig>
+        struct result;
+
+        template <typename This, typename Env>
+        struct result<This(Env&, A0 const&, A1 const&, A2 const&)>
+        {
+            typedef typename boost::result_of<
+                eval_grammar(A0 const&, typename basic_environment<Env>::type&)
+                >::type
+                type;
+        };
+
+        template <typename Env>
+        typename boost::result_of<
+            eval_grammar(A0 const&, typename basic_environment<Env>::type&)
+            >::type
+        operator()(Env& env, A0 const& a0, A1 const& a1, A2 const& a2) const
+        {
+            typename basic_environment<Env>::type args(eval(a1, env), eval(a2, env));
+
+            return eval(a0, args);
+        }
+    };
+
+    // Bring in the rest ...
+    #include <boost/phoenix/core/detail/actor_fun_eval.hpp>
+
 }}
 
 namespace boost

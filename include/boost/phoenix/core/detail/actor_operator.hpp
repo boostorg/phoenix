@@ -77,6 +77,21 @@
 
 #endif
 
+        template <PHOENIX_typename_A>
+        typename compose<
+            actor_fun_eval<
+                actor<Expr>, BOOST_PP_ENUM_BINARY_PARAMS(PHOENIX_ITERATION, actor<A, > BOOST_PP_INTERCEPT)
+            >
+          , actor<Expr>, BOOST_PP_ENUM_BINARY_PARAMS(PHOENIX_ITERATION, actor<A, > BOOST_PP_INTERCEPT)
+        >::type const
+        operator()(BOOST_PP_ENUM_BINARY_PARAMS(PHOENIX_ITERATION, actor<A, > const& a)) const
+        {
+            return compose<
+                actor_fun_eval<actor<Expr>, BOOST_PP_ENUM_BINARY_PARAMS(PHOENIX_ITERATION, actor<A, > BOOST_PP_INTERCEPT)>
+              , actor<Expr>, BOOST_PP_ENUM_BINARY_PARAMS(PHOENIX_ITERATION, actor<A, > BOOST_PP_INTERCEPT)
+              >()(*this, a0, a1, a2);
+        }
+
 #undef PHOENIX_ENV
 
 #endif
