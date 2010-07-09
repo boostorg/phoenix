@@ -56,17 +56,27 @@ namespace boost { namespace phoenix
             struct result;
 
             template <typename This, typename Expr, typename State>
-            struct result<This(Expr, State)>
-                : fusion::result_of::push_front<typename remove_reference<State>::type const, Expr>
+            struct result<This(Expr const&, State&)>
+                : fusion::result_of::push_front<State, Expr>
             {};
 
+            template <typename This, typename Expr, typename State>
+            struct result<This(Expr&, State&)>
+                : fusion::result_of::push_front<State, Expr>
+            {};
+
+            template <typename This, typename Expr, typename State>
+            struct result<This(Expr, State&)>
+                : fusion::result_of::push_front<State, Expr>
+            {};
+
+
             template <typename Expr, typename State>
-            typename fusion::result_of::push_front<State const, Expr>::type
-            operator()(Expr const& expr, State const& state)
+            typename fusion::result_of::push_front<State, Expr>::type
+            operator()(Expr const& expr, State& state)
             {
                 return fusion::push_front(state, expr);
             }
-
         };
         
         template <typename Case>
@@ -106,11 +116,18 @@ namespace boost { namespace phoenix
                 >
               , proto::when<
                     proto::binary_expr<switch_case_tag, proto::_, eval_grammar>
-                  , detail::push_front(switch_case<proto::_value(proto::_left), proto::_right>(proto::_right), proto::_state)
+                  , detail::push_front(
+                        switch_case<
+                            proto::_value(proto::_left)
+                          , proto::_right
+                        >(proto::_right)
+                      , proto::_state)
                 >
               , proto::when<
                     proto::unary_expr<switch_default_tag, eval_grammar>
-                  , detail::push_front(switch_default<proto::_child>(proto::_child), proto::_state)
+                  , detail::push_front(
+                        switch_default<proto::_child>(proto::_child)
+                      , proto::_state)
                 >
             >
         //>
@@ -194,7 +211,7 @@ namespace boost { namespace phoenix
             typedef
                 typename fusion::result_of::as_vector<
                     typename boost::result_of<
-                        switch_grammar(Cases const&, fusion::vector0<> const&)
+                        switch_grammar(Cases const&, fusion::vector0<>&)
                     >::type
                 >::type
                 cases_type;
