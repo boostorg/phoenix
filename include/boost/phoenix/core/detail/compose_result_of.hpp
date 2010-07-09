@@ -14,7 +14,7 @@
 #include <boost/phoenix/support/iterate.hpp>
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+    (3, (3, PHOENIX_COMPOSITE_LIMIT,                                            \
     <boost/phoenix/core/detail/compose_ex.hpp>))
 #include PHOENIX_ITERATE()
 

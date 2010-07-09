@@ -130,7 +130,7 @@ namespace boost { namespace phoenix
         {
             BOOST_PROTO_ASSERT_MATCHES( *this, eval_grammar );
             typename make_basic_environment<A0&>::type args(a0);
-            
+
             return eval(*this, args);
         }
 

@@ -12,13 +12,21 @@
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/core.hpp>
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace std;
-
 int
 main()
 {
+    using boost::phoenix::arg_names::_1;
+    using boost::phoenix::case_;
+    using boost::phoenix::default_;
+    using boost::phoenix::switch_;
+    using boost::phoenix::ref;
+    using boost::phoenix::val;
+
+    using std::cout;
+    using std::endl;
+    using std::vector;
+    using std::for_each;
+
     int init[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     vector<int> v(init, init+10);
 
@@ -26,7 +34,8 @@ main()
         switch_(_1)
         [
             // wierd case, why not just use if(...), but valid, nonetheless
-            case_<4>(cout << val("<4>") << endl)
+            //case_<4>(cout << val("<4>") << endl)
+            case_<4>(cout << ref("<4>") << endl)
         ]
     );
 
@@ -36,7 +45,8 @@ main()
         switch_(_1)
         [
             // wierd case, but valid, nonetheless
-            default_(cout << val("<any...>") << endl)
+            //default_(cout << val("<any...>") << endl)
+            default_(cout << ref("<any...>") << endl)
         ]
     );
 
@@ -45,10 +55,14 @@ main()
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
-            case_<1>(cout << val("<1>") << endl),
-            case_<2>(cout << val("<2>") << endl),
-            case_<3>(cout << val("<3>") << endl),
-            case_<4>(cout << val("<4>") << endl)
+            //case_<1>(cout << val("<1>") << endl),
+            case_<1>(cout << ref("<1>") << endl),
+            //case_<2>(cout << val("<2>") << endl),
+            case_<2>(cout << ref("<2>") << endl),
+            //case_<3>(cout << val("<3>") << endl)//,
+            case_<3>(cout << ref("<3>") << endl),
+            //case_<4>(cout << val("<4>") << endl)
+            case_<4>(cout << ref("<4>") << endl)
         ]
     );
 
@@ -57,11 +71,16 @@ main()
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
-            case_<1>(cout << val("<1>") << endl),
-            case_<2>(cout << val("<2>") << endl),
-            case_<3>(cout << val("<3>") << endl),
-            case_<4>(cout << val("<4>") << endl),
-            default_(cout << val("<over 4>") << endl)
+            //case_<1>(cout << val("<1>") << endl),
+            case_<1>(cout << ref("<1>") << endl),
+            //case_<2>(cout << val("<2>") << endl),
+            case_<2>(cout << ref("<2>") << endl),
+            //case_<3>(cout << val("<3>") << endl),
+            case_<3>(cout << ref("<3>") << endl),
+            //case_<4>(cout << val("<4>") << endl),
+            case_<4>(cout << ref("<4>") << endl),
+            //default_(cout << val("<over 4>") << endl)
+            default_(cout << ref("<over 4>") << endl)
         ]
     );
 
