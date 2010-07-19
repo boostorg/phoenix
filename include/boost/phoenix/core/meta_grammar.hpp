@@ -38,7 +38,12 @@ namespace boost { namespace phoenix
     struct eval_cases
     {
         template <class Tag>
-        struct case_ : proto::_default<eval_grammar> {};
+        struct case_
+            : proto::or_<
+                proto::when<proto::terminal<env>, proto::_state>
+              , proto::otherwise<proto::_default<eval_grammar> >
+            >
+        {};
     };
 
     ////////////////////////////////////////////////////////////////////////////

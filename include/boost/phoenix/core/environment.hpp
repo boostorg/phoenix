@@ -20,9 +20,19 @@ namespace boost { namespace phoenix
     
     namespace result_of 
     {
-        template <typename Env, typename N>
+        template <typename Env, typename N, typename Dummy = void>
         struct get_environment_argument
             : fusion::result_of::at_c<Env, N::value> {};
+    }
+
+    template <int N, typename Env>
+    typename boost::enable_if<
+        is_environment<Env>
+      , typename result_of::get_environment_argument<Env, mpl::int_<N> >::type
+    >::type
+    get_environment_argument_c(Env& env)
+    {
+        return fusion::at_c<N>(env);
     }
 
     // Get the Nth argument from the environment
@@ -39,7 +49,8 @@ namespace boost { namespace phoenix
         typename result_of::get_environment_argument<Env, N>::type
         operator()(Env& env, N) const
         {
-            return fusion::at_c<N::value>(env);
+            return get_environment_argument_c<N::value>(env);
+            //return fusion::at_c<N::value>(env);
         }
     };
     

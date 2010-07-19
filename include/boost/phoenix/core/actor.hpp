@@ -51,7 +51,7 @@ namespace boost { namespace phoenix
 
             typedef typename
                 mpl::eval_if_c<
-                    arity == 0 // avoid calling result_of::actor when this is true
+                    arity == 0 // avoid calling result_of::actor when this is false
                   , boost::result_of<eval_grammar(Expr const&, 
                         typename make_basic_environment<>::type&)>
                   , mpl::identity<detail::error_expecting_arguments>

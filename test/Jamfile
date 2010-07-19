@@ -72,12 +72,12 @@ test-suite phoenix_container :
     [ run container/container_tests6b.cpp ] 
     ;
 
-#test-suite phoenix_scope :
+test-suite phoenix_scope :
 #    [ run scope/lambda_tests.cpp ] 
 #    [ run scope/let_tests.cpp ] 
 #    [ run scope/dynamic_tests.cpp ] 
 #    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
-#    ;
+    ;
 
 test-suite phoenix_algorithm :
     [ run algorithm/iteration.cpp ]

@@ -45,13 +45,13 @@ namespace boost { namespace phoenix
         struct result;
 
         template <typename This, typename Env, typename N>
-        struct result<This(Env&, N&)>
+        struct result<This(Env&, N const&)>
             : result_of::argument<Env, N>
         {};
 
         template <typename Env, typename N>
         typename result_of::argument<Env, N>::type
-        operator()(Env& env, N& n) const
+        operator()(Env& env, N const& n) const
         {
             return get_environment_argument()(env, eval(n));
         }

@@ -40,7 +40,8 @@ namespace boost { namespace phoenix
     template <typename F
         , PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)
         , typename Dummy = void>
-    struct compose : compose_ex<F, actor, PHOENIX_A(PHOENIX_COMPOSITE_LIMIT)> {};
+    struct compose : compose_ex<F, actor, PHOENIX_A(PHOENIX_COMPOSITE_LIMIT)>
+    {};
 
     template <typename F, template<typename> class Actor>
     struct compose_ex<F, Actor>
