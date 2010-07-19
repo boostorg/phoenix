@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SCOPE_LAMBDA_HPP
-#define PHOENIX_SCOPE_LAMBDA_HPP
+#ifndef PHOENIX_SCOPE_LET_HPP
+#define PHOENIX_SCOPE_LET_HPP
 
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/as_vector.hpp>
@@ -21,50 +21,8 @@
 
 namespace boost { namespace phoenix
 {
-    namespace result_of
-    {
-        template <typename Env, typename Expr, typename OuterEnv, typename Locals, typename Map>
-        struct lambda
-        {
-            typedef scoped_environment<
-                Env
-              , typename proto::result_of::value<OuterEnv>::type
-              , typename proto::result_of::value<Locals>::type
-              , Map
-            > environment;
-
-            typedef typename boost::result_of<eval_grammar(Expr const&, environment&)>::type type;
-        };
-    }
-
-    template <typename Map>
-    struct lambda_eval
-    {
-        template <typename Sig>
-        struct result;
-
-        template <typename This, typename Env, typename Expr, typename OuterEnv, typename Locals>
-        struct result<This(Env&, Expr const&, OuterEnv const&, Locals const&)>
-		      : result_of::lambda<Env, Expr, OuterEnv, Locals, Map>
-        {};
-
-        template <typename Env, typename Expr, typename OuterEnv, typename Locals>
-        typename result_of::lambda<Env, Expr, OuterEnv, Locals, Map>::type
-        operator()(Env& env, Expr const& expr, OuterEnv const& outer_env, Locals const& locals) const
-        {
-            typedef typename result_of::lambda<Env, Expr, OuterEnv, Locals, Map>::environment environment;
-
-            environment args(env, proto::value(outer_env), proto::value(locals));
-
-            return eval(expr, args);
-        }
-    };
-    
-    template <typename Expr, typename OuterEnv, typename Locals, typename Map>
-    struct make_lambda : compose<lambda_eval<Map>, Expr, OuterEnv, Locals> {};
-
-    struct lambda_actor_eval
-    {
+	struct let_eval
+	{
         template <typename Sig>
         struct result;
 
@@ -74,17 +32,17 @@ namespace boost { namespace phoenix
         {};
 
         template <typename Env, typename A>
-        typename result<lambda_actor_eval(Env&, A const&)>::type const
+        typename result<let_eval(Env&, A const&)>::type const
         operator()(Env& env, A const& a)
         {
             return proto::value(a)(env);
         }
-    };
+	};
 
     template <typename Expr, typename Vars, typename Map>
-    struct lambda_actor
+    struct let_actor
     {
-        lambda_actor(Expr const& expr, Vars const& vars)
+        let_actor(Expr const& expr, Vars const& vars)
             : expr(expr)
             , vars(vars)
         {}
@@ -103,19 +61,21 @@ namespace boost { namespace phoenix
                     >::type
                 >::type
             locals_type;
+			
+			typedef scoped_environment<Env, Env, locals_type, Map> env_type;
 
-            typedef typename make_lambda<Expr, Env, locals_type, Map>::type type;
+			typedef typename boost::result_of<eval_grammar(Expr const&, env_type&)>::type type;
         };
 
         template <typename Env>
-        typename result<lambda_actor(Env&)>::type const
+        typename result<let_actor(Env&)>::type const
         operator()(Env& env) const
         {
-            typedef typename result<lambda_actor(Env&)>::locals_type locals_type;
+            typedef typename result<let_actor(Env&)>::locals_type locals_type;
 
-            return make_lambda<
-					Expr, Env, locals_type, Map
-					>()(expr, env, fusion::as_vector(fusion::transform(vars, detail::initialize_local<Env>(env))));
+			scoped_environment<Env, Env, locals_type, Map> args(env, env, as_vector(fusion::transform(vars, detail::initialize_local<Env>(env))));
+
+            return eval(expr, args);
         }
 
         Expr expr;
@@ -123,38 +83,38 @@ namespace boost { namespace phoenix
     };
 
     template <typename Expr, typename Vars, typename Map>
-    struct make_lambda_actor: compose<lambda_actor_eval, lambda_actor<Expr, Vars, Map> > {};
+    struct make_let: compose<let_eval, let_actor<Expr, Vars, Map> > {};
 
     template <typename Vars, typename Map>
-    struct lambda_actor_gen
+    struct let_actor_gen
     {
 
         template <typename Expr>
-        typename make_lambda_actor<Expr, Vars, Map>::type const
+        typename make_let<Expr, Vars, Map>::type const
         operator[](Expr const expr) const
         {
-            return make_lambda_actor<Expr, Vars, Map>()(lambda_actor<Expr, Vars, Map>(expr, vars));
+            return make_let<Expr, Vars, Map>()(let_actor<Expr, Vars, Map>(expr, vars));
         }
 
-        lambda_actor_gen(Vars const& vars)
+        let_actor_gen(Vars const& vars)
             : vars(vars) {}
 
         Vars const& vars;
     };
 
-    struct lambda_gen
-        : lambda_actor_gen<
+    struct let_gen
+        : let_actor_gen<
             fusion::vector0<>
           , detail::map_local_index_to_tuple<> >
     {
-        typedef lambda_actor_gen<fusion::vector0<>, detail::map_local_index_to_tuple<> > base_type;
+        typedef let_actor_gen<fusion::vector0<>, detail::map_local_index_to_tuple<> > base_type;
 
-        lambda_gen()
+        let_gen()
             : base_type(fusion::vector0<>())
         {}
 
         template <typename A0>
-        lambda_actor_gen<
+        let_actor_gen<
             fusion::vector1<typename proto::result_of::child_c<A0, 1>::type>
           , detail::map_local_index_to_tuple<
                 typename proto::result_of::value<
@@ -164,13 +124,13 @@ namespace boost { namespace phoenix
                 >::type::type::key_type
             >
         > const
-        operator()( A0 const& a0) const
+        operator()(A0 const& a0) const
         {
             return fusion::vector1<typename proto::result_of::child_c<A0, 1>::type>(proto::child_c<1>(a0));
         }
 
         template <typename A0, typename A1>
-        lambda_actor_gen<
+        let_actor_gen<
             fusion::vector2<
                 typename proto::result_of::child_c<A0, 1>::type
               , typename proto::result_of::child_c<A1, 1>::type
@@ -199,12 +159,12 @@ namespace boost { namespace phoenix
             );
         }
 
-		  #define PHOENIX_LOCAL_GEN_NAME lambda_actor_gen
+		  #define PHOENIX_LOCAL_GEN_NAME let_actor_gen
 		  #include <boost/phoenix/scope/detail/local_gen.hpp>
-        #undef PHOENIX_LOCAL_GEN_NAME
+          #undef PHOENIX_LOCAL_GEN_NAME
     };
 
-    lambda_gen const lambda = lambda_gen();
+    let_gen const let = let_gen();
 }}
 
 #endif

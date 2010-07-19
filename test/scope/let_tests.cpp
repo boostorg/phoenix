@@ -10,6 +10,8 @@
 #include <vector>
 
 #define PHOENIX_LIMIT 6
+#define PHOENIX_LOCAL_LIMIT 10
+#include <boost/phoenix/core/limits.hpp>
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
@@ -35,7 +37,8 @@ main()
             (x) == x
         );
     }
-    
+
+    /*
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -46,7 +49,9 @@ main()
             (x, y) == x + y
         );
     }
+	 */
 
+	 /*
     {
         int x = 1, y = 10, z = 13;
         BOOST_TEST(
@@ -75,6 +80,7 @@ main()
             (x, y) == x + -y
         );
     }
+
     
     {
         int x = 999;
@@ -126,6 +132,7 @@ main()
         int x = (let(_a = 1)[let(_b = _1)[ _a ]])(y);
         BOOST_TEST(x == 1);
     }
+	 */
 
     {
         // show that this code returns an lvalue
@@ -140,6 +147,7 @@ main()
         int& j = let(_a = arg1)[ _a ](i);
         BOOST_TEST(&i == &j);
     }
+
     
     return boost::report_errors();
 }

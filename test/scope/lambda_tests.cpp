@@ -76,7 +76,6 @@ void blubb(Expr const& expr)
 int
 main()
 {
-
     {
         int x = 1;
         int y = lambda[_1]()(x);
