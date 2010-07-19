@@ -45,12 +45,16 @@ namespace boost { namespace phoenix
     }
 
     // overload get_environment_argument_c to return the correct argument
-    template <int N, typename Env>
-    typename boost::enable_if<
-        is_scoped_environment<Env>
-      , typename result_of::get_environment_argument<Env, mpl::int_<N> >::type
-    >::type
-    get_environment_argument_c(Env& env)
+    template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>
+	 typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
+    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map>& env)
+    {
+        return fusion::at_c<N>(env.env);
+    }
+    
+	 template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>
+	 typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
+    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map> const& env)
     {
         return fusion::at_c<N>(env.env);
     }

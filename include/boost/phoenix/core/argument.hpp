@@ -51,9 +51,10 @@ namespace boost { namespace phoenix
 
         template <typename Env, typename N>
         typename result_of::argument<Env, N>::type
-        operator()(Env& env, N const& n) const
+        operator()(Env& env, N const&) const
         {
-            return get_environment_argument()(env, eval(n));
+            typedef typename boost::result_of<eval_grammar(N)>::type argument_id;
+            return get_environment_argument_c<argument_id::value>(env);
         }
     };
     

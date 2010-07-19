@@ -13,6 +13,7 @@
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
+#include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/scope/local_actor.hpp>
 #include <boost/phoenix/scope/detail/local_variable.hpp>
 #include <boost/phoenix/support/element_at.hpp>
