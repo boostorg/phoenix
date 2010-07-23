@@ -66,7 +66,8 @@ namespace boost { namespace phoenix
       : proto::or_<
             proto::when<
                 proto::terminal<funcwrap<proto::_> >, 
-                mpl::deref<proto::_value>()>
+                mpl::deref<proto::_value>()
+            >
           , proto::when<proto::terminal<env>, proto::_state>
           , proto::_
         >

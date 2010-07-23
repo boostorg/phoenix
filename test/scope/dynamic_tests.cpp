@@ -16,7 +16,7 @@
 
 struct my_dynamic : ::boost::phoenix::dynamic<int, std::string, double>
 {
-    my_dynamic() : num(*this), message(*this), real(*this) {}
+    my_dynamic() : num(init<0>(*this)), message(init<1>(*this)), real(init<2>(*this)) {}
 
     member1 num;
     member2 message;
@@ -75,5 +75,5 @@ main()
         BOOST_TEST(clos.message() == "Hello " + std::string("World "));
     }
 
-    return 0;
+    return boost::report_errors();
 }

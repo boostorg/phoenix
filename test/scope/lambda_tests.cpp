@@ -60,22 +60,20 @@ namespace boost { namespace phoenix
     function<push_back_impl> const push_back = push_back_impl();
 }}
 
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace boost::phoenix::local_names;
-using namespace std;
-
 struct zzz {};
-
-template <typename Expr>
-void blubb(Expr const& expr)
-{
-    std::cout << typeid( typename boost::phoenix::result_of::actor<Expr, boost::fusion::vector1<int&> >::type ).name() << "\n";
-}
 
 int
 main()
 {
+    using boost::phoenix::lambda;
+    using boost::phoenix::let;
+    using boost::phoenix::ref;
+    using boost::phoenix::arg_names::_1;
+    using boost::phoenix::arg_names::_2;
+    using boost::phoenix::local_names::_a;
+    using boost::phoenix::local_names::_b;
+    using boost::phoenix::placeholders::arg1;
+
     {
         int x = 1;
         int y = lambda[_1]()(x);
@@ -183,12 +181,11 @@ main()
     }
 
     {
-    /*
         // $$$ Fixme. This should not be failing $$$
-        int x = (let(_a = lambda[val(1)])[_a])()();
-        //~ BOOST_TEST(x == 1);
-    */
+        //int x = (let(_a = lambda[val(1)])[_a])(0)(0);
+        //BOOST_TEST(x == 1);
     }
+
     return boost::report_errors();
 }
 

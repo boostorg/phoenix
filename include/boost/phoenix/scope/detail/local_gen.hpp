@@ -8,15 +8,10 @@
 
 #if !PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_SCOPE_DETAIL_LAMBDA_LOCAL_GEN_HPP
-#define PHOENIX_SCOPE_DETAIL_LAMBDA_LOCAL_GEN_HPP
-
 #define PHOENIX_ITERATION_PARAMS                                                \
     (3, (3, PHOENIX_LOCAL_LIMIT,                                                  \
     <boost/phoenix/scope/detail/local_gen.hpp>))
 #include PHOENIX_ITERATE()
-
-#endif
 
 #else
 

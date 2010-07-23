@@ -14,6 +14,7 @@
 #include <boost/phoenix/core/arity.hpp>
 #include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/domain.hpp>
+#include <boost/phoenix/core/no_nullary.hpp>
 #include <boost/phoenix/core/environment.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
@@ -50,11 +51,11 @@ namespace boost { namespace phoenix
             static const int arity = result_of::arity<Expr>::type::value;
 
             typedef typename
-                mpl::eval_if_c<
-                    arity == 0 // avoid calling result_of::actor when this is false
+                mpl::eval_if<
+                    typename no_nullary<Expr>::type//false//arity == 0 // avoid calling result_of::actor when this is false
+                  , mpl::identity<detail::error_expecting_arguments>
                   , boost::result_of<eval_grammar(Expr const&, 
                         typename make_basic_environment<>::type&)>
-                  , mpl::identity<detail::error_expecting_arguments>
                 >::type
             type;
         };

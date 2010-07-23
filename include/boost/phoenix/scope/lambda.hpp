@@ -11,6 +11,7 @@
 
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/as_vector.hpp>
+#include <boost/fusion/include/mpl.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
 #include <boost/phoenix/core/actor.hpp>
@@ -45,7 +46,7 @@ namespace boost { namespace phoenix
 
         template <typename This, typename Env, typename Expr, typename OuterEnv, typename Locals>
         struct result<This(Env&, Expr const&, OuterEnv const&, Locals const&)>
-		      : result_of::lambda<Env, Expr, OuterEnv, Locals, Map>
+              : result_of::lambda<Env, Expr, OuterEnv, Locals, Map>
         {};
 
         template <typename Env, typename Expr, typename OuterEnv, typename Locals>
@@ -54,7 +55,13 @@ namespace boost { namespace phoenix
         {
             typedef typename result_of::lambda<Env, Expr, OuterEnv, Locals, Map>::environment environment;
 
-            environment args(env, proto::value(outer_env), proto::value(locals));
+            typename remove_const<
+                typename remove_reference<
+                    typename boost::result_of<eval_grammar(OuterEnv const&)>::type
+                >::type
+            >::type a(eval(outer_env));
+
+            environment args(env, a, proto::value(locals));
 
             return eval(expr, args);
         }
@@ -63,6 +70,7 @@ namespace boost { namespace phoenix
     template <typename Expr, typename OuterEnv, typename Locals, typename Map>
     struct make_lambda : compose<lambda_eval<Map>, Expr, OuterEnv, Locals> {};
 
+    template <typename Vars>
     struct lambda_actor_eval
     {
         template <typename Sig>
@@ -80,6 +88,16 @@ namespace boost { namespace phoenix
             return proto::value(a)(env);
         }
     };
+    
+    template <typename Vars, typename Dummy>
+    struct enable_nullary<lambda_actor_eval<Vars>, Dummy>
+        : mpl::not_< typename mpl::fold<
+            Vars
+          , mpl::false_
+          , detail::compute_no_nullary
+        >::type >
+    {};
+
 
     template <typename Expr, typename Vars, typename Map>
     struct lambda_actor
@@ -114,8 +132,8 @@ namespace boost { namespace phoenix
             typedef typename result<lambda_actor(Env&)>::locals_type locals_type;
 
             return make_lambda<
-					Expr, Env, locals_type, Map
-					>()(expr, env, fusion::as_vector(fusion::transform(vars, detail::initialize_local<Env>(env))));
+                    Expr, Env, locals_type, Map
+                    >()(expr, env, fusion::as_vector(fusion::transform(vars, detail::initialize_local<Env>(env))));
         }
 
         Expr expr;
@@ -123,15 +141,15 @@ namespace boost { namespace phoenix
     };
 
     template <typename Expr, typename Vars, typename Map>
-    struct make_lambda_actor: compose<lambda_actor_eval, lambda_actor<Expr, Vars, Map> > {};
-
+    struct make_lambda_actor: compose<lambda_actor_eval<Vars>, lambda_actor<Expr, Vars, Map> > {};
+    
     template <typename Vars, typename Map>
     struct lambda_actor_gen
     {
 
         template <typename Expr>
         typename make_lambda_actor<Expr, Vars, Map>::type const
-        operator[](Expr const expr) const
+        operator[](Expr const& expr) const
         {
             return make_lambda_actor<Expr, Vars, Map>()(lambda_actor<Expr, Vars, Map>(expr, vars));
         }
@@ -139,7 +157,7 @@ namespace boost { namespace phoenix
         lambda_actor_gen(Vars const& vars)
             : vars(vars) {}
 
-        Vars const& vars;
+        Vars vars;
     };
 
     struct lambda_gen
@@ -199,9 +217,9 @@ namespace boost { namespace phoenix
             );
         }
 
-		  #define PHOENIX_LOCAL_GEN_NAME lambda_actor_gen
-		  #include <boost/phoenix/scope/detail/local_gen.hpp>
-        #undef PHOENIX_LOCAL_GEN_NAME
+          #define PHOENIX_LOCAL_GEN_NAME lambda_actor_gen
+          #include <boost/phoenix/scope/detail/local_gen.hpp>
+          #undef PHOENIX_LOCAL_GEN_NAME
     };
 
     lambda_gen const lambda = lambda_gen();

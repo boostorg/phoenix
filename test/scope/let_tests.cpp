@@ -10,23 +10,32 @@
 #include <vector>
 
 #define PHOENIX_LIMIT 6
-#define PHOENIX_LOCAL_LIMIT 10
 #include <boost/phoenix/core/limits.hpp>
 
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/phoenix/scope.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
-#include <boost/phoenix/scope.hpp>
 #include <boost/phoenix/function.hpp>
-
-using namespace boost::phoenix;
-using namespace boost::phoenix::arg_names;
-using namespace boost::phoenix::local_names;
-using namespace std;
 
 int
 main()
 {
+    using boost::phoenix::let;
+    using boost::phoenix::val;
+    using boost::phoenix::arg_names::_1;
+    using boost::phoenix::arg_names::_2;
+    using boost::phoenix::arg_names::_3;
+    using boost::phoenix::local_names::_a;
+    using boost::phoenix::local_names::_b;
+    using boost::phoenix::local_names::_c;
+    using boost::phoenix::local_names::_d;
+    using boost::phoenix::local_names::_e;
+    using boost::phoenix::local_names::_x;
+    using boost::phoenix::local_names::_y;
+    using boost::phoenix::local_names::_z;
+    using boost::phoenix::placeholders::arg1;
+
     {
         int x = 1;
         BOOST_TEST(
@@ -38,7 +47,6 @@ main()
         );
     }
 
-    /*
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -49,9 +57,7 @@ main()
             (x, y) == x + y
         );
     }
-	 */
 
-	 /*
     {
         int x = 1, y = 10, z = 13;
         BOOST_TEST(
@@ -81,7 +87,6 @@ main()
         );
     }
 
-    
     {
         int x = 999;
         BOOST_TEST(
@@ -105,16 +110,17 @@ main()
             (x) == x + 888
         );
         
-        BOOST_TEST(x == 999);    
+        BOOST_TEST(x == 999);
     }
     
     {
+        // FIXME do not require a argument to return int
         BOOST_TEST(
             let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
             [
                 _a + _b + _c + _d + _e
             ]
-            () == 1 + 2 + 3 + 4 + 5
+            (0) == 1 + 2 + 3 + 4 + 5
         );
     }
     
@@ -130,9 +136,9 @@ main()
         // show that we can return a local from an outer scope
         int y = 0;
         int x = (let(_a = 1)[let(_b = _1)[ _a ]])(y);
+
         BOOST_TEST(x == 1);
     }
-	 */
 
     {
         // show that this code returns an lvalue
@@ -144,11 +150,10 @@ main()
     {
         // show that what you put in is what you get out
         int i = 1;
-        int& j = let(_a = arg1)[ _a ](i);
+        int& j = let(_a = arg1)[_a](i);
         BOOST_TEST(&i == &j);
     }
 
-    
     return boost::report_errors();
 }
 

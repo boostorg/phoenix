@@ -57,6 +57,12 @@ namespace boost { namespace phoenix
             return get_environment_argument_c<argument_id::value>(env);
         }
     };
+
+    template <typename Dummy>
+    struct enable_nullary<argument, Dummy>
+        : mpl::false_
+    {};
+
     
     template <typename N>
     struct make_argument : boost::phoenix::compose<argument, N> {};

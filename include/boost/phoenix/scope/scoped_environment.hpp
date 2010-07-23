@@ -46,14 +46,14 @@ namespace boost { namespace phoenix
 
     // overload get_environment_argument_c to return the correct argument
     template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>
-	 typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
+    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
     get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map>& env)
     {
         return fusion::at_c<N>(env.env);
     }
     
-	 template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>
-	 typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
+    template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>
+    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
     get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map> const& env)
     {
         return fusion::at_c<N>(env.env);
@@ -66,14 +66,14 @@ namespace boost { namespace phoenix
         typedef Locals locals_type;
         typedef Map map_type;
 
-        scoped_environment(Env& env, OuterEnv const& outer_env, Locals const& locals)
+        scoped_environment(Env& env, OuterEnv& outer_env, Locals const& locals)
             : env(env)
             , outer_env(outer_env)
             , locals(locals) {}
 
         Env& env;
-        OuterEnv const& outer_env;
-        Locals const& locals;
+        OuterEnv& outer_env;
+        Locals locals;
     };
 
 }}

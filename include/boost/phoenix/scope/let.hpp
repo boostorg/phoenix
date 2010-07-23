@@ -21,69 +21,51 @@
 
 namespace boost { namespace phoenix
 {
-	struct let_eval
-	{
-        template <typename Sig>
-        struct result;
-
-        template <typename This, typename Env, typename A>
-        struct result<This(Env&, A const&)>
-            : boost::result_of<typename proto::result_of::value<A>::type(Env&)>
-        {};
-
-        template <typename Env, typename A>
-        typename result<let_eval(Env&, A const&)>::type const
-        operator()(Env& env, A const& a)
-        {
-            return proto::value(a)(env);
-        }
-	};
-
-    template <typename Expr, typename Vars, typename Map>
-    struct let_actor
+    template <typename Map>
+    struct let_eval
     {
-        let_actor(Expr const& expr, Vars const& vars)
-            : expr(expr)
-            , vars(vars)
-        {}
-
         template <typename Sig>
         struct result;
-        
-        template <typename This, typename Env>
-        struct result<This(Env&)>
+
+        template <typename This, typename Env, typename Expr, typename Vars>
+        struct result<This(Env&, Expr const&, Vars const&)>
         {
             typedef typename
                 fusion::result_of::as_vector<
                     typename fusion::result_of::transform<
-                        Vars
+                        typename proto::result_of::value<Vars>::type
                       , detail::initialize_local<Env>
                     >::type
                 >::type
             locals_type;
-			
-			typedef scoped_environment<Env, Env, locals_type, Map> env_type;
+            
+            typedef scoped_environment<Env, Env, locals_type, Map> env_type;
 
-			typedef typename boost::result_of<eval_grammar(Expr const&, env_type&)>::type type;
+            typedef typename boost::result_of<eval_grammar(Expr const&, env_type&)>::type type;
         };
 
-        template <typename Env>
-        typename result<let_actor(Env&)>::type const
-        operator()(Env& env) const
+        template <typename Env, typename Expr, typename Vars>
+        typename result<let_eval(Env&, Expr const&, Vars const&)>::type
+        operator()(Env& env, Expr const& expr, Vars const& vars)
         {
-            typedef typename result<let_actor(Env&)>::locals_type locals_type;
-
-			scoped_environment<Env, Env, locals_type, Map> args(env, env, as_vector(fusion::transform(vars, detail::initialize_local<Env>(env))));
+            typename result<let_eval(Env&, Expr const&, Vars const&)>::env_type
+                args(
+                    env
+                  , env
+                  , fusion::as_vector(
+                      fusion::transform(
+                          proto::value(vars)
+                        , detail::initialize_local<Env>(env)
+                      )
+                    )
+                );
 
             return eval(expr, args);
         }
-
-        Expr expr;
-        Vars vars;
     };
 
     template <typename Expr, typename Vars, typename Map>
-    struct make_let: compose<let_eval, let_actor<Expr, Vars, Map> > {};
+    struct make_let: compose<let_eval<Map>, Expr, Vars> {};
 
     template <typename Vars, typename Map>
     struct let_actor_gen
@@ -91,15 +73,24 @@ namespace boost { namespace phoenix
 
         template <typename Expr>
         typename make_let<Expr, Vars, Map>::type const
-        operator[](Expr const expr) const
+        operator[](Expr const& expr) const
         {
-            return make_let<Expr, Vars, Map>()(let_actor<Expr, Vars, Map>(expr, vars));
+            typedef typename
+                fusion::result_of::as_vector<
+                    typename fusion::result_of::transform<
+                        Vars
+                      , detail::initialize_local<fusion::vector1<int&> >
+                    >::type
+                >::type
+            locals_type;
+
+            return make_let<Expr, Vars, Map>()(expr, vars);
         }
 
         let_actor_gen(Vars const& vars)
             : vars(vars) {}
 
-        Vars const& vars;
+        Vars vars;
     };
 
     struct let_gen
@@ -159,8 +150,8 @@ namespace boost { namespace phoenix
             );
         }
 
-		  #define PHOENIX_LOCAL_GEN_NAME let_actor_gen
-		  #include <boost/phoenix/scope/detail/local_gen.hpp>
+          #define PHOENIX_LOCAL_GEN_NAME let_actor_gen
+          #include <boost/phoenix/scope/detail/local_gen.hpp>
           #undef PHOENIX_LOCAL_GEN_NAME
     };
 

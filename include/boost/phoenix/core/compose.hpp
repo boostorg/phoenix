@@ -16,8 +16,6 @@
 #include <boost/proto/tags.hpp>
 #include <boost/proto/make_expr.hpp>
 
-namespace foo { template< typename T > struct wrap{}; }
-
 namespace boost { namespace phoenix
 {
     ////////////////////////////////////////////////////////////////////////////

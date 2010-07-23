@@ -48,7 +48,7 @@ namespace boost { namespace phoenix
             typedef typename result_of::local_variable<Env, Key>::type return_type;
             typedef typename Env::map_type map_type;
             typedef typename 
-                detail::get_index<typename Env::map_type, Key>::type 
+                detail::get_index<map_type, Key>::type 
             index_type;
 
             typedef detail::eval_local<Key> eval_local;
@@ -61,6 +61,11 @@ namespace boost { namespace phoenix
 
     template <typename Key>
     struct make_local_variable : compose<local_variable<Key> > {};
+    
+    template <typename Key, typename Dummy>
+    struct enable_nullary<local_variable<Key>, Dummy>
+        : mpl::false_
+    {};
 
     namespace local_names
     {

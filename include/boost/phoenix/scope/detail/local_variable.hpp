@@ -21,6 +21,17 @@ namespace boost { namespace phoenix
 
     namespace detail
     {
+        struct compute_no_nullary
+        {
+            template <typename State, typename T>
+            struct apply
+            {
+                typedef typename 
+                    mpl::or_<typename no_nullary<T>::type, State>::type
+                type;
+            };
+        };
+
         template <typename Env>
         struct initialize_local
         {
@@ -34,7 +45,7 @@ namespace boost { namespace phoenix
                 typedef typename boost::result_of<eval_grammar(expr_type const&, Env &)>::type type;
             };
 
-            initialize_local(Env const& env)
+            initialize_local(Env& env)
                 : env(env) {}
 
             template <typename Expr>
@@ -44,7 +55,7 @@ namespace boost { namespace phoenix
                 return eval(expr, env);
             }
 
-            Env const& env;
+            Env& env;
         };
 
         template <int N>
@@ -136,14 +147,14 @@ namespace boost { namespace phoenix
         {
             template <typename RT, typename Env, typename Index>
             static RT
-            get(Env const& env, Index, mpl::false_)
+            get(Env & env, Index, mpl::false_)
             {
                 return fusion::at<Index>(env.locals);
             }
 
             template <typename RT, typename Env, typename Index>
             static RT
-            get(Env const& env, Index index, mpl::true_)
+            get(Env & env, Index index, mpl::true_)
             {
                 typedef typename
                     get_index<typename Env::outer_env_type::map_type, Key>::type
@@ -157,7 +168,7 @@ namespace boost { namespace phoenix
 
             template <typename RT, typename Env, typename Index>
             static RT
-            get(Env const& env, Index index)
+            get(Env & env, Index index)
             {
                 return get<RT>(
                     env

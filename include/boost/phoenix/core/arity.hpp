@@ -33,9 +33,6 @@ namespace boost { namespace phoenix
     struct funcwrap;
 
     struct env;
-    
-    template <typename Key>
-    struct local_variable;
 
     namespace detail
     {
@@ -49,13 +46,6 @@ namespace boost { namespace phoenix
                       , proto::_
                     >
                   , mpl::next<proto::_value(proto::_child2)>()
-                >
-              , proto::when<
-                    proto::function<
-                        proto::terminal<funcwrap<local_variable<proto::_> > >
-                      , proto::terminal<env>
-                    >
-                  , mpl::int_<100>()
                 >
               , proto::otherwise<
                     proto::fold<
