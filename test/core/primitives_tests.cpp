@@ -13,6 +13,7 @@
 using boost::phoenix::cref;
 using boost::phoenix::ref;
 using boost::phoenix::val;
+using boost::phoenix::arg_names::_1;
 using boost::phoenix::arg_names::arg1;
 using boost::phoenix::arg_names::arg2;
 
@@ -36,10 +37,12 @@ main()
     BOOST_TEST(&(arg1(c1)) == &c1); // must be an lvalue
 
     //  value
-    //cout << val("Hello,")(0) << val(' ')(0) << val("World")(0) << endl;
+    val(' ')();
+    val(" ")();
+    std::cout << val("Hello,")() << val(' ')() << val("World")() << std::endl;
     BOOST_TEST(val(3)() == 3);
-    //BOOST_TEST(val("Hello, world")(0) == std::string("Hello, world"));
-    //BOOST_TEST(val(_1)(i1) == i1);
+    BOOST_TEST(val("Hello, world")() == std::string("Hello, world"));
+    BOOST_TEST(val(_1)(i1) == i1);
 
     //  should not compile:
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST

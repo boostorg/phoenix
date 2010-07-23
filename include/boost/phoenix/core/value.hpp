@@ -76,8 +76,23 @@ namespace boost { namespace phoenix
         }
     };
 
+    namespace detail
+    {
+        template <typename T>
+        struct convert_value
+        {
+            typedef T type;
+        };
+
+        template <typename T, int N>
+        struct convert_value<T[N]>
+        {
+            typedef T const* type;
+        };
+    }
+
     template <typename T>
-    struct make_value : compose<value, T> {};
+    struct make_value : compose<value, typename detail::convert_value<T>::type> {};
 
     template <typename Actor>
     struct make_actor_value : compose<actor_value, Actor> {};
