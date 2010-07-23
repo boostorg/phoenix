@@ -9,7 +9,7 @@
 # bring in rules for testing
 import testing ;
 
-local multi-threading = <library>/boost/thread//boost/thread
+local multi-threading = <library>/boost/thread
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
 #test-suite phoenix_detail :
@@ -75,8 +75,8 @@ test-suite phoenix_container :
 test-suite phoenix_scope :
     [ run scope/lambda_tests.cpp ] 
     [ run scope/let_tests.cpp ] 
-#    [ run scope/dynamic_tests.cpp ] 
-#    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
+    [ run scope/dynamic_tests.cpp ] 
+    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
     ;
 
 test-suite phoenix_algorithm :
