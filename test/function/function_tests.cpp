@@ -28,9 +28,9 @@ struct sqr_impl
     struct result;
 
     template <typename This, typename Arg>
-    struct result<This(Arg &)>
+    struct result<This(Arg)>
     {
-        typedef Arg type;
+        typedef typename boost::remove_reference<Arg>::type type;
     };
 
     template <typename Arg>
@@ -49,9 +49,9 @@ struct fact_impl
     struct result;
 
     template <typename This, typename Arg>
-    struct result<This(Arg &)>
+    struct result<This(Arg)>
     {
-        typedef Arg type;
+        typedef typename boost::remove_reference<Arg>::type type;
     };
 
     template <typename Arg>
@@ -71,9 +71,9 @@ struct pow_impl
     struct result;
 
     template <typename This, typename Arg1, typename Arg2>
-    struct result<This(Arg1 &, Arg2 &)>
+    struct result<This(Arg1, Arg2)>
     {
-        typedef Arg1 type;
+        typedef typename boost::remove_reference<Arg1>::type type;
     };
 
     template <typename Arg1, typename Arg2>
@@ -92,9 +92,9 @@ struct add_impl
     struct result;
 
     template <typename This, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
-    struct result<This(Arg1&, Arg2&, Arg3&, Arg4&)>
+    struct result<This(Arg1, Arg2, Arg3, Arg4)>
     {
-        typedef Arg1 type;
+        typedef typename boost::remove_reference<Arg1>::type type;
     };
 
     template <typename Arg1, typename Arg2, typename Arg3, typename Arg4>
@@ -123,6 +123,9 @@ main()
     BOOST_TEST((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
     BOOST_TEST((sqr(arg1) + 5)(i5) == ((i5*i5)+5));
     BOOST_TEST(add(arg1, arg1, arg1, arg1)(i5) == (5+5+5+5));
+
+    // testing composition
+    BOOST_TEST(add(arg1, arg1, arg1, power(arg1, 2))(i5) == (5+5+5+25));
 
     int const ic5 = 5;
     // testing consts
