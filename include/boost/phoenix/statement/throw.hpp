@@ -9,6 +9,9 @@
 #ifndef PHOENIX_STATEMENT_THROW_HPP
 #define PHOENIX_STATEMENT_THROW_HPP
 
+#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/actor.hpp>
+
 namespace boost { namespace phoenix
 {
     namespace result_of

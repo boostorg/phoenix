@@ -12,6 +12,8 @@
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
+#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/support/iterate.hpp>
 
 namespace boost { namespace phoenix
 {

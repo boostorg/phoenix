@@ -11,6 +11,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/deref.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/traits.hpp>
@@ -22,6 +23,8 @@
 
 namespace boost { namespace phoenix
 {
+    template <typename Fun>
+    struct funcwrap;
 
     template <typename Func, typename Dummy = void>
     struct enable_nullary

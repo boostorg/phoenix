@@ -8,6 +8,9 @@
 #ifndef PHOENIX_OBJECT_IF_ELSE_HPP
 #define PHOENIX_OBJECT_IF_ELSE_HPP
 
+#include <boost/phoenix/core/compose.hpp>
+#include <boost/utility/result_of.hpp>
+
 namespace boost { namespace phoenix
 {
     namespace result_of

@@ -7,9 +7,10 @@
 #ifndef PHOENIX_CORE_ENVIRONMENT_HPP
 #define PHOENIX_CORE_ENVIRONMENT_HPP
 
-#include <boost/fusion/support/is_sequence.hpp>
-#include <boost/fusion/container/vector/vector10.hpp>
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/fusion/container/vector/vector.hpp>
+#include <boost/fusion/sequence/intrinsic/at.hpp>
+#include <boost/fusion/support/is_sequence.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/utility/enable_if.hpp>
 

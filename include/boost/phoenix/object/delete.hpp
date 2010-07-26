@@ -8,6 +8,8 @@
 #ifndef PHOENIX_OBJECT_DELETE_HPP
 #define PHOENIX_OBJECT_DELETE_HPP
 
+#include <boost/phoenix/core/compose.hpp>
+
 namespace boost { namespace phoenix
 {
 

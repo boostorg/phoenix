@@ -9,6 +9,7 @@
 #define PHOENIX_OBJECT_CONSTRUCT_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/phoenix/core/compose.hpp>
 
 namespace boost { namespace phoenix
 {

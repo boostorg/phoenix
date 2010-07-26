@@ -8,6 +8,8 @@
 #ifndef PHOENIX_OBJECT_DYNAMIC_CAST_HPP
 #define PHOENIX_OBJECT_DYNAMIC_CAST_HPP
 
+#include <boost/phoenix/core/compose.hpp>
+
 namespace boost { namespace phoenix
 {
     namespace result_of

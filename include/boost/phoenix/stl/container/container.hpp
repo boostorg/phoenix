@@ -8,11 +8,12 @@
 #ifndef PHOENIX_STL_CONTAINER_CONTAINER_HPP
 #define PHOENIX_STL_CONTAINER_CONTAINER_HPP
 
-#include <boost/phoenix/stl/container/detail/container.hpp>
-#include <boost/phoenix/function/function.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/or.hpp>
+#include <boost/phoenix/stl/container/detail/container.hpp>
+#include <boost/phoenix/function/function.hpp>
+#include <boost/phoenix/core/actor.hpp>
 #include <boost/type_traits/is_const.hpp>
 
 namespace boost { namespace phoenix

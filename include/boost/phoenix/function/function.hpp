@@ -8,10 +8,10 @@
 #ifndef PHOENIX_FUNCTION_FUNCTION_HPP
 #define PHOENIX_FUNCTION_FUNCTION_HPP
 
+#include <boost/fusion/sequence/intrinsic/at_c.hpp>
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/support/iterate.hpp>
-#include <boost/fusion/sequence/intrinsic/at_c.hpp>
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/utility/result_of.hpp>
@@ -61,6 +61,7 @@ namespace boost { namespace phoenix
               , F, A0, A1, A2>
         {};
 
+        // Bring in the rest
         #include <boost/phoenix/function/detail/function_result_of.hpp>
     }
 
@@ -112,6 +113,7 @@ namespace boost { namespace phoenix
                 proto::tag::function, phoenix_domain>(f, a0, a1, a2);
         }
         
+        // Bring in the rest
         #include <boost/phoenix/function/detail/function_operator.hpp>
 
         F f;

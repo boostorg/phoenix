@@ -9,7 +9,8 @@
 #ifndef PHOENIX_FUSION_AT_HPP
 #define PHOENIX_FUSION_AT_HPP
 
-#include <boost/fusion/include/at.hpp>
+#include <boost/fusion/sequence/intrinsic/at.hpp>
+#include <boost/fusion/sequence/intrinsic/at_c.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/compose.hpp>
 #include <boost/type_traits/remove_reference.hpp>
@@ -21,11 +22,11 @@ namespace boost { namespace phoenix
         template <typename Env, typename Tuple, int N>
         struct at
             : fusion::result_of::at_c<
-                typename remove_reference<
-                    boost::result_of<
+                typename boost::remove_reference<
+                    typename boost::result_of<
                         eval_grammar(Tuple const&, Env&)
                     >::type
-                >
+                >::type
               , N
             >
         {};

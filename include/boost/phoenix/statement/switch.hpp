@@ -11,11 +11,13 @@
 #include <boost/fusion/algorithm/transformation/push_front.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/fusion/sequence/intrinsic/value_at.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/support/element_at.hpp>
 #include <boost/phoenix/support/iterate.hpp>
-
 #include <boost/proto/proto_fwd.hpp>
+#include <boost/proto/debug.hpp>
 #include <boost/proto/context/callable.hpp>
 #include <boost/proto/extends.hpp>
 #include <boost/proto/make_expr.hpp>

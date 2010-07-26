@@ -8,6 +8,7 @@
 #ifndef PHOENIX_OBJECT_NEW_HPP
 #define PHOENIX_OBJECT_NEW_HPP
 
+#include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 
 namespace boost { namespace phoenix

@@ -7,6 +7,8 @@
 #ifndef PHOENIX_CORE_IS_ACTOR_HPP
 #define PHOENIX_CORE_IS_ACTOR_HPP
 
+#include <boost/mpl/bool.hpp>
+
 namespace boost { namespace phoenix
 {
 ///////////////////////////////////////////////////////////////////////////////
@@ -16,6 +18,10 @@ namespace boost { namespace phoenix
 //      Tests if T is an actor. Evaluates to mpl::true_ or mpl::false_
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+    template <typename Expr>
+    struct actor;
+
     template <typename T, typename Enable = void>
     struct is_actor : mpl::false_ {};
 
