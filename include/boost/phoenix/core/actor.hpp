@@ -380,7 +380,7 @@ namespace boost { namespace phoenix
         template <typename Env>
         typename boost::result_of<
             eval_grammar(A0 const&, typename basic_environment<Env>::type&)
-            >::type
+        >::type
         operator()(Env& env, A0 const& a0, A1 const& a1, A2 const& a2) const
         {
             typename basic_environment<Env>::type args(eval(a1, env), eval(a2, env));

@@ -80,11 +80,22 @@
 
 // this include will bring in mpl::vectorN and 
 // fusion::vectorN where N is PHOENIX_LIMIT
-#include <boost/fusion/include/vector.hpp>
-
-// for some reason, this must be included now to make
-// detail/type_deduction.hpp compile. $$$ TODO: Investigate further $$$
-#include <boost/mpl/vector/vector20.hpp>
+#include <boost/fusion/container/vector/vector10.hpp>
+#if PHOENIX_LIMIT > 10
+#include <boost/fusion/container/vector/vector20.hpp>
+#endif
+#if PHOENIX_LIMIT > 20
+#include <boost/fusion/container/vector/vector30.hpp>
+#endif
+#if PHOENIX_LIMIT > 30
+#include <boost/fusion/container/vector/vector40.hpp>
+#endif
+#if PHOENIX_LIMIT > 40
+#include <boost/fusion/container/vector/vector50.hpp>
+#endif
+#if PHOENIX_LIMIT > 50
+#error "PHOENIX_LIMIT too high!"
+#endif
 
 #if !defined(BOOST_PROTO_MAX_ARITY)
 #define BOOST_PROTO_MAX_ARITY BOOST_PP_INC(PHOENIX_COMPOSITE_LIMIT)

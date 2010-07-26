@@ -8,7 +8,6 @@
 #define PHOENIX_CORE_ENVIRONMENT_HPP
 
 #include <boost/phoenix/core/limits.hpp>
-#include <boost/fusion/container/vector/vector.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/fusion/support/is_sequence.hpp>
 #include <boost/phoenix/support/iterate.hpp>
