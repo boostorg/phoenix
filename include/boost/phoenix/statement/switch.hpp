@@ -59,24 +59,13 @@ namespace boost { namespace phoenix
             struct result;
 
             template <typename This, typename Expr, typename State>
-            struct result<This(Expr const&, State&)>
-                : fusion::result_of::push_front<State, Expr>
+            struct result<This(Expr, State)>
+                : fusion::result_of::push_front<typename remove_const<typename remove_reference<State>::type>::type const, typename remove_const<typename remove_reference<Expr>::type>::type>
             {};
-
-            template <typename This, typename Expr, typename State>
-            struct result<This(Expr&, State&)>
-                : fusion::result_of::push_front<State, Expr>
-            {};
-
-            template <typename This, typename Expr, typename State>
-            struct result<This(Expr, State&)>
-                : fusion::result_of::push_front<State, Expr>
-            {};
-
 
             template <typename Expr, typename State>
-            typename fusion::result_of::push_front<State, Expr>::type
-            operator()(Expr const& expr, State& state)
+            typename fusion::result_of::push_front<typename remove_const<typename remove_reference<State>::type>::type const, typename remove_const<typename remove_reference<Expr>::type>::type>::type
+            operator()(Expr expr, State state) const
             {
                 return fusion::push_front(state, expr);
             }
@@ -203,8 +192,9 @@ namespace boost { namespace phoenix
         typename make_switch<
             Cond
           , typename fusion::result_of::as_vector<
+                    //typename switch_grammar::impl<Cases const&, fusion::vector0<>&,int>::result_type
                 typename boost::result_of<
-                    switch_grammar(Cases const&, fusion::vector0<> const&)
+                    switch_grammar(Cases const&, fusion::vector0<>&)
                 >::type
             >::type
         >::type
@@ -213,13 +203,15 @@ namespace boost { namespace phoenix
             BOOST_PROTO_ASSERT_MATCHES( cases, switch_grammar );
             typedef
                 typename fusion::result_of::as_vector<
+                    //typename switch_grammar::impl<Cases const&, fusion::vector0<>&,int>::result_type
                     typename boost::result_of<
                         switch_grammar(Cases const&, fusion::vector0<>&)
                     >::type
                 >::type
                 cases_type;
 
-            return make_switch<Cond, cases_type>()(cond, fusion::as_vector(switch_grammar()(cases, fusion::vector0<>())));
+            fusion::vector0<> v;
+            return make_switch<Cond, cases_type>()(cond, fusion::as_vector(switch_grammar()(cases, v)));
         }
 
         Cond const& cond;

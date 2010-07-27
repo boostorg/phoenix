@@ -58,7 +58,6 @@ void member_function_test()
 
     bind(&X::f0, &x)();
     bind(&X::f0, ref(x))();
-    bind(&X::f0, x)();
 
     bind(&X::g0, &x)();
     bind(&X::g0, x)();
