@@ -48,7 +48,7 @@ namespace boost { namespace phoenix
         template <typename Expr>
         struct actor<Expr>
         {
-            static const int arity = result_of::arity<Expr>::type::value;
+            //static const int arity = result_of::arity<Expr>::type::value;
 
             typedef typename
                 mpl::eval_if<
@@ -110,10 +110,12 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
+        /*
         template <typename This>
         struct result<This()>
             : result_of::actor<Expr>
         {};
+        */
 
         typename result_of::actor<Expr>::type
         operator()() const

@@ -23,7 +23,7 @@
 
 namespace boost { namespace phoenix
 {
-    template <typename Fun>
+    template <typename F>
     struct funcwrap;
 
     template <typename Func, typename Dummy = void>

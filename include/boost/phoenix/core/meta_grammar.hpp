@@ -43,7 +43,7 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////
     struct eval_cases
     {
-        template <class Tag>
+        template <typename Tag>
         struct case_
             : proto::or_<
                 proto::when<proto::terminal<env>, proto::_state>
@@ -55,7 +55,7 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////
     // wrapper for a Fusion extension evaluator function. Keep this POD.
     ////////////////////////////////////////////////////////////////////////////
-    template <class Fun>
+    template <typename Fun>
     struct funcwrap
     {
         typedef Fun type;

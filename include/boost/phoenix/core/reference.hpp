@@ -8,7 +8,6 @@
 #ifndef PHOENIX_CORE_REFERENCE_HPP
 #define PHOENIX_CORE_REFERENCE_HPP
 
-#include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/utility/result_of.hpp>

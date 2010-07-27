@@ -27,7 +27,7 @@
     struct actor_fun_eval<PHOENIX_A>
     {
 #define EVAL_RESULTS(_, n, __) BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) typename boost::result_of<eval_grammar(A ## n const&, Env&)>::type
-        template <typename Env>
+        template <typename Env, typename Dummy = void>
         struct basic_environment
             : make_basic_environment<
                 BOOST_PP_REPEAT_FROM_TO(

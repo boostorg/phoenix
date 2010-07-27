@@ -9,8 +9,9 @@
 #ifndef PHOENIX_CORE_ARGUMENT_HPP
 #define PHOENIX_CORE_ARGUMENT_HPP
 
-#include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/no_nullary.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/environment.hpp>
 
@@ -80,6 +81,12 @@ namespace boost { namespace phoenix
         make_argument<mpl::int_<0> >::type const _1 = {};
         make_argument<mpl::int_<1> >::type const _2 = {};
         make_argument<mpl::int_<2> >::type const _3 = {};
+        make_argument<mpl::int_<2> >::type const _4 = {};
+        make_argument<mpl::int_<2> >::type const _5 = {};
+        make_argument<mpl::int_<2> >::type const _6 = {};
+        make_argument<mpl::int_<2> >::type const _7 = {};
+        make_argument<mpl::int_<2> >::type const _8 = {};
+        make_argument<mpl::int_<2> >::type const _9 = {};
     }
 
     namespace arg_names

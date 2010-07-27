@@ -9,6 +9,7 @@
 #define PHOENIX_STATEMENT_SWITCH_HPP
 
 #include <boost/fusion/algorithm/transformation/push_front.hpp>
+#include <boost/fusion/container/vector/convert.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/fusion/sequence/intrinsic/value_at.hpp>
 #include <boost/phoenix/core/limits.hpp>

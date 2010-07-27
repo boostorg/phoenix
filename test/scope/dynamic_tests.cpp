@@ -54,7 +54,7 @@ main()
             (clos.real = clos.num * 1e30)();
 
             {   //  Third stack frame
-                boost::fusion::vector<int, char const*, double> init(-1, "Direct Init ", 3.14);
+                boost::fusion::vector3<int, char const*, double> init(-1, "Direct Init ", 3.14);
                 dynamic_frame<my_dynamic::self_type> frame(clos, init);
 
                 (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
