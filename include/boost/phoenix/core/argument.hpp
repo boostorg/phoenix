@@ -81,12 +81,12 @@ namespace boost { namespace phoenix
         make_argument<mpl::int_<0> >::type const _1 = {};
         make_argument<mpl::int_<1> >::type const _2 = {};
         make_argument<mpl::int_<2> >::type const _3 = {};
-        make_argument<mpl::int_<2> >::type const _4 = {};
-        make_argument<mpl::int_<2> >::type const _5 = {};
-        make_argument<mpl::int_<2> >::type const _6 = {};
-        make_argument<mpl::int_<2> >::type const _7 = {};
-        make_argument<mpl::int_<2> >::type const _8 = {};
-        make_argument<mpl::int_<2> >::type const _9 = {};
+        make_argument<mpl::int_<3> >::type const _4 = {};
+        make_argument<mpl::int_<4> >::type const _5 = {};
+        make_argument<mpl::int_<5> >::type const _6 = {};
+        make_argument<mpl::int_<6> >::type const _7 = {};
+        make_argument<mpl::int_<7> >::type const _8 = {};
+        make_argument<mpl::int_<8> >::type const _9 = {};
     }
 
     namespace arg_names
