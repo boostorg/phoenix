@@ -60,11 +60,25 @@ namespace boost { namespace phoenix
 
             template <typename This, typename Expr, typename State>
             struct result<This(Expr, State)>
-                : fusion::result_of::push_front<typename remove_const<typename remove_reference<State>::type>::type const, typename remove_const<typename remove_reference<Expr>::type>::type>
+                : fusion::result_of::push_front<
+                    typename remove_const<
+                        typename remove_reference<State>::type
+                    >::type const
+                  , typename remove_const<
+                        typename remove_reference<Expr>::type
+                    >::type
+                >
             {};
 
             template <typename Expr, typename State>
-            typename fusion::result_of::push_front<typename remove_const<typename remove_reference<State>::type>::type const, typename remove_const<typename remove_reference<Expr>::type>::type>::type
+            typename fusion::result_of::push_front<
+                typename remove_const<
+                    typename remove_reference<State>::type
+                >::type const
+              , typename remove_const<
+                    typename remove_reference<Expr>::type
+                >::type
+            >::type
             operator()(Expr expr, State state) const
             {
                 return fusion::push_front(state, expr);

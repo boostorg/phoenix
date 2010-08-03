@@ -10,13 +10,14 @@
 #include <vector>
 
 #define PHOENIX_LIMIT 6
-#include <boost/phoenix/core/limits.hpp>
-
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/fusion/tuple.hpp>
 #include <boost/phoenix/scope.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/function.hpp>
+#include <boost/phoenix/fusion.hpp>
+
 
 int
 main()
@@ -152,6 +153,15 @@ main()
         int i = 1;
         int& j = let(_a = arg1)[_a](i);
         BOOST_TEST(&i == &j);
+    }
+
+    {
+        using boost::phoenix::at_c;
+
+        boost::fusion::tuple<int, int> t = boost::fusion::make_tuple(0, 1);
+        int i = let(_a = at_c<0>(_1))[_a](t);
+
+        BOOST_TEST( i == 0 );
     }
 
     return boost::report_errors();

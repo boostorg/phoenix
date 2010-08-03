@@ -74,15 +74,6 @@ namespace boost { namespace phoenix
         typename make_let<Expr, Vars, Map>::type const
         operator[](Expr const& expr) const
         {
-            typedef typename
-                fusion::result_of::as_vector<
-                    typename fusion::result_of::transform<
-                        Vars
-                      , detail::initialize_local<fusion::vector1<int&> >
-                    >::type
-                >::type
-            locals_type;
-
             return make_let<Expr, Vars, Map>()(expr, vars);
         }
 

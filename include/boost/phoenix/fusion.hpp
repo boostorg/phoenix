@@ -8,6 +8,6 @@
 #ifndef PHOENIX_FUSION_HPP
 #define PHOENIX_FUSION_HPP
 
-#include <boost/phoenix/fusion.hpp>
+#include <boost/phoenix/fusion/at.hpp>
 
 #endif
