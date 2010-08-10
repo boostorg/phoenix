@@ -164,6 +164,12 @@ main()
         BOOST_TEST( i == 0 );
     }
 
+    {
+        int i = 0;
+        let(_a = _1)[_a = _2](i, 2);
+        BOOST_TEST(i == 2);
+    }
+
     return boost::report_errors();
 }
 

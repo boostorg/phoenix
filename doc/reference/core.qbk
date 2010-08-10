@@ -1,0 +1,114 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2005 Dan Marsden
+    Copyright (C) 2001-2010 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section Core]
+
+Actors are composed to create more complex actors in a tree-like hierarchy. The
+primitives are atomic entities that are like the leaves in the tree. Phoenix is
+extensible. New primitives can be added anytime. Right out of the box, there are
+only a few primitives, these are all defined in the Core module.
+
+This section shall deal with these preset primitives.
+
+[section Values]
+
+
+    #include <boost/phoenix/core/value.hpp>
+
+Whenever we see a constant in a partially applied function, an
+
+    actor<value, T>
+
+(where T is the type of the constant) is automatically created for
+us. For instance:
+
+    add(arg1, 6)
+
+Passing a second argument, `6`, an `actor<value, int>` is implicitly created
+behind the scenes. This is also equivalent to:
+
+    add(arg1, val(6))
+
+`val(x)` generates an `actor<value, T>` where `T` is the type of `x`. In most
+cases, there's no need to explicitly use `val`, but, as we'll see later on,
+there are situations where this is unavoidable.
+
+[h2 Evaluating a Value]
+
+Like arguments, values are also actors. As such, values can be evaluated.
+Invoking a value gives the value's identity. Example:
+
+    cout << val(3)() << val("Hello World")();
+
+prints out "3 Hello World".
+
+[endsect]
+
+[section References]
+
+    #include <boost/phoenix/core/reference.hpp>
+
+Values are immutable constants. Attempting to modify a value will result in a
+compile time error. When we want the function to modify the parameter, we use a
+reference instead. For instance, imagine a lazy function `add_assign`:
+
+    void add_assign(T& x, T y) { x += y; } // pseudo code
+
+Here, we want the first function argument, x, to be mutable. Obviously, we
+cannot write:
+
+    add_assign(1, 2) // error first argument is immutable
+
+In C++, we can pass in a reference to a variable as the first argument in our
+example above. Yet, by default, the library forces arguments passed to partially
+applied functions functions to be immutable values (see [link phoenix.reference.core.values
+Values]). To achieve our intent, we use:
+
+    actor<reference, T&>
+
+This is similar to `actor<value, T>` above but instead holds a reference to a
+variable.
+
+We normally don't instantiate `actor<reference, T>` objects directly. Instead we
+use `ref`. For example (where `i` is an `int` variable):
+
+    add_assign(ref(i), 2)
+
+[h2 Evaluating a Reference]
+
+References are actors. Hence, references can be evaluated. Such invocation gives
+the references's identity. Example:
+
+    int i = 3;
+    char const* s = "Hello World";
+    cout << ref(i)() << ref(s)();
+
+prints out "3 Hello World"
+
+[endsect]
+
+[section Constant References]
+
+
+    #include <boost/phoenix/core/reference.hpp>
+
+Another free function `cref(cv)` may also be used. `cref(cv)` creates an
+`actor<reference, T const&>` object. This is similar to `actor<value, T>` but
+when the data to be passed as argument to a function is heavy and expensive to
+copy by value, the `cref(cv)` offers a lighter alternative.
+
+[endsect]
+
+[section Arguments]
+[endsect]
+
+[section Nothing]
+[endsect]
+
+[endsect]

@@ -1,0 +1,35 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2005 Dan Marsden
+    Copyright (C) 2001-2010 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section Advanced]
+
+[section Phoenix in Detail]
+
+Section explaining how phoenix expression look like, the structure of the AST, and so on
+
+[section Composites]
+[endsect]
+
+[section AST structure]
+[endsect]
+
+[endsect]
+
+[section Extending]
+
+Section about how to extend phoenix
+
+[endsect]
+
+[section Transformations]
+
+[endsect]
+
+
+[endsect]

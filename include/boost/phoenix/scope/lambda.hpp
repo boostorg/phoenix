@@ -82,7 +82,7 @@ namespace boost { namespace phoenix
 
         template <typename Env, typename A>
         typename result<lambda_actor_eval(Env&, A const&)>::type const
-        operator()(Env& env, A const& a)
+        operator()(Env& env, A const& a) const
         {
             return proto::value(a)(env);
         }

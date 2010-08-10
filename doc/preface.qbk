@@ -1,5 +1,14 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2005 Dan Marsden
+    Copyright (C) 2001-2010 Thomas Heller
 
-[section Preface]
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[/section Preface]
+[h1 Preface]
 
 [:['Functional programming is so called because a program consists entirely of
 functions. The main program itself is written as a function which receives the
@@ -53,6 +62,8 @@ icons precede some text to indicate:
                                      information.]]
 ]
 
+[blurb __note__ `using namespace boost::phoenix` is assumed if nothing else is explicitly noted]
+
 [h2 [*/...To my dear daughter, Phoenix/]]
 
-[endsect]
+[/endsect]

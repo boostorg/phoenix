@@ -45,7 +45,7 @@ namespace boost { namespace phoenix
 
         template <typename Env, typename Expr, typename Vars>
         typename result<let_eval(Env&, Expr const&, Vars const&)>::type
-        operator()(Env& env, Expr const& expr, Vars const& vars)
+        operator()(Env& env, Expr const& expr, Vars const& vars) const
         {
             typename result<let_eval(Env&, Expr const&, Vars const&)>::env_type
                 args(
@@ -69,7 +69,6 @@ namespace boost { namespace phoenix
     template <typename Vars, typename Map>
     struct let_actor_gen
     {
-
         template <typename Expr>
         typename make_let<Expr, Vars, Map>::type const
         operator[](Expr const& expr) const
@@ -140,9 +139,9 @@ namespace boost { namespace phoenix
             );
         }
 
-          #define PHOENIX_LOCAL_GEN_NAME let_actor_gen
-          #include <boost/phoenix/scope/detail/local_gen.hpp>
-          #undef PHOENIX_LOCAL_GEN_NAME
+        #define PHOENIX_LOCAL_GEN_NAME let_actor_gen
+        #include <boost/phoenix/scope/detail/local_gen.hpp>
+        #undef PHOENIX_LOCAL_GEN_NAME
     };
 
     let_gen const let = let_gen();

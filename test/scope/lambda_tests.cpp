@@ -186,6 +186,14 @@ main()
         //BOOST_TEST(x == 1);
     }
 
+    {
+        int i = 0;
+        lambda[let(_a = _1)[_a = _2](_1, _2)]()(i, 2);
+        // $$$ Fixme. This should not be failing $$$
+        //lambda[let(_a = _1)[_a = _2]]()(i, 2);
+        BOOST_TEST(i == 2);
+    }
+
     return boost::report_errors();
 }
 
