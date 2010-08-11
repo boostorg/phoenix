@@ -20,35 +20,18 @@ Concepts of this library ...
 
 [include reference/actor.qbk]
 [include reference/composite.qbk]
-[include reference/core.qbk]
 
 [section Modules]
-[section Core]
-[endsect]
 
-[section Function]
-[endsect]
+[include reference/core.qbk]
+[include reference/function.qbk]
+[include reference/operator.qbk]
+[include reference/statement.qbk]
+[include reference/object.qbk]
+[include reference/scope.qbk]
+[include reference/bind.qbk]
+[include reference/stl.qbk]
 
-[section Operator]
-[endsect]
-
-[section Statement]
-[endsect]
-
-[section Object]
-[endsect]
-
-[section Scope]
-[endsect]
-
-[section Bind]
-[endsect]
-
-[section Container]
-[endsect]
-
-[section Algorithm]
-[endsect]
 [endsect]
 
 [endsect]

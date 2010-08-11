@@ -24,6 +24,7 @@
 [def __tip__            [$images/tip.png]]
 
 [def __spirit__         [@http://spirit.sourceforge.net Spirit]]
+[def __proto__          [@http://www.boost.org/doc/libs/1_43_0/doc/html/proto Boost.Proto]]
 [def __haskell__        [@http://www.haskell.org Haskell]]
 [def __mpl__            [@http://www.boost.org/libs/mpl/index.html MPL]]
 [def __bll__            [@http://www.boost.org/libs/lambda/doc/index.html BLL]]

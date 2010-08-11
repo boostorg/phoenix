@@ -13,7 +13,7 @@
 
 Section explaining how phoenix expression look like, the structure of the AST, and so on
 
-[section Composites]
+[section Actors]
 [endsect]
 
 [section AST structure]
@@ -24,6 +24,10 @@ Section explaining how phoenix expression look like, the structure of the AST, a
 [section Extending]
 
 Section about how to extend phoenix
+
+[section Extending Actors]
+
+[endsect]
 
 [endsect]
 

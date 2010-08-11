@@ -62,7 +62,7 @@ icons precede some text to indicate:
                                      information.]]
 ]
 
-[blurb __note__ `using namespace boost::phoenix` is assumed if nothing else is explicitly noted]
+[blurb __note__ Unless otherwise noted `using namespace boost::phoenix;` is assumed]
 
 [h2 [*/...To my dear daughter, Phoenix/]]
 
