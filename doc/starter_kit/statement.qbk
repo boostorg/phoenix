@@ -13,7 +13,9 @@ Lazy statements? Sure. There are lazy versions of the C++ statements we all know
 and love. For example:
 
     if_(arg1 > 5)
+    [
         cout << arg1
+    ]
 
 Say, for example, we wish to print all the elements that are greater than 5
 (separated by a comma) in a vector. Here's how we write it:
