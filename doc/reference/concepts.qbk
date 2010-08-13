@@ -96,7 +96,7 @@ actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 
 [heading Result Type Expressions]
 [table
-	[[Expression] [Result Type] [Compiletime Complexity]
+	[[Expression] [Result Type] [Compiletime Complexity]]
 	[[result_of::actor<Expr, A0...AN>::type] [Any Type] [unspecified]]
 	[[result_of::element_at_c<Actor, N>::type] [Any Type] [unspecified]]
 	[[result_of::element_at_c<Actor, M>::type] [Any Type] [unspecified]]
