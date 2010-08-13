@@ -11,15 +11,9 @@
 
 [include reference/basics.qbk]
 [include reference/organisation.qbk]
-
-[section Concepts]
-
-Concepts of this library ...
-
-[endsect]
-
-[include reference/actor.qbk]
-[include reference/composite.qbk]
+[include reference/concepts.qbk]
+[/include reference/actor.qbk]
+[/include reference/composite.qbk]
 
 [section Modules]
 

@@ -10,7 +10,7 @@
 
 [include notes/porting_from_2_0.qbk]
 
-
+[/
 [section C++0x Lambdas - Differences, Similiarities]
 Notes on portability with all the other existing FP libraries
 [endsect]
@@ -22,5 +22,6 @@ Notes on portability with all the other existing FP libraries
 [include notes/performance.qbk]
 
 [/include notes/journey.qbk]
+]
 
 [endsect]

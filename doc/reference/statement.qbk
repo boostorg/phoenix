@@ -145,7 +145,7 @@ or `" < 5"` depending on the element's actual value:
 
 Notice how the `if_else_` statement is nested.
 
-[note `if_` is one example of a customized actor. See [link phoenix.advanced.extending.extending_actors Extending Actors] for more details]
+[/note `if_` is one example of a customized actor. See [link phoenix.advanced.extending.extending_actors Extending Actors] for more details]
 
 [endsect]
 
@@ -234,7 +234,7 @@ slight twist in logic.
         )
     );
 
-[note `do_` is one example of a customized actor. See [link phoenix.advanced.extending.extending_actors Extending Actors] for more details]
+[/note `do_` is one example of a customized actor. See [link phoenix.advanced.extending.extending_actors Extending Actors] for more details]
 
 [endsect]
 
@@ -298,7 +298,7 @@ The syntax is:
 Note the usual underscore after try and catch, and the extra parentheses required
 after the catch.
 
-[note `do_` is one example of a customized actor. See [link phoenix.advanced.extending.extending_actors Extending Actors] for more details]
+[/note `do_` is one example of a customized actor. See [link phoenix.advanced.extending.extending_actors Extending Actors] for more details]
 
 Example: The following code calls the (lazy) function `f` for each element, and
 prints messages about different exception types it catches.

@@ -26,7 +26,7 @@
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller</p></div>
 <div><div class="legalnotice">
-<a name="id698908"></a><p>
+<a name="id622484"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -54,8 +54,13 @@
 <dt><span class="section"><a href="phoenix/reference/basics.html">Basics</a></span></dt>
 <dt><span class="section"><a href="phoenix/reference/organization.html">Organization</a></span></dt>
 <dt><span class="section"><a href="phoenix/reference/concepts.html">Concepts</a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/actor.html">Actor</a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/composite.html">Composite</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="phoenix/reference/concepts/environment.html">Environment</a></span></dt>
+<dt><span class="section"><a href="phoenix/reference/concepts/actor.html">Actor</a></span></dt>
+<dt><span class="section"><a href="phoenix/reference/concepts/composite.html">Composite</a></span></dt>
+<dt><span class="section"><a href="phoenix/reference/concepts/evaluationpolicy.html">EvaluationPolicy</a></span></dt>
+<dt><span class="section"><a href="phoenix/reference/concepts/evaluator.html">Evaluator</a></span></dt>
+</dl></dd>
 <dt><span class="section"><a href="phoenix/reference/modules.html">Modules</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="phoenix/reference/modules/core.html">Core</a></span></dt>
@@ -119,40 +124,16 @@
 </dl></dd>
 </dl></dd>
 </dl></dd>
-<dt><span class="section"><a href="phoenix/advanced.html">Advanced</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/advanced/phoenix_in_detail.html">Phoenix in Detail</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/advanced/phoenix_in_detail/actors.html">Actors</a></span></dt>
-<dt><span class="section"><a href="phoenix/advanced/phoenix_in_detail/ast_structure.html">AST
-        structure</a></span></dt>
-</dl></dd>
-<dt><span class="section"><a href="phoenix/advanced/extending.html">Extending</a></span></dt>
-<dd><dl><dt><span class="section"><a href="phoenix/advanced/extending/extending_actors.html">Extending
-        Actors</a></span></dt></dl></dd>
-<dt><span class="section"><a href="phoenix/advanced/transformations.html">Transformations</a></span></dt>
-</dl></dd>
 <dt><span class="section"><a href="phoenix/notes.html">Notes</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/notes/porting_from_phoenix_2_0.html">Porting from
-      Phoenix 2.0</a></span></dt>
-<dt><span class="section"><a href="phoenix/notes/c__0x_lambdas___differences__similiarities.html">C++0x
-      Lambdas - Differences, Similiarities</a></span></dt>
-<dt><span class="section"><a href="phoenix/notes/bll___differences__similiarities.html">BLL -
-      Differences, Similiarities</a></span></dt>
-<dt><span class="section"><a href="phoenix/notes/performance.html">Performance</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/notes/performance/compiletime.html">Compiletime</a></span></dt>
-<dt><span class="section"><a href="phoenix/notes/performance/runtime.html">Runtime</a></span></dt>
-</dl></dd>
-</dl></dd>
+<dd><dl><dt><span class="section"><a href="phoenix/notes/porting_from_phoenix_2_0.html">Porting from
+      Phoenix 2.0</a></span></dt></dl></dd>
 <dt><span class="section"><a href="phoenix/wrap_up.html">Wrap Up</a></span></dt>
 <dt><span class="section"><a href="phoenix/acknowledgement.html">Acknowledgement</a></span></dt>
 <dt><span class="section"><a href="phoenix/references.html">References</a></span></dt>
 </dl>
 </div>
 <a name="phoenix.preface"></a><h2>
-<a name="id729638"></a>
+<a name="id653213"></a>
     <a class="link" href="index.html#phoenix.preface">Preface</a>
   </h2>
 <div class="blockquote"><blockquote class="blockquote">
@@ -183,7 +164,7 @@
     <span class="inlinemediaobject"><img src="images/lambda_cpp.png" alt="lambda_cpp"></span>
   </p>
 <a name="phoenix.description"></a><h3>
-<a name="id697696"></a>
+<a name="id621272"></a>
     <a class="link" href="index.html#phoenix.description">Description</a>
   </h3>
 <p>
@@ -201,7 +182,7 @@
     library is organized in highly independent modules and layers.
   </p>
 <a name="phoenix.how_to_use_this_manual"></a><h3>
-<a name="id697743"></a>
+<a name="id621319"></a>
     <a class="link" href="index.html#phoenix.how_to_use_this_manual">How to use this manual</a>
   </h3>
 <p>
@@ -223,7 +204,7 @@
     icons precede some text to indicate:
   </p>
 <div class="table">
-<a name="id697774"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
+<a name="id621350"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
 <div class="table-contents"><table class="table" summary="Icons">
 <colgroup>
 <col>
@@ -312,14 +293,14 @@
   </p>
 </div>
 <a name="phoenix._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"></a><h3>
-<a name="id738596"></a>
+<a name="id662171"></a>
     <a class="link" href="index.html#phoenix._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"><span class="bold"><strong><span class="emphasis"><em>...To my dear daughter, Phoenix</em></span></strong></span></a>
   </h3>
 <p>
   </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: August 11, 2010 at 15:11:09 GMT</small></p></td>
+<td align="left"><p><small>Last revised: August 13, 2010 at 20:22:52 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

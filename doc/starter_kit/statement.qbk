@@ -14,7 +14,7 @@ and love. For example:
 
     if_(arg1 > 5)
     [
-        cout << arg1
+        std::cout << arg1
     ]
 
 Say, for example, we wish to print all the elements that are greater than 5
@@ -23,7 +23,7 @@ Say, for example, we wish to print all the elements that are greater than 5
     for_each(v.begin(), v.end(),
         if_(arg1 > 5)
         [
-            cout << arg1 << ", "
+            std::cout << arg1 << ", "
         ]
     );
 

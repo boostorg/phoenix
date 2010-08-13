@@ -1,0 +1,124 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2005 Dan Marsden
+    Copyright (C) 2001-2010 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[def __boost_mpl_int__      [@http://www.boost.org/libs/mpl/doc/refmanual/integral-constant.html MPL Integral Constant]]
+
+[def __phoenix_concept_environment__ [link phoenix.reference.concepts.environment Environment]]
+[def __phoenix_concept_evaluator__ [link phoenix.reference.concepts.evaluator Evaluator]]
+
+[section Concepts]
+
+[section Environment]
+
+[heading Description]
+
+On an actor function call, bafore evaluating the actors expression, the actor
+creates an environment. Basically, the environment packages the arguments in a
+tuple.
+
+[variablelist Notation
+	[[`Env`] [A type fulfilling this concept]]
+	[[`env`] [Object of type Env]]
+	[[`N`] [A __boost_mpl_int__]]
+	[[`M`] [A positive Integer index]]
+]
+
+[heading Valid Expressions]
+
+[table
+	[[Expression] [Return Type] [Runtime Complexity]]
+	[[`get_environment_argument<N>(env)`] [Any Type] [Constant]]
+	[[`get_environment_argument_c<M>(env)`] [Any Type] [Constant]]
+]
+
+[heading Result Type Expressions]
+
+[table
+	[[Expression] [Result Type] [Compiletime Complexity]]
+	[[`result_of::get_environment_argument<N, Env>::type`] [Any Type] [Constant]]
+	[[`result_of::get_environment_argument_c<M, Env>::type`] [Any Type] [Constant]]
+]
+
+[heading Expression Semantics]
+
+[table
+	[[Expression] [Semantics]]
+	[[`get_environment_argument<N>(env)`] [Returns the `N::value`-th argument passed to the enclosed evaluation context]]
+	[[`get_environment_argument_c<M>(env)`] [Returns the `M`th argument passed to the enclosed evaluation context]]
+]
+
+[heading Models]
+
+* [link phoenix.reference.modules.core.basic_environment `boost::phoenix::basic_environment`]
+* [link phoenix.reference.modules.scope.scope_environment `boost::phoenix::scoped_environment`]
+
+[endsect]
+
+[section Actor]
+
+[heading Description]
+
+The Actor is the main concept behind the library.
+
+Actors are TR1 function objects and can accept 0 to `PHOENIX_LIMIT` arguments.
+An Actor is responsible for setting up the __phoenix_concept_environment__ which
+is then passed to the __phoenix_concept_evaluator__.
+Every Actor needs to somehow embed the expression it is supposed to evaluate.
+An Actor itself is required to be a valid Expression.
+
+[note You can set `PHOENIX_LIMIT`, the predefined maximum arity an
+actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
+
+
+[variablelist Notation
+	[[`Actor`]   [A type fulfilling this concept]]
+	[[`actor`]   [Object of type Env]]
+	[[`A0...AN`] []]
+	[[`a0...aN`] [Objects of type A0, ...AN]]
+	[[`N`] [A __boost_mpl_int__]]
+	[[`M`] [A positive Integer index]]
+]
+
+[heading Valid Expressions]
+
+[table
+	[[Expression] [Return Type] [Runtime Complexity]]
+	[[actor(a0...aN)] [Any Type] [unspecified]]
+	[[element_at<N>(actor)] [Actor] [Constant]]
+	[[element_at_c<M>(actor)] [Actor] [Constant]]
+]
+
+[heading Result Type Expressions]
+[table
+	[[Expression] [Result Type] [Compiletime Complexity]
+	[[result_of::actor<Expr, A0...AN>::type] [Any Type] [unspecified]]
+	[[result_of::element_at_c<Actor, N>::type] [Any Type] [unspecified]]
+	[[result_of::element_at_c<Actor, M>::type] [Any Type] [unspecified]]
+]
+
+[heading Expression Semantics]
+
+[heading Models]
+
+* [link phoenix.reference.modules.core.actor `boost::phoenix::actor`]
+* [link phoenix.reference.modules.statement.if_ `boost::phoenix::if_`]
+* [link phoenix.reference.modules.statement.try_ `boost::phoenix::try_`]
+
+[endsect]
+
+[section Composite]
+[endsect]
+
+[section EvaluationPolicy]
+[endsect]
+
+[section Evaluator]
+[endsect]
+
+[endsect]
