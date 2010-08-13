@@ -104,12 +104,22 @@ actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 
 [heading Expression Semantics]
 
+[table
+	[[Expression] [Semantics]]
+	[[actor(a0...aN)] [Evaluates the expression with the default __phoenix_concept_evaluator]]
+	[[element_at<N>(actor)] [Returns the `N::value`-th element of an compounf expression]]
+	[[element_at_c<M>(actor)] [Returns the `M`th element of an compound expression]]
+]
+
 [heading Models]
 
 * [link phoenix.reference.modules.core.actor `boost::phoenix::actor`]
 * [link phoenix.reference.modules.statement.if_ `boost::phoenix::if_`]
 * [link phoenix.reference.modules.statement.try_ `boost::phoenix::try_`]
 
+[endsect]
+
+[section Primitive]
 [endsect]
 
 [section Composite]

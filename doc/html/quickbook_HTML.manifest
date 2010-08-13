@@ -16,6 +16,7 @@ phoenix/reference/organization.html
 phoenix/reference/concepts.html
 phoenix/reference/concepts/environment.html
 phoenix/reference/concepts/actor.html
+phoenix/reference/concepts/primitive.html
 phoenix/reference/concepts/composite.html
 phoenix/reference/concepts/evaluationpolicy.html
 phoenix/reference/concepts/evaluator.html
