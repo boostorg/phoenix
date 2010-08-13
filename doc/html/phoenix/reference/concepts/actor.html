@@ -7,20 +7,20 @@
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../concepts.html" title="Concepts">
 <link rel="prev" href="environment.html" title="Environment">
-<link rel="next" href="primitive.html" title="Primitive">
+<link rel="next" href="evaluationpolicy.html" title="EvaluationPolicy">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="environment.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../concepts.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="primitive.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="environment.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../concepts.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="evaluationpolicy.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="phoenix.reference.concepts.actor"></a><a class="link" href="actor.html" title="Actor">Actor</a>
 </h4></div></div></div>
 <a name="phoenix.reference.concepts.actor.description"></a><h6>
-<a name="id676084"></a>
+<a name="id719126"></a>
           <a class="link" href="actor.html#phoenix.reference.concepts.actor.description">Description</a>
         </h6>
 <p>
@@ -52,10 +52,11 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">actor</span></code></span></dt>
 <dd><p>
-                Object of type Env
+                Object of type Actor
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A0</span><span class="special">...</span><span class="identifier">AN</span></code></span></dt>
 <dd><p>
+                Argument Types
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a0</span><span class="special">...</span><span class="identifier">aN</span></code></span></dt>
 <dd><p>
@@ -73,7 +74,7 @@
 </dl>
 </div>
 <a name="phoenix.reference.concepts.actor.valid_expressions"></a><h6>
-<a name="id676295"></a>
+<a name="id719337"></a>
           <a class="link" href="actor.html#phoenix.reference.concepts.actor.valid_expressions">Valid
           Expressions</a>
         </h6>
@@ -155,7 +156,7 @@
 </tbody>
 </table></div>
 <a name="phoenix.reference.concepts.actor.result_type_expressions"></a><h6>
-<a name="id676420"></a>
+<a name="id719462"></a>
           <a class="link" href="actor.html#phoenix.reference.concepts.actor.result_type_expressions">Result
           Type Expressions</a>
         </h6>
@@ -181,23 +182,25 @@
                     Compiletime Complexity
                   </p>
                 </th>
-<th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
                   <p>
-                    [result_of::actor&lt;Expr, A0...AN&gt;::type
+                    result_of::actor&lt;Expr, A0...AN&gt;::type
                   </p>
-                </th>
-<th>
+                </td>
+<td>
                   <p>
                     Any Type
                   </p>
-                </th>
-<th>
+                </td>
+<td>
                   <p>
                     unspecified
                   </p>
-                </th>
-</tr></thead>
-<tbody>
+                </td>
+</tr>
 <tr>
 <td>
                   <p>
@@ -211,7 +214,7 @@
                 </td>
 <td>
                   <p>
-                    unspecified
+                    Constant
                   </p>
                 </td>
 </tr>
@@ -228,14 +231,14 @@
                 </td>
 <td>
                   <p>
-                    unspecified
+                    Constant
                   </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="phoenix.reference.concepts.actor.expression_semantics"></a><h6>
-<a name="id676541"></a>
+<a name="id719586"></a>
           <a class="link" href="actor.html#phoenix.reference.concepts.actor.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -265,7 +268,7 @@
                 </td>
 <td>
                   <p>
-                    Evaluates the expression with the default __phoenix_concept_evaluator
+                    Evaluates the expression with the default <a class="link" href="evaluator.html" title="Evaluator">Evaluator</a>
                   </p>
                 </td>
 </tr>
@@ -298,7 +301,7 @@
 </tbody>
 </table></div>
 <a name="phoenix.reference.concepts.actor.models"></a><h6>
-<a name="id676665"></a>
+<a name="id719715"></a>
           <a class="link" href="actor.html#phoenix.reference.concepts.actor.models">Models</a>
         </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -317,7 +320,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="environment.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../concepts.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="primitive.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="environment.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../concepts.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="evaluationpolicy.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

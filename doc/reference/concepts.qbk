@@ -11,6 +11,7 @@
 
 [def __phoenix_concept_environment__ [link phoenix.reference.concepts.environment Environment]]
 [def __phoenix_concept_evaluator__ [link phoenix.reference.concepts.evaluator Evaluator]]
+[def __phoenix_concept_evaluation_policies__ [link phoenix.reference.concepts.evaluator Evaluation Policies]]
 
 [section Concepts]
 
@@ -78,8 +79,8 @@ actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 
 [variablelist Notation
 	[[`Actor`]   [A type fulfilling this concept]]
-	[[`actor`]   [Object of type Env]]
-	[[`A0...AN`] []]
+	[[`actor`]   [Object of type Actor]]
+	[[`A0...AN`] [Argument Types]]
 	[[`a0...aN`] [Objects of type A0, ...AN]]
 	[[`N`] [A __boost_mpl_int__]]
 	[[`M`] [A positive Integer index]]
@@ -98,15 +99,15 @@ actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 [table
 	[[Expression] [Result Type] [Compiletime Complexity]]
 	[[result_of::actor<Expr, A0...AN>::type] [Any Type] [unspecified]]
-	[[result_of::element_at_c<Actor, N>::type] [Any Type] [unspecified]]
-	[[result_of::element_at_c<Actor, M>::type] [Any Type] [unspecified]]
+	[[result_of::element_at_c<Actor, N>::type] [Any Type] [Constant]]
+	[[result_of::element_at_c<Actor, M>::type] [Any Type] [Constant]]
 ]
 
 [heading Expression Semantics]
 
 [table
 	[[Expression] [Semantics]]
-	[[actor(a0...aN)] [Evaluates the expression with the default __phoenix_concept_evaluator]]
+	[[actor(a0...aN)] [Evaluates the expression with the default __phoenix_concept_evaluator__]]
 	[[element_at<N>(actor)] [Returns the `N::value`-th element of an compounf expression]]
 	[[element_at_c<M>(actor)] [Returns the `M`th element of an compound expression]]
 ]
@@ -119,16 +120,105 @@ actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 
 [endsect]
 
+[/
 [section Primitive]
+
+[heading Description]
+
+Refinement of Actor.
+
 [endsect]
 
 [section Composite]
 [endsect]
+]
 
 [section EvaluationPolicy]
+
+[heading Description]
+
+Evaluation Policies are the classes which decide how the composite is to be evaluated with respect to the default evaluator.
+
+[variablelist Notation
+   [[`F`] [Type fulfilling this concept]]
+	[[`f`] [Object of type F]]
+	[[`Env`] [A type of __phoenix_concept_environment__]]
+	[[`env`] [Object of type Env]]
+	[[`A0...AN`] [Argument Types]]
+	[[`a0...aN`] [Objects of type A0, ...AN]]
+]
+
+[heading Valid Expressions]
+
+[table
+	[[Expression] [Return Type] [Runtime Complexity]]
+	[[`f(env, a0...aN)`] [Any Type] [unspecified]]
+]
+
+[heading Result Type Expressions]
+[table
+	[[Expression] [Result Type] [Compiletime Complexity]]
+	[[`boost::result_of<F(Env, A0...AN)>::type|`] [Result of evaluation] [unspecified]]
+]
+
+[heading Expression Semantics]
+
+[table
+	[[Expression] [Semantics]]
+	[[`f(env, a0...aN)`] [Evalutes the Composite with the given attached data]]
+]
+
+[heading Models]
+
+TODO (almost everything)
+
 [endsect]
 
 [section Evaluator]
+
+[heading Description]
+
+The concepts of evaluators are the working horses behind phoenix.
+They are responsible of evaluating the composed expressions.
+
+Various evaluators are thinkable, the main evaluator will be refered to as the
+default evaluator. It is implemented in terms of the Boost.Proto default context
+and the various __phoenix_concpets_evaluation_policies__.
+
+[variablelist Notation
+	[[`Actor`]   [Type fulfilling this concept]]
+	[[`eval`]    [An object of type Eval]]
+	[[`Expr`]    [Type of the Actor Concept]]
+	[[`expr`]    [Object of type Expr]]
+]
+
+[heading Valid Expressions]
+
+[table
+	[[Expression] [Return Type] [Runtime Complexity]]
+	[[`eval(expr, env)`] [Any Type] [unspecified]]
+]
+
+[heading Result Type Expressions]
+[table
+	[[Expression] [Result Type] [Compiletime Complexity]]
+	[[boost::result_of<Eval(Expr const&, Env&)>::type] [Result of evaluation] [unspecified]]
+]
+
+[heading Expression Semantics]
+
+[table
+	[[Expression] [Semantics]]
+	[[`eval(expr, env)`] [Evaluate the expression with the given environment]]
+]
+
+[heading Models]
+
+* eval_grammar
+* arity
+* no_nullary
+* switch_grammar
+
 [endsect]
 
 [endsect]
