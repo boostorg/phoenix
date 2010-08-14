@@ -175,6 +175,6 @@ function of `container_actor`:
 
 It is left as exercise to the user to implement the missing parts by resuing
 functions from the [link phoenix.reference.modules.stl.algorithm Phoenix Algorithm Module]
-(The impatient take a look here: [@../example/container_actor.cpp container_actor.cpp]).
+(The impatient take a look here: [@../../example/container_actor.cpp container_actor.cpp]).
 
 [endsect]

@@ -38,7 +38,7 @@
         on how to implement a custom actor which is usable as if it where a <a href="http://www.sgi.com/tech/stl/Container.html" target="_top">STL Container</a>.
       </p>
 <a name="phoenix.advanced_topics.extending_actors.requirements"></a><h5>
-<a name="id833448"></a>
+<a name="id673158"></a>
         <a class="link" href="extending_actors.html#phoenix.advanced_topics.extending_actors.requirements">Requirements</a>
       </h5>
 <p>
@@ -140,7 +140,7 @@
         Additionally, we want all the operator() overloads of the regular actor.
       </p>
 <a name="phoenix.advanced_topics.extending_actors.the__code__phrase_role__identifier__container_actor__phrase___code_"></a><h5>
-<a name="id833737"></a>
+<a name="id673446"></a>
         <a class="link" href="extending_actors.html#phoenix.advanced_topics.extending_actors.the__code__phrase_role__identifier__container_actor__phrase___code_">The
         <code class="computeroutput"><span class="identifier">container_actor</span></code></a>
       </h5>
@@ -155,6 +155,12 @@
 <span class="keyword">struct</span> <span class="identifier">container_actor</span>
 	<span class="special">:</span> <span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span>
 <span class="special">{</span>
+	<span class="keyword">typedef</span> <span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="identifier">base_type</span><span class="special">;</span>
+	<span class="keyword">typedef</span> <span class="identifier">container_actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="identifier">that_type</span><span class="special">;</span>
+	
+	<span class="identifier">container_actor</span><span class="special">(</span> <span class="identifier">base_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">base</span> <span class="special">)</span>
+		<span class="special">:</span> <span class="identifier">base_type</span><span class="special">(</span> <span class="identifier">base</span> <span class="special">)</span> <span class="special">{}</span>
+
 	<span class="identifier">compose</span><span class="special">&lt;</span><span class="identifier">null_actor</span><span class="special">&gt;::</span><span class="identifier">result_type</span> <span class="keyword">const</span> <span class="identifier">begin</span><span class="special">()</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">nothing</span><span class="special">;</span> <span class="special">}</span>
 	<span class="identifier">compose</span><span class="special">&lt;</span><span class="identifier">null_actor</span><span class="special">&gt;::</span><span class="identifier">result_type</span> <span class="keyword">const</span> <span class="identifier">end</span><span class="special">()</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">nothing</span><span class="special">;</span> <span class="special">}</span>
 	<span class="identifier">compose</span><span class="special">&lt;</span><span class="identifier">null_actor</span><span class="special">&gt;::</span><span class="identifier">result_type</span> <span class="keyword">const</span> <span class="identifier">size</span><span class="special">()</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">nothing</span><span class="special">;</span> <span class="special">}</span>
@@ -167,7 +173,7 @@
 <span class="special">};</span>
 </pre>
 <a name="phoenix.advanced_topics.extending_actors.using_the_new_actor"></a><h5>
-<a name="id834287"></a>
+<a name="id674125"></a>
         <a class="link" href="extending_actors.html#phoenix.advanced_topics.extending_actors.using_the_new_actor">Using
         the new actor</a>
       </h5>
@@ -181,11 +187,9 @@
       </p>
 <pre class="programlisting">  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">&gt;</span>
 <span class="identifier">container_actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="keyword">const</span>
-<span class="identifier">container</span><span class="special">(</span> <span class="identifier">Expr</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">expr</span> <span class="special">)</span>
+<span class="identifier">container</span><span class="special">(</span> <span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">expr</span> <span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">container_actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="identifier">e</span> <span class="special">=</span> <span class="special">{{</span><span class="identifier">expr</span><span class="special">}};</span>
-
-	<span class="keyword">return</span> <span class="identifier">e</span><span class="special">;</span>
+	<span class="keyword">return</span> <span class="identifier">expr</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -211,7 +215,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">N</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_container_argument</span> <span class="special">:</span> <span class="identifier">compose_ex</span><span class="special">&lt;</span><span class="identifier">argument</span><span class="special">,</span> <span class="identifier">container_actor</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span> <span class="special">{};</span>
 
-<span class="identifier">make_container_argument</span><span class="special">&lt;</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">int_</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="keyword">const</span> <span class="identifier">con1</span> <span class="special">=</span> <span class="special">{};</span>
+<span class="keyword">typedef</span> <span class="identifier">make_container_argument</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">int_</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">make_con1</span><span class="special">;</span>
+<span class="identifier">make_con1</span><span class="special">::</span><span class="identifier">type</span> <span class="keyword">const</span> <span class="identifier">con1</span> <span class="special">=</span> <span class="identifier">make_con1</span><span class="special">()(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">int_</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;());</span>
 <span class="comment">// and so on ...
 </span></pre>
 <p>
@@ -229,7 +234,7 @@
         Wow, that was easy!
       </p>
 <a name="phoenix.advanced_topics.extending_actors.adding_live_to_our_actor"></a><h5>
-<a name="id835012"></a>
+<a name="id674887"></a>
         <a class="link" href="extending_actors.html#phoenix.advanced_topics.extending_actors.adding_live_to_our_actor">Adding
         live to our actor</a>
       </h5>
@@ -273,7 +278,13 @@
 <span class="keyword">struct</span> <span class="identifier">container_actor</span>
 	<span class="special">:</span> <span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span>
 <span class="special">{</span>
-	<span class="keyword">typename</span> <span class="identifier">result_of</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">size_impl</span><span class="special">,</span> <span class="identifier">container_actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="keyword">const</span>
+	<span class="keyword">typedef</span> <span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="identifier">base_type</span><span class="special">;</span>
+	<span class="keyword">typedef</span> <span class="identifier">container_actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;</span> <span class="identifier">that_type</span><span class="special">;</span>
+	
+	<span class="identifier">container_actor</span><span class="special">(</span> <span class="identifier">base_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">base</span> <span class="special">)</span>
+		<span class="special">:</span> <span class="identifier">base_type</span><span class="special">(</span> <span class="identifier">base</span> <span class="special">)</span> <span class="special">{}</span>
+
+	<span class="keyword">typename</span> <span class="identifier">result_of</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">size_impl</span><span class="special">,</span> <span class="identifier">that_type</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="keyword">const</span>
 	<span class="identifier">size</span><span class="special">()</span>
 	<span class="special">{</span>
 		<span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">size_impl</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">size_impl</span><span class="special">();</span>
@@ -286,7 +297,7 @@
 <p>
         It is left as exercise to the user to implement the missing parts by resuing
         functions from the <a class="link" href="../reference/modules/stl/algorithm.html" title="Algorithm">Phoenix
-        Algorithm Module</a> (The impatient take a look here: <a href="../../../example/user_manual/container_actor.cpp" target="_top">container_actor.cpp</a>).
+        Algorithm Module</a> (The impatient take a look here: <a href="../../../../example/container_actor.cpp" target="_top">container_actor.cpp</a>).
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
