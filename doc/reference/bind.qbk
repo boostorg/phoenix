@@ -19,7 +19,7 @@ is your friend.
 [note Take note that binders are monomorphic. Rather than binding
 functions, the preferred way is to write true generic and polymorphic [link
 phoenix.reference.modules.function lazy-functions]. However, since most of the time we
-are dealing with adaptation of exisiting code, binders get the job done faster.]
+are dealing with adaptation of existing code, binders get the job done faster.]
 
 There is a set of overloaded `bind` template functions. Each `bind(x)`
 function generates a suitable binder object, a [link phoenix.reference.composite
@@ -109,7 +109,7 @@ The object (reference or pointer) can be lazily bound. Examples:
 [section Compatibility with other bind libraries]
 
 `phoenix::bind` passes all testcases of the Boost.Bind library. It is therefore
-completely compatible and interchangable.
+completely compatible and interchangeable.
 
 Note that at the current state of the library, you can not mix phoenix and lambda
 expressions just like that.

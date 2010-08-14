@@ -9,7 +9,7 @@
 
 [section References]
 
-References are functions. They hold a reference to a value stored somehere.
+References are functions. They hold a reference to a value stored somewhere.
 For example, given:
 
     int i = 3;

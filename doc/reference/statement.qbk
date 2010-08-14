@@ -327,17 +327,17 @@ prints messages about different exception types it catches.
     #include <boost/phoenix/statement/throw.hpp>
 
 As a natural companion to the try/catch support, the statement module provides
-lazy throwing and rethrowing of exceptions.
+lazy throwing and re-throwing of exceptions.
 
 The syntax to throw an exception is:
 
     throw_(exception_expression)
 
-The syntax to rethrow an exception is:
+The syntax to re-throw an exception is:
 
     throw_()
 
-Example: This code extends the try/catch example, rethrowing exceptions derived from
+Example: This code extends the try/catch example, re-throwing exceptions derived from
 runtime_error or exception, and translating other exception types to runtime_errors.
 
     try_

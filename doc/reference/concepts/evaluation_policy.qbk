@@ -1,0 +1,49 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2005 Dan Marsden
+    Copyright (C) 2001-2010 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section EvaluationPolicy]
+
+[heading Description]
+
+Evaluation Policies are the classes which decide how the composite is to be evaluated with respect to the default evaluator.
+
+[variablelist Notation
+   [[`F`] [Type fulfilling this concept]]
+	[[`f`] [Object of type F]]
+	[[`Env`] [A type of __phoenix_concept_environment__]]
+	[[`env`] [Object of type Env]]
+	[[`A0...AN`] [Argument Types]]
+	[[`a0...aN`] [Objects of type A0, ...AN]]
+]
+
+[heading Valid Expressions]
+
+[table
+	[[Expression] [Return Type] [Run time Complexity]]
+	[[`f(env, a0...aN)`] [Any Type] [unspecified]]
+]
+
+[heading Result Type Expressions]
+[table
+	[[Expression] [Result Type] [Compile time Complexity]]
+	[[`boost::result_of<F(Env, A0...AN)>::type|`] [Result of evaluation] [unspecified]]
+]
+
+[heading Expression Semantics]
+
+[table
+	[[Expression] [Semantics]]
+	[[`f(env, a0...aN)`] [Evaluates the Composite with the given attached data]]
+]
+
+[heading Models]
+
+TODO (almost everything)
+
+[endsect]

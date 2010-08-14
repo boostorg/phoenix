@@ -8,12 +8,12 @@
 
 [section Performance]
 
-This section will contain some obversations and notes about performance of the current implementation
+This section will contain some observations and notes about performance of the current implementation
 
-[section Compiletime]
+[section Compile time]
 [endsect]
 
-[section Runtime]
+[section Run time]
 [endsect]
 
 [endsect]

@@ -30,7 +30,7 @@ Lazily construct an object from an arbitrary set of arguments:
 
     construct<T>(ctor_arg1, ctor_arg2, ..., ctor_argN);
 
-where the given parameters are the parameters to the contructor of the object of
+where the given parameters are the parameters to the constructor of the object of
 type T (This implies, that type T is expected to have a constructor with a
 corresponding set of parameter types.).
 
@@ -53,7 +53,7 @@ Lazily construct an object, on the heap, from an arbitrary set of arguments:
 
     new_<T>(ctor_arg1, ctor_arg2, ..., ctor_argN);
 
-where the given parameters are the parameters to the contructor of the object of
+where the given parameters are the parameters to the contractor of the object of
 type T (This implies, that type T is expected to have a constructor with a
 corresponding set of parameter types.).
 

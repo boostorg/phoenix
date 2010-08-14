@@ -34,5 +34,8 @@ int main()
 
 	BOOST_TEST((arg1 + arg2)(arg1, arg1)(8) == 16);
 
+    double mean = 8.0;
+    (arg1 + arg2 * (arg1 * arg1)( boost::phoenix::val(1.0) - mean ))(1.0, 2.0);
+
 	return boost::report_errors();
 }

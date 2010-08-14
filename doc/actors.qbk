@@ -61,7 +61,7 @@ actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 For any Actor the following expressions must be valid:
 
 [table
-    [[Expression] [Return type] [Type Requirements] [Runtime Complexity]]
+    [[Expression] [Return type] [Type Requirements] [Run time Complexity]]
 	 [[`eval(a)`] [Any type] [] []] 
 	 [[`eval(a, env)`] [Any type] [][]] 
 	 [[`a(expr0, expr1..., exprN)`] [Boost.Proto expression] [][]]

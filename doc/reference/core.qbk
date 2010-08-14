@@ -141,7 +141,7 @@ placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
 You see the use make_argument this is a convenience class wrapping the `compose` class:
 
     template <typename N>
-    struct make_arguemnt : compose<argument, N> {};
+    struct make_argument : compose<argument, N> {};
 
 This scheme of actor creation is used throughout the library and follows the DRY principle.
 See [link phoenix.reference.composite Composites] for more details.
@@ -161,10 +161,10 @@ which is equivalent to:
     add(arg1, 6)
 
 [note
-When dealing with argument placeholders the question arises wether you can call
+When dealing with argument placeholders the question arises whether you can call
 member functions on an `argument` actor.
 
-This is possible by supplying a costum `actor` which has a member
+This is possible by supplying a custom `actor` which has a member
 generator function. See [link phoenix.advanced.extending.extending_actors Extending Actors]
 for more details.
 ]
@@ -216,7 +216,7 @@ Here, arguments b, c, and d are ignored. The function `add` takes in the first
 argument (`arg1`) and the fifth argument (`arg5`).
 
 [note There are a few reasons why enforcing strict arity is not
-desireable. A case in point is the callback function. Typical callback functions
+desirable. A case in point is the callback function. Typical callback functions
 provide more information than is actually needed. Lambda functions are often
 used as callbacks.]
 

@@ -20,7 +20,7 @@ The modules are orthogonal, with no cyclic dependencies.
 Lower layers do not depend on higher layers. Modules in a layer do not depend on other modules in the same layer.
 This means, for example, that Bind can be completely discarded if it is
 not required; or one could perhaps take out Operator and Statement and just use Function,
-which may be desireable in a pure FP application.
+which may be desirable in a pure FP application.
 
 The library has grown from the original Phoenix but still comprises only
 header files. There are no object files to link against.
@@ -47,7 +47,7 @@ again be another composite.
     [[Module]           [Description]]
     [[Function]         [Lazy functions support (e.g. `add`)]]
     [[Operator]         [Lazy operators support (e.g. `+`)]]
-    [[Statement]        [Lazy statments (e.g. `if_`, `while_`)]]
+    [[Statement]        [Lazy statements (e.g. `if_`, `while_`)]]
     [[Object]           [Lazy casts (e.g. `static_cast_`),
                         object creation destruction (e.g.
                         `new_`, `delete_`)]]

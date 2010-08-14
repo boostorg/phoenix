@@ -38,7 +38,7 @@ The concept of a composite is therefore best formulated in terms of `proto::func
 ]
 
 As mentioned each of the `A0...AN` can be another actor or composite, this makes
-an actor a recursive structure. The actual evluation is handle by the evaluator `F`.
+an actor a recursive structure. The actual evaluation is handle by the evaluator `F`.
 To ease the creation of actors, there exist helper class responsible for
 creating the correct types.
 

@@ -71,21 +71,22 @@
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            A binary operator, except <code class="computeroutput"><span class="special">-&gt;*</span></code>
-            will be lazily evaluated when <span class="emphasis"><em>at least</em></span> one of its
-            operands is an actor object (see <a class="link" href="../../../">actors</a>).
-          </li>
+              A binary operator, except <code class="computeroutput"><span class="special">-&gt;*</span></code>
+              will be lazily evaluated when <span class="emphasis"><em>at least</em></span> one of
+              its operands is an actor object (see <a class="link" href="../../../">actors</a>).
+            </li>
 <li class="listitem">
-            Unary operators are lazily evaluted if their argument is an actor object.
-          </li>
+              Unary operators are lazily evaluated if their argument is an actor
+              object.
+            </li>
 <li class="listitem">
-            Operator <code class="computeroutput"><span class="special">-&gt;*</span></code> is lazily
-            evaluted if the left hand argument is an actor object.
-          </li>
+              Operator <code class="computeroutput"><span class="special">-&gt;*</span></code> is lazily
+              evaluated if the left hand argument is an actor object.
+            </li>
 <li class="listitem">
-            The result of a lazy operator is an actor object that can in turn allow
-            the applications of rules 1, 2 and 3.
-          </li>
+              The result of a lazy operator is an actor object that can in turn allow
+              the applications of rules 1, 2 and 3.
+            </li>
 </ol></div>
 <p>
           For example, to check the following expression is lazily evaluated:
@@ -94,27 +95,33 @@
 </pre>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            Following rule 1, <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span></code> is
-            lazily evaluated since <code class="computeroutput"><span class="identifier">arg1</span></code>
-            is an actor (see <a class="link" href="core/arguments.html" title="Arguments">Arguments</a>).
-          </li>
+              Following rule 1, <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span></code> is
+              lazily evaluated since <code class="computeroutput"><span class="identifier">arg1</span></code>
+              is an actor (see <a class="link" href="core/arguments.html" title="Arguments">Arguments</a>).
+            </li>
 <li class="listitem">
-            The result of this <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span></code> expression
-            is an actor object, following rule 4.
-          </li>
+              The result of this <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span></code> expression
+              is an actor object, following rule 4.
+            </li>
 <li class="listitem">
-            Continuing, <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span>
-            <span class="number">3</span> <span class="special">+</span> <span class="number">6</span></code> is again lazily evaluated. Rule 2.
-          </li>
+              Continuing, <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span>
+              <span class="number">3</span> <span class="special">+</span>
+              <span class="number">6</span></code> is again lazily evaluated.
+              Rule 2.
+            </li>
 <li class="listitem">
-            By rule 4 again, the result of <code class="computeroutput"><span class="identifier">arg1</span>
-            <span class="special">+</span> <span class="number">3</span> <span class="special">+</span> <span class="number">6</span></code> is
-            an actor object.
-          </li>
+              By rule 4 again, the result of <code class="computeroutput"><span class="identifier">arg1</span>
+              <span class="special">+</span> <span class="number">3</span>
+              <span class="special">+</span> <span class="number">6</span></code>
+              is an actor object.
+            </li>
 <li class="listitem">
-            As <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span>
-            <span class="number">3</span> <span class="special">+</span> <span class="number">6</span></code> is an actor, <code class="computeroutput"><span class="special">-(</span><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span> <span class="special">+</span> <span class="number">6</span><span class="special">)</span></code> is lazily evaluated. Rule 2.
-          </li>
+              As <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span>
+              <span class="number">3</span> <span class="special">+</span>
+              <span class="number">6</span></code> is an actor, <code class="computeroutput"><span class="special">-(</span><span class="identifier">arg1</span>
+              <span class="special">+</span> <span class="number">3</span>
+              <span class="special">+</span> <span class="number">6</span><span class="special">)</span></code> is lazily evaluated. Rule 2.
+            </li>
 </ol></div>
 <p>
           Lazy-operator application is highly contagious. In most cases, a single
@@ -134,12 +141,12 @@
 </span><span class="identifier">val</span><span class="special">(</span><span class="number">1</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="number">3</span><span class="special">;</span> <span class="comment">// Lazily evaluated
 </span></pre>
 <a name="phoenix.reference.modules.operator.supported_operators"></a><h3>
-<a name="id725779"></a>
+<a name="id846162"></a>
           <a class="link" href="operator.html#phoenix.reference.modules.operator.supported_operators">Supported
           operators</a>
         </h3>
 <a name="phoenix.reference.modules.operator.unary_operators"></a><h4>
-<a name="id725798"></a>
+<a name="id846182"></a>
           <a class="link" href="operator.html#phoenix.reference.modules.operator.unary_operators">Unary
           operators</a>
         </h4>
@@ -147,7 +154,7 @@
 <span class="identifier">postfix</span><span class="special">:</span>  <span class="special">++,</span> <span class="special">--</span>
 </pre>
 <a name="phoenix.reference.modules.operator.binary_operators"></a><h4>
-<a name="id725929"></a>
+<a name="id846313"></a>
           <a class="link" href="operator.html#phoenix.reference.modules.operator.binary_operators">Binary
           operators</a>
         </h4>
@@ -157,7 +164,7 @@
 <span class="special">&amp;&amp;,</span> <span class="special">||,</span> <span class="special">-&gt;*</span>
 </pre>
 <a name="phoenix.reference.modules.operator.ternary_operator"></a><h4>
-<a name="id726130"></a>
+<a name="id846515"></a>
           <a class="link" href="operator.html#phoenix.reference.modules.operator.ternary_operator">Ternary
           operator</a>
         </h4>
@@ -172,7 +179,7 @@
           is identical, albeit in a lazy manner.
         </p>
 <a name="phoenix.reference.modules.operator.member_pointer_operator"></a><h4>
-<a name="id726231"></a>
+<a name="id846617"></a>
           <a class="link" href="operator.html#phoenix.reference.modules.operator.member_pointer_operator">Member
           pointer operator</a>
         </h4>

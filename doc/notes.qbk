@@ -11,11 +11,11 @@
 [include notes/porting_from_2_0.qbk]
 
 [/
-[section C++0x Lambdas - Differences, Similiarities]
+[section C++0x Lambdas - Differences, Similarities]
 Notes on portability with all the other existing FP libraries
 [endsect]
 
-[section BLL - Differences, Similiarities]
+[section BLL - Differences, Similarities]
 Notes on portability with all the other existing FP libraries
 [endsect]
 

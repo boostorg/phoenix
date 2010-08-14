@@ -53,8 +53,8 @@ Operator expressions are lazily evaluated following four simple rules:
 # A binary operator, except `->*` will be lazily evaluated when
   /at least/ one of its operands is an actor object
   (see [link phoenix.reference.actor actors]).
-# Unary operators are lazily evaluted if their argument is an actor object.
-# Operator `->*` is lazily evaluted if the left hand argument is an actor object.
+# Unary operators are lazily evaluated if their argument is an actor object.
+# Operator `->*` is lazily evaluated if the left hand argument is an actor object.
 # The result of a lazy operator is an actor object that can in turn allow the
   applications of rules 1, 2 and 3.
 

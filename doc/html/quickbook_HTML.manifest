@@ -10,14 +10,17 @@ phoenix/starter_kit/lazy_statements.html
 phoenix/starter_kit/construct__new__delete__casts.html
 phoenix/starter_kit/lazy_functions.html
 phoenix/starter_kit/more.html
+phoenix/advanced_topics.html
+phoenix/advanced_topics/porting_from_phoenix_2_0.html
+phoenix/advanced_topics/extending_actors.html
 phoenix/reference.html
 phoenix/reference/basics.html
 phoenix/reference/organization.html
 phoenix/reference/concepts.html
-phoenix/reference/concepts/environment.html
 phoenix/reference/concepts/actor.html
-phoenix/reference/concepts/evaluationpolicy.html
 phoenix/reference/concepts/evaluator.html
+phoenix/reference/concepts/evaluationpolicy.html
+phoenix/reference/concepts/environment.html
 phoenix/reference/modules.html
 phoenix/reference/modules/core.html
 phoenix/reference/modules/core/values.html
@@ -57,5 +60,5 @@ phoenix/reference/modules/stl/algorithm.html
 phoenix/notes.html
 phoenix/notes/porting_from_phoenix_2_0.html
 phoenix/wrap_up.html
-phoenix/acknowledgement.html
+phoenix/acknowledgments.html
 phoenix/references.html
