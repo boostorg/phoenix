@@ -39,7 +39,7 @@ Let's repeat what we want to have:
 
 Additionally, we want all the operator() overloads of the regular actor.
 
-[heading The `container_actor`]
+[heading Defining the actor]
 
 The first version of our `container_actor` interface to show the general
 principle. This will be continually be extended. For the sake of simplicity,
@@ -56,18 +56,18 @@ at first.
 		container_actor( base_type const& base )
 			: base_type( base ) {}
 
-		compose<null_actor>::result_type const begin() { return nothing; }
-		compose<null_actor>::result_type const end() { return nothing; }
-		compose<null_actor>::result_type const size() { return nothing; }
-		compose<null_actor>::result_type const max_size() { return nothing; }
-		compose<null_actor>::result_type const empty() { return nothing; }
+		compose<null_actor>::result_type const begin() const { return nothing; }
+		compose<null_actor>::result_type const end() const { return nothing; }
+		compose<null_actor>::result_type const size() const { return nothing; }
+		compose<null_actor>::result_type const max_size() const { return nothing; }
+		compose<null_actor>::result_type const empty() const { return nothing; }
 
 		// note that swap is the only function needing another container.
 		template <typename OtherExpr>
-		compose<null_actor>::result_type const swap( actor<OtherExpr> const& ) { return nothing; }
+		compose<null_actor>::result_type const swap( actor<OtherExpr> const& ) const { return nothing; }
 	};
 
-[heading Using the new actor]
+[heading Using the actor]
 
 Although the member function do nothing right now, we want to test if we can use
 our new actor.
@@ -118,7 +118,7 @@ The above code now changes to:
 
 Wow, that was easy!
 
-[heading Adding live to our actor]
+[heading Adding live to the actor]
 
 This one will be actually even easier.
 
@@ -164,7 +164,7 @@ function of `container_actor`:
 			: base_type( base ) {}
 
 		typename result_of::function<size_impl, that_type>::type const
-		size()
+		size() const
 		{
 			function<size_impl> const f = size_impl();
 			return f(*this);
