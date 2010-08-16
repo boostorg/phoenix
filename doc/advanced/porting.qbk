@@ -70,7 +70,7 @@ result type deduction protocol:
 			template <typename Arg1, typename Arg2>
 			struct result
 			{
-				typedef Arg1;
+				typedef Arg1 type;
 			};
 
 			template <typename Arg1, typename Arg2>
