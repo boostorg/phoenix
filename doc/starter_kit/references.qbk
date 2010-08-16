@@ -23,9 +23,9 @@ we create `references` to `i` and `s` this way:
 Like `val`, the expressions above evaluates to a nullary function; the first one
 returning an `int&`, and the second one returning a `char const*&`.
 
-(See [@../../example/users_manual/references.cpp references.cpp])
+(See [@../../example/references.cpp references.cpp])
 
-[blurb __tip__ Learn more about references [/link phoenix.primitives.references here.]]
+[blurb __tip__ Learn more about references [link phoenix.reference.modules.core.references here.]]
 
 [endsect]
 

@@ -41,11 +41,11 @@
           means in a short while.
         </p></td></tr>
 </table></div>
-<a name="phoenix.reference.basics.partial_function_application"></a><h3>
-<a name="id819204"></a>
+<a name="phoenix.reference.basics.partial_function_application"></a><h5>
+<a name="id680131"></a>
         <a class="link" href="basics.html#phoenix.reference.basics.partial_function_application">Partial
         Function Application</a>
-      </h3>
+      </h5>
 <p>
         Think of a function as a black box. You pass arguments and it returns something
         back. The figure below depicts the typical scenario.
@@ -97,17 +97,17 @@
         application. And even more, with Phoenix, these resulting functions won't
         be black boxes anymore.
       </p>
-<a name="phoenix.reference.basics.stl_and_higher_order_functions"></a><h3>
-<a name="id819420"></a>
+<a name="phoenix.reference.basics.stl_and_higher_order_functions"></a><h5>
+<a name="id680347"></a>
         <a class="link" href="basics.html#phoenix.reference.basics.stl_and_higher_order_functions">STL
         and higher order functions</a>
-      </h3>
+      </h5>
 <p>
         So, what's all the fuss? What makes partial function application so useful?
-        Recall our original example in the <a class="link" href="../starter_kit/lazy_operators.html" title="Lazy Operators">previous
+        Recall our original example in the <a class="link" href="../starter_kit/composites/lazy_operators.html" title="Lazy Operators">previous
         section</a>:
       </p>
-<pre class="programlisting"><span class="identifier">find_if</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">find_if</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)</span>
 </pre>
 <p>
         The expression <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">%</span>
@@ -128,10 +128,10 @@
           arguments and return values from functions.
         </p></td></tr>
 </table></div>
-<a name="phoenix.reference.basics.lazy_evaluation"></a><h3>
-<a name="id819624"></a>
+<a name="phoenix.reference.basics.lazy_evaluation"></a><h5>
+<a name="id680559"></a>
         <a class="link" href="basics.html#phoenix.reference.basics.lazy_evaluation">Lazy Evaluation</a>
-      </h3>
+      </h5>
 <p>
         In Phoenix, to put it more accurately, function evaluation has two stages:
       </p>
@@ -180,14 +180,14 @@
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">x</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
 <span class="keyword">int</span> <span class="identifier">y</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
 
-<span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)(</span><span class="identifier">x</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 1 or true
-</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)(</span><span class="identifier">y</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 0 or false
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)(</span><span class="identifier">x</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 1 or true
+</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)(</span><span class="identifier">y</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 0 or false
 </span></pre>
-<a name="phoenix.reference.basics.forwarding_function_problem"></a><h3>
-<a name="id820134"></a>
+<a name="phoenix.reference.basics.forwarding_function_problem"></a><h5>
+<a name="id681102"></a>
         <a class="link" href="basics.html#phoenix.reference.basics.forwarding_function_problem">Forwarding
         Function Problem</a>
-      </h3>
+      </h5>
 <p>
         Usually, we, as clients, write the call-back functions while libraries (such
         as STL) provide the callee (e.g. <code class="computeroutput"><span class="identifier">find_if</span></code>).
@@ -206,7 +206,7 @@
         <code class="computeroutput"><span class="identifier">x</span></code>.
       </p>
 <p>
-        In Phoenix we emulated perfect forwarding through Preprocessor Macros generating
+        In Phoenix we emulated perfect forwarding through preprocessor macros generating
         code to allow const and non-const references.
       </p>
 <p>
@@ -224,11 +224,11 @@
           is set to 3.
         </p></td></tr>
 </table></div>
-<a name="phoenix.reference.basics.polymorphic_functions"></a><h3>
-<a name="id820272"></a>
+<a name="phoenix.reference.basics.polymorphic_functions"></a><h5>
+<a name="id681240"></a>
         <a class="link" href="basics.html#phoenix.reference.basics.polymorphic_functions">Polymorphic
         Functions</a>
-      </h3>
+      </h5>
 <p>
         Unless otherwise noted, Phoenix generated functions are fully polymorphic.
         For instance, the <code class="computeroutput"><span class="identifier">add</span></code> example

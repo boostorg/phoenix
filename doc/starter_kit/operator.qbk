@@ -40,9 +40,9 @@ immediately evaluated. Some examples:
     x[ref(i)]       // illegal (x is not a phoenix primitive or composite)
     ref(x[ref(i)])  // illegal (x is not a phoenix primitive or composite)
 
-[blurb __tip__ Learn more about operators [/link phoenix.composite.operator here.]]
+[blurb __tip__ Learn more about operators [link phoenix.reference.modules.operator here.]]
 
-[h2 First Practical Example]
+[heading First Practical Example]
 
 We've covered enough ground to present a real world example. We want to find the
 first odd number in an STL container. Normally we use a functor (function
@@ -59,11 +59,11 @@ Write a function:
 
 Pass a pointer to the function to STL's `find_if` algorithm:
 
-    find_if(c.begin(), c.end(), &is_odd)
+    std::find_if(c.begin(), c.end(), &is_odd)
 
 Using Phoenix, the same can be achieved directly with a one-liner:
 
-    find_if(c.begin(), c.end(), arg1 % 2 == 1)
+    std::find_if(c.begin(), c.end(), arg1 % 2 == 1)
 
 The expression `arg1 % 2 == 1` automagically creates a functor with the expected
 behavior. In FP, this unnamed function is called a lambda function. Unlike the
@@ -72,7 +72,7 @@ fixed type int argument), the Phoenix version is fully polymorphic and works
 with any container (of ints, of longs, of bignum, etc.) as long as its elements
 can handle the `arg1 % 2 == 1` expression.
 
-(See [@../../example/users_manual/find_if.cpp find_if.cpp])
+(See [@../../example/find_if.cpp find_if.cpp])
 
 [blurb __tip__ ...[*That's it, we're done]. Well if you wish to know a little bit
 more, read on...]

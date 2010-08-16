@@ -47,7 +47,7 @@
 
 [/include actors.qbk]
 [/include advanced.qbk]
-[include notes.qbk]
+[/include notes.qbk]
 [include wrap_up.qbk]
 [include acknowledgment.qbk]
 [include references.qbk]

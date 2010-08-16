@@ -25,11 +25,11 @@ on). Examples:
 
     int i = 3;
     char const* s = "Hello World";
-    cout << arg1(i) << endl;        // prints 3
-    cout << arg2(i, s) << endl;     // prints "Hello World"
+    std::cout << arg1(i) << std::endl;        // prints 3
+    std::cout << arg2(i, s) << std::endl;     // prints "Hello World"
 
-(See [@../../example/users_manual/arguments.cpp arguments.cpp])
+(See [@../../example/arguments.cpp arguments.cpp])
 
-[blurb __tip__ Learn more about arguments [/link phoenix.primitives.arguments here.]]
+[blurb __tip__ Learn more about arguments [link phoenix.reference.modules.core.arguments here.]]
 
 [endsect]

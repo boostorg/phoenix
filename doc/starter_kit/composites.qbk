@@ -7,13 +7,10 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Composites]
-
-What we have seen so far, are what are called *primitives*. You can think of
-primitives (such as values, references and arguments) as atoms.
+[/section Composites]
 
 Things start to get interesting when we start /composing/ primitives to form
 *composites*. The composites can, in turn, be composed to form even more complex
 composites.
 
-[endsect]
+[/endsect]

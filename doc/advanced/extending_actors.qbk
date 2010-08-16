@@ -9,19 +9,20 @@
 
 [section Extending Actors]
 
-[link phoenix.reference.concept.actor Actors] are one of the main parts of the
+[link phoenix.reference.concepts.actor Actors] are one of the main parts of the
 library, and one of the many customization points. The default actor implementation
-provides several perator() overloads which deal with the evaluation of expressions.
+provides several operator() overloads which deal with the evaluation of expressions.
 
 For some uses cases this might not be enough. For convenience it is thinkable to
-provide custom member functions which generate new expressions. An example is
-the [link phoenix.reference.modules.statement.if__statement if_ Statement] which
-provides an additional else member. With this the actual phoenix expression
-becomes more expressive.
+provide custom member functions which generate new expressions. An example is the
+[link phoenix.reference.modules.statement.___if_else_____statement '''if_else_'''
+Statement] which provides an additional else member for generating a lazy if-else
+expression. With this the actual Phoenix expression becomes more expressive.
 
-Another szenario is to give actors the semantics of a certain well known interface
+Another scenario is to give actors the semantics of a certain well known interface
 or concept. This tutorial like section will provide information on how to implement
-a custom actor which is usable as if it where a [@http://www.sgi.com/tech/stl/Container.html STL Container].
+a custom actor which is usable as if it were a
+[@http://www.sgi.com/tech/stl/Container.html STL Container].
 
 [heading Requirements]
 
@@ -41,8 +42,8 @@ Additionally, we want all the operator() overloads of the regular actor.
 
 [heading Defining the actor]
 
-The first version of our `container_actor` interface to show the general
-principle. This will be continually be extended. For the sake of simplicity,
+The first version of our `container_actor` interface will show the general
+principle. This will be continually extended. For the sake of simplicity,
 every member function generator will return [link phoenix.reference.modules.core.nothing `nothing`]
 at first.
 
@@ -56,20 +57,20 @@ at first.
 		container_actor( base_type const& base )
 			: base_type( base ) {}
 
-		compose<null_actor>::result_type const begin() const { return nothing; }
-		compose<null_actor>::result_type const end() const { return nothing; }
-		compose<null_actor>::result_type const size() const { return nothing; }
-		compose<null_actor>::result_type const max_size() const { return nothing; }
-		compose<null_actor>::result_type const empty() const { return nothing; }
+		compose<null_actor>::type const begin() const { return nothing; }
+		compose<null_actor>::type const end() const { return nothing; }
+		compose<null_actor>::type const size() const { return nothing; }
+		compose<null_actor>::type const max_size() const { return nothing; }
+		compose<null_actor>::type const empty() const { return nothing; }
 
-		// note that swap is the only function needing another container.
-		template <typename OtherExpr>
-		compose<null_actor>::result_type const swap( actor<OtherExpr> const& ) const { return nothing; }
+		// Note that swap is the only function needing another container.
+		template <typename Container>
+		compose<null_actor>::result_type const swap( actor<Container> const& ) const { return nothing; }
 	};
 
 [heading Using the actor]
 
-Although the member function do nothing right now, we want to test if we can use
+Although the member functions do nothing right now, we want to test if we can use
 our new actor.
 
 First, lets create a generator which wraps the `container_actor` around any other
@@ -82,7 +83,7 @@ expression:
 		return expr;
 	}
 
-Now lets test this:
+Now let's test this:
 
 	std::vector<int> v;
 	v.push_back(0);
@@ -90,13 +91,13 @@ Now lets test this:
 	v.push_back(2);
 	v.push_back(3);
 
-	(container(arg1).begin())(v);
+	(container(arg1).size())(v);
 
-Granted, this is not really elegant and not really practical (we coud have just
-used phoenix::begin(v) from the [link phoenix.reference.modules.stl.algorithm Phoenix Algorithm Module], 
+Granted, this is not really elegant and not very practical (we could have just
+used phoenix::begin(v) from the [link phoenix.reference.modules.stl.algorithm Phoenix algorithm module], 
 but we can do better.
 
-Let's have a [link phoenix.reference.modules.core.arguments Argument placeholder]
+Let's have an [link phoenix.reference.modules.core.arguments argument placeholder]
 which is usable as if it was a STL container:
 
 	template <typename N>
@@ -106,7 +107,7 @@ which is usable as if it was a STL container:
 	make_con1::type const con1 = make_con1()(boost::mpl::int_<0>());
 	// and so on ...
 
-The above code now changes to:
+The above example can be rewritten as:
 
 	std::vector<int> v;
 	v.push_back(0);
@@ -118,11 +119,11 @@ The above code now changes to:
 
 Wow, that was easy!
 
-[heading Adding live to the actor]
+[heading Adding life to the actor]
 
-This one will be actually even easier.
+This one will be even easier!
 
-First, we define a [link pheonix.reference.modules.function Lazy function] which
+First, we define a [link phoenix.reference.modules.function lazy function] which
 evaluates the expression we want to implement.
 Following is the implementation of the size function:
 
@@ -150,7 +151,7 @@ Following is the implementation of the size function:
 		}
 	};
 
-Good, this was the first part. The second part will be, to implement the size member
+Good, this was the first part. The second part will be to implement the size member
 function of `container_actor`:
 	
 	template <typename Expr>
@@ -173,8 +174,8 @@ function of `container_actor`:
 		// the rest ...
 	};
 
-It is left as exercise to the user to implement the missing parts by resuing
+It is left as an exercise to the user to implement the missing parts by reusing
 functions from the [link phoenix.reference.modules.stl.algorithm Phoenix Algorithm Module]
-(The impatient take a look here: [@../../example/container_actor.cpp container_actor.cpp]).
+(the impatient take a look here: [@../../example/container_actor.cpp container_actor.cpp]).
 
 [endsect]

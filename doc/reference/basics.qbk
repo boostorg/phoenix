@@ -21,7 +21,7 @@ function with arity == 2 (or binary). `a + b` is the same as `add(a, b)`, `a + b
 [note Amusingly, functions may even return functions. We shall see
 what this means in a short while.]
 
-[h2 Partial Function Application]
+[heading Partial Function Application]
 
 Think of a function as a black box. You pass arguments and it returns something
 back. The figure below depicts the typical scenario.
@@ -62,24 +62,26 @@ provides the facilities to do partial function application.
 And even more, with Phoenix, these resulting functions won't be black boxes
 anymore.
 
-[h2 STL and higher order functions]
+[heading STL and higher order functions]
 
 So, what's all the fuss? What makes partial function application so useful?
-Recall our original example in the [link phoenix.starter_kit.lazy_operators previous section]:
+Recall our original example in the [link phoenix.starter_kit.composites.lazy_operators
+previous section]:
 
-    find_if(c.begin(), c.end(), arg1 % 2 == 1)
+    std::find_if(c.begin(), c.end(), arg1 % 2 == 1)
 
-The expression `arg1 % 2 == 1` evaluates to a lambda function. `arg1` is a placeholder
-for an argument to be supplied later. Hence, since there's only one unsupplied argument, the
-lambda function has an arity 1. It just so happens that `find_if` supplies the
-unsupplied argument as it loops from `c.begin()` to `c.end()`.
+The expression `arg1 % 2 == 1` evaluates to a lambda function. `arg1` is a
+placeholder for an argument to be supplied later. Hence, since there's only one
+unsupplied argument, the lambda function has an arity 1. It just so happens that
+`find_if` supplies the unsupplied argument as it loops from `c.begin()` to
+`c.end()`.
 
 [note Higher order functions are functions which can take other
 functions as arguments, and may also return functions as results. Higher order
-functions are functions that are treated like any other objects and can be used as
-arguments and return values from functions.]
+functions are functions that are treated like any other objects and can be used
+as arguments and return values from functions.]
 
-[h2 Lazy Evaluation]
+[heading Lazy Evaluation]
 
 In Phoenix, to put it more accurately, function evaluation has two stages:
 
@@ -119,11 +121,11 @@ of Phoenix expressions. Examples:
     int x = 1;
     int y = 2;
 
-    cout << (arg1 % 2 == 1)(x) << endl; // prints 1 or true
-    cout << (arg1 % 2 == 1)(y) << endl; // prints 0 or false
+    std::cout << (arg1 % 2 == 1)(x) << std::endl; // prints 1 or true
+    std::cout << (arg1 % 2 == 1)(y) << std::endl; // prints 0 or false
 
 
-[h2 Forwarding Function Problem]
+[heading Forwarding Function Problem]
 
 Usually, we, as clients, write the call-back functions while libraries (such as
 STL) provide the callee (e.g. `find_if`). In case the role is reversed, e.g.
@@ -137,14 +139,15 @@ Look again at the code above:
 
 Notice that, in the second-stage (the final evaluation), we used a variable `x`.
 
-In Phoenix we emulated perfect forwarding through Preprocessor Macros generating
+In Phoenix we emulated perfect forwarding through preprocessor macros generating
 code to allow const and non-const references.
 
 We generate these second-stage overloads for Phoenix expression up to
 `PHOENIX_PERFECT_FORWARD_LIMIT`
 
-[note You can set `PHOENIX_PERFECT_FORWARD_LIMIT`, the predefined maximum perfect forward arguments an
-actor can take. By default, `PHOENIX_PERFECT_FORWARDLIMIT` is set to 3.]
+[note You can set `PHOENIX_PERFECT_FORWARD_LIMIT`, the predefined maximum perfect
+forward arguments an actor can take. By default, `PHOENIX_PERFECT_FORWARDLIMIT`
+is set to 3.]
 
 
 [/
@@ -157,7 +160,7 @@ Disallowing non-const rvalues partially solves the "__forwarding__" but
 prohibits code like above.
 ]
 
-[h2 Polymorphic Functions]
+[heading Polymorphic Functions]
 
 Unless otherwise noted, Phoenix generated functions are fully polymorphic. For
 instance, the `add` example above can apply to integers, floating points, user
@@ -168,8 +171,8 @@ defined complex numbers or even strings. Example:
     std::string r = add(arg1, arg2)(h, w);
 
 evaluates to `std::string("Hello World")`. The observant reader might notice
-that this function call in fact takes in heterogeneous arguments where `arg1` is
-of type `std::string` and `arg2` is of type `char const*`. `add` still works
+that this function call in fact takes in heterogeneous arguments where `arg1`
+is of type `std::string` and `arg2` is of type `char const*`. `add` still works
 because the C++ standard library allows the expression `a + b` where `a` is a
 `std::string` and `b` is a `char const*`.
 

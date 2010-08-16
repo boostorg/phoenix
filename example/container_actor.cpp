@@ -8,6 +8,7 @@
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/function.hpp>
+#include <boost/phoenix/stl/container.hpp>
 
 #include <vector>
 
@@ -51,14 +52,43 @@ struct container_actor
     container_actor( base_type const& base )
         : base_type( base ) {}
 
+    typename phoenix::result_of::function<phoenix::stl::begin, that_type>::type const
+    begin() const
+    {
+        return phoenix::begin(*this);
+    }
+    
+    typename phoenix::result_of::function<phoenix::stl::end, that_type>::type const
+    end() const
+    {
+        return phoenix::begin(*this);
+    }
+
     typename phoenix::result_of::function<size_impl, that_type>::type const
     size() const
     {
         function<size_impl> const f = size_impl();
         return f(*this);
     }
+    
+    typename phoenix::result_of::function<phoenix::stl::max_size, that_type>::type const
+    max_size() const
+    {
+        return phoenix::max_size(*this);
+    }
 
-    // the rest ...
+    typename phoenix::result_of::function<phoenix::stl::empty, that_type>::type const
+    empty() const
+    {
+        return phoenix::empty(*this);
+    }
+
+    template <typename Container>
+    typename phoenix::result_of::function<phoenix::stl::swap, that_type, Container>::type const
+    swap(actor<Container> const& expr) const
+    {
+        return phoenix::swap(*this, expr);
+    }
 };
 
 

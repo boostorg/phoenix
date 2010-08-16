@@ -6,10 +6,6 @@
  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Advanced Topics]
-
-[include advanced/porting.qbk]
-[include advanced/extending_actors.qbk]
-[/include advanced/custom_evaluation.qbk]
+[section Custom Evaluation]
 
 [endsect]

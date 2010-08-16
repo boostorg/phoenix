@@ -18,18 +18,18 @@ The first evaluates to a nullary function (a function taking no arguments) that
 returns an `int`, `3`. The second evaluates to a nullary function that returns
 a `char const(&)[13]`, `"Hello, World"`.
 
-[h2 Lazy Evaluation]
+[heading Lazy Evaluation]
 
 Confused? `val(3)` is a unary function, you say? Yes it is. However, read
 carefully: /"evaluates to a nullary function"/. `val(3)` evaluates to (returns) a
 nullary function. Aha! `val(3)` returns a function! So, since `val(3)` returns a
 function, you can invoke it. Example:
 
-    cout << val(3)() << endl;
+    std::cout << val(3)() << std::endl;
 
-(See [@../../example/users_manual/values.cpp values.cpp])
+(See [@../../example/values.cpp values.cpp])
 
-[blurb __tip__ Learn more about values [/link phoenix.primitives.values here.]]
+[blurb __tip__ Learn more about values [link phoenix.reference.modules.core.values here.]]
 
 The second function call (the one with no arguments) calls the nullary function
 which then returns `3`. The need for a second function call is the reason why
@@ -38,7 +38,7 @@ anything. You need a second call to finally evaluate the thing. The first call
 lazily evaluates the function; i.e. doesn't do anything and defers the evaluation
 for later.
 
-[h2 Callbacks]
+[heading Callbacks]
 
 It may not be immediately apparent how lazy evaluation can be useful by just
 looking at the example above. Putting the first and second function call in a
@@ -60,7 +60,7 @@ it clear. Example:
         return 0;
     }
 
-(See [@../../example/users_manual/callback.cpp callback.cpp])
+(See [@../../example/callback.cpp callback.cpp])
 
 [endsect]
 
