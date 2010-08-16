@@ -25,7 +25,7 @@
 <p>
             We use an instance of:
           </p>
-<pre class="programlisting"><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">local_variable</span><span class="special">&lt;</span><span class="identifier">Key</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<pre class="programlisting"><span class="identifier">make_local_variable</span><span class="special">&lt;</span><span class="identifier">Key</span><span class="special">&gt;::</span><span class="identifier">type</span>
 </pre>
 <p>
             to represent a local variable. The local variable acts as an imaginary
@@ -33,13 +33,13 @@
             to identify the local variable. Example:
           </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">size_key</span><span class="special">;</span>
-<span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">local_variable</span><span class="special">&lt;</span><span class="identifier">size_key</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">size</span><span class="special">;</span>
+<span class="identifier">make_local_variable</span><span class="special">&lt;</span><span class="identifier">size_key</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">size</span><span class="special">;</span>
 </pre>
 <p>
             <span class="bold"><strong>Predefined Local Variables</strong></span>
           </p>
 <p>
-            There are a few predefined instances of <code class="computeroutput"><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">local_variable</span><span class="special">&lt;</span><span class="identifier">Key</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>
+            There are a few predefined instances of <code class="computeroutput"><span class="identifier">make_local_variable</span><span class="special">&lt;</span><span class="identifier">Key</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
             named <code class="computeroutput"><span class="identifier">_a</span></code>..<code class="computeroutput"><span class="identifier">_z</span></code> that you can already use. To make
             use of them, simply use the <code class="computeroutput"><span class="keyword">namespace</span>
             <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">local_names</span></code>:

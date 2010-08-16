@@ -41,24 +41,25 @@
             <a class="link" href="values.html" title="Values">Values</a>).
             To achieve our intent, we use:
           </p>
-<pre class="programlisting"><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">reference</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&amp;&gt;</span>
+<pre class="programlisting"><span class="identifier">make_reference</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span>
 </pre>
 <p>
-            This is similar to <code class="computeroutput"><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">value</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code> above but instead holds a reference
-            to a variable.
+            This is similar to <code class="computeroutput"><span class="identifier">make_value</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+            befor but instead holds a reference to a variable.
           </p>
 <p>
-            We normally don't instantiate <code class="computeroutput"><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">reference</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code> objects directly. Instead we use
-            <code class="computeroutput"><span class="identifier">ref</span></code>. For example (where
-            <code class="computeroutput"><span class="identifier">i</span></code> is an <code class="computeroutput"><span class="keyword">int</span></code> variable):
+            We normally don't instantiate <code class="computeroutput"><span class="identifier">make_reference</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+            objects directly. Instead we use <code class="computeroutput"><span class="identifier">ref</span></code>.
+            For example (where <code class="computeroutput"><span class="identifier">i</span></code>
+            is an <code class="computeroutput"><span class="keyword">int</span></code> variable):
           </p>
 <pre class="programlisting"><span class="identifier">add_assign</span><span class="special">(</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">i</span><span class="special">),</span> <span class="number">2</span><span class="special">)</span>
 </pre>
-<a name="phoenix.reference.modules.core.references.evaluating_a_reference"></a><h3>
-<a name="id686311"></a>
+<a name="phoenix.reference.modules.core.references.evaluating_a_reference"></a><h6>
+<a name="id688898"></a>
             <a class="link" href="references.html#phoenix.reference.modules.core.references.evaluating_a_reference">Evaluating
             a Reference</a>
-          </h3>
+          </h6>
 <p>
             References are actors. Hence, references can be evaluated. Such invocation
             gives the references's identity. Example:

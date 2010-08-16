@@ -20,12 +20,13 @@
 <a name="phoenix.reference.concepts.evaluationpolicy"></a><a class="link" href="evaluationpolicy.html" title="EvaluationPolicy">EvaluationPolicy</a>
 </h4></div></div></div>
 <a name="phoenix.reference.concepts.evaluationpolicy.description"></a><h6>
-<a name="id684012"></a>
+<a name="id685794"></a>
           <a class="link" href="evaluationpolicy.html#phoenix.reference.concepts.evaluationpolicy.description">Description</a>
         </h6>
 <p>
           Evaluation Policies are the classes which decide how the composite is to
-          be evaluated with respect to the default evaluator.
+          be evaluated with respect to the default evaluator. They are completly
+          independent of the <a class="link" href="actor.html" title="Actor">Actor</a>.
         </p>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
@@ -40,7 +41,8 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Env</span></code></span></dt>
 <dd><p>
-                A type of <a class="link" href="environment.html" title="Environment">Environment</a>
+                Type fulfilling the <a class="link" href="environment.html" title="Environment">Environment
+                concept</a>
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">env</span></code></span></dt>
 <dd><p>
@@ -48,7 +50,8 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A0</span><span class="special">...</span><span class="identifier">AN</span></code></span></dt>
 <dd><p>
-                Argument Types
+                Types fulfilling the <a class="link" href="actor.html" title="Actor">Actor
+                Concept</a>
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a0</span><span class="special">...</span><span class="identifier">aN</span></code></span></dt>
 <dd><p>
@@ -57,7 +60,7 @@
 </dl>
 </div>
 <a name="phoenix.reference.concepts.evaluationpolicy.valid_expressions"></a><h6>
-<a name="id684194"></a>
+<a name="id685990"></a>
           <a class="link" href="evaluationpolicy.html#phoenix.reference.concepts.evaluationpolicy.valid_expressions">Valid
           Expressions</a>
         </h6>
@@ -104,7 +107,7 @@
 </tr></tbody>
 </table></div>
 <a name="phoenix.reference.concepts.evaluationpolicy.result_type_expressions"></a><h6>
-<a name="id684321"></a>
+<a name="id686117"></a>
           <a class="link" href="evaluationpolicy.html#phoenix.reference.concepts.evaluationpolicy.result_type_expressions">Result
           Type Expressions</a>
         </h6>
@@ -140,7 +143,7 @@
                 </td>
 <td>
                   <p>
-                    Result of evaluation
+                    Result of the evaluation
                   </p>
                 </td>
 <td>
@@ -151,7 +154,7 @@
 </tr></tbody>
 </table></div>
 <a name="phoenix.reference.concepts.evaluationpolicy.expression_semantics"></a><h6>
-<a name="id684475"></a>
+<a name="id686271"></a>
           <a class="link" href="evaluationpolicy.html#phoenix.reference.concepts.evaluationpolicy.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -187,12 +190,83 @@
 </tr></tbody>
 </table></div>
 <a name="phoenix.reference.concepts.evaluationpolicy.models"></a><h6>
-<a name="id684588"></a>
+<a name="id686384"></a>
           <a class="link" href="evaluationpolicy.html#phoenix.reference.concepts.evaluationpolicy.models">Models</a>
         </h6>
-<p>
-          TODO (almost everything)
-        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">value</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">reference</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">argument</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">null_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">if_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">if_else_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">switch_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">while_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">do_while_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">for_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">try_catch_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">try_catch_all_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">throw_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">construct_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">new_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">delete_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">static_cast_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">dynamic_cast_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">reinterpret_cast_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">const_cast_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">local_variable</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">let_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">lambda_eval</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">lambda_actor_eval</span></code>
+            </li>
+</ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

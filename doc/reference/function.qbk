@@ -12,11 +12,13 @@
     #include <boost/phoenix/function.hpp>
 
 The `function` class template provides a mechanism for implementing lazily
-evaluated functions. Syntactically, a lazy function looks like an ordinary C/C++ function.
-The function call looks familiar and feels the same as ordinary C++ functions.
-However, unlike ordinary functions, the actual function execution is deferred.
+evaluated functions. Syntactically, a lazy function looks like an ordinary C/C++
+function. The function call looks familiar and feels the same as ordinary C++
+functions. However, unlike ordinary functions, the actual function execution is
+deferred.
 
-Unlike ordinary function pointers or functor objects that need to be explicitly bound through the bind function (see [link phoenix.reference.modules.bind Bind]),
+Unlike ordinary function pointers or functor objects that need to be explicitly
+bound through the bind function (see [link phoenix.reference.modules.bind Bind]),
 the argument types of these functions are automatically lazily bound.
 
 In order to create a lazy function, we need to implement a model of the
@@ -66,7 +68,7 @@ Having implemented the `factorial_impl` type, we can declare and instantiate a l
     function<factorial_impl> factorial;
 
 Invoking a lazy function such as `factorial` does not immediately execute the function
-object `factorial_impl`. Instead, an [link phoenix.reference.actor `actor`] object is
+object `factorial_impl`. Instead, an [link phoenix.reference.concepts.actor actor] object is
 created and returned to the caller. Example:
 
     factorial(arg1)

@@ -12,13 +12,13 @@
 [*/Lazy statements.../]
 
 The primitives and composite building blocks presented so far are sufficiently
-powerful to construct quite elaborate structures. We have presented lazy-
-functions and lazy-operators. How about lazy-statements? First, an appetizer:
+powerful to construct quite elaborate structures. We have presented lazy-functions
+and lazy-operators. How about lazy-statements? First, an appetizer:
 
 Print all odd-numbered contents of an STL container using `std::for_each`
-([@../../example/users_manual/all_odds.cpp all_odds.cpp]):
+([@../../example/all_odds.cpp all_odds.cpp]):
 
-    for_each(c.begin(), c.end(),
+    std::for_each(c.begin(), c.end(),
         if_(arg1 % 2 == 1)
         [
             cout << arg1 << ' '
@@ -77,7 +77,7 @@ have a trailing comma.
 
 Outside the square brackets, block statements should be grouped. For example:
 
-    for_each(c.begin(), c.end(),
+    std::for_each(c.begin(), c.end(),
         (
             do_this(arg1),
             do_that(arg1)
@@ -125,7 +125,7 @@ Take note that `else` has a leading dot and a trailing underscore: `.else_`
 Example: This code prints out all the elements and appends `" > 5"`, `" == 5"`
 or `" < 5"` depending on the element's actual value:
 
-    for_each(c.begin(), c.end(),
+    std::for_each(c.begin(), c.end(),
         if_(arg1 > 5)
         [
             cout << arg1 << " > 5\n"
@@ -168,7 +168,7 @@ a normal switch statement, cases do not fall through.
 Example: This code prints out `"one"`, `"two"` or `"other value"` depending on the
 element's actual value:
 
-    for_each(c.begin(), c.end(),
+    std::for_each(c.begin(), c.end(),
         switch_(arg1)
         [
             case_<1>(std::cout << val("one") << '\n'),
@@ -193,7 +193,7 @@ The syntax is:
 Example: This code decrements each element until it reaches zero and prints out
 the number at each step. A newline terminates the printout of each value.
 
-    for_each(c.begin(), c.end(),
+    std::for_each(c.begin(), c.end(),
         (
             while_(arg1--)
             [
@@ -223,7 +223,7 @@ Again, take note that `while` has a leading dot and a trailing underscore:
 Example: This code is almost the same as the previous example above with a
 slight twist in logic.
 
-    for_each(c.begin(), c.end(),
+    std::for_each(c.begin(), c.end(),
         (
             do_
             [
@@ -259,7 +259,7 @@ Example: This code prints each element N times where N is the element's value. A
 newline terminates the printout of each value.
 
     int iii;
-    for_each(c.begin(), c.end(),
+    std::for_each(c.begin(), c.end(),
         (
             for_(ref(iii) = 0, ref(iii) < arg1, ++ref(iii))
             [

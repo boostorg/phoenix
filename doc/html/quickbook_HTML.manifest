@@ -31,6 +31,7 @@ phoenix/reference/modules/core/arguments.html
 phoenix/reference/modules/core/nothing.html
 phoenix/reference/modules/function.html
 phoenix/reference/modules/operator.html
+phoenix/reference/modules/operator/supported_operators.html
 phoenix/reference/modules/statement.html
 phoenix/reference/modules/statement/block_statement.html
 phoenix/reference/modules/statement/if__statement.html

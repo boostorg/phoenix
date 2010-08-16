@@ -48,8 +48,8 @@ tuple.
 
 [heading Models]
 
-* [link phoenix.reference.modules.core.basic_environment `boost::phoenix::basic_environment`]
-* [link phoenix.reference.modules.scope.scope_environment `boost::phoenix::scoped_environment`]
+* `boost::phoenix::basic_environment`
+* `boost::phoenix::scoped_environment`
 
 [endsect]
 

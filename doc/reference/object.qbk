@@ -11,7 +11,7 @@
 The maximum number of actual parameters is limited by the
 preprocessor constant PHOENIX_COMPOSITE_LIMIT. Note though, that this limit
 should not be greater than PHOENIX_LIMIT. By default, `PHOENIX_COMPOSITE_LIMIT`
-is set to `PHOENIX_LIMIT` (See [link phoenix.reference.actor Actor]).
+is set to `PHOENIX_LIMIT` (See [link phoenix.reference.concepts.actor Actor]).
 ]
 
 [section Object]

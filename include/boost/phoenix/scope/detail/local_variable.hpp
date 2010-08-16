@@ -18,7 +18,6 @@
 
 namespace boost { namespace phoenix
 {
-
     namespace detail
     {
         struct compute_no_nullary

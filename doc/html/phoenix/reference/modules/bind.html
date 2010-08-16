@@ -31,7 +31,7 @@
 </dl></div>
 <p>
           <span class="emphasis"><em>Binding</em></span> is the act of tying together a function to
-          some arguments for deferred (lazy) evaluation. Named <a class="link" href="function.html" title="Function">Lazy
+          some arguments for deferred (lazy) evaluation. Named <a class="link" href="function.html" title="Function">lazy
           functions</a> require a bit of typing. Unlike (unnamed) lambda expressions,
           we need to write a functor somewhere offline, detached from the call site.
           If you wish to transform a plain function, member function or member variable
@@ -45,15 +45,15 @@
 </tr>
 <tr><td align="left" valign="top"><p>
             Take note that binders are monomorphic. Rather than binding functions,
-            the preferred way is to write true generic and polymorphic <a class="link" href="function.html" title="Function">lazy-functions</a>.
-            However, since most of the time we are dealing with adaptation of existing
-            code, binders get the job done faster.
+            the preferred way is to write true generic and polymorphic <a class="link" href="function.html" title="Function">lazy
+            functions</a>. However, since most of the time we are dealing with
+            adaptation of existing code, binders get the job done faster.
           </p></td></tr>
 </table></div>
 <p>
           There is a set of overloaded <code class="computeroutput"><span class="identifier">bind</span></code>
           template functions. Each <code class="computeroutput"><span class="identifier">bind</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span></code>
-          function generates a suitable binder object, a <a class="link" href="../../../">composite</a>.
+          function generates a suitable binder object.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

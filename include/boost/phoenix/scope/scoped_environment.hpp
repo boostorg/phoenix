@@ -43,6 +43,22 @@ namespace boost { namespace phoenix
             : fusion::result_of::at_c<Env, N::value>
         {};
     }
+    
+    // overload get_environment_argument to return the correct argument
+    template <typename N, typename Env, typename OuterEnv, typename Locals, typename Map>
+    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, N>::type
+    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map>& env)
+    {
+        return fusion::at_c<N::value>(env.env);
+    }
+    
+    template <typename N, typename Env, typename OuterEnv, typename Locals, typename Map>
+    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, N>::type
+    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map> const& env)
+    {
+        return fusion::at_c<N::value>(env.env);
+    }
+
 
     // overload get_environment_argument_c to return the correct argument
     template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>

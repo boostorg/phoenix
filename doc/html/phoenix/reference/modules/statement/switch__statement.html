@@ -41,7 +41,7 @@
             <code class="computeroutput"><span class="string">"two"</span></code> or <code class="computeroutput"><span class="string">"other value"</span></code> depending on the
             element's actual value:
           </p>
-<pre class="programlisting"><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span>
     <span class="identifier">switch_</span><span class="special">(</span><span class="identifier">arg1</span><span class="special">)</span>
     <span class="special">[</span>
         <span class="identifier">case_</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">val</span><span class="special">(</span><span class="string">"one"</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">),</span>

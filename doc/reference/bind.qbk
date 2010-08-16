@@ -10,7 +10,7 @@
 [section Bind]
 
 ['Binding] is the act of tying together a function to some arguments for
-deferred (lazy) evaluation. Named [link phoenix.reference.modules.function Lazy functions]
+deferred (lazy) evaluation. Named [link phoenix.reference.modules.function lazy functions]
 require a bit of typing. Unlike (unnamed) lambda expressions, we need to write a
 functor somewhere offline, detached from the call site. If you wish to transform a
 plain function, member function or member variable to a lambda expression, `bind`
@@ -18,12 +18,13 @@ is your friend.
 
 [note Take note that binders are monomorphic. Rather than binding
 functions, the preferred way is to write true generic and polymorphic [link
-phoenix.reference.modules.function lazy-functions]. However, since most of the time we
+phoenix.reference.modules.function lazy functions]. However, since most of the time we
 are dealing with adaptation of existing code, binders get the job done faster.]
 
 There is a set of overloaded `bind` template functions. Each `bind(x)`
-function generates a suitable binder object, a [link phoenix.reference.composite
-composite].
+function generates a suitable binder object.
+[/, a [link phoenix.reference.composite
+composite].]
 
 [section Binding Functions]
 
@@ -40,7 +41,7 @@ Here's how the function `foo` may be bound:
 
     bind(&foo, arg1)
 
-This is now a full-fledged [link phoenix.reference.composite composite] that can finally
+This is now a full-fledged composite that can finally
 be evaluated by another function call invocation. A second function call will
 invoke the actual `foo` function. Example:
 

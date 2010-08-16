@@ -35,6 +35,16 @@ namespace boost { namespace phoenix
         return fusion::at_c<N>(env);
     }
 
+    template <typename N, typename Env>
+    typename boost::enable_if<
+        is_environment<Env>
+      , typename result_of::get_environment_argument<Env, N>::type
+    >::type
+    get_environment_argument_c(Env& env)
+    {
+        return fusion::at_c<N::value>(env);
+    }
+
     // Get the Nth argument from the environment
     struct get_environment_argument
     {

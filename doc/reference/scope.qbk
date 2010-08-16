@@ -30,18 +30,18 @@ This section deals with local variables and nested lambda scopes.
 
 We use an instance of:
 
-    actor<local_variable<Key> >
+    make_local_variable<Key>::type
 
 to represent a local variable. The local variable acts as an imaginary data-bin
 where a local, stack based data will be placed. `Key` is an arbitrary type that
 is used to identify the local variable. Example:
 
     struct size_key;
-    actor<local_variable<size_key> > size;
+    make_local_variable<size_key>::type size;
 
 [*Predefined Local Variables]
 
-There are a few predefined instances of `actor<local_variable<Key> >`
+There are a few predefined instances of `make_local_variable<Key>::type`
 named `_a`..`_z` that you can already use. To make use of them, simply use the
 `namespace boost::phoenix::local_names`:
 
@@ -280,7 +280,7 @@ lambda-body, we introduce a local variable `_a` that captures the second outer
 argument: `arg2`. Hence: _a = arg2. This local variable is visible inside the
 lambda scope.
 
-(See [@../../example/users_manual/lambda.cpp lambda.cpp])
+(See [@../../example/lambda.cpp lambda.cpp])
 
 [endsect]
 

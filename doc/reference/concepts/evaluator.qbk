@@ -21,9 +21,9 @@ and the various __phoenix_concepts_evaluation_policies__.
 [variablelist Notation
 	[[`Eval`]    [Type fulfilling this concept]]
 	[[`eval`]    [An object of type Eval]]
-	[[`Expr`]    [Type of the Actor Concept]]
+	[[`Expr`]    [Type of the [link phoenix.reference.concepts.actor Actor Concept]]]
 	[[`expr`]    [Object of type Expr]]
-	[[`Env`]     [Type fulfilling the Environment concept]]
+	[[`Env`]     [Type fulfilling the [link phoenix.reference.concepts.environment Environment concept]]]
 	[[`env`]     [Object of type Env]]
 ]
 
@@ -49,10 +49,10 @@ and the various __phoenix_concepts_evaluation_policies__.
 
 [heading Models]
 
-* eval_grammar
-* arity
-* no_nullary
-* switch_grammar
+* `boost::phoenix::eval_grammar`
+* `boost::phoenix::arity`
+* `boost::phoenix::no_nullary`
+* `boost::phoenix::switch_grammar`
 
 [endsect]
 

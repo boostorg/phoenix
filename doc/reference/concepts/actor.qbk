@@ -60,9 +60,9 @@ actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 
 [heading Models]
 
-* [link phoenix.reference.modules.core.actor `boost::phoenix::actor`]
-* [link phoenix.reference.modules.statement.if__statement `boost::phoenix::if_`]
-* [link phoenix.reference.modules.statement.try__catch__statement `boost::phoenix::try_`]
+* `boost::phoenix::actor`
+* `boost::phoenix::if_`
+* `boost::phoenix::try_`
 
 [endsect]
 

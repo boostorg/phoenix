@@ -41,7 +41,7 @@
             value. A newline terminates the printout of each value.
           </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">iii</span><span class="special">;</span>
-<span class="identifier">for_each</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span>
     <span class="special">(</span>
         <span class="identifier">for_</span><span class="special">(</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">iii</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">iii</span><span class="special">)</span> <span class="special">&lt;</span> <span class="identifier">arg1</span><span class="special">,</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">iii</span><span class="special">))</span>
         <span class="special">[</span>

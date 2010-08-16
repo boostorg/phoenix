@@ -20,7 +20,7 @@ namespace boost { namespace phoenix
     //
     ////////////////////////////////////////////////////////////////////////////
     
-    struct null_actor
+    struct null_eval
     {
         typedef void result_type;
 
@@ -29,7 +29,7 @@ namespace boost { namespace phoenix
         {}
     };
 
-    compose<null_actor>::result_type const nothing = {};
+    compose<null_eval>::type const nothing = {};
 }}
 
 #endif
