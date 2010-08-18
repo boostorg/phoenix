@@ -39,7 +39,6 @@ main()
     );
 
     cout << endl;
-
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
@@ -49,7 +48,7 @@ main()
     );
 
     cout << endl;
-
+    
     for_each(v.begin(), v.end(),
         switch_(_1)
         [

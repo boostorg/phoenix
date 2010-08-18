@@ -1,5 +1,4 @@
 /*==============================================================================
-    Copyright (c) 2005-2010 Joel de Guzman
     Copyright (c) 2010 Thomas Heller
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -69,9 +68,9 @@ namespace impl
 
             result_type operator()(Expr &expr, phoenix_to_cpp &ctx) const
             {
-                ctx.ostr << std::setw(ctx.level*4) << " "; proto::eval(proto::child_c<0>(expr), ctx);
+                /*ctx.ostr << std::setw(ctx.level*4) << " ";*/ proto::eval(proto::child_c<0>(expr), ctx);
                 ctx.ostr << ";\n";
-                ctx.ostr << std::setw(ctx.level*4) << " "; proto::eval(proto::child_c<1>(expr), ctx);
+                /*ctx.ostr << std::setw(ctx.level*4) << " ";*/ proto::eval(proto::child_c<1>(expr), ctx);
                 ctx.ostr << ";";
 
                 return ctx.ostr;
@@ -83,12 +82,30 @@ namespace impl
         {
             typedef OutStream& result_type;
             
-            template <typename N, typename E>
-            void output(OutStream& os, E &expr) const {}
+            template <typename E>
+            void output(OutStream& os, E const& expr) const
+            {
+                std::cout << typeid( expr ).name() << "\n\n";
+                std::cout << typeid( typename phoenix::make_argument<boost::mpl::int_<0> >::type ).name() << "\n\n";
+            }
 
-            template <typename N, typename Env>
-            void output(OutStream& os,
-                    phoenix::actor<
+            void output(OutStream& os, typename phoenix::make_argument<boost::mpl::int_<0> >::type const& expr)
+            {
+                os << "arg" << 0;
+            }
+            void output(OutStream& os, typename phoenix::make_argument<boost::mpl::int_<1> >::type const& expr)
+            {
+                os << "arg" << 1;
+            }
+            void output(OutStream& os, typename phoenix::make_argument<boost::mpl::int_<2> >::type const& expr)
+            {
+                os << "arg" << 2;
+            }
+            void output(OutStream& os, typename phoenix::make_argument<boost::mpl::int_<3> >::type const& expr)
+            {
+                os << "arg" << 3;
+            }
+                    /*phoenix::actor<
                         proto::basic_expr<
                             boost::proto::tag::function
                           , proto::list3<
@@ -103,10 +120,7 @@ namespace impl
                                 >
                             >
                         >
-                    > const& expr) const
-            {
-                os << "arg" << N::value;
-            }
+                    > const& expr) const */
 
             result_type operator()(Expr &expr, phoenix_to_cpp &ctx) const
             {

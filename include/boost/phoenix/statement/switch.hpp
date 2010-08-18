@@ -8,10 +8,6 @@
 #ifndef PHOENIX_STATEMENT_SWITCH_HPP
 #define PHOENIX_STATEMENT_SWITCH_HPP
 
-#include <boost/fusion/algorithm/transformation/push_front.hpp>
-#include <boost/fusion/container/vector/convert.hpp>
-#include <boost/fusion/sequence/intrinsic/at.hpp>
-#include <boost/fusion/sequence/intrinsic/value_at.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/compose.hpp>
@@ -28,127 +24,132 @@ namespace boost { namespace phoenix
     struct switch_case_tag {};
     struct switch_default_tag {};
 
-    template <typename Value, typename Case>
-    struct switch_case
-    {
-        typedef Value value_type;
-        typedef Case  case_type;
-
-        switch_case(Case const& case_) : case_(case_) {};
-
-        Case const& case_;
-    };
-    
-    template <typename Case>
-    struct switch_default
-    {
-        typedef mpl::false_ value_type;
-        typedef Case  case_type;
-
-        switch_default(Case const& case_) : case_(case_) {};
-
-        Case const& case_;
-    };
-
     namespace detail
     {
-        struct push_front
-            : proto::callable
-        {
-            template <typename Sig>
-            struct result;
-
-            template <typename This, typename Expr, typename State>
-            struct result<This(Expr, State)>
-                : fusion::result_of::push_front<
-                    typename remove_const<
-                        typename remove_reference<State>::type
-                    >::type const
-                  , typename remove_const<
-                        typename remove_reference<Expr>::type
-                    >::type
-                >
-            {};
-
-            template <typename Expr, typename State>
-            typename fusion::result_of::push_front<
-                typename remove_const<
-                    typename remove_reference<State>::type
-                >::type const
-              , typename remove_const<
-                    typename remove_reference<Expr>::type
-                >::type
-            >::type
-            operator()(Expr expr, State state) const
-            {
-                return fusion::push_front(state, expr);
-            }
-        };
-        
-        template <typename Case>
-        struct is_default
-            : mpl::false_
+        struct case_label
+            : proto::terminal<proto::_>
         {};
 
-        template <typename Case>
-        struct is_default<switch_default<Case> >
-            : mpl::true_
+        struct case_statement
+            : proto::binary_expr<switch_case_tag, case_label, eval_grammar>
+        {};
+
+        struct default_statement
+            : proto::unary_expr<switch_default_tag, eval_grammar>
+        {};
+
+        struct switch_size
+            : proto::or_<
+                proto::when<
+                    proto::comma<switch_size, proto::_>
+                  , mpl::next<switch_size(proto::_left)>()
+                >
+              , proto::when<proto::_, mpl::int_<1>()>
+            >
+        {};
+
+        struct switch_has_default
+            : proto::or_<
+                proto::when<
+                    proto::comma<switch_size, case_statement>
+                  , mpl::false_()
+                >
+              , proto::when<
+                    proto::comma<switch_size, default_statement>
+                  , mpl::true_()
+                >
+              , proto::when<
+                    case_statement
+                  , mpl::false_()
+                >
+              , proto::when<
+                    default_statement
+                  , mpl::true_()
+                >
+            >
+        {};
+
+        struct switch_case_statement
+            : proto::or_<
+                proto::when<
+                    proto::comma<switch_case_statement, proto::_>
+                  , proto::if_<
+                        is_same<mpl::prior<proto::_data>(), proto::_state>()
+                      , proto::_right
+                      , switch_case_statement(proto::_left, proto::_state, mpl::prior<proto::_data>())
+                    >
+                >
+              , proto::otherwise<proto::_>
+            >
         {};
     }
 
-    struct switch_grammar
-        : /// FIXME
-          /*proto::and_<
-            // switch_(...)[default_(...), default_(...)] not allowed
-            proto::not_<
-                proto::comma<
-                    proto::unary_expr<switch_default_tag, eval_grammar>
-                  , proto::unary_expr<switch_default_tag, eval_grammar>
-                >
-            >
-            // switch_(...)[case_<...>(...), default_(...), case<...>(...)] not allowed
-          , proto::not_<
-                proto::comma<proto::comma<switch_grammar, proto::unary_expr<switch_default_tag, eval_grammar> >, switch_grammar >
-            >
-            // switch_(...)[case_<...>(...), default_(...), default_(...)] not allowed
-          , proto::not_<
-                proto::comma<proto::comma<switch_grammar, proto::unary_expr<switch_default_tag, eval_grammar> >, proto::unary_expr<switch_default_tag, eval_grammar> >
-            >
-          // and finally the transforms to create the fusion vector of the actors
-          ,*/ proto::or_<
-                proto::when<
-                    proto::comma<switch_grammar, switch_grammar>
-                  , switch_grammar(proto::_left, switch_grammar(proto::_right))
-                >
-              , proto::when<
-                    proto::binary_expr<switch_case_tag, proto::_, eval_grammar>
-                  , detail::push_front(
-                        switch_case<
-                            proto::_value(proto::_left)
-                          , proto::_right
-                        >(proto::_right)
-                      , proto::_state)
-                >
-              , proto::when<
-                    proto::unary_expr<switch_default_tag, eval_grammar>
-                  , detail::push_front(
-                        switch_default<proto::_child>(proto::_child)
-                      , proto::_state)
-                >
-            >
-        //>
-    {};
+    namespace result_of
+    {
+        template <typename Cases>
+        struct cases_size : boost::result_of<detail::switch_size(Cases)> {};
 
-    template <PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT), typename Dummy = void>
+        template <typename Cases, typename N>
+        struct case_compound
+            : mpl::eval_if<
+                mpl::less<N, typename cases_size<Cases>::type >
+              , boost::result_of<detail::switch_case_statement(Cases, N, typename cases_size<Cases>::type)>
+              , mpl::void_
+            >
+        {};
+
+        template <typename Case>
+        struct case_statement
+            : proto::result_of::right<Case>
+        {};
+
+        template <typename Case>
+        struct case_label
+            : proto::result_of::value<
+                typename proto::result_of::left<
+                    Case
+                >::type
+            >
+        {};
+
+        template <typename Cases>
+        struct switch_has_default : boost::result_of<detail::switch_has_default(Cases)> {};
+
+        template <typename Case>
+        struct is_default_case
+            : proto::matches<Case, detail::default_statement>
+        {};
+    }
+
+    template <int N, typename Cases>
+    typename result_of::case_compound<Cases, mpl::int_<N> >::type const &
+    case_compound_c(Cases const& cases)
+    {
+        typename result_of::cases_size<Cases>::type size;
+        return detail::switch_case_statement()(cases, mpl::int_<N>(), size);
+    }
+
+    template <typename N, typename Cases>
+    typename result_of::case_compound<Cases, N>::type const &
+    case_compound(Cases const& cases)
+    {
+        typename result_of::cases_size<Cases>::type size;
+        return detail::switch_case_statement()(cases, N(), size);
+    }
+
+    template <typename Case>
+    typename result_of::case_statement<Case>::type const &
+    case_statement(Case const& case_)
+    {
+        return proto::right(case_);
+    }
+
     struct switch_eval;
-
-    template <PHOENIX_typename_A_void(BOOST_PP_DEC(PHOENIX_COMPOSITE_LIMIT)), typename Dummy = void>
-    struct switch_default_eval;
 
     template <
         typename Cond,
-        typename Cases, int N = fusion::result_of::size<Cases>::type::value,
-        bool with_default = detail::is_default<typename fusion::result_of::value_at_c<Cases, N-1>::type >::value,
+        typename Cases,
+        int N = result_of::cases_size<Cases>::type::value,
         typename Dummy = void>
     struct make_switch;
 
@@ -205,27 +206,13 @@ namespace boost { namespace phoenix
         template <typename Cases>
         typename make_switch<
             Cond
-          , typename fusion::result_of::as_vector<
-                    //typename switch_grammar::impl<Cases const&, fusion::vector0<>&,int>::result_type
-                typename boost::result_of<
-                    switch_grammar(Cases const&, fusion::vector0<>&)
-                >::type
-            >::type
+          , Cases
         >::type
         operator[](Cases const& cases) const
         {
-            BOOST_PROTO_ASSERT_MATCHES( cases, switch_grammar );
-            typedef
-                typename fusion::result_of::as_vector<
-                    //typename switch_grammar::impl<Cases const&, fusion::vector0<>&,int>::result_type
-                    typename boost::result_of<
-                        switch_grammar(Cases const&, fusion::vector0<>&)
-                    >::type
-                >::type
-                cases_type;
+            BOOST_PROTO_ASSERT_MATCHES(cases, detail::switch_case_statement);
 
-            fusion::vector0<> v;
-            return make_switch<Cond, cases_type>()(cond, fusion::as_vector(switch_grammar()(cases, v)));
+            return make_switch<Cond, Cases>()(cond, cases);
         }
 
         Cond const& cond;
