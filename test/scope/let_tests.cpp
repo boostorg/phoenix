@@ -18,6 +18,7 @@
 #include <boost/phoenix/function.hpp>
 #include <boost/phoenix/fusion.hpp>
 
+#include <typeinfo>
 
 int
 main()
@@ -36,7 +37,7 @@ main()
     using boost::phoenix::local_names::_y;
     using boost::phoenix::local_names::_z;
     using boost::phoenix::placeholders::arg1;
-
+/*
     {
         int x = 1;
         BOOST_TEST(
@@ -113,7 +114,7 @@ main()
         
         BOOST_TEST(x == 999);
     }
-    
+    */
     {
         // FIXME do not require a argument to return int
         BOOST_TEST(
@@ -123,8 +124,22 @@ main()
             ]
             (0) == 1 + 2 + 3 + 4 + 5
         );
+        std::cout << typeid(
+            let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
+            [
+                _a + _b + _c + _d + _e
+            ]
+            ()
+        ).name() << "\n";
+        std::cout << typeid(
+            let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
+            [
+                _a + _b + _c + _d + _e
+            ]
+            (0)
+        ).name() << "\n";
     }
-    
+  /*  
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST
     {
         // disallow this:
@@ -169,7 +184,7 @@ main()
         let(_a = _1)[_a = _2](i, 2);
         BOOST_TEST(i == 2);
     }
-
+*/
     return boost::report_errors();
 }
 

@@ -19,6 +19,8 @@ namespace boost { namespace phoenix
     template <typename Expr>
     struct actor;
 
+    struct meta_grammar;
+
     struct phoenix_domain
       : proto::domain<
         proto::pod_generator<actor>, 

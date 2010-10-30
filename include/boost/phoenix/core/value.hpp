@@ -8,8 +8,8 @@
 #ifndef PHOENIX_CORE_VALUE_HPP
 #define PHOENIX_CORE_VALUE_HPP
 
-#include <boost/phoenix/core/compose.hpp>
-#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/terminal.hpp>
 #include <boost/utility/result_of.hpp>
 
 namespace boost { namespace phoenix
@@ -21,7 +21,68 @@ namespace boost { namespace phoenix
     //      function for evaluating values, e.g. val(123)
     //
     ////////////////////////////////////////////////////////////////////////////
+ 
+    template <typename T>
+    struct value
+        : proto::terminal<T>
+    {
+        typedef actor<typename proto::terminal<T>::type const> type;
+    };
     
+    template <typename T, int N>
+    struct value<T[N]>
+        : proto::terminal<T>
+    {
+        typedef actor<typename proto::terminal<T const* >::type const> type;
+    };
+
+    template <typename T>
+    typename value<T>::type const
+    val(T const & t)
+    {
+        typename value<T>::type const e = {{t}};
+        return e;
+    }
+
+    template <typename T>
+    typename value<T>::type const
+    val(T & t)
+    {
+        typename value<T>::type const e = {{t}};
+        return e;
+    }
+
+    // Call out actor for special handling
+    template<typename Expr>
+    struct is_custom_terminal<actor<Expr> >
+      : mpl::true_
+    {};
+    
+    // Special handling for actor
+    template<typename Expr>
+    struct custom_terminal<actor<Expr> >
+    {
+        template <typename Sig>
+        struct result;
+
+        template <typename This, typename Actor, typename Env>
+        struct result<This(Actor, Env)>
+            : boost::remove_reference<
+                typename boost::result_of<
+                    evaluator(Actor, Env)
+                >::type
+            >
+        {};     
+
+        template <typename Env>
+        typename result<custom_terminal(actor<Expr> const &, Env &)>::type
+        operator()(actor<Expr> const& expr, Env & env) const
+        {
+            return eval(expr, env);
+        }
+    };
+
+    /*
     namespace result_of
     {
         template <typename Env, typename T>
@@ -116,7 +177,7 @@ namespace boost { namespace phoenix
     {
         return make_value<T>()(t);
     }
-
+*/
 }}
 
 #endif

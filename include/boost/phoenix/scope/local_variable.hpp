@@ -97,7 +97,6 @@ namespace boost { namespace phoenix
         make_local_variable<struct _z_key>::type const _z = {};
     }
 
-
 }}
 
 #endif

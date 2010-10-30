@@ -62,7 +62,12 @@ namespace boost { namespace phoenix
             return eval(expr, args);
         }
     };
-
+    
+    template <typename Map, typename Dummy>
+    struct enable_nullary<let_eval<Map>, Dummy>
+        : mpl::true_
+    {};
+    
     template <typename Expr, typename Vars, typename Map>
     struct make_let: compose<let_eval<Map>, Expr, Vars> {};
 

@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
     Copyright (c) 2010 Eric Niebler
+    Copyright (c) 2010 Thomas Heller
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,6 +10,7 @@
 #define PHOENIX_CORE_META_GRAMMAR_HPP
 
 #include <boost/mpl/deref.hpp>
+#include <boost/phoenix/core/environment.hpp>
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/traits.hpp>
@@ -20,76 +22,41 @@
 namespace boost { namespace phoenix
 {
     ////////////////////////////////////////////////////////////////////////////
-    // Our meta-grammar and expression evaluator
-    ////////////////////////////////////////////////////////////////////////////
-    struct eval_grammar
-      : proto::switch_<struct eval_cases>
-    {};
-    
-    ////////////////////////////////////////////////////////////////////////////
-    // A function object we can call
-    ////////////////////////////////////////////////////////////////////////////
-    eval_grammar const eval = eval_grammar();
-
-    ////////////////////////////////////////////////////////////////////////////
-    // A dummy terminal that, when evaluated, returns the current state.
-    ////////////////////////////////////////////////////////////////////////////
-    struct env
-    {};
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Open ended grammar dispatch allows us to extend the grammar
-    // without modifying the code
-    ////////////////////////////////////////////////////////////////////////////
-    struct eval_cases
+    // The grammar defining valid phoenix expressions
+    struct meta_grammar
+        : proto::switch_<meta_grammar>
     {
-        template <typename Tag>
+        template <typename Tag, typename Dummy = void>
         struct case_
-            : proto::or_<
-                proto::when<proto::terminal<env>, proto::_state>
-              , proto::otherwise<proto::_default<eval_grammar> >
-            >
+            : proto::not_<proto::_>
         {};
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    // wrapper for a Fusion extension evaluator function. Keep this POD.
+    // An evaluation transform you can call to dispatch to different actions
+    struct evaluator
+        : proto::call<
+            meta_grammar(
+                proto::_
+              , functional::args(proto::_state)
+              , functional::actions(proto::_state)
+            )
+        >
+    {};
+    
     ////////////////////////////////////////////////////////////////////////////
-    template <typename Fun>
-    struct funcwrap
+    // Set of default actions. Extend this whenever you add a new phoenix construct
+    struct default_actions
     {
-        typedef Fun type;
+        template <typename Rule, typename Dummy = void>
+        struct when
+            : proto::_default<meta_grammar>
+        {};
     };
 
-    // Handling for terminals, with the special case for env terminals.
-    struct func_grammar
-      : proto::or_<
-            proto::when<
-                proto::terminal<funcwrap<proto::_> >, 
-                mpl::deref<proto::_value>()
-            >
-          , proto::when<proto::terminal<env>, proto::_state>
-          , proto::_
-        >
-    {};
-
-    // Handling for function invocations. When _child0 is a 
-    // funcwrap<>, don't evaluate the other child nodes. Just
-    // pass then unevaluated to the function.
-    template <>
-    struct eval_cases::case_<proto::tag::function>
-      : proto::or_<
-            proto::when<
-                proto::function<
-                    proto::terminal<funcwrap<proto::_> >
-                  , proto::terminal<env>
-                  , proto::vararg<eval_grammar>
-                >
-              , proto::_default<func_grammar>
-            >
-          , proto::_default<eval_grammar>
-        >
-    {};
+    ////////////////////////////////////////////////////////////////////////////
+    // A function object we can call to evaluate our expression
+    evaluator const eval = evaluator();
 }}
 
 #endif

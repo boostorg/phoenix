@@ -35,7 +35,6 @@
         typename result_of::actor<Expr, PHOENIX_A_ref>::type
         operator()(PHOENIX_A_ref_a) const
         {
-            BOOST_PROTO_ASSERT_MATCHES(*this, eval_grammar);
             PHOENIX_ENV(PHOENIX_A_ref) args( PHOENIX_a);
 
             return eval(*this, args);
@@ -45,7 +44,6 @@
         typename result_of::actor<Expr, PHOENIX_A_const_ref>::type
         operator()(PHOENIX_A_const_ref_a) const
         {
-            BOOST_PROTO_ASSERT_MATCHES(*this, eval_grammar);
             PHOENIX_ENV(PHOENIX_A_const_ref) args( PHOENIX_a);
 
             return eval(*this, args);

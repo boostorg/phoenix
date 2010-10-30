@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 
+#include <boost/proto/proto.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/detail/lightweight_test.hpp>
 

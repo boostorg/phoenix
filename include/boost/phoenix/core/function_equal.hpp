@@ -14,7 +14,7 @@ namespace boost { namespace phoenix
     template <typename Expr1, typename Expr2>
     bool function_equal_impl(actor<Expr1> const&, actor<Expr2> const&)
     {
-        return typeid(actor<Expr1>) == typeid(actor<Expr2>);
+        return true;//typeid(actor<Expr1>) == typeid(actor<Expr2>);
     }
 
     template <typename Expr1, typename Expr2>

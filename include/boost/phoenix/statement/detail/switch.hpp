@@ -12,28 +12,6 @@
 #define PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
 
 #include <boost/preprocessor/cat.hpp>
-    
-    template <typename Cond, typename Cases>
-    struct make_switch<Cond, Cases, 1>
-    {
-        typedef typename result_of::case_compound<Cases, mpl::int_<0> >::type case0;
-
-        typedef
-            compose<
-                switch_eval
-              , Cond
-              , case0
-            >
-            composite_type;
-
-        typedef typename composite_type::type type;
-
-        type const
-        operator()( Cond const& cond, Cases const& cases) const
-        {
-            return composite_type()(cond, case_compound_c<0>(cases));
-        }
-    };
 
     struct switch_eval
     {
@@ -113,11 +91,32 @@
 #undef PHOENIX_SWITCH_EVAL_OVERLOADS
     };
 
+    template <typename Cond, typename Cases>
+    struct make_switch<Cond, Cases, 1>
+    {
+        typedef typename result_of::case_compound<Cases, mpl::int_<0> >::type case0;
+
+        typedef
+            compose<
+                switch_eval
+              , Cond
+              , case0
+            >
+            composite_type;
+
+        typedef typename composite_type::type type;
+
+        type const
+        operator()( Cond const& cond, Cases const& cases) const
+        {
+            return composite_type()(cond, case_compound_c<0>(cases));
+        }
+    };
+
 #define PHOENIX_ITERATION_PARAMS                                                \
     (3, (2, PHOENIX_COMPOSITE_LIMIT,                                            \
     <boost/phoenix/statement/detail/switch.hpp>))
 #include PHOENIX_ITERATE()
-
 
 #endif
 

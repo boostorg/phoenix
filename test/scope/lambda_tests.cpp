@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <vector>
 
+#include <typeinfo>
+
 #define PHOENIX_LIMIT 5
 
 #include <boost/detail/lightweight_test.hpp>
@@ -73,7 +75,7 @@ main()
     using boost::phoenix::local_names::_a;
     using boost::phoenix::local_names::_b;
     using boost::phoenix::placeholders::arg1;
-
+/*
     {
         int x = 1;
         int y = lambda[_1]()(x);
@@ -100,15 +102,19 @@ main()
             (x, z)(y) == x + y + z
         );
     }
-
+*/
     {
         int x = 4;
         int y = 5;
-        lambda(_a = _1)[_a = 555](x)();
+        //lambda(_a = _1)[_a = 555](x)();
+
+        std::cout << typeid(lambda(_a = _1)[_a = 555](x)()).name() << "\n";
+        std::cout << typeid(lambda(_a = _1)[_a = 555](x)(0)).name() << "\n";
+
         BOOST_TEST(x == 555);
         (void)y;
     }
-
+/*
     {
         int x = 1;
         long x2 = 2;
@@ -193,7 +199,7 @@ main()
         //lambda[let(_a = _1)[_a = _2]]()(i, 2);
         BOOST_TEST(i == 2);
     }
-
+*/
     return boost::report_errors();
 }
 

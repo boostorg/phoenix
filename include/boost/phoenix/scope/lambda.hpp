@@ -90,17 +90,19 @@ namespace boost { namespace phoenix
     
     template <typename Vars, typename Dummy>
     struct enable_nullary<lambda_actor_eval<Vars>, Dummy>
-        : mpl::not_< typename mpl::fold<
+        : mpl::false_/*mpl::not_< typename mpl::fold<
             Vars
           , mpl::false_
           , detail::compute_no_nullary
-        >::type >
+        >::type >*/
     {};
 
 
     template <typename Expr, typename Vars, typename Map>
     struct lambda_actor
     {
+        lambda_actor() {}
+
         lambda_actor(Expr const& expr, Vars const& vars)
             : expr(expr)
             , vars(vars)
