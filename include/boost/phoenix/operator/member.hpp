@@ -11,7 +11,7 @@
 #ifndef PHOENIX_OPERATOR_MEMBER_HPP
 #define PHOENIX_OPERATOR_MEMBER_HPP
 
-#include <boost/get_pointer.hpp>
+/*#include <boost/get_pointer.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/domain.hpp>
@@ -20,10 +20,14 @@
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
-#include <boost/type_traits/is_member_object_pointer.hpp>
+#include <boost/type_traits/is_member_object_pointer.hpp>*/
 
 namespace boost { namespace phoenix
 {
+	PHOENIX_BINARY_OPERATORS(
+		(mem_ptr)
+	)
+	/*
     namespace detail
     {
 
@@ -116,6 +120,7 @@ namespace boost { namespace phoenix
     {
         return make_mem_obj_ptr<actor<Object>, MemPtr>()(obj, ptr);
     }
+*/
 
 }}
 

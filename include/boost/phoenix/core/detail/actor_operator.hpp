@@ -35,18 +35,20 @@
         typename result_of::actor<Expr, PHOENIX_A_ref>::type
         operator()(PHOENIX_A_ref_a) const
         {
-            PHOENIX_ENV(PHOENIX_A_ref) args( PHOENIX_a);
+            typedef make_basic_environment<default_actions, PHOENIX_A_ref> env_type;
+            typename env_type::type env = env_type::make(PHOENIX_a);
 
-            return eval(*this, args);
+            return eval(*this, env);
         }
 
         template <PHOENIX_typename_A>
         typename result_of::actor<Expr, PHOENIX_A_const_ref>::type
         operator()(PHOENIX_A_const_ref_a) const
         {
-            PHOENIX_ENV(PHOENIX_A_const_ref) args( PHOENIX_a);
+            typedef make_basic_environment<default_actions, PHOENIX_A_const_ref> env_type;
+            typename env_type::type env = env_type::make(PHOENIX_a);
 
-            return eval(*this, args);
+            return eval(*this, env);
         }
 
 #else
@@ -58,23 +60,28 @@
 // if PHOENIX_ITERATION > PHOENIX_LIMIT_PERFECT_FORWARD
 // only operator()(A const &...a) and operator()(A &...a) are generated
 // this is all handled by the PP mumbo jumbo above
-#define PHOENIX_ACTOR_OPERATOR(_, I, __)                                       \
-        template <PHOENIX_typename_A>                                          \
-        typename result_of::actor<Expr, PHOENIX_PERM_A(I)>::type               \
-        operator()(PHOENIX_PERM_A_a(I)) const                                  \
-        {                                                                      \
-            BOOST_PROTO_ASSERT_MATCHES(*this, eval_grammar);                   \
-            PHOENIX_ENV(PHOENIX_PERM_A(I)) args(PHOENIX_a);                    \
-                                                                               \
-            return eval(*this, args);                                          \
-        }
+#define PHOENIX_ACTOR_OPERATOR(_, I, __)                                        \
+        template <PHOENIX_typename_A>                                           \
+        typename result_of::actor<Expr, PHOENIX_PERM_A(I)>::type                \
+        operator()(PHOENIX_PERM_A_a(I)) const                                   \
+        {                                                                       \
+            typedef                                                             \
+			  	    make_basic_environment<                                         \
+					     default_actions, PHOENIX_PERM_A(I)                          \
+					 >                                                               \
+					 env_type;                                                       \
+            typename env_type::type env = env_type::make(PHOENIX_a);            \
+                                                                                \
+            return eval(*this, env);                                            \
+        }                                                                       \
+        /**/
 
         BOOST_PP_REPEAT( PHOENIX_PERM_SIZE, PHOENIX_ACTOR_OPERATOR, _)
 
 #undef PHOENIX_ACTOR_OPERATOR
 
 #endif
-
+/*
         template <PHOENIX_typename_A>
         typename compose<
             actor_fun_eval<
@@ -89,6 +96,7 @@
               , actor<Expr>, BOOST_PP_ENUM_BINARY_PARAMS(PHOENIX_ITERATION, actor<A, > BOOST_PP_INTERCEPT)
               >()(*this, a0, a1, a2);
         }
+*/
 
 #undef PHOENIX_ENV
 

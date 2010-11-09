@@ -11,15 +11,11 @@
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
-/*#include <boost/phoenix/core/arity.hpp>
-#include <boost/phoenix/core/compose.hpp>
-#include <boost/phoenix/core/domain.hpp>
-#include <boost/phoenix/core/no_nullary.hpp>*/
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/environment.hpp>
+#include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
-#include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/extends.hpp>
 #include <boost/utility/result_of.hpp>
@@ -53,11 +49,11 @@ namespace boost { namespace phoenix
 
             typedef typename
                 mpl::eval_if<
-                    typename is_nullary<Expr>::type//false//arity == 0 // avoid calling result_of::actor when this is false
+                    typename is_nullary<Expr>::type // avoid calling result_of::actor when this is false
                   , boost::result_of<
                         evaluator(
-                            Expr const&
-                          , fusion::vector2<typename make_basic_environment<>::type&, default_actions>
+                            Expr const &
+                          , typename make_basic_environment<default_actions>::type &
                         )
                     >
                   , mpl::identity<detail::error_expecting_arguments>
@@ -67,48 +63,36 @@ namespace boost { namespace phoenix
 
         template <typename Expr, typename A0>
         struct actor<Expr, A0>
-            /*: boost::result_of<eval_grammar(
-                ::boost::phoenix::actor<Expr> const &,
-                typename make_basic_environment<A0>::type&)
-            >*/
             : boost::result_of<
                 evaluator(
-                    Expr const&
-                  , fusion::vector2<typename make_basic_environment<A0>::type&, default_actions>
+                    Expr const &
+                  , typename make_basic_environment<default_actions, A0>::type &
                 )
             >
         {};
 
         template <typename Expr, typename A0, typename A1>
         struct actor<Expr, A0, A1>
-            /*: boost::result_of<eval_grammar(
-                ::boost::phoenix::actor<Expr> const &,
-                typename make_basic_environment<A0, A1>::type&)
-            >*/
             : boost::result_of<
                 evaluator(
                     Expr const&
-                  , fusion::vector2<typename make_basic_environment<A0, A1>::type&, default_actions>
+                  , typename make_basic_environment<default_actions, A0, A1>::type &
                 )
             >
         {};
 
         template <typename Expr, typename A0, typename A1, typename A2>
         struct actor<Expr, A0, A1, A2>
-            /*: boost::result_of<eval_grammar(
-                ::boost::phoenix::actor<Expr> const &,
-                typename make_basic_environment<A0, A1, A2>::type&)
-            >*/
             : boost::result_of<
                 evaluator(
                     Expr const&
-                  , fusion::vector2<typename make_basic_environment<A0, A1, A2>::type&, default_actions>
+                  , typename make_basic_environment<default_actions, A0, A1, A2>::type &
                 )
             >
         {};
 
         // Bring in the rest
-        //#include <boost/phoenix/core/detail/actor_result_of.hpp>
+        #include <boost/phoenix/core/detail/actor_result_of.hpp>
     }
     
     /*
@@ -146,15 +130,10 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr>::type
         operator()() const
         {
-            typename make_basic_environment<>::type args;
+            typedef make_basic_environment<default_actions> env_type;
+            typename env_type::type env = env_type::make();
 
-            typedef make_basic_environment<>::type params_type;
-            typedef fusion::vector2<params_type, default_actions> env_type;
-            
-            env_type env(args, default_actions());
             return eval(*this, env);
-
-            //return eval(this->proto_base(), args);
         }
 
         template <typename This, typename A0>
@@ -166,32 +145,30 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr, A0&>::type
         operator()(A0& a0) const
         {
-            typename make_basic_environment<A0&>::type args(a0);
-            typedef typename make_basic_environment<A0&>::type params_type;
-            typedef fusion::vector2<params_type, default_actions> env_type;
-            
-            env_type env(args, default_actions());
+            typedef make_basic_environment<default_actions, A0&> env_type;
+            typename env_type::type env = env_type::make(a0);
 
             return eval(*this, env);
         }
 
-        /*
         template <typename A0>
         typename result_of::actor<Expr, A0 const&>::type
         operator()(A0 const& a0) const
         {
-            typename make_basic_environment<A0 const&>::type args(a0);
+            typedef make_basic_environment<default_actions, A0 const&> env_type;
+            typename env_type::type env = env_type::make(a0);
             
-            return eval(*this, args);
+            return eval(*this, env);
         }
 
+		  /*
         template <typename A0>
         typename compose<actor_fun_eval<actor<Expr>, actor<A0> >, actor<Expr>, actor<A0> >::type const
         operator()(actor<A0> const& a0) const
         {
             return compose<actor_fun_eval<actor<Expr>, actor<A0> >, actor<Expr>, actor<A0> >()(*this, a0);
         }
-        */
+		  */
 
         template <typename This, typename A0, typename A1>
         struct result<This(A0&, A1&)>
@@ -202,43 +179,43 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr, A0&, A1&>::type
         operator()(A0& a0, A1& a1) const
         {
-            typedef typename make_basic_environment<A0&, A1&>::type params_type;
-            params_type args(a0, a1);
-            typedef fusion::vector2<params_type, default_actions> env_type;
-            
-            env_type env(args, default_actions());
+            typedef make_basic_environment<default_actions, A0&, A1&> env_type;
+            typename env_type::type env = env_type::make(a0, a1);
 
             return eval(*this, env);
         }
 
-        /*
         template <typename A0, typename A1>
         typename result_of::actor<Expr, A0&, A1 const&>::type
         operator()(A0& a0, A1 const& a1) const
         {
-            typename make_basic_environment<A0&, A1 const&>::type args(a0, a1);
+            typedef make_basic_environment<default_actions, A0&, A1 const&> env_type;
+            typename env_type::type env = env_type::make(a0, a1);
             
-            return eval(*this, args);
+            return eval(*this, env);
         }
 
         template <typename A0, typename A1>
         typename result_of::actor<Expr, A0 const&, A1&>::type
         operator()(A0 const& a0, A1& a1) const
         {
-            typename make_basic_environment<A0 const&, A1&>::type args(a0, a1);
+            typedef make_basic_environment<default_actions, A0 const&, A1 &> env_type;
+            typename env_type::type env = env_type::make(a0, a1);
             
-            return eval(*this, args);
+            return eval(*this, env);
         }
 
         template <typename A0, typename A1>
         typename result_of::actor<Expr, A0 const&, A1 const&>::type
         operator()(A0 const& a0, A1 const& a1) const
         {
-            typename make_basic_environment<A0 const&, A1 const&>::type args(a0, a1);
+            typedef make_basic_environment<default_actions, A0 const&, A1 const&> env_type;
+            typename env_type::type env = env_type::make(a0, a1);
             
-            return eval(this->proto_base(), args);
+            return eval(this->proto_base(), env);
         }
 
+        /*
         template <typename A0, typename A1>
         typename compose<
             actor_fun_eval<
@@ -253,6 +230,7 @@ namespace boost { namespace phoenix
               , actor<Expr>, actor<A0>, actor<A1>
               >()(*this, a0, a1);
         }
+		  */
 
         template <typename This, typename A0, typename A1, typename A2>
         struct result<This(A0, A1, A2)>
@@ -263,74 +241,83 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr, A0&, A1&, A2&>::type
         operator()(A0& a0, A1& a1, A2& a2) const
         {
-            typename make_basic_environment<A0&, A1&, A2&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0&, A1&, A2&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         }
 
         template <typename A0, typename A1, typename A2>
         typename result_of::actor<Expr, A0 const&, A1&, A2&>::type
         operator()(A0 const& a0, A1& a1, A2& a2) const
         {
-            typename make_basic_environment<A0 const&, A1&, A2&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0 const&, A1&, A2&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         } 
 
         template <typename A0, typename A1, typename A2>
         typename result_of::actor<Expr, A0&, A1 const&, A2&>::type
         operator()(A0& a0, A1 const& a1, A2& a2) const
         {
-            typename make_basic_environment<A0&, A1 const&, A2&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0&, A1 const&, A2&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         }
 
         template <typename A0, typename A1, typename A2>
         typename result_of::actor<Expr, A0&, A1&, A2 const&>::type
         operator()(A0& a0, A1& a1, A2 const& a2) const
         {
-            typename make_basic_environment<A0&, A1&, A2 const&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0&, A1&, A2 const&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         }
 
         template <typename A0, typename A1, typename A2>
         typename result_of::actor<Expr, A0 const&, A1 const&, A2&>::type
         operator()(A0 const& a0, A1 const& a1, A2& a2) const
         {
-            typename make_basic_environment<A0 const&, A1 const&, A2&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0 const&, A1 const&, A2&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         }
 
         template <typename A0, typename A1, typename A2>
         typename result_of::actor<Expr, A0&, A1 const&, A2 const&>::type
         operator()(A0& a0, A1 const& a1, A2 const& a2) const
         {
-            typename make_basic_environment<A0&, A1 const&, A2 const&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0&, A1 const&, A2 const&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         } 
 
         template <typename A0, typename A1, typename A2>
         typename result_of::actor<Expr, A0 const&, A1&, A2 const&>::type
         operator()(A0 const& a0, A1& a1, A2 const& a2) const
         {
-            typename make_basic_environment<A0 const&, A1&, A2 const&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0 const&, A1&, A2 const&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         }
 
         template <typename A0, typename A1, typename A2>
         typename result_of::actor<Expr, A0 const&, A1 const&, A2 const&>::type
         operator()(A0 const& a0, A1 const& a1, A2 const& a2) const
         {
-            typename make_basic_environment<A0 const&, A1 const&, A2 const&>::type args(a0, a1, a2);
-            
-            return eval(*this, args);
+            typedef make_basic_environment<default_actions, A0 const&, A1 const&, A2 const&> env_type;
+            typename env_type::type env = env_type::make(a0, a1, a2);
+
+            return eval(*this, env);
         }
 
+		  /*
         template <typename A0, typename A1, typename A2>
         typename compose<
             actor_fun_eval<
@@ -345,10 +332,10 @@ namespace boost { namespace phoenix
               , actor<Expr>, actor<A0>, actor<A1>, actor<A2>
               >()(*this, a0, a1, a2);
         }
+        */
 
         // Bring in the rest
         #include <boost/phoenix/core/detail/actor_operator.hpp>
-        */
     };
 
     /*

@@ -39,6 +39,7 @@ main()
     }
 
     {
+        BOOST_TEST((-val(123))() == -123);
         BOOST_TEST((val(123) + 456)() == 123 + 456);
         BOOST_TEST((val(123) - 456)() == 123 - 456);
         BOOST_TEST((val(123) * 456)() == 123 * 456);

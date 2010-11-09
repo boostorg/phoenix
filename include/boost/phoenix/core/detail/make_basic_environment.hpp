@@ -20,9 +20,18 @@
 
 #else
 
-    template <PHOENIX_typename_A>
-    struct make_basic_environment<PHOENIX_A>
-        : mpl::identity<
-            BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<PHOENIX_A> > {};
+    template <typename Actions, PHOENIX_typename_A>
+    struct make_basic_environment<Actions, PHOENIX_A>
+    {
+		 typedef
+			 BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<PHOENIX_A>
+			 params_type;
+		 typedef fusion::vector2<params_type, Actions> type;
+
+		 static type make(PHOENIX_A_a)
+		 {
+			 return type(params_type(PHOENIX_a), Actions());
+		 }
+	 };
 
 #endif

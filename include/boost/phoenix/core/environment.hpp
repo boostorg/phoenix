@@ -9,6 +9,7 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
+#include <boost/fusion/container/vector.hpp>
 #include <boost/fusion/support/is_sequence.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -137,39 +138,57 @@ namespace boost { namespace phoenix
     };
     */
     
-    template </*typename Actions,*/ PHOENIX_typename_A_void(PHOENIX_ARG_LIMIT), typename Dummy = void>
+    template <typename Actions, PHOENIX_typename_A_void(PHOENIX_ARG_LIMIT), typename Dummy = void>
     struct make_basic_environment;
     
-    //template <typename Actions>
-    template <>
-    struct make_basic_environment<>//<Actions>
-        : mpl::identity<//fusion::vector2<
-        fusion::vector0<>
-        //, Actions>
-        >
-        {};
+    template <typename Actions>
+    struct make_basic_environment<Actions>
+    {
+		 typedef fusion::vector0<>                     params_type;
+		 typedef fusion::vector2<params_type, Actions> type;
 
-    //template <typename Actions, typename A0>
-    template <typename A0>
-    struct make_basic_environment</*Actions,*/ A0>
-        : mpl::identity<//fusion::vector2<
-        fusion::vector1<A0>
-        //, Actions>
-        >
-        {};
+		 static type make()
+		 {
+			 return type(params_type(), Actions());
+		 }
+	 };
 
-    template <typename A0, typename A1>
-    struct make_basic_environment<A0, A1>
-        : mpl::identity<//fusion::vector2<
-            fusion::vector2<A0, A1>
-            //, Actions>
-            > 
-        {};
+    template <typename Actions, typename A0>
+    struct make_basic_environment<Actions, A0>
+    {
+		 typedef fusion::vector1<A0>                   params_type;
+		 typedef fusion::vector2<params_type, Actions> type;
 
-    template <typename A0, typename A1, typename A2>
-    struct make_basic_environment<A0, A1, A2>
-        : mpl::identity<fusion::vector3<A0, A1, A2> >
-        {};
+		 static type make(A0 a0)
+		 {
+			 return type(params_type(a0), Actions());
+		 }
+	 };
+
+    template <typename Actions, typename A0, typename A1>
+    struct make_basic_environment<Actions, A0, A1>
+    {
+		 typedef fusion::vector2<A0, A1>               params_type;
+		 typedef fusion::vector2<params_type, Actions> type;
+
+		 static type make(A0 a0, A1 a1)
+		 {
+			 params_type params(a0, a1);
+			 return type(params, Actions());
+		 }
+	 };
+
+    template <typename Actions, typename A0, typename A1, typename A2>
+    struct make_basic_environment<Actions, A0, A1, A2>
+    {
+		 typedef fusion::vector3<A0, A1, A2>               params_type;
+		 typedef fusion::vector2<params_type, Actions> type;
+
+		 static type make(A0 a0, A1 a1, A2 a2)
+		 {
+			 return type(params_type(a0, a1, a2), Actions());
+		 }
+	 };
 
     // Bring in the rest
     #include <boost/phoenix/core/detail/make_basic_environment.hpp>

@@ -22,16 +22,16 @@ test-suite phoenix_core :
     ;
 
 test-suite phoenix_operator :
-#    [ run operator/arithmetic_tests.cpp ] 
-#    [ run operator/bitwise_tests.cpp ]
-#    [ run operator/comparison_tests.cpp ] 
-#    [ run operator/if_else_tests.cpp ]
-#    [ run operator/io_tests.cpp ]
-#    [ run operator/logical_tests.cpp ]
-#    [ run operator/misc_binary_tests.cpp ]
-#    [ run operator/self_tests.cpp ]
-#    [ run operator/unary_tests.cpp ] 
-#    [ run operator/member.cpp ]
+    [ run operator/arithmetic_tests.cpp ] 
+    [ run operator/bitwise_tests.cpp ]
+    [ run operator/comparison_tests.cpp ] 
+    [ run operator/if_else_tests.cpp ]
+    [ run operator/io_tests.cpp ]
+    [ run operator/logical_tests.cpp ]
+    [ run operator/misc_binary_tests.cpp ]
+    [ run operator/self_tests.cpp ]
+    [ run operator/unary_tests.cpp ] 
+    [ run operator/member.cpp ]
     ;
 
 test-suite phoenix_object :
