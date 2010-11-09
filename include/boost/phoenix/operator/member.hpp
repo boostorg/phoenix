@@ -19,18 +19,28 @@
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/tags.hpp>
-#include <boost/type_traits/is_member_function_pointer.hpp>
 #include <boost/type_traits/is_member_object_pointer.hpp>*/
+#include <boost/type_traits/is_member_function_pointer.hpp>
 
 namespace boost { namespace phoenix
 {
 	PHOENIX_BINARY_OPERATORS(
 		(mem_ptr)
 	)
-	/*
-    namespace detail
-    {
 
+	namespace rule
+	{
+		struct function
+			: proto::function<proto::vararg<meta_grammar> >
+		{};
+	}
+
+	template <typename Dummy>
+	struct meta_grammar::case_<proto::tag::function, Dummy>
+		: proto::when<rule::function, proto::external_transform>
+	{};
+	
+	namespace detail {
         namespace result_of
         {
             template <typename Object, typename MemPtr,
@@ -85,16 +95,9 @@ namespace boost { namespace phoenix
 
         };
 
-    }
+	}
 
-    ////////////////////////////////////////////////////////////////////////////
-    //
-    // This operator overload is preferred to Proto's when the second parameter
-    // is a member function pointer. If it is a member object pointer, Proto's
-    // default handling could do the right thing, if there wasn't MSVC.
-    // 
-    ////////////////////////////////////////////////////////////////////////////
-    template <typename Object, typename MemPtr>
+	template <typename Object, typename MemPtr>
     typename enable_if<
         is_member_function_pointer<MemPtr>
       , detail::mem_fun_ptr<actor<Object>, MemPtr> const
@@ -103,25 +106,6 @@ namespace boost { namespace phoenix
     {
         return detail::mem_fun_ptr<actor<Object>, MemPtr>(obj, ptr);
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    //
-    // This operator overload is preferred to Proto's when the second parameter
-    // is a member object pointer. If it is a member object pointer, Proto's
-    // default handling could do the right thing, if there wasn't MSVC.
-    // 
-    ////////////////////////////////////////////////////////////////////////////
-    template <typename Object, typename MemPtr>
-    typename enable_if<
-        is_member_object_pointer<MemPtr>
-      , typename make_mem_obj_ptr<actor<Object>, MemPtr>::type const
-      >::type
-    operator->*(actor<Object> const& obj, MemPtr ptr)
-    {
-        return make_mem_obj_ptr<actor<Object>, MemPtr>()(obj, ptr);
-    }
-*/
-
 }}
 
 #endif
@@ -145,6 +129,14 @@ namespace boost { namespace phoenix
             template <PHOENIX_typename_A>
             typename result_of::mem_fun_ptr<Object, MemPtr, PHOENIX_A>::type const
             operator()(PHOENIX_A_const_ref_a) const
+            {
+                return proto::make_expr<
+                    proto::tag::function, phoenix_domain>(ptr, obj, PHOENIX_a);
+            }
+
+            template <PHOENIX_typename_A>
+            typename result_of::mem_fun_ptr<Object, MemPtr, PHOENIX_A>::type const
+            operator()(PHOENIX_A_ref_a) const
             {
                 return proto::make_expr<
                     proto::tag::function, phoenix_domain>(ptr, obj, PHOENIX_a);

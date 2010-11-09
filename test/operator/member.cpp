@@ -49,16 +49,16 @@ int main()
     ((val(ptr)->*&Test::value) = 2)();
     BOOST_TEST(test.value == 2);
 
-    //BOOST_TEST((val(ptr)->*&Test::func)(3)() == 3);
-    //int i = 33;
-    //BOOST_TEST((arg1->*&Test::func)(arg2)(cptr, i) == i);
-    //BOOST_TEST((val(cptr)->*&Test::func)(4)() == 4);
-    //BOOST_TEST((val(ptr)->*&Test::dunc)()() == 10);
+	 val(ptr)->*&Test::func;
+    BOOST_TEST((val(ptr)->*&Test::func)(3)() == 3);
+    int i = 33;
+    BOOST_TEST((arg1->*&Test::func)(arg2)(cptr, i) == i);
+    BOOST_TEST((val(cptr)->*&Test::func)(4)() == 4);
+    BOOST_TEST((val(ptr)->*&Test::dunc)()() == 10);
 
-    //BOOST_TEST((arg1->*&Test::func)(5)(ptr) == 5);
-    //BOOST_TEST((arg1->*&Test::kunc)()(ptr));
+    BOOST_TEST((arg1->*&Test::func)(5)(ptr) == 5);
+    BOOST_TEST((arg1->*&Test::kunc)()(ptr));
 
-    /*
     shared_ptr<Test> sptr(new Test(test));
 
     BOOST_TEST((arg1->*&Test::value)(sptr) == 2);
@@ -88,7 +88,6 @@ int main()
 
     BOOST_TEST((arg1->*&Test::value)(captr) == 2);
     BOOST_TEST((arg1->*&Test::func)(11)(captr) == 11);
-    */
 
     return 0;
 }
