@@ -1,13 +1,3 @@
-/*==============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2010 Thomas Heller
-
-    Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-==============================================================================*/
-
-#if !PHOENIX_IS_ITERATING
-
 #ifndef PHOENIX_OPERATOR_MEMBER_HPP
 #define PHOENIX_OPERATOR_MEMBER_HPP
 
@@ -20,6 +10,8 @@
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/type_traits/is_member_object_pointer.hpp>*/
+#include <boost/phoenix/core/unpack.hpp>
+#include <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
 
 namespace boost { namespace phoenix
@@ -30,117 +22,69 @@ namespace boost { namespace phoenix
 
 	namespace rule
 	{
-		struct function
-			: proto::function<proto::vararg<meta_grammar> >
+		struct mem_fun_ptr
+			: proto::nary_expr<tag::mem_fun_ptr, proto::vararg<meta_grammar> >
 		{};
 	}
 
 	template <typename Dummy>
-	struct meta_grammar::case_<proto::tag::function, Dummy>
-		: proto::when<rule::function, proto::external_transform>
+	struct meta_grammar::case_<tag::mem_fun_ptr, Dummy>
+		: proto::when<rule::mem_fun_ptr, proto::external_transform>
 	{};
-	
-	namespace detail {
-        namespace result_of
-        {
-            template <typename Object, typename MemPtr,
-                PHOENIX_typename_A_void(PHOENIX_MEMBER_LIMIT)
-                , typename Dummy = void>
-            struct mem_fun_ptr;
-
-            template <typename Object, typename MemPtr>
-            struct mem_fun_ptr<Object, MemPtr>
-                : proto::result_of::make_expr<
-                      proto::tag::function
-                    , phoenix_domain
-                    , MemPtr
-                    , Object>
-            {};
-
-#define PHOENIX_ITERATE_RESULT_OF 1
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (4, (1, PHOENIX_MEMBER_LIMIT,                                           \
-        <boost/phoenix/operator/member.hpp>,                                    \
-        PHOENIX_ITERATE_RESULT_OF))
-#include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_RESULT_OF
-
-        }
-
-        template <typename Object, typename MemPtr>
-        struct mem_fun_ptr
-        {
-            mem_fun_ptr(Object const& obj, MemPtr ptr)
-              : obj(obj)
-              , ptr(ptr)
-            {}
-
-            typename result_of::mem_fun_ptr<Object, MemPtr>::type const
-            operator()() const
-            {
-                return proto::make_expr<
-                    proto::tag::function, phoenix_domain>(ptr, obj);
-            }
-
-#define PHOENIX_ITERATE_OPERATOR 2
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (4, (1, PHOENIX_MEMBER_LIMIT,                                           \
-        <boost/phoenix/operator/member.hpp>,                                    \
-        PHOENIX_ITERATE_OPERATOR))
-#include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_OPERATOR
-
-            Object const& obj;
-            MemPtr ptr;
-
-        };
-
-	}
 
 	template <typename Object, typename MemPtr>
     typename enable_if<
         is_member_function_pointer<MemPtr>
-      , detail::mem_fun_ptr<actor<Object>, MemPtr> const
+      , detail::mem_fun_ptr_gen<actor<Object>, MemPtr> const
       >::type
     operator->*(actor<Object> const& obj, MemPtr ptr)
     {
-        return detail::mem_fun_ptr<actor<Object>, MemPtr>(obj, ptr);
+        return detail::mem_fun_ptr_gen<actor<Object>, MemPtr>(obj, ptr);
     }
+
+	struct mem_fun_ptr_eval
+		: proto::callable
+	{
+		typedef int result_type;
+		
+		result_type
+		operator()() const
+		{
+			std::cout << "ok ... evaluate ... \n";
+			return 5;
+		}
+
+		template <typename T1>
+		result_type
+		operator()(T1 const& t1) const
+		{
+			std::cout << "ok ... evaluate ... \n";
+			return 5;
+		}
+
+		template <typename T1, typename T2>
+		result_type
+		operator()(T1 const& t1, T2 const& t2) const
+		{
+			std::cout << "ok ... evaluate ... \n";
+			return 5;
+		}
+
+		template <typename T1, typename T2, typename T3>
+		result_type
+		operator()(T1 const& t1, T2 const& t2, T3 const& t3) const
+		{
+			std::cout << "ok ... evaluate ... \n";
+			return 5;
+		}
+	};
+
+   template <typename Dummy>
+	struct default_actions::when<rule::mem_fun_ptr, Dummy>
+		//: proto::call<mem_fun_ptr_eval(unpack(proto::_))>
+		: proto::call<mem_fun_ptr_eval(unpack(fusion::vector0<>()))>
+	{};
 }}
 
 #endif
 
-#else
-
-#if BOOST_PP_ITERATION_FLAGS() == PHOENIX_ITERATE_RESULT_OF
-
-            template <typename Object, typename MemPtr, PHOENIX_typename_A>
-            struct mem_fun_ptr<Object, MemPtr, PHOENIX_A>
-                : proto::result_of::make_expr<
-                      proto::tag::function
-                    , phoenix_domain
-                    , MemPtr
-                    , Object
-                    , PHOENIX_A>
-            {};
-
-#elif BOOST_PP_ITERATION_FLAGS() == PHOENIX_ITERATE_OPERATOR
-
-            template <PHOENIX_typename_A>
-            typename result_of::mem_fun_ptr<Object, MemPtr, PHOENIX_A>::type const
-            operator()(PHOENIX_A_const_ref_a) const
-            {
-                return proto::make_expr<
-                    proto::tag::function, phoenix_domain>(ptr, obj, PHOENIX_a);
-            }
-
-            template <PHOENIX_typename_A>
-            typename result_of::mem_fun_ptr<Object, MemPtr, PHOENIX_A>::type const
-            operator()(PHOENIX_A_ref_a) const
-            {
-                return proto::make_expr<
-                    proto::tag::function, phoenix_domain>(ptr, obj, PHOENIX_a);
-            }
-
-#endif
-#endif
