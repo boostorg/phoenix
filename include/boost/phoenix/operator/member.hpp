@@ -75,15 +75,28 @@ namespace boost { namespace phoenix
 		operator()(T1 const& t1, T2 const& t2, T3 const& t3) const
 		{
 			std::cout << "ok ... evaluate ... \n";
+            std::cout << typeid(T1).name() << "\n";
+            std::cout << typeid(T2).name() << "\n";
+            std::cout << typeid(T3).name() << "\n";
+			return 5;
+		}
+
+		template <typename Env, typename T1, typename T2, typename T3>
+		result_type
+		operator()(Env & env, T1 const& t1, T2 const& t2, T3 const& t3) const
+		{
+			std::cout << "ok ... evaluate ... \n";
+            std::cout << typeid(T1).name() << "\n";
+            std::cout << typeid(T2).name() << "\n";
+            std::cout << typeid(T3).name() << "\n";
 			return 5;
 		}
 	};
 
-   template <typename Dummy>
-	struct default_actions::when<rule::mem_fun_ptr, Dummy>
-		//: proto::call<mem_fun_ptr_eval(unpack(proto::_))>
-		: proto::call<mem_fun_ptr_eval(unpack(fusion::vector0<>()))>
-	{};
+    template <typename Dummy>
+    struct default_actions::when<rule::mem_fun_ptr, Dummy>
+        : proto::call<mem_fun_ptr_eval(unpack(proto::_, evaluator(proto::_, _env)))>
+    {};
 }}
 
 #endif

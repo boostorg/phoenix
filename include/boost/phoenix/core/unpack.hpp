@@ -14,15 +14,24 @@
 
 namespace boost { namespace phoenix
 {
-	struct unpack {};
-
-	namespace detail
-	{
-		template <typename Expr, typename State, typename Data, typename Transform, long Arity = fusion::result_of::size<Expr>::value>
-		struct unpack_impl;
-		
-		template <typename Expr, typename State, typename Data, typename R>
-		struct unpack_impl<Expr, State, Data, R(unpack), 1>
+    struct unpack {};
+    
+    namespace detail
+    {
+        template <
+            typename Expr
+          , typename State
+          , typename Data
+          , typename Seq
+          , typename Fun
+          , typename R
+          , long Arity = fusion::result_of::size<
+                typename proto::detail::uncvref<typename proto::when<proto::_, Seq>::template impl<Expr, State, Data>::result_type>::type
+            >::value>
+        struct unpack_impl;
+        
+        template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R>
+        struct unpack_impl<Expr, State, Data, Seq, Fun, R(), 1>
 			: proto::transform_impl<Expr, State, Data>
 		{
 			typedef int result_type;
@@ -39,26 +48,8 @@ namespace boost { namespace phoenix
 			}
 		};
 
-		template <typename Expr, typename State, typename Data, typename R>
-		struct unpack_impl<Expr, State, Data, R(unpack), 2>
-			: proto::transform_impl<Expr, State, Data>
-		{
-			typedef int result_type;
-
-			result_type
-			operator()(
-				typename unpack_impl::expr_param e
-			 , typename unpack_impl::state_param s
-			 , typename unpack_impl::data_param d
-			) const
-			{
-				std::cout << "yeha ... unpack without params 2\n";
-				return 5;
-			}
-		};
-
-		template <typename Expr, typename State, typename Data, typename R, typename Seq>
-		struct unpack_impl<Expr, State, Data, R(unpack(Seq)), 2>
+		template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R>
+		struct unpack_impl<Expr, State, Data, Seq, Fun, R(), 2>
 			: proto::transform_impl<Expr, State, Data>
 		{
 			typedef int result_type;
@@ -75,50 +66,33 @@ namespace boost { namespace phoenix
 			}
 		};
 
-		template <typename Expr, typename State, typename Data, typename R>
-		struct unpack_impl<Expr, State, Data, R(unpack), 3>
-			: proto::transform_impl<Expr, State, Data>
-		{
-			typedef int result_type;
-
-			result_type
-			operator()(
-				typename unpack_impl::expr_param e
-			 , typename unpack_impl::state_param s
-			 , typename unpack_impl::data_param d
-			) const
-			{
-				std::cout << "yeha ... unpack without params 3\n";
-				return 5;
-			}
-		};
-
-		template <typename Expr, typename State, typename Data, typename R, typename Seq>
-		struct unpack_impl<Expr, State, Data, R(unpack(Seq)), 3>
-			: proto::transform_impl<Expr, State, Data>
-		{
-			typedef int result_type;
-
-			result_type
-			operator()(
-				typename unpack_impl::expr_param e
-			 , typename unpack_impl::state_param s
-			 , typename unpack_impl::data_param d
-			) const
-			{
-				typedef typename proto::when<proto::_, Seq>::template impl<Expr, State, Data>::result_type test_type;
-
-				std::cout << "yeha ... unpack with Seq 3\n";
-				std::cout << "Seq:\n";
-				std::cout << typeid(Seq).name() << "\n";
-				//std::cout << typeid(typename boost::result_of<proto::_child_c<0>(proto::when<proto::_, Seq>(Expr))>::type).name() << "\n";
-				//std::cout << typeid(typename boost::result_of<Seq(Expr)>::type).name() << "\n";
-				std::cout << typeid(test_type).name() << "\n";
-				//std::cout << typeid(typename boost::result_of<proto::_child_c<0>(test_type)>::type).name() << "\n";
-				std::cout << "Expr:\n";
-				std::cout << typeid(Expr).name() << "\n";
-				return 5;
-			}
+        template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R>
+        struct unpack_impl<Expr, State, Data, Seq, Fun, R(), 3>
+            : proto::transform_impl<Expr, State, Data>
+        {
+            //typedef proto::when<proto::_, Fun> fun_type;
+            struct fun_type : proto::when<proto::_, Fun> {};
+            
+            // OK to evaluate is_callable<R> here. R should be compete by now.
+            typedef
+                typename mpl::if_c<
+                    proto::is_callable<R>::value
+                  , proto::call<R(fun_type(proto::_child_c<0>(Seq)), fun_type(proto::_child_c<1>(Seq)), fun_type(proto::_child_c<2>(Seq)))> // "R" is a function to call
+                  , proto::make<R(fun_type(proto::_child_c<0>(Seq)), fun_type(proto::_child_c<1>(Seq)), fun_type(proto::_child_c<2>(Seq)))> // "R" is an object to constructa
+                >::type
+                which;
+            
+            typedef typename which::template impl<Expr, State, Data>::result_type result_type;
+            
+            result_type
+            operator()(
+                typename unpack_impl::expr_param e
+              , typename unpack_impl::state_param s
+              , typename unpack_impl::data_param d
+            ) const
+            {
+                return typename which::template impl<Expr, State, Data>()(e, s, d);
+            }
 		};
 	}
 }}
@@ -131,7 +105,7 @@ namespace boost { namespace proto
 	{
 		template <typename Expr, typename State, typename Data>
 		struct impl
-			: phoenix::detail::unpack_impl<Expr, State, Data, R(phoenix::unpack)>
+			: phoenix::detail::unpack_impl<Expr, State, Data, Expr, proto::_, R()>//R(phoenix::unpack(Expr, proto::_))>
 		{};
 	};
 	
@@ -139,10 +113,12 @@ namespace boost { namespace proto
 	struct call<R(phoenix::unpack(Seq))>
 		: proto::transform<call<R(phoenix::unpack(Seq))> >
 	{
+
 		template <typename Expr, typename State, typename Data>
 		struct impl
-			: phoenix::detail::unpack_impl<Expr, State, Data, R(phoenix::unpack(Seq))>
-		{};
+			: phoenix::detail::unpack_impl<Expr, State, Data, Seq, proto::_, R()>//R(phoenix::unpack(Expr, proto::_))>
+		{
+        };
 	};
 	
 	template <typename R, typename Seq, typename Fun>
@@ -151,21 +127,8 @@ namespace boost { namespace proto
 	{
 		template <typename Expr, typename State, typename Data>
 		struct impl
-			: proto::transform_impl<Expr, State, Data>
-		{
-			typedef int result_type;
-
-			result_type
-			operator()(
-				typename impl::expr_param e
-			 , typename impl::state_param s
-			 , typename impl::data_param d
-			) const
-			{
-				std::cout << "yeha ... unpack with Seq and Fun param\n";
-				return 5;
-			}
-		};
+			: phoenix::detail::unpack_impl<Expr, State, Data, Seq, Fun, R()>//R(phoenix::unpack(Expr, proto::_))>
+		{};
 	};
 
 }}
