@@ -8,10 +8,27 @@
 #ifndef PHOENIX_OBJECT_DYNAMIC_CAST_HPP
 #define PHOENIX_OBJECT_DYNAMIC_CAST_HPP
 
-#include <boost/phoenix/core/compose.hpp>
+//#include <boost/phoenix/core/compose.hpp>
 
 namespace boost { namespace phoenix
 {
+    namespace tag {
+        struct dynamic_cast_ {};
+    }
+
+	namespace rule
+	{
+		struct dynamic_cast_
+			: proto::unary_expr<tag::dynamic_cast_, meta_grammar>
+		{};
+	}
+
+	template <typename Dummy>
+	struct meta_grammar::case_<tag::dynamic_cast_, Dummy>
+		: proto::when<rule::dynamic_cast_, proto::external_transform>
+	{};
+
+
     namespace result_of
     {
         template <typename Env, typename T, typename U>

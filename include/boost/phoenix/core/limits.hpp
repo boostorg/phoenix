@@ -12,7 +12,7 @@
 #include <boost/preprocessor/dec.hpp>
 
 #if !defined(PHOENIX_LIMIT)
-# define PHOENIX_LIMIT 10
+# define PHOENIX_LIMIT 5
 #elif (PHOENIX_LIMIT < 5)
 # error "PHOENIX_LIMIT is set too low"
 #endif

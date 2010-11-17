@@ -1,3 +1,5 @@
+#if !PHOENIX_IS_ITERATING
+
 #ifndef PHOENIX_OPERATOR_MEMBER_HPP
 #define PHOENIX_OPERATOR_MEMBER_HPP
 
@@ -6,13 +8,14 @@
 #include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/mem_obj_ptr.hpp>
-#include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/type_traits/is_member_object_pointer.hpp>*/
 #include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>
+#include <boost/phoenix/support/iterate.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
+#include <boost/get_pointer.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -45,59 +48,51 @@ namespace boost { namespace phoenix
 	struct mem_fun_ptr_eval
 		: proto::callable
 	{
-		typedef int result_type;
-		
-		result_type
-		operator()() const
-		{
-			std::cout << "ok ... evaluate ... \n";
-			return 5;
-		}
+        //typedef int result_type;
 
-		template <typename T1>
-		result_type
-		operator()(T1 const& t1) const
-		{
-			std::cout << "ok ... evaluate ... \n";
-			return 5;
-		}
+        template<typename Sig>
+        struct result;
 
-		template <typename T1, typename T2>
-		result_type
-		operator()(T1 const& t1, T2 const& t2) const
-		{
-			std::cout << "ok ... evaluate ... \n";
-			return 5;
-		}
+        #define PHOENIX_MEMBER_RESULT_OF(_, N, __) \
+                  typename boost::result_of<evaluator(BOOST_PP_CAT(A, N) const&, Env&)>::type
+        #define PHOENIX_MEMBER_EVAL(_, N, __) \
+                  eval(BOOST_PP_CAT(a, N), env)
 
-		template <typename T1, typename T2, typename T3>
-		result_type
-		operator()(T1 const& t1, T2 const& t2, T3 const& t3) const
-		{
-			std::cout << "ok ... evaluate ... \n";
-            std::cout << typeid(T1).name() << "\n";
-            std::cout << typeid(T2).name() << "\n";
-            std::cout << typeid(T3).name() << "\n";
-			return 5;
-		}
-
-		template <typename Env, typename T1, typename T2, typename T3>
-		result_type
-		operator()(Env & env, T1 const& t1, T2 const& t2, T3 const& t3) const
-		{
-			std::cout << "ok ... evaluate ... \n";
-            std::cout << typeid(T1).name() << "\n";
-            std::cout << typeid(T2).name() << "\n";
-            std::cout << typeid(T3).name() << "\n";
-			return 5;
-		}
+        #define PHOENIX_ITERATION_PARAMS                                                \
+            (4, (0, PHOENIX_LIMIT,                                                  \
+            <boost/phoenix/operator/member.hpp>,                                    \
+            PHOENIX_ITERATE_OPERATOR))
+        #include PHOENIX_ITERATE()
+        #undef PHOENIX_MEMBER_RESULT_OF
+        #undef PHOENIX_MEMBER_EVAL
 	};
 
     template <typename Dummy>
     struct default_actions::when<rule::mem_fun_ptr, Dummy>
-        : proto::call<mem_fun_ptr_eval(unpack(proto::_, evaluator(proto::_, _env)))>
+        : proto::call<mem_fun_ptr_eval(_env, unpack)>//(proto::_, evaluator(proto::_, _env)))>
     {};
 }}
+
+#endif
+
+#else // PHOENIX_IS_ITERATING
+        
+        template<typename This, typename Env, typename T1, typename T2 BOOST_PP_ENUM_TRAILING_PARAMS(PHOENIX_ITERATION, typename A)>
+        struct result<This(Env, T1 const&, T2 const& BOOST_PP_ENUM_TRAILING_BINARY_PARAMS(PHOENIX_ITERATION, A, const & BOOST_PP_INTERCEPT))>
+            : boost::result_of<
+                typename boost::remove_reference<typename boost::result_of<evaluator(T2 const &, Env&)>::type>::type(
+                    typename boost::result_of<evaluator(T1 const&, Env&)>::type
+                    BOOST_PP_ENUM_TRAILING(PHOENIX_ITERATION, PHOENIX_MEMBER_RESULT_OF, _)
+                )
+            >
+        {};
+		
+        template <typename Env, typename T1, typename T2 BOOST_PP_ENUM_TRAILING_PARAMS(PHOENIX_ITERATION, typename A)>
+		typename result<mem_fun_ptr_eval(Env &, T1 const&, T2 const&  BOOST_PP_ENUM_TRAILING_BINARY_PARAMS(PHOENIX_ITERATION, A, const & BOOST_PP_INTERCEPT))>::type
+		operator()(Env & env, T1 const& t1, T2 const& t2 BOOST_PP_ENUM_TRAILING_BINARY_PARAMS(PHOENIX_ITERATION, A, const & a)) const
+		{
+			return (get_pointer(eval(t1, env))->*eval(t2, env))(BOOST_PP_ENUM(PHOENIX_ITERATION, PHOENIX_MEMBER_EVAL, _));
+		}
 
 #endif
 
