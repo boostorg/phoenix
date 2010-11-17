@@ -1,3 +1,5 @@
+#if !PHOENIX_IS_ITERATING
+
 /*=============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
     Copyright (c) 2010 Eric Niebler
@@ -10,7 +12,21 @@
 #define PHOENIX_CORE_UNPACK_HPP
 
 #include <boost/fusion/include/size.hpp>
+#include <boost/fusion/container/vector.hpp>
 #include <boost/proto/proto.hpp>
+
+#define M3(_, N, MAX)                                                       \
+    BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N))                                 \
+    BOOST_PP_CAT(A, N)                                                      \
+/**/
+
+#define M2(UNPACK, N, ARITY)                                                \
+    BOOST_PP_ENUM_PARAMS(N, A)                                              \
+    BOOST_PP_COMMA_IF(N)                                                    \
+    UNPACK BOOST_PP_REPEAT_FROM_TO(N, ARITY, M3, ARITY)                     \
+/**/
+
+#define M0(_, N, __) BOOST_PP_REPEAT(BOOST_PP_INC(N), M1, N)
 
 namespace boost { namespace phoenix
 {
@@ -18,6 +34,38 @@ namespace boost { namespace phoenix
     
     namespace detail
     {
+        template <unsigned N>
+        struct fusion_at_c
+            : proto::callable
+        {
+            template <typename Sig>
+            struct result;
+
+            template <typename This, typename Seq>
+            struct result<This(Seq)>
+                : result<This(Seq const &)>
+            {};
+
+            template <typename This, typename Seq>
+            struct result<This(Seq &)>
+                : fusion::result_of::at_c<Seq, N>
+            {};
+
+            template <typename Seq>
+            typename fusion::result_of::at_c<Seq, N>::type
+            operator()(Seq & seq) const
+            {
+                return fusion::at_c<N>(seq);
+            }
+
+            template <typename Seq>
+            typename fusion::result_of::at_c<Seq const, N>::type
+            operator()(Seq const & seq) const
+            {
+                return fusion::at_c<N>(seq);
+            }
+        };
+
         template <
             typename Expr
           , typename State
@@ -77,8 +125,8 @@ namespace boost { namespace phoenix
             typedef
                 typename mpl::if_c<
                     proto::is_callable<R>::value
-                  , proto::call<R(fun_type(proto::_child_c<0>(Seq)), fun_type(proto::_child_c<1>(Seq)), fun_type(proto::_child_c<2>(Seq)))> // "R" is a function to call
-                  , proto::make<R(fun_type(proto::_child_c<0>(Seq)), fun_type(proto::_child_c<1>(Seq)), fun_type(proto::_child_c<2>(Seq)))> // "R" is an object to constructa
+                  , proto::call<R(fun_type(fusion_at_c<0>(Seq)), fun_type(fusion_at_c<1>(Seq)), fun_type(fusion_at_c<2>(Seq)))> // "R" is a function to call
+                  , proto::make<R(fun_type(fusion_at_c<0>(Seq)), fun_type(fusion_at_c<1>(Seq)), fun_type(fusion_at_c<2>(Seq)))> // "R" is an object to constructa
                 >::type
                 which;
             
@@ -94,43 +142,81 @@ namespace boost { namespace phoenix
                 return typename which::template impl<Expr, State, Data>()(e, s, d);
             }
 		};
+
+        #define M1(Z, N, ARITY)
+
+        BOOST_PP_REPEAT(BOOST_PROTO_MAX_ARITY, M0, _)
+
+        #undef M1
 	}
 }}
 
+
 namespace boost { namespace proto
 {
-	template <typename R>
-	struct call<R(phoenix::unpack)>
-		: proto::transform<call<R(phoenix::unpack)> >
-	{
-		template <typename Expr, typename State, typename Data>
-		struct impl
-			: phoenix::detail::unpack_impl<Expr, State, Data, Expr, proto::_, R()>//R(phoenix::unpack(Expr, proto::_))>
-		{};
-	};
-	
-	template <typename R, typename Seq>
-	struct call<R(phoenix::unpack(Seq))>
-		: proto::transform<call<R(phoenix::unpack(Seq))> >
-	{
+    template <unsigned N>
+    struct is_callable<phoenix::detail::fusion_at_c<N> > : mpl::true_ {};
 
-		template <typename Expr, typename State, typename Data>
-		struct impl
-			: phoenix::detail::unpack_impl<Expr, State, Data, Seq, proto::_, R()>//R(phoenix::unpack(Expr, proto::_))>
-		{
-        };
-	};
-	
-	template <typename R, typename Seq, typename Fun>
-	struct call<R(phoenix::unpack(Seq, Fun))>
-		: proto::transform<call<R(phoenix::unpack(Seq, Fun))> >
-	{
-		template <typename Expr, typename State, typename Data>
-		struct impl
-			: phoenix::detail::unpack_impl<Expr, State, Data, Seq, Fun, R()>//R(phoenix::unpack(Expr, proto::_))>
-		{};
-	};
+    #define M1(Z, N, ARITY)                                                     \
+    template <typename R BOOST_PP_ENUM_TRAILING_PARAMS(ARITY, typename A)>      \
+    struct call<R(M2(phoenix::unpack(), N, ARITY))>                             \
+		: proto::transform<call<R(M2(phoenix::unpack(), N, ARITY))> >           \
+	{                                                                           \
+		template <typename Expr, typename State, typename Data>                 \
+		struct impl                                                             \
+			: phoenix::detail::unpack_impl<                                     \
+                Expr, State, Data, proto::_, proto::_, R()>                     \
+		{};                                                                     \
+	};                                                                          \
+	                                                                            \
+    template <typename R BOOST_PP_ENUM_TRAILING_PARAMS(ARITY, typename A)>      \
+    struct call<R(M2(phoenix::unpack, N, ARITY))>                               \
+		: proto::transform<call<R(M2(phoenix::unpack, N, ARITY))> >             \
+	{                                                                           \
+		template <typename Expr, typename State, typename Data>                 \
+		struct impl                                                             \
+			: phoenix::detail::unpack_impl<                                     \
+                Expr, State, Data, proto::_, proto::_, R()>                     \
+		{};                                                                     \
+	};                                                                          \
+	                                                                            \
+	template <typename R, typename Seq                                          \
+        BOOST_PP_ENUM_TRAILING_PARAMS(ARITY, typename A)>                       \
+	struct call<R(M2(phoenix::unpack(Seq), N, ARITY))>                          \
+		: proto::transform<call<R(M2(phoenix::unpack(Seq), N, ARITY))> >        \
+	{                                                                           \
+		template <typename Expr, typename State, typename Data>                 \
+		struct impl                                                             \
+			: phoenix::detail::unpack_impl<                                     \
+                Expr, State, Data, Seq, proto::_, R()>                          \
+		{                                                                       \
+        };                                                                      \
+	};                                                                          \
+                                                                                \
+	template <typename R, typename Seq, typename Fun                            \
+        BOOST_PP_ENUM_TRAILING_PARAMS(ARITY, typename A)>                       \
+	struct call<R(M2(phoenix::unpack(Seq, Fun), N, ARITY))>                     \
+		: proto::transform<call<R(M2(phoenix::unpack(Seq, Fun), N, ARITY))> >   \
+	{                                                                           \
+		template <typename Expr, typename State, typename Data>                 \
+		struct impl                                                             \
+			: phoenix::detail::unpack_impl<Expr, State, Data, Seq, Fun, R()>    \
+		{};                                                                     \
+	};                                                                          \
+    /**/
+    
+    BOOST_PP_REPEAT(BOOST_PROTO_MAX_ARITY, M0, _)
+
+    #undef M1
 
 }}
+    
+#undef M3
+#undef M2
+#undef M0
+
+#endif
+
+#else // BOOST_PP_IS_ITERATING
 
 #endif
