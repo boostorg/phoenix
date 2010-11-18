@@ -46,20 +46,14 @@ namespace boost { namespace phoenix
     struct expr_ext<Actor, Tag, PHOENIX_A>
         : proto::transform<expr_ext<Actor, Tag, PHOENIX_A>, int>
     {
-        #define BOOST_PHOENIX_AS_EXPR(_, N, __) \
-        typename proto::detail::as_expr<BOOST_PP_CAT(A, N), proto::pod_generator<actor>, true>::result_type
-
-        //typedef typename proto::result_of::make_expr<Tag, default_domain_with_basic_expr, BOOST_PP_ENUM(PHOENIX_ITERATION, BOOST_PHOENIX_AS_EXPR, _)>::type base_type;
         typedef typename proto::result_of::make_expr<Tag, default_domain_with_basic_expr, PHOENIX_A>::type base_type;
         typedef Actor<base_type> type;
-        //typedef typename proto::nary_expr<Tag, BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, proto::_ BOOST_PP_INTERCEPT)>::proto_grammar proto_grammar;//BOOST_PP_ENUM(PHOENIX_ITERATION, BOOST_PHOENIX_AS_EXPR, _)>::proto_grammar proto_grammar;
-        typedef typename proto::nary_expr<Tag, PHOENIX_A>::proto_grammar proto_grammar;//BOOST_PP_ENUM(PHOENIX_ITERATION, BOOST_PHOENIX_AS_EXPR, _)>::proto_grammar proto_grammar;
-        //typedef typename type::proto_grammar proto_grammar;//BOOST_PP_ENUM(PHOENIX_ITERATION, BOOST_PHOENIX_AS_EXPR, _)>::proto_grammar proto_grammar;
+        typedef typename proto::nary_expr<Tag, PHOENIX_A>::proto_grammar proto_grammar;
         
         static type const make(PHOENIX_A_a)
         {
             type const e = {PHOENIX_a};
-            //return e;
+            return e;
         }
 
         template<typename Expr, typename State, typename Data>
@@ -72,12 +66,5 @@ namespace boost { namespace phoenix
         BOOST_PP_REPEAT(PHOENIX_ITERATION, BOOST_PHOENIX_ENUM_CHILDREN, _)
         #undef BOOST_PHOENIX_ENUM_CHILDREN
     };
-
-/*
-    template <typename Tag, PHOENIX_typename_A>
-	struct expr<Tag, PHOENIX_A>
-        : expr_ext<actor, Tag, PHOENIX_A>
-    {};
-*/
 
 #endif
