@@ -35,25 +35,21 @@ int
 main()
 {
     using boost::phoenix::arg_names::arg1;
-    //using boost::phoenix::const_cast_;
+    using boost::phoenix::const_cast_;
     using boost::phoenix::dynamic_cast_;
-    //using boost::phoenix::reinterpret_cast_;
-    //using boost::phoenix::static_cast_;
+    using boost::phoenix::reinterpret_cast_;
+    using boost::phoenix::static_cast_;
 
-    /*
     {
         U u;
         BOOST_TEST(arg1(u).foo() == "U");
         BOOST_TEST(static_cast_<T&>(arg1)(u).foo() == "T");
     }
-    */
 
-    /*
     {
         U const u = U();
         BOOST_TEST(const_cast_<U&>(arg1)(u).foo() == "U");
     }
-    */
 
     {
         VU u;
@@ -62,12 +58,10 @@ main()
         BOOST_TEST(dynamic_cast_<VU*>(arg1)(tp) != 0);
     }
 
-    /*
     {
         void* p = 0;
         reinterpret_cast_<VU*>(arg1)(p); // compile test only
     }
-    */
 
     return boost::report_errors();
 }

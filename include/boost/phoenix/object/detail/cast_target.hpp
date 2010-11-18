@@ -5,15 +5,19 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OBJECT_HPP
-#define PHOENIX_OBJECT_HPP
+#ifndef PHOENIX_OBJECT_DETAIL_CAST_TARGET_HPP
+#define PHOENIX_OBJECT_DETAIL_CAST_TARGET_HPP
 
-#include <boost/phoenix/object/const_cast.hpp>
-//#include <boost/phoenix/object/construct.hpp>
-//#include <boost/phoenix/object/delete.hpp>
-#include <boost/phoenix/object/dynamic_cast.hpp>
-//#include <boost/phoenix/object/new.hpp>
-#include <boost/phoenix/object/reinterpret_cast.hpp>
-#include <boost/phoenix/object/static_cast.hpp>
+namespace boost { namespace phoenix
+{
+    namespace detail
+    {
+        template <typename T>
+        struct cast_target
+        {
+            typedef T type;
+        };
+    }
+}}
 
 #endif
