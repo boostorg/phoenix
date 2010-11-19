@@ -3,20 +3,12 @@
 #ifndef PHOENIX_OPERATOR_MEMBER_HPP
 #define PHOENIX_OPERATOR_MEMBER_HPP
 
-/*#include <boost/get_pointer.hpp>
-#include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/compose.hpp>
-#include <boost/phoenix/core/domain.hpp>
-#include <boost/phoenix/core/mem_obj_ptr.hpp>
-#include <boost/proto/make_expr.hpp>
-#include <boost/proto/tags.hpp>
-#include <boost/type_traits/is_member_object_pointer.hpp>*/
+#include <boost/get_pointer.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
-#include <boost/get_pointer.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -25,20 +17,6 @@ namespace boost { namespace phoenix
 	)
 
     PHOENIX_DEFINE_EXPRESSION_VARARG(mem_fun_ptr, (meta_grammar), PHOENIX_LIMIT)
-
-    /*
-	namespace rule
-	{
-		struct mem_fun_ptr
-			: proto::nary_expr<tag::mem_fun_ptr, proto::vararg<meta_grammar> >
-		{};
-	}
-
-	template <typename Dummy>
-	struct meta_grammar::case_<tag::mem_fun_ptr, Dummy>
-		: proto::when<rule::mem_fun_ptr, proto::external_transform>
-	{};
-    */
 
 	template <typename Object, typename MemPtr>
     typename enable_if<
@@ -53,8 +31,6 @@ namespace boost { namespace phoenix
 	struct mem_fun_ptr_eval
 		: proto::callable
 	{
-        //typedef int result_type;
-
         template<typename Sig>
         struct result;
 
@@ -74,7 +50,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::mem_fun_ptr, Dummy>
-        : proto::call<mem_fun_ptr_eval(_env, unpack)>//(proto::_, evaluator(proto::_, _env)))>
+        : proto::call<mem_fun_ptr_eval(_env, unpack)>
     {};
 }}
 
