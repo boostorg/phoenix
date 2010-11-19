@@ -8,51 +8,30 @@
 #ifndef PHOENIX_OBJECT_CONSTRUCT_HPP
 #define PHOENIX_OBJECT_CONSTRUCT_HPP
 
+#include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/support/iterate.hpp>
-#include <boost/phoenix/core/compose.hpp>
+#include <boost/proto/fusion.hpp>
 
 namespace boost { namespace phoenix
 {
-    namespace result_of
-    {
-        template <typename Env, typename T, PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)>
-        struct construct
-        {
-            typedef T type;
-        };
-    }
+    PHOENIX_DEFINE_EXPRESSION_VARARG(
+        construct
+      , (proto::terminal<detail::target<proto::_> >)
+        (meta_grammar)
+      , PHOENIX_COMPOSITE_LIMIT
+    )
 
     template <typename T>
     struct construct_eval
     {
-        typedef T result_type;
+        typedef typename T::type result_type;
 
         template <typename Env>
         result_type
         operator()(Env& env) const
         {
-            return T();
-        }
-
-        template <typename Env, typename A0>
-        result_type
-        operator()(Env& env, A0 const& a0) const
-        {
-            return T(eval(a0, env));
-        }
-
-        template <typename Env, typename A0, typename A1>
-        result_type
-        operator()(Env& env, A0 const& a0, A1 const& a1) const
-        {
-            return T(eval(a0, env), eval(a1, env));
-        }
-
-        template <typename Env, typename A0, typename A1, typename A2>
-        result_type
-        operator()(Env& env, A0 const& a0, A1 const& a1, A2 const& a2) const
-        {
-            return T(eval(a0, env), eval(a1, env), eval(a2, env));
+            return result_type();
         }
 
         // Bring in the rest
@@ -60,39 +39,18 @@ namespace boost { namespace phoenix
 
     };
 
-    template <typename T, PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)>
-    struct make_construct
-        : compose<construct_eval<T>, PHOENIX_A(PHOENIX_COMPOSITE_LIMIT)>
+    template <typename Dummy>
+    struct default_actions::when<rule::construct, Dummy>
+        : proto::lazy<construct_eval<proto::_value(proto::_child_c<0>)>(_env, unpack(proto::functional::pop_front(proto::_)))>
     {};
 
     template <typename T>
-    typename make_construct<T>::type const
+    typename expression::construct<detail::target<T> >::type const
     construct()
     {
-        make_construct<T>()();
+        return expression::construct<detail::target<T> >::make(detail::target<T>());
     }
 
-    template <typename T, typename A0>
-    typename make_construct<T, A0>::type const
-    construct(A0 const& a0)
-    {
-        return make_construct<T, A0>()(a0);
-    }
-
-    template <typename T, typename A0, typename A1>
-    typename make_construct<T, A0, A1>::type const
-    construct(A0 const& a0, A1 const& a1)
-    {
-        return make_construct<T, A0, A1>()(a0, a1);
-    }
-
-    template <typename T, typename A0, typename A1, typename A2>
-    typename make_construct<T, A0, A1, A2>::type const
-    construct(A0 const& a0, A1 const& a1, A2 const& a2)
-    {
-        return make_construct<T, A0, A1, A2>()(a0, a1, a2);
-    }
-        
     // Bring in the rest
     #include <boost/phoenix/object/detail/construct.hpp>
 

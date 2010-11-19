@@ -35,8 +35,8 @@ test-suite phoenix_operator :
     ;
 
 test-suite phoenix_object :
-#    [ run object/cast_tests.cpp ] 
-#    [ run object/new_delete_tests.cpp ] 
+    [ run object/cast_tests.cpp ] 
+    [ run object/new_delete_tests.cpp ] 
     ;
 
 test-suite phoenix_function :

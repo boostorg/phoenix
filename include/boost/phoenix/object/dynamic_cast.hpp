@@ -9,33 +9,15 @@
 #define PHOENIX_OBJECT_DYNAMIC_CAST_HPP
 
 #include <boost/phoenix/core/expression.hpp>
-#include <boost/phoenix/object/detail/cast_target.hpp>
+#include <boost/phoenix/object/detail/target.hpp>
 
 namespace boost { namespace phoenix
 {
-    namespace tag {
-        struct dynamic_cast_ {};
-    }
-
-    namespace expression
-    {
-        template <typename T, typename U>
-        struct dynamic_cast_
-            : expr<tag::dynamic_cast_, T, U>
-        {};
-    }
-
-	namespace rule
-	{
-		struct dynamic_cast_
-            : expression::dynamic_cast_<proto::terminal<detail::cast_target<proto::_> >, meta_grammar>
-		{};
-	}
-
-	template <typename Dummy>
-	struct meta_grammar::case_<tag::dynamic_cast_, Dummy>
-		: proto::when<rule::dynamic_cast_, proto::external_transform>
-	{};
+    PHOENIX_DEFINE_EXPRESSION(
+        dynamic_cast_
+      , (proto::terminal<detail::target<proto::_> >)
+        (meta_grammar)
+    )
     
     template <typename T>
     struct dynamic_cast_eval
@@ -57,17 +39,17 @@ namespace boost { namespace phoenix
     {};
 
     template <typename T, typename U>
-    typename expression::dynamic_cast_<detail::cast_target<T>, U>::type const
+    typename expression::dynamic_cast_<detail::target<T>, U>::type const
     dynamic_cast_(U const& u)
     {
-        return expression::dynamic_cast_<detail::cast_target<T>, U>::make(detail::cast_target<T>(), u);
+        return expression::dynamic_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
     }
     
     template <typename T, typename U>
-    typename expression::dynamic_cast_<detail::cast_target<T>, U>::type const
+    typename expression::dynamic_cast_<detail::target<T>, U>::type const
     dynamic_cast_(U & u)
     {
-        return expression::dynamic_cast_<detail::cast_target<T>, U>::make(detail::cast_target<T>(), u);
+        return expression::dynamic_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
     }
 }}
 

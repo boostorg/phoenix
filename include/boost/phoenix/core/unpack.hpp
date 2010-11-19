@@ -14,6 +14,7 @@
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/container/vector.hpp>
 #include <boost/proto/proto.hpp>
+#include <boost/type_traits/remove_pointer.hpp>
 
 #define M3(_, N, MAX)                                                       \
     BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N))                                 \
@@ -77,7 +78,69 @@ namespace boost { namespace phoenix
                 typename proto::detail::uncvref<typename proto::when<proto::_, Seq>::template impl<Expr, State, Data>::result_type>::type
             >::value>
         struct unpack_impl;
+        
+        template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R>
+        struct unpack_impl<Expr, State, Data, Seq, Fun, R(), 0>
+            : proto::transform_impl<Expr, State, Data>
+        {
+            struct fun_type : proto::when<proto::_, Fun> {};
+            
+            typedef proto::call<R()> which;
 
+            typedef typename which::template impl<Expr, State, Data>::result_type result_type;
+
+            result_type
+            operator()(
+                typename unpack_impl::expr_param e
+              , typename unpack_impl::state_param s
+              , typename unpack_impl::data_param d
+            ) const
+            {
+                return typename which::template impl<Expr, State, Data>()(e, s, d);
+            }
+        };
+        
+        template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R>
+        struct unpack_impl<Expr, State, Data, Seq, Fun, R(unpack), 0>
+            : proto::transform_impl<Expr, State, Data>
+        {
+            struct fun_type : proto::when<proto::_, Fun> {};
+            
+            typedef proto::call<R()> which;
+
+            typedef typename which::template impl<Expr, State, Data>::result_type result_type;
+
+            result_type
+            operator()(
+                typename unpack_impl::expr_param e
+              , typename unpack_impl::state_param s
+              , typename unpack_impl::data_param d
+            ) const
+            {
+                return typename which::template impl<Expr, State, Data>()(e, s, d);
+            }
+        };
+        
+        template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R, typename A0>
+        struct unpack_impl<Expr, State, Data, Seq, Fun, R(A0, unpack), 0>
+            : proto::transform_impl<Expr, State, Data>
+        {
+            struct fun_type : proto::when<proto::_, Fun> {};
+            
+            typedef proto::call<R(A0)> which;
+
+            typedef typename which::template impl<Expr, State, Data>::result_type result_type;
+
+            result_type
+            operator()(
+                typename unpack_impl::expr_param e
+              , typename unpack_impl::state_param s
+              , typename unpack_impl::data_param d
+            ) const
+            {
+                return typename which::template impl<Expr, State, Data>()(e, s, d);
+            }
+        };
 
 #define M5(_, N, __) fun_type(fusion_at_c< N >(Seq))
         
@@ -88,12 +151,7 @@ namespace boost { namespace phoenix
         { \
             struct fun_type : proto::when<proto::_, Fun> {}; \
             \
-            typedef \
-                typename mpl::if_c< \
-                    proto::is_callable<R>::value \
-                  , proto::call<R(M2(BOOST_PP_ENUM(EXPR_N, M5, EXPR_N), N, ARITY))> \
-                  , proto::make<R(M2(BOOST_PP_ENUM(EXPR_N, M5, EXPR_N), N, ARITY))> \
-                >::type \
+            typedef proto::call<R(M2(BOOST_PP_ENUM(EXPR_N, M5, EXPR_N), N, ARITY))> \
                 which; \
             \
             typedef typename which::template impl<Expr, State, Data>::result_type result_type; \
@@ -111,14 +169,13 @@ namespace boost { namespace phoenix
         }; \
         /**/
         
-
-        
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (1, BOOST_PROTO_MAX_ARITY,                                            \
-        <boost/phoenix/core/unpack.hpp>))
+        #define PHOENIX_ITERATION_PARAMS                                        \
+            (3, (1, BOOST_PROTO_MAX_ARITY,                                      \
+            <boost/phoenix/core/unpack.hpp>))
 #include PHOENIX_ITERATE()
 
         #undef M1
+
 	}
 }}
 
@@ -159,7 +216,7 @@ namespace boost { namespace proto
 		template <typename Expr, typename State, typename Data>                 \
 		struct impl                                                             \
 			: phoenix::detail::unpack_impl<                                     \
-                Expr, State, Data, Seq, proto::_, R()>                          \
+                Expr, State, Data, typename boost::remove_pointer<Seq>::type, proto::_, R(M2(phoenix::unpack, N, ARITY))>                          \
 		{                                                                       \
         };                                                                      \
 	};                                                                          \
@@ -171,7 +228,7 @@ namespace boost { namespace proto
 	{                                                                           \
 		template <typename Expr, typename State, typename Data>                 \
 		struct impl                                                             \
-			: phoenix::detail::unpack_impl<Expr, State, Data, Seq, Fun, R(M2(phoenix::unpack, N, ARITY))>    \
+			: phoenix::detail::unpack_impl<Expr, State, Data, typename boost::remove_pointer<Seq>::type, Fun, R(M2(phoenix::unpack, N, ARITY))>    \
 		{};                                                                     \
 	};                                                                          \
     /**/

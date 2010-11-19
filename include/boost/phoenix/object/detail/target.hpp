@@ -13,7 +13,7 @@ namespace boost { namespace phoenix
     namespace detail
     {
         template <typename T>
-        struct cast_target
+        struct target
         {
             typedef T type;
         };

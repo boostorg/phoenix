@@ -11,6 +11,7 @@
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/type_traits/is_member_object_pointer.hpp>*/
+#include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>
 #include <boost/phoenix/support/iterate.hpp>
@@ -23,6 +24,9 @@ namespace boost { namespace phoenix
 		(mem_ptr)
 	)
 
+    PHOENIX_DEFINE_EXPRESSION_VARARG(mem_fun_ptr, (meta_grammar), PHOENIX_LIMIT)
+
+    /*
 	namespace rule
 	{
 		struct mem_fun_ptr
@@ -34,6 +38,7 @@ namespace boost { namespace phoenix
 	struct meta_grammar::case_<tag::mem_fun_ptr, Dummy>
 		: proto::when<rule::mem_fun_ptr, proto::external_transform>
 	{};
+    */
 
 	template <typename Object, typename MemPtr>
     typename enable_if<

@@ -12,7 +12,7 @@
 #define PHOENIX_OBJECT_DETAIL_NEW_EVAL_HPP
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (4, PHOENIX_COMPOSITE_LIMIT,                                        \
+        (3, (1, PHOENIX_COMPOSITE_LIMIT,                                        \
         <boost/phoenix/object/detail/new_eval.hpp>))
 #include PHOENIX_ITERATE()
 
@@ -27,7 +27,7 @@
 #define EVAL_a(_,n,__) \
             BOOST_PP_COMMA_IF(n) eval(a ## n, env)
 
-            return new T(BOOST_PP_REPEAT(PHOENIX_ITERATION, EVAL_a, _));
+            return new construct_type(BOOST_PP_REPEAT(PHOENIX_ITERATION, EVAL_a, _));
 #undef EVAL_a
         }
 

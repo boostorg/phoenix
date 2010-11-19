@@ -15,7 +15,7 @@ namespace boost { namespace phoenix
 {
 	namespace tag
 	{
-		struct mem_fun_ptr {};
+		struct mem_fun_ptr;
 	}
 
 	namespace detail {

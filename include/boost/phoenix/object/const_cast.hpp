@@ -9,34 +9,16 @@
 #define PHOENIX_OBJECT_CONST_CAST_HPP
 
 #include <boost/phoenix/core/expression.hpp>
-#include <boost/phoenix/object/detail/cast_target.hpp>
+#include <boost/phoenix/object/detail/target.hpp>
 
 namespace boost { namespace phoenix
 {
-    namespace tag {
-        struct const_cast_ {};
-    }
+    PHOENIX_DEFINE_EXPRESSION(
+        const_cast_
+      , (proto::terminal<detail::target<proto::_> >)
+        (meta_grammar)
+    )
 
-    namespace expression
-    {
-        template <typename T, typename U>
-        struct const_cast_
-            : expr<tag::const_cast_, T, U>
-        {};
-    }
-
-	namespace rule
-	{
-		struct const_cast_
-            : expression::const_cast_<proto::terminal<detail::cast_target<proto::_> >, meta_grammar>
-		{};
-	}
-
-	template <typename Dummy>
-	struct meta_grammar::case_<tag::const_cast_, Dummy>
-		: proto::when<rule::const_cast_, proto::external_transform>
-	{};
-    
     template <typename T>
     struct const_cast_eval
         : proto::callable
@@ -57,17 +39,17 @@ namespace boost { namespace phoenix
     {};
 
     template <typename T, typename U>
-    typename expression::const_cast_<detail::cast_target<T>, U>::type const
+    typename expression::const_cast_<detail::target<T>, U>::type const
     const_cast_(U const& u)
     {
-        return expression::const_cast_<detail::cast_target<T>, U>::make(detail::cast_target<T>(), u);
+        return expression::const_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
     }
     
     template <typename T, typename U>
-    typename expression::const_cast_<detail::cast_target<T>, U>::type const
+    typename expression::const_cast_<detail::target<T>, U>::type const
     const_cast_(U & u)
     {
-        return expression::const_cast_<detail::cast_target<T>, U>::make(detail::cast_target<T>(), u);
+        return expression::const_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
     }
 
 }}

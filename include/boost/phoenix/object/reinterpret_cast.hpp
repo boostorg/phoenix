@@ -9,33 +9,15 @@
 #define PHOENIX_OBJECT_REINTERPRET_CAST_HPP
 
 #include <boost/phoenix/core/expression.hpp>
-#include <boost/phoenix/object/detail/cast_target.hpp>
+#include <boost/phoenix/object/detail/target.hpp>
 
 namespace boost { namespace phoenix
 {
-    namespace tag {
-        struct reinterpret_cast_ {};
-    }
-
-    namespace expression
-    {
-        template <typename T, typename U>
-        struct reinterpret_cast_
-            : expr<tag::reinterpret_cast_, T, U>
-        {};
-    }
-
-	namespace rule
-	{
-		struct reinterpret_cast_
-            : expression::reinterpret_cast_<proto::terminal<detail::cast_target<proto::_> >, meta_grammar>
-		{};
-	}
-
-	template <typename Dummy>
-	struct meta_grammar::case_<tag::reinterpret_cast_, Dummy>
-		: proto::when<rule::reinterpret_cast_, proto::external_transform>
-	{};
+    PHOENIX_DEFINE_EXPRESSION(
+        reinterpret_cast_
+      , (proto::terminal<detail::target<proto::_> >)
+        (meta_grammar)
+    )
     
     template <typename T>
     struct reinterpret_cast_eval
@@ -57,17 +39,17 @@ namespace boost { namespace phoenix
     {};
 
     template <typename T, typename U>
-    typename expression::reinterpret_cast_<detail::cast_target<T>, U>::type const
+    typename expression::reinterpret_cast_<detail::target<T>, U>::type const
     reinterpret_cast_(U const& u)
     {
-        return expression::reinterpret_cast_<detail::cast_target<T>, U>::make(detail::cast_target<T>(), u);
+        return expression::reinterpret_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
     }
     
     template <typename T, typename U>
-    typename expression::reinterpret_cast_<detail::cast_target<T>, U>::type const
+    typename expression::reinterpret_cast_<detail::target<T>, U>::type const
     reinterpret_cast_(U & u)
     {
-        return expression::reinterpret_cast_<detail::cast_target<T>, U>::make(detail::cast_target<T>(), u);
+        return expression::reinterpret_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
     }
 
 }}
