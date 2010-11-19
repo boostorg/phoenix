@@ -8,21 +8,36 @@
 #ifndef PHOENIX_OBJECT_DELETE_HPP
 #define PHOENIX_OBJECT_DELETE_HPP
 
-#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/expression.hpp>
 
 namespace boost { namespace phoenix
 {
-
-    namespace result_of
-    {
-        template <typename Env, typename P>
-        struct delete_
-        {
-            typedef void type;
-        };
+    namespace tag {
+        struct delete_ {};
     }
 
+    namespace expression
+    {
+        template <typename T>
+        struct delete_
+            : expr<tag::delete_, T>
+        {};
+    }
+
+	namespace rule
+	{
+		struct delete_
+            : expression::delete_<meta_grammar>
+		{};
+	}
+
+	template <typename Dummy>
+	struct meta_grammar::case_<tag::delete_, Dummy>
+		: proto::when<rule::delete_, proto::external_transform>
+	{};
+
     struct delete_eval
+        : proto::callable
     {
         typedef void result_type;
 
@@ -34,14 +49,16 @@ namespace boost { namespace phoenix
         }
     };
 
-    template <typename P>
-    struct make_delete : compose<delete_eval, P> {};
+    template <typename Dummy>
+    struct default_actions::when<rule::delete_, Dummy>
+        : proto::call<delete_eval(_env, proto::_child_c<0>)>
+    {};
 
     template <typename P>
-    typename make_delete<P>::type const
+    typename expression::delete_<P>::type const
     delete_(P const& p)
     {
-        return make_delete<P>()(p);
+        return expression::delete_<P>::make(p);
     }
 
 }}
