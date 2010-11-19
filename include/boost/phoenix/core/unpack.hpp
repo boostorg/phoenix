@@ -79,6 +79,7 @@ namespace boost { namespace phoenix
             >::value>
         struct unpack_impl;
         
+        /*
         template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R>
         struct unpack_impl<Expr, State, Data, Seq, Fun, R(), 0>
             : proto::transform_impl<Expr, State, Data>
@@ -141,6 +142,7 @@ namespace boost { namespace phoenix
                 return typename which::template impl<Expr, State, Data>()(e, s, d);
             }
         };
+        */
 
 #define M5(_, N, __) fun_type(fusion_at_c< N >(Seq))
         
@@ -174,6 +176,34 @@ namespace boost { namespace phoenix
             <boost/phoenix/core/unpack.hpp>))
 #include PHOENIX_ITERATE()
 
+        #undef M1
+
+#define M1(Z, N, ARITY) \
+        template <typename Expr, typename State, typename Data, typename Seq, typename Fun, typename R BOOST_PP_ENUM_TRAILING_PARAMS(ARITY, typename A)> \
+        struct unpack_impl<Expr, State, Data, Seq, Fun, R(M2(unpack, N, ARITY)), 0> \
+            : proto::transform_impl<Expr, State, Data> \
+        { \
+            struct fun_type : proto::when<proto::_, Fun> {}; \
+            \
+            typedef proto::call<R(BOOST_PP_ENUM_PARAMS(ARITY, A))> \
+                which; \
+            \
+            typedef typename which::template impl<Expr, State, Data>::result_type result_type; \
+            \
+            result_type \
+            operator()( \
+                typename unpack_impl::expr_param e \
+              , typename unpack_impl::state_param s \
+              , typename unpack_impl::data_param d \
+            ) const \
+            { \
+                return typename which::template impl<Expr, State, Data>()(e, s, d); \
+            } \
+            \
+        }; \
+        /**/
+
+        BOOST_PP_REPEAT(BOOST_PROTO_MAX_ARITY, M0, _)
         #undef M1
 
 	}
