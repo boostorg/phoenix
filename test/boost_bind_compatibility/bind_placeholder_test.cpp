@@ -18,6 +18,8 @@
 
 #endif
 
+#define PHOENIX_LIMIT 10
+
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
 
@@ -45,22 +47,20 @@ template< int I > struct custom_placeholder
 {
 };
 
-/*
 namespace boost
 {
 
 template< int I > struct is_placeholder< custom_placeholder< I > >
+    : mpl::true_
 {
     enum { value = I };
 };
 
 } // namespace boost
-*/
 
 int main()
 {
     using boost::phoenix::bind;
-    using boost::phoenix::make_argument;
 
     int const x1 = 1;
     int const x2 = 2;
@@ -72,15 +72,15 @@ int main()
     int const x8 = 8;
     int const x9 = 9;
 
-    make_argument<custom_placeholder<0> >::type const p1 = {};
-    make_argument<custom_placeholder<1> >::type const p2 = {};
-    make_argument<custom_placeholder<2> >::type const p3 = {};
-    make_argument<custom_placeholder<3> >::type const p4 = {};
-    make_argument<custom_placeholder<4> >::type const p5 = {};
-    make_argument<custom_placeholder<5> >::type const p6 = {};
-    make_argument<custom_placeholder<6> >::type const p7 = {};
-    make_argument<custom_placeholder<7> >::type const p8 = {};
-    make_argument<custom_placeholder<8> >::type const p9 = {};
+    custom_placeholder<0> p1;
+    custom_placeholder<1> p2;
+    custom_placeholder<2> p3;
+    custom_placeholder<3> p4;
+    custom_placeholder<4> p5;
+    custom_placeholder<5> p6;
+    custom_placeholder<6> p7;
+    custom_placeholder<7> p8;
+    custom_placeholder<8> p9;
 
     BOOST_TEST( 
         bind( f, p1, p2, p3, p4, p5, p6, p7, p8, p9 )

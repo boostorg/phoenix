@@ -56,23 +56,23 @@ int main()
     BOOST_TEST( fn() == 1 );
 
     BOOST_TEST( fn.contains( bind( f, 1 ) ) );
-    //BOOST_TEST( !fn.contains( bind( f, 2 ) ) );
-    //BOOST_TEST( !fn.contains( bind( g, 1 ) ) );
+    BOOST_TEST( !fn.contains( bind( f, 2 ) ) );
+    BOOST_TEST( !fn.contains( bind( g, 1 ) ) );
 
     fn = bind( f, 2 );
 
     BOOST_TEST( fn() == 2 );
 
-    //BOOST_TEST( !fn.contains( bind( f, 1 ) ) );
+    BOOST_TEST( !fn.contains( bind( f, 1 ) ) );
     BOOST_TEST( fn.contains( bind( f, 2 ) ) );
-    //BOOST_TEST( !fn.contains( bind( g, 1 ) ) );
+    BOOST_TEST( !fn.contains( bind( g, 1 ) ) );
 
     fn = bind( g, 1 );
 
     BOOST_TEST( fn() == 2 );
 
-    //BOOST_TEST( !fn.contains( bind( f, 1 ) ) );
-    //BOOST_TEST( !fn.contains( bind( f, 2 ) ) );
+    BOOST_TEST( !fn.contains( bind( f, 1 ) ) );
+    BOOST_TEST( !fn.contains( bind( f, 2 ) ) );
     BOOST_TEST( fn.contains( bind( g, 1 ) ) );
 
     return boost::report_errors();

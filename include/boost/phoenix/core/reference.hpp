@@ -26,7 +26,7 @@ namespace boost { namespace phoenix
     struct reference
         : proto::terminal<reference_wrapper<T> >
     {
-        typedef actor<typename proto::terminal<reference_wrapper<T> >::type const> type;
+        typedef actor<typename proto::terminal<reference_wrapper<T> >::type> type;
     };
 
     template <typename T>
@@ -57,63 +57,18 @@ namespace boost { namespace phoenix
     {
         typedef T &result_type;
 
+        T &operator()(boost::reference_wrapper<T> r) const
+        {
+            std::cout << "...\n";
+            return r;
+        }
+
         template <typename Env>
         T &operator()(boost::reference_wrapper<T> r, Env &) const
         {
             return r;
         }
     };
-    /*
-    namespace result_of
-    {
-        template <typename Env, typename T>
-        struct reference;
-
-        template <typename Env, typename T>
-        struct reference<Env, T const&>
-            : boost::result_of<eval_grammar(T const&)>
-        {};
-    }
-    
-    struct reference
-    {
-        template <typename Sig>
-        struct result;
-
-        template <typename This, typename Env, typename T>
-        struct result<This(Env&, T const&)>
-            : result_of::reference<Env, T const&>
-        {};
-
-        template <typename Env, typename T>
-        typename result_of::reference<Env, T const&>::type
-        operator()(Env& env, T const& ref) const
-        {
-            return eval(ref);
-        }
-    };
-    
-    template <typename T>
-    struct make_reference : compose<reference, T&> {};
-    
-    template <typename T>
-    struct make_reference<T const> : compose<reference, T const&> {};
-
-    template <typename T>
-    typename make_reference<T>::type const
-    ref(T& t)
-    {
-        return make_reference<T>()(t);
-    }
-
-    template <typename T>
-    typename make_reference<T const>::type const
-    cref(T const& t)
-    {
-        return make_reference<T const>()(t);
-    }
-    */
-
 }}
 
 #endif

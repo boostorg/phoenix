@@ -16,6 +16,8 @@
 #pragma warning(disable: 4514)  // unreferenced inline removed
 #endif
 
+#define PHOENIX_LIMIT 10
+
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
 
@@ -35,7 +37,7 @@ class X
 {
 private:
 
-    mutable int state_;
+    int state_;
 
 public:
 
@@ -50,52 +52,52 @@ public:
 
     typedef int result_type;
 
-    int operator()() const
+    int operator()()
     {
         return state_ += 17041;
     }
 
-    int operator()(int x1) const
+    int operator()(int x1)
     {
         return state_ += x1;
     }
 
-    int operator()(int x1, int x2) const
+    int operator()(int x1, int x2)
     {
         return state_ += x1+x2;
     }
 
-    int operator()(int x1, int x2, int x3) const
+    int operator()(int x1, int x2, int x3)
     {
         return state_ += x1+x2+x3;
     }
 
-    int operator()(int x1, int x2, int x3, int x4) const
+    int operator()(int x1, int x2, int x3, int x4)
     {
         return state_ += x1+x2+x3+x4;
     }
 
-    int operator()(int x1, int x2, int x3, int x4, int x5) const
+    int operator()(int x1, int x2, int x3, int x4, int x5)
     {
         return state_ += x1+x2+x3+x4+x5;
     }
 
-    int operator()(int x1, int x2, int x3, int x4, int x5, int x6) const
+    int operator()(int x1, int x2, int x3, int x4, int x5, int x6)
     {
         return state_ += x1+x2+x3+x4+x5+x6;
     }
 
-    int operator()(int x1, int x2, int x3, int x4, int x5, int x6, int x7) const
+    int operator()(int x1, int x2, int x3, int x4, int x5, int x6, int x7)
     {
         return state_ += x1+x2+x3+x4+x5+x6+x7;
     }
 
-    int operator()(int x1, int x2, int x3, int x4, int x5, int x6, int x7, int x8) const
+    int operator()(int x1, int x2, int x3, int x4, int x5, int x6, int x7, int x8)
     {
         return state_ += x1+x2+x3+x4+x5+x6+x7+x8;
     }
 
-    int operator()(int x1, int x2, int x3, int x4, int x5, int x6, int x7, int x8, int x9) const
+    int operator()(int x1, int x2, int x3, int x4, int x5, int x6, int x7, int x8, int x9)
     {
         return state_ += x1+x2+x3+x4+x5+x6+x7+x8+x9;
     }
@@ -210,19 +212,6 @@ void stateful_function_test()
 {
     using boost::phoenix::ref;
 
-    int state = 0;;
-    /*
-    test( bind( f0, ref(state)), state, 17041 );
-    test( bind( f1, ref(state), 1 ), state, 1 );
-    test( bind( f2, ref(state), 1, 2 ), state, 1+2 );
-    test( bind( f3, ref(state), 1, 2, 3 ), state, 1+2+3 );
-    test( bind( f4, ref(state), 1, 2, 3, 4 ), state, 1+2+3+4 );
-    test( bind( f5, ref(state), 1, 2, 3, 4, 5 ), state, 1+2+3+4+5 );
-    test( bind( f6, ref(state), 1, 2, 3, 4, 5, 6 ), state, 1+2+3+4+5+6 );
-    test( bind( f7, ref(state), 1, 2, 3, 4, 5, 6, 7 ), state, 1+2+3+4+5+6+7 );
-    test( bind( f8, ref(state), 1, 2, 3, 4, 5, 6, 7, 8 ), state, 1+2+3+4+5+6+7+8 );
-    */
-    /*
     test( bind( f0, 0), 0, 17041 );
     test( bind( f1, 0, 1 ), 0, 1 );
     test( bind( f2, 0, 1, 2 ), 0, 1+2 );
@@ -232,7 +221,6 @@ void stateful_function_test()
     test( bind( f6, 0, 1, 2, 3, 4, 5, 6 ), 0, 1+2+3+4+5+6 );
     test( bind( f7, 0, 1, 2, 3, 4, 5, 6, 7 ), 0, 1+2+3+4+5+6+7 );
     test( bind( f8, 0, 1, 2, 3, 4, 5, 6, 7, 8 ), 0, 1+2+3+4+5+6+7+8 );
-    */
 }
 
 int main()

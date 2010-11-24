@@ -40,7 +40,7 @@ struct X
     {
     }
 
-    int f() const
+    int f()
     {
         return v_;
     }

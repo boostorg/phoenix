@@ -91,7 +91,6 @@ int main()
 
     // bind op bind
 
-    // important: bind( f, _1 ) and bind( g, _1 ) have the same type
     BOOST_TEST( ( bind( f, _1 ) == bind( g, _1 ) )( x ) );
     BOOST_TEST( !( ( bind( f, _1 ) != bind( g, _1 ) )( x ) ) );
     BOOST_TEST( !( ( bind( f, _1 ) < bind( g, _1 ) )( x ) ) );

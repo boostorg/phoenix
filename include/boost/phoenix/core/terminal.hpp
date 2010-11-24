@@ -8,6 +8,9 @@
 #ifndef PHOENIX_CORE_TERMINAL_HPP
 #define PHOENIX_CORE_TERMINAL_HPP
 
+#include <boost/is_placeholder.hpp>
+
+/*
 namespace boost
 {
     template <typename T>
@@ -15,6 +18,7 @@ namespace boost
         : mpl::false_
     {};
 }
+*/
 
 namespace boost { namespace phoenix
 {

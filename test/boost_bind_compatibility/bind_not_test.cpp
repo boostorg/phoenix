@@ -18,6 +18,7 @@
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 #pragma warning(push, 3)
@@ -33,7 +34,7 @@
 
 template<class F, class A1, class R> void test( F f, A1 a1, R r )
 {
-    BOOST_TEST( !f(a1) == r );
+    BOOST_TEST( f(a1) == r );
 }
 
 bool f( bool v )
@@ -51,14 +52,10 @@ int main()
     using boost::phoenix::bind;
     using boost::phoenix::placeholders::_1;
 
-    //test( !bind( f, true ), 0, !f( true ) );
-    test( bind( f, true ), 0, !f( true ) );
-    //test( !bind( g, _1 ), 5, !g( 5 ) );
-    test( bind( g, _1 ), 5, !g( 5 ) );
-    //test( bind( f, !bind( f, true ) ), 0, f( !f( true ) ) );
-    test( bind( f, bind( f, true ) ), 0, f( !f( true ) ) );
-    //test( bind( f, !bind( f, _1 ) ), true, f( !f( true ) ) );
-    test( bind( f, bind( f, _1 ) ), true, f( !f( true ) ) );
+    test( !bind( f, true ), 0, !f( true ) );
+    test( !bind( g, _1 ), 5, !g( 5 ) );
+    test( bind( f, !bind( f, true ) ), 0, f( !f( true ) ) );
+    test( bind( f, !bind( f, _1 ) ), true, f( !f( true ) ) );
 
     return boost::report_errors();
 }

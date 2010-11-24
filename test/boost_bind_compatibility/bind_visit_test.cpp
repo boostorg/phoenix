@@ -38,18 +38,18 @@
 
 struct visitor
 {
-    mutable int hash;
+    int hash;
 
     visitor(): hash( 0 )
     {
     }
 
-    template<typename T> void operator()( T const & t ) const
+    template<typename T> void operator()( T const & t )
     {
         std::cout << "visitor::operator()( T ): " << typeid( t ).name() << std::endl;
     }
 
-    void operator()( int const & t ) const
+    void operator()( int const & t )
     {
         std::cout << "visitor::operator()( int ): " << t << std::endl;
         hash = hash * 10 + t;

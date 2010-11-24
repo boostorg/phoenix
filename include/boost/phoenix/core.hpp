@@ -16,7 +16,7 @@
 #include <boost/phoenix/core/value.hpp>
 #include <boost/phoenix/core/reference.hpp>
 //#include <boost/phoenix/core/nothing.hpp>
-//#include <boost/phoenix/core/function_equal.hpp>
+#include <boost/phoenix/core/function_equal.hpp>
 //#include <boost/phoenix/core/visit_each.hpp>
 
 #endif

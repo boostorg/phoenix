@@ -17,6 +17,8 @@
 #pragma warning(disable: 4514)  // unreferenced inline removed
 #endif
 
+#define PHOENIX_LIMIT 10
+
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
 

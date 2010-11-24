@@ -16,6 +16,9 @@
 #pragma warning(disable: 4514)  // unreferenced inline removed
 #endif
 
+
+#define PHOENIX_LIMIT 10
+
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
 
@@ -189,7 +192,7 @@ template<class F> void test_0(F f)
 template<class F, class V> void test_1_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1), bind(f, v1) );
-    //test_ne( bind(f, v1), bind(f, v2) );
+    test_ne( bind(f, v1), bind(f, v2) );
 }
 
 template<class F> void test_1(F f)
@@ -207,8 +210,8 @@ template<class F> void test_1(F f)
 template<class F, class V> void test_2_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1), bind(f, v1, v1) );
-    //test_ne( bind(f, v1, v1), bind(f, v1, v2) );
-    //test_ne( bind(f, v1, v1), bind(f, v2, v1) );
+    test_ne( bind(f, v1, v1), bind(f, v1, v2) );
+    test_ne( bind(f, v1, v1), bind(f, v2, v1) );
 }
 
 template<class F> void test_2(F f)
@@ -226,9 +229,9 @@ template<class F> void test_2(F f)
 template<class F, class V> void test_3_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1, v1), bind(f, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1), bind(f, v1, v1, v2) );
-    //test_ne( bind(f, v1, v1, v1), bind(f, v1, v2, v1) );
-    //test_ne( bind(f, v1, v1, v1), bind(f, v2, v1, v1) );
+    test_ne( bind(f, v1, v1, v1), bind(f, v1, v1, v2) );
+    test_ne( bind(f, v1, v1, v1), bind(f, v1, v2, v1) );
+    test_ne( bind(f, v1, v1, v1), bind(f, v2, v1, v1) );
 }
 
 template<class F> void test_3(F f)
@@ -246,10 +249,10 @@ template<class F> void test_3(F f)
 template<class F, class V> void test_4_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1, v1, v1), bind(f, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1), bind(f, v1, v1, v1, v2) );
-    //test_ne( bind(f, v1, v1, v1, v1), bind(f, v1, v1, v2, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1), bind(f, v1, v2, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1), bind(f, v2, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1), bind(f, v1, v1, v1, v2) );
+    test_ne( bind(f, v1, v1, v1, v1), bind(f, v1, v1, v2, v1) );
+    test_ne( bind(f, v1, v1, v1, v1), bind(f, v1, v2, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1), bind(f, v2, v1, v1, v1) );
 }
 
 template<class F> void test_4(F f)
@@ -267,11 +270,11 @@ template<class F> void test_4(F f)
 template<class F, class V> void test_5_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2) );
+    test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1) );
 }
 
 template<class F> void test_5(F f)
@@ -289,12 +292,12 @@ template<class F> void test_5(F f)
 template<class F, class V> void test_6_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1) );
 }
 
 template<class F> void test_6(F f)
@@ -312,13 +315,13 @@ template<class F> void test_6(F f)
 template<class F, class V> void test_7_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v2) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v2) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1, v1) );
 }
 
 template<class F> void test_7(F f)
@@ -336,14 +339,14 @@ template<class F> void test_7(F f)
 template<class F, class V> void test_8_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v2) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v2, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v2) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v2, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1, v1, v1) );
 }
 
 template<class F> void test_8(F f)
@@ -361,15 +364,15 @@ template<class F> void test_8(F f)
 template<class F, class V> void test_9_(F f, V v1, V v2)
 {
     test_eq( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v2) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v2, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v2, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1, v1, v1, v1) );
-    //test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v2) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v2, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v2, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v2, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v2, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v2, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1, v1, v1, v1) );
+    test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1, v1, v1, v1) );
 }
 
 template<class F> void test_9(F f)

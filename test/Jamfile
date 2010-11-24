@@ -40,14 +40,14 @@ test-suite phoenix_object :
     ;
 
 test-suite phoenix_function :
-#    [ run function/function_tests.cpp ] 
+    [ run function/function_tests.cpp ] 
     ;
 
 test-suite phoenix_bind :
-#    [ run bind/bind_function_tests.cpp ] 
-#    [ run bind/bind_function_object_tests.cpp ]
-#    [ run bind/bind_member_function_tests.cpp ]
-#    [ run bind/bind_member_variable_tests.cpp ]
+    [ run bind/bind_function_tests.cpp ] 
+    [ run bind/bind_function_object_tests.cpp ]
+    [ run bind/bind_member_function_tests.cpp ]
+    [ run bind/bind_member_variable_tests.cpp ]
     ;
     
 test-suite phoenix_statement :
@@ -58,18 +58,18 @@ test-suite phoenix_statement :
     ;
         
 test-suite phoenix_container :
-#    [ run container/container_tests1a.cpp ] 
-#    [ run container/container_tests1b.cpp ] 
-#    [ run container/container_tests2a.cpp ] 
-#    [ run container/container_tests2b.cpp ] 
-#    [ run container/container_tests3a.cpp ] 
-#    [ run container/container_tests3b.cpp ] 
-#    [ run container/container_tests4a.cpp ] 
-#    [ run container/container_tests4b.cpp ] 
-#    [ run container/container_tests5a.cpp ] 
-#    [ run container/container_tests5b.cpp ] 
-#    [ run container/container_tests6a.cpp ] 
-#    [ run container/container_tests6b.cpp ] 
+    [ run container/container_tests1a.cpp ] 
+    [ run container/container_tests1b.cpp ] 
+    [ run container/container_tests2a.cpp ] 
+    [ run container/container_tests2b.cpp ] 
+    [ run container/container_tests3a.cpp ] 
+    [ run container/container_tests3b.cpp ] 
+    [ run container/container_tests4a.cpp ] 
+    [ run container/container_tests4b.cpp ] 
+    [ run container/container_tests5a.cpp ] 
+    [ run container/container_tests5b.cpp ] 
+    [ run container/container_tests6a.cpp ] 
+    [ run container/container_tests6b.cpp ] 
     ;
 
 test-suite phoenix_scope :
@@ -80,41 +80,41 @@ test-suite phoenix_scope :
     ;
 
 test-suite phoenix_algorithm :
-#    [ run algorithm/iteration.cpp ]
-#    [ run algorithm/transformation1.cpp ]
-#    [ run algorithm/transformation2.cpp ]
-#    [ run algorithm/transformation3.cpp ]
-#    [ run algorithm/transformation4.cpp ]
-#    [ run algorithm/querying.cpp ]
-#    [ run algorithm/querying2.cpp ]
+    [ run algorithm/iteration.cpp ]
+    [ run algorithm/transformation1.cpp ]
+    [ run algorithm/transformation2.cpp ]
+    [ run algorithm/transformation3.cpp ]
+    [ run algorithm/transformation4.cpp ]
+    [ run algorithm/querying.cpp ]
+    [ run algorithm/querying2.cpp ]
     ;
 
 test-suite phoenix_boost_bind_compatibility :
-#    [ run boost_bind_compatibility/bind_and_or_test.cpp ]
-#    [ run boost_bind_compatibility/bind_cdecl_mf_test.cpp ]
-#    [ run boost_bind_compatibility/bind_const_test.cpp ]
-#    [ run boost_bind_compatibility/bind_cv_test.cpp ] # problem: only const operator() overloads are regarded
-#    [ run boost_bind_compatibility/bind_dm_test.cpp ]
-#    [ run boost_bind_compatibility/bind_dm2_test.cpp ]
-#    [ run boost_bind_compatibility/bind_dm3_test.cpp ]
-#    [ run boost_bind_compatibility/bind_eq_test.cpp ] # problem: binary visitation of AST for equality test not implemented
-#    [ run boost_bind_compatibility/bind_eq2_test.cpp ]
-#    [ run boost_bind_compatibility/bind_eq3_test.cpp ]
-#	 #[ run boost_bind_compatibility/bind_fastcall_mf_test.cpp ] # problem: result_of can't handle the fastcall attribute
-#	 #[ run boost_bind_compatibility/bind_fastcall_test.cpp ] # problem: result_of can't handle the fastcall attribute
-#    [ run boost_bind_compatibility/bind_fn2_test.cpp ]
-#    [ run boost_bind_compatibility/bind_function_test.cpp ] # problem: fn.contains not working properly
-#    [ run boost_bind_compatibility/bind_mf2_test.cpp ]
-#    [ run boost_bind_compatibility/bind_not_test.cpp ]
-#    [ run boost_bind_compatibility/bind_placeholder_test.cpp ] # problem: real custom placeholders, like in the original test not implemented yet
-#    [ run boost_bind_compatibility/bind_ref_test.cpp ]
-#    [ run boost_bind_compatibility/bind_rel_test.cpp ]
-#    [ run boost_bind_compatibility/bind_rvalue_test.cpp ]
-#    [ run boost_bind_compatibility/bind_rv_sp_test.cpp ]
-#    [ run boost_bind_compatibility/bind_stateful_test.cpp ] # problem: only const operator() overloads are regarded
-#	 #[ run boost_bind_compatibility/bind_stdcall_mf_test.cpp ] # problem: result_of can't handle the stdcall attribute
-#	 #[ run boost_bind_compatibility/bind_stdcall_test.cpp ] # problem: result_of can't handle the stdcall attribute
-#    [ run boost_bind_compatibility/bind_test.cpp ]
+    [ run boost_bind_compatibility/bind_and_or_test.cpp ]
+    #[ run boost_bind_compatibility/bind_cdecl_mf_test.cpp ]
+    [ run boost_bind_compatibility/bind_const_test.cpp ]
+    [ run boost_bind_compatibility/bind_cv_test.cpp ]
+    [ run boost_bind_compatibility/bind_dm_test.cpp ]
+    [ run boost_bind_compatibility/bind_dm2_test.cpp ]
+    [ run boost_bind_compatibility/bind_dm3_test.cpp ]
+    [ run boost_bind_compatibility/bind_eq_test.cpp ]
+    [ run boost_bind_compatibility/bind_eq2_test.cpp ]
+    [ run boost_bind_compatibility/bind_eq3_test.cpp ]
+	#[ run boost_bind_compatibility/bind_fastcall_mf_test.cpp ] # problem: result_of can't handle the fastcall attribute
+	#[ run boost_bind_compatibility/bind_fastcall_test.cpp ] # problem: result_of can't handle the fastcall attribute
+    [ run boost_bind_compatibility/bind_fn2_test.cpp ]
+    [ run boost_bind_compatibility/bind_function_test.cpp ]
+    [ run boost_bind_compatibility/bind_mf2_test.cpp ]
+    [ run boost_bind_compatibility/bind_not_test.cpp ]
+    [ run boost_bind_compatibility/bind_placeholder_test.cpp ]
+    [ run boost_bind_compatibility/bind_ref_test.cpp ]
+    [ run boost_bind_compatibility/bind_rel_test.cpp ]
+    [ run boost_bind_compatibility/bind_rvalue_test.cpp ]
+    [ run boost_bind_compatibility/bind_rv_sp_test.cpp ]
+    [ run boost_bind_compatibility/bind_stateful_test.cpp ]
+	 #[ run boost_bind_compatibility/bind_stdcall_mf_test.cpp ] # problem: result_of can't handle the stdcall attribute
+	 #[ run boost_bind_compatibility/bind_stdcall_test.cpp ] # problem: result_of can't handle the stdcall attribute
+    [ run boost_bind_compatibility/bind_test.cpp ]
 	 ;
 
 test-suite phoenix_include :

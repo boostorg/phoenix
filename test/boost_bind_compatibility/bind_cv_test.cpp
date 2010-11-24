@@ -16,6 +16,8 @@
 #pragma warning(disable: 4514)  // unreferenced inline removed
 #endif
 
+#define PHOENIX_LIMIT 10
+
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
 
@@ -140,12 +142,15 @@ template<class F> void test(F f, int r)
 {
     F const & cf = f;
     BOOST_TEST( cf() == -r );
-    //BOOST_TEST( f() == r );
+    BOOST_TEST( f() == r );
+
 }
 
 int main()
 {
     using boost::phoenix::bind;
+    using boost::phoenix::ref;
+    using boost::phoenix::cref;
 
     test( bind(X()), 17041);
     test( bind(X(), 1), 1);

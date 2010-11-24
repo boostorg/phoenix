@@ -22,6 +22,19 @@ namespace boost { namespace phoenix
     // Functions
     ////////////////////////////////////////////////////////////////////////////
     
+    
+    namespace rule
+    {
+        struct function
+            : proto::nary_expr<proto::tag::function, proto::vararg<meta_grammar> >
+        {};
+    }
+
+    template <typename Dummy>
+    struct meta_grammar::case_<proto::tag::function, Dummy>
+        : proto::when<rule::function, proto::external_transform>
+    {};
+
     namespace result_of
     {
         template <typename F,

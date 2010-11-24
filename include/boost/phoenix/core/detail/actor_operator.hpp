@@ -14,7 +14,7 @@
 #include <boost/phoenix/support/iterate.hpp>
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (4, PHOENIX_ACTOR_LIMIT,                                            \
+        (3, (1, PHOENIX_ACTOR_LIMIT,                                            \
         <boost/phoenix/core/detail/actor_operator.hpp>))
 #include PHOENIX_ITERATE()
 
@@ -33,9 +33,29 @@
 
         template <PHOENIX_typename_A>
         typename result_of::actor<Expr, PHOENIX_A_ref>::type
+        operator()(PHOENIX_A_ref_a)
+        {
+            typedef make_basic_environment<default_actions, PHOENIX_A_ref> env_type;
+            typename env_type::type env = env_type::make(PHOENIX_a);
+
+            return eval(*this, env);
+        }
+
+        template <PHOENIX_typename_A>
+        typename result_of::actor<Expr, PHOENIX_A_ref>::type
         operator()(PHOENIX_A_ref_a) const
         {
             typedef make_basic_environment<default_actions, PHOENIX_A_ref> env_type;
+            typename env_type::type env = env_type::make(PHOENIX_a);
+
+            return eval(*this, env);
+        }
+
+        template <PHOENIX_typename_A>
+        typename result_of::actor<Expr, PHOENIX_A_const_ref>::type
+        operator()(PHOENIX_A_const_ref_a)
+        {
+            typedef make_basic_environment<default_actions, PHOENIX_A_const_ref> env_type;
             typename env_type::type env = env_type::make(PHOENIX_a);
 
             return eval(*this, env);
@@ -66,10 +86,24 @@
         operator()(PHOENIX_PERM_A_a(I)) const                                   \
         {                                                                       \
             typedef                                                             \
-			  	    make_basic_environment<                                         \
-					     default_actions, PHOENIX_PERM_A(I)                          \
-					 >                                                               \
-					 env_type;                                                       \
+                make_basic_environment<                                         \
+                    default_actions, PHOENIX_PERM_A(I)                          \
+                >                                                               \
+                env_type;                                                       \
+            typename env_type::type env = env_type::make(PHOENIX_a);            \
+                                                                                \
+            return eval(*this, env);                                            \
+        }                                                                       \
+                                                                                \
+        template <PHOENIX_typename_A>                                           \
+        typename result_of::actor<Expr, PHOENIX_PERM_A(I)>::type                \
+        operator()(PHOENIX_PERM_A_a(I))                                         \
+        {                                                                       \
+            typedef                                                             \
+                make_basic_environment<                                         \
+                    default_actions, PHOENIX_PERM_A(I)                          \
+                >                                                               \
+                env_type;                                                       \
             typename env_type::type env = env_type::make(PHOENIX_a);            \
                                                                                 \
             return eval(*this, env);                                            \

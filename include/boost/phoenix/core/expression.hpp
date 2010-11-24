@@ -215,13 +215,12 @@ namespace boost { namespace phoenix
         : proto::transform<expr_ext<Actor, Tag, PHOENIX_A>, int>
     {
         typedef typename proto::result_of::make_expr<Tag, default_domain_with_basic_expr, PHOENIX_A>::type base_type;
-        typedef Actor<base_type const> type;
+        typedef Actor<base_type> type;
         typedef typename proto::nary_expr<Tag, PHOENIX_A>::proto_grammar proto_grammar;
         
-        static type const make(PHOENIX_A_a)
+        static type make(PHOENIX_A_a)
         {
-            base_type const b = proto::make_expr<Tag, default_domain_with_basic_expr>(PHOENIX_a);
-            type const e = {b};
+            type e = {proto::make_expr<Tag, default_domain_with_basic_expr>(PHOENIX_a)};
             return e;
         }
 
