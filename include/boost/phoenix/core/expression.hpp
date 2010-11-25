@@ -220,7 +220,7 @@ namespace boost { namespace phoenix
         
         static type make(PHOENIX_A_a)
         {
-            type e = {proto::make_expr<Tag, default_domain_with_basic_expr>(PHOENIX_a)};
+            actor<base_type> const e = {proto::make_expr<Tag, default_domain_with_basic_expr>(PHOENIX_a)};
             return e;
         }
 

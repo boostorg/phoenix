@@ -9,10 +9,11 @@
 #define PHOENIX_STATEMENT_IF_HPP
 
 #include <boost/config.hpp>
+#include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/compose.hpp>
+//#include <boost/phoenix/core/compose.hpp>
 
-#include <boost/phoenix/support/element_at.hpp>
+//#include <boost/phoenix/support/element_at.hpp>
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
@@ -25,13 +26,41 @@ namespace boost { namespace phoenix
     // If-Else statements
     ////////////////////////////////////////////////////////////////////////////
     
-    // Function for evaluating lambdas like: if_( foo )[ bar ].else_[ baz ]
+    template <typename> struct if_actor;
+    
+    PHOENIX_DEFINE_EXPRESSION_EXT(
+        if_actor
+      , if_
+      , (meta_grammar) // Cond
+        (meta_grammar) // Then
+    )
+    
+    PHOENIX_DEFINE_EXPRESSION(
+        if_else_
+      , (meta_grammar) // Cond
+        (meta_grammar) // Then
+        (meta_grammar) // Else
+    )
+    
+    // Function for evaluating lambdas like:
+    // if_( foo )[ bar ]
+    // and
+    // if_( foo )[ bar ].else_[ baz ]
     struct if_else_eval
+        : proto::callable
     {
         typedef void result_type;
         
+        template<typename Env, typename Cond, typename Then>
+        result_type
+        operator()(Env & env, Cond const & cond, Then const & then) const
+        {
+            if( eval( cond, env ) )
+                eval( then, env );
+        }
+        
         template<typename Env, typename Cond, typename Then, typename Else>
-        void
+        result_type
         operator()(
               Env & env
             , Cond const & cond
@@ -44,23 +73,30 @@ namespace boost { namespace phoenix
                 eval( else_, env );
         }
     };
+    
+    template <typename Dummy>
+    struct default_actions::when<rule::if_, Dummy>
+        : proto::call<
+            if_else_eval(
+                _env
+              , proto::_child_c<0> // Cond
+              , proto::_child_c<1> // Then
+            )
+          >
+    {};
+    
+    template <typename Dummy>
+    struct default_actions::when<rule::if_else_, Dummy>
+        : proto::call<
+            if_else_eval(
+                _env
+              , proto::_child_c<0> // Cond
+              , proto::_child_c<1> // Then
+              , proto::_child_c<2> // Else
+            )
+          >
+    {};
 
-    template <typename Cond, typename Then, typename Else>
-    struct make_if_else_s : compose<if_else_eval, Cond, Then, Else> {};
-
-    // Function for evaluating lambdas like: if_( foo )[ bar ]
-    struct if_eval
-    {
-        typedef void result_type;
-        
-        template<typename Env, typename Cond, typename Then>
-        void
-        operator()(Env & env, Cond const & cond, Then const & then) const
-        {
-            if( eval( cond, env ) )
-                eval( then, env );
-        }
-    };
 
     // Generator for .else_[ expr ] branch.
     template<typename Cond, typename Then>
@@ -71,10 +107,10 @@ namespace boost { namespace phoenix
             , then( then ) {}
 
         template<typename Else>
-        typename make_if_else_s<Cond, Then, Else>::type const
+        typename expression::if_else_<Cond, Then, Else>::type const
         operator[](Else const & else_) const
         {
-            return make_if_else_s<Cond, Then, Else>()(cond, then, else_);
+            return expression::if_else_<Cond, Then, Else>::make(cond, then, else_);
         }
 
         Cond const & cond;
@@ -90,17 +126,14 @@ namespace boost { namespace phoenix
 
         if_actor(base_type const & base)
             : base_type( base )
-            , else_(element_at_c<0>(*this), element_at_c<1>(*this))
+            , else_(proto::child_c<0>(*this), proto::child_c<1>(*this))
         {}
 
-        typedef typename result_of::element_value_at_c<Expr, 0>::type cond_type;
-        typedef typename result_of::element_value_at_c<Expr, 1>::type then_type;
+        typedef typename proto::result_of::child_c<Expr, 0>::type cond_type;
+        typedef typename proto::result_of::child_c<Expr, 1>::type then_type;
 
         else_gen<cond_type, then_type> else_;
     };
-
-    template <typename Cond, typename Then>
-    struct make_if : compose_ex<if_eval, if_actor, Cond, Then> {};
 
     // Generator for if( cond )[ then ] branch.
     template<typename Cond>
@@ -110,10 +143,10 @@ namespace boost { namespace phoenix
             : cond( cond ) {}
 
         template<typename Then>
-        typename make_if<Cond, Then>::type const
+        typename expression::if_<Cond, Then>::type const
         operator[](Then const & then) const
         {
-            return make_if<Cond, Then>()(cond, then);
+            return expression::if_<Cond, Then>::make(cond, then);
         }
 
         Cond const & cond;
