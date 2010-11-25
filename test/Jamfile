@@ -51,8 +51,8 @@ test-suite phoenix_bind :
     ;
     
 test-suite phoenix_statement :
-#    [ run statement/if_tests.cpp ] 
-#    [ run statement/loops_tests.cpp ] 
+    [ run statement/if_tests.cpp ] 
+    [ run statement/loops_tests.cpp ] 
 #    [ run statement/switch_tests.cpp ] 
 #    [ run statement/exceptions.cpp ]
     ;

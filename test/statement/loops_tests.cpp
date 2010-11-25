@@ -17,10 +17,8 @@ main()
 {
     using boost::phoenix::arg_names::arg1;
     using boost::phoenix::do_;
-    using boost::phoenix::for_;
     using boost::phoenix::ref;
     using boost::phoenix::val;
-    using boost::phoenix::while_;
 
     using std::cout;
     using std::endl;
@@ -40,8 +38,7 @@ main()
                 cout << arg1 << ", ",
                 ++ref(x)
             ],
-            cout << ref("\n")
-            //cout << val("\n")
+            cout << val("\n")
         )
     );
 
@@ -58,8 +55,7 @@ main()
                 ++ref(x)
             ]
             .while_(arg1--),
-            cout << ref("\n")
-            //cout << val("\n")
+            cout << val("\n")
         )
     );
 
@@ -76,8 +72,7 @@ main()
                 cout << arg1 << ", ",
                 ++ref(x)
             ],
-            cout << ref("\n")
-            //cout << val("\n")
+            cout << val("\n")
         )
     );
 

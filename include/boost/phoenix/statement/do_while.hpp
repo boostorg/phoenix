@@ -8,20 +8,18 @@
 #ifndef PHOENIX_STATEMENT_DO_WHILE_HPP
 #define PHOENIX_STATEMENT_DO_WHILE_HPP
 
-#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/expression.hpp>
 
 namespace boost { namespace phoenix
 {
-    namespace result_of
-    {
-        template <typename Env, typename Cond, typename Do>
-        struct do_while
-        {
-            typedef void type;
-        };
-    }
+    PHOENIX_DEFINE_EXPRESSION(
+        do_while
+      , (meta_grammar) // Cond
+        (meta_grammar) // Do
+    )
 
     struct do_while_eval
+        : proto::callable
     {
         typedef void result_type;
 
@@ -34,9 +32,17 @@ namespace boost { namespace phoenix
             while (eval(cond, env));
         }
     };
-
-    template <typename Cond, typename Do>
-    struct make_do_while : compose<do_while_eval, Cond, Do> {};
+    
+    template <typename Dummy>
+    struct default_actions::when<rule::do_while, Dummy>
+        : proto::call<
+            do_while_eval(
+                _env
+              , proto::_child_c<0> // Cond
+              , proto::_child_c<1> // Do
+            )
+          >
+    {};
 
     template <typename Do>
     struct do_while_gen
@@ -45,10 +51,10 @@ namespace boost { namespace phoenix
             : do_(do_) {}
 
         template <typename Cond>
-        typename make_do_while<Cond, Do>::type const
+        typename expression::do_while<Cond, Do>::type const
         while_(Cond const& cond) const
         {
-            return make_do_while<Cond, Do>()(cond, do_);
+            return expression::do_while<Cond, Do>::make(cond, do_);
         }
 
         Do const& do_;

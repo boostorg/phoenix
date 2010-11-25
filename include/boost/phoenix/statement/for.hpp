@@ -8,24 +8,17 @@
 #ifndef PHOENIX_STATEMENT_FOR_HPP
 #define PHOENIX_STATEMENT_FOR_HPP
 
-#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/expression.hpp>
 
 namespace boost { namespace phoenix
 {
-    namespace result_of
-    {
-        template <
-            typename Env
-          , typename Init
-          , typename Cond
-          , typename Step
-          , typename Do>
-        struct for_
-        {
-            typedef void type;
-        };
-
-    }
+    PHOENIX_DEFINE_EXPRESSION(
+        for_
+      , (meta_grammar) // Cond
+        (meta_grammar) // Init
+        (meta_grammar) // Step
+        (meta_grammar) // Do
+    )
 
     struct for_eval
     {
@@ -50,9 +43,19 @@ namespace boost { namespace phoenix
         }
     };
     
-    template <typename Init, typename Cond, typename Step, typename Do>
-    struct make_for : compose<for_eval, Init, Cond, Step, Do> {};
-
+    template <typename Dummy>
+    struct default_actions::when<rule::for_, Dummy>
+        : proto::call<
+            for_eval(
+                _env
+              , proto::_child_c<0> // Cond
+              , proto::_child_c<1> // Init
+              , proto::_child_c<2> // Step
+              , proto::_child_c<3> // Do
+            )
+          >
+    {};
+    
     template <typename Init, typename Cond, typename Step>
     struct for_gen
     {
@@ -60,10 +63,10 @@ namespace boost { namespace phoenix
             : init(init), cond(cond), step(step) {}
 
         template <typename Do>
-        typename make_for<Init, Cond, Step, Do>::type const
+        typename expression::for_<Init, Cond, Step, Do>::type const
         operator[](Do const& do_) const
         {
-            return make_for<Init, Cond, Step, Do>()(init, cond, step, do_);
+            return expression::for_<Init, Cond, Step, Do>::make(init, cond, step, do_);
         }
 
         Init const& init;
