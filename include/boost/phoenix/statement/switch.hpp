@@ -66,7 +66,7 @@ namespace boost { namespace phoenix
 
     PHOENIX_DEFINE_EXPRESSION(
         switch_
-      , (meta_grammar) // Cond
+      , (meta_grammar)           // Cond
         (detail::switch_grammar) // Cases
     )
 
@@ -80,8 +80,14 @@ namespace boost { namespace phoenix
                       , proto::or_<rule::switch_default_case, rule::switch_case>
                     >
                   , mpl::and_<
-                        switch_case_is_nullary(proto::_child_c<0>, proto::_state)
-                      , evaluator(proto::_child_c<0>(proto::_child_c<1>), proto::_state)
+                        switch_case_is_nullary(
+                            proto::_child_c<0>
+                          , proto::_state
+                        )
+                      , evaluator(
+                            proto::_child_c<0>(proto::_child_c<1>)
+                          , proto::_state
+                        )
                     >()
                 >
               , proto::when<
@@ -107,7 +113,11 @@ namespace boost { namespace phoenix
                   , proto::if_<
                         is_same<mpl::prior<proto::_data>(), proto::_state>()
                       , proto::_child_c<1>
-                      , switch_case_grammar(proto::_child_c<0>, proto::_state, mpl::prior<proto::_data>())
+                      , switch_case_grammar(
+                            proto::_child_c<0>
+                          , proto::_state
+                          , mpl::prior<proto::_data>()
+                        )
                     >
                 >
               , proto::when<rule::switch_case, proto::_>
@@ -121,7 +131,11 @@ namespace boost { namespace phoenix
                   , proto::if_<
                         is_same<mpl::prior<proto::_data>(), proto::_state>()
                       , proto::_child_c<1>
-                      , switch_case_grammar(proto::_child_c<0>, proto::_state, mpl::prior<proto::_data>())
+                      , switch_case_grammar(
+                            proto::_child_c<0>
+                          , proto::_state
+                          , mpl::prior<proto::_data>()
+                        )
                     >
                 >
               , proto::when<rule::switch_default_case, proto::_>
@@ -158,58 +172,96 @@ namespace boost { namespace phoenix
                   , cond
                   , cases
                   , typename boost::result_of<detail::switch_size(Cases)>::type()
-                  , typename proto::matches<Cases, detail::switch_case_with_default_grammar>::type()
+                  , typename proto::matches<
+                        Cases
+                      , detail::switch_case_with_default_grammar
+                    >::type()
                 );
         }
 
         private:
-        #define PHOENIX_SWITCH_EVAL_TYPEDEF_R(Z, N, DATA) \
-            typedef                                       \
-                typename boost::result_of<                \
-                    detail::switch_grammar(               \
-                        Cases                             \
-                      , mpl::int_<N>                      \
-                      , mpl::int_<DATA>                   \
-                    )                                     \
-                >::type                                   \
-                BOOST_PP_CAT(case, N);                    \
-            typedef \
-                typename proto::result_of::value<         \
-                    typename proto::result_of::child_c<   \
-                        BOOST_PP_CAT(case, N)             \
-                      , 0                                 \
-                    >::type \
-                >::type \
-                BOOST_PP_CAT(case_label, N); \
-            mpl::int_<N> BOOST_PP_CAT(idx, N); \
+        #define PHOENIX_SWITCH_EVAL_TYPEDEF_R(Z, N, DATA)                       \
+            typedef                                                             \
+                typename boost::result_of<                                      \
+                    detail::switch_grammar(                                     \
+                        Cases                                                   \
+                      , mpl::int_<N>                                            \
+                      , mpl::int_<DATA>                                         \
+                    )                                                           \
+                >::type                                                         \
+                BOOST_PP_CAT(case, N);                                          \
+            typedef                                                             \
+                typename proto::result_of::value<                               \
+                    typename proto::result_of::child_c<                         \
+                        BOOST_PP_CAT(case, N)                                   \
+                      , 0                                                       \
+                    >::type                                                     \
+                >::type                                                         \
+                BOOST_PP_CAT(case_label, N);                                    \
+            mpl::int_<N> BOOST_PP_CAT(idx, N);                                  \
         /**/
 
-        #define PHOENIX_SWITCH_EVAL_R(Z, N, DATA) \
-        case BOOST_PP_CAT(case_label, N)::value : \
-            eval(proto::child_c<1>(detail::switch_grammar()(cases, BOOST_PP_CAT(idx, N), size)), env); \
+        #define PHOENIX_SWITCH_EVAL_R(Z, N, DATA)                               \
+        case BOOST_PP_CAT(case_label, N)::value :                               \
+            eval(                                                               \
+                proto::child_c<1>(                                              \
+                    detail::switch_grammar()(                                   \
+                        cases, BOOST_PP_CAT(idx, N), size                       \
+                    )                                                           \
+                )                                                               \
+              , env                                                             \
+            );                                                                  \
             break;
         /**/
 
-        #define PHOENIX_SWITCH_EVAL(Z, N, DATA) \
-            template <typename Env, typename Cond, typename Cases> \
-            result_type evaluate(Env & env, Cond const & cond, Cases const & cases, mpl::int_<N> size, mpl::false_) const\
-            { \
-                BOOST_PP_REPEAT(N, PHOENIX_SWITCH_EVAL_TYPEDEF_R, N) \
-                switch(eval(cond, env)) \
-                { \
-                    BOOST_PP_REPEAT(N, PHOENIX_SWITCH_EVAL_R, _) \
-                } \
-            } \
-            \
-            template <typename Env, typename Cond, typename Cases> \
-            result_type evaluate(Env & env, Cond const & cond, Cases const & cases, mpl::int_<N> size, mpl::true_) const\
-            { \
-                BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_SWITCH_EVAL_TYPEDEF_R, N) \
-                mpl::int_<BOOST_PP_DEC(N)> BOOST_PP_CAT(idx, BOOST_PP_DEC(N)); \
-                switch(eval(cond, env)) \
-                { \
-                    BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_SWITCH_EVAL_R, _) \
-                    default: eval(proto::child_c<0>(detail::switch_grammar()(cases, BOOST_PP_CAT(idx, BOOST_PP_DEC(N)), size)), env); \
+        #define PHOENIX_SWITCH_EVAL(Z, N, DATA)                                 \
+            template <typename Env, typename Cond, typename Cases>              \
+            result_type                                                         \
+            evaluate(                                                           \
+                Env & env                                                       \
+              , Cond const & cond                                               \
+              , Cases const & cases                                             \
+              , mpl::int_<N> size                                               \
+              , mpl::false_                                                     \
+            ) const                                                             \
+            {                                                                   \
+                BOOST_PP_REPEAT(N, PHOENIX_SWITCH_EVAL_TYPEDEF_R, N)            \
+                switch(eval(cond, env))                                         \
+                {                                                               \
+                    BOOST_PP_REPEAT(N, PHOENIX_SWITCH_EVAL_R, _)                \
+                }                                                               \
+            }                                                                   \
+                                                                                \
+            template <typename Env, typename Cond, typename Cases>              \
+            result_type                                                         \
+            evaluate(                                                           \
+                Env & env                                                       \
+              , Cond const & cond                                               \
+              , Cases const & cases                                             \
+              , mpl::int_<N> size                                               \
+              , mpl::true_                                                      \
+            ) const                                                             \
+            {                                                                   \
+                BOOST_PP_REPEAT(                                                \
+                    BOOST_PP_DEC(N)                                             \
+                  , PHOENIX_SWITCH_EVAL_TYPEDEF_R                               \
+                  , N                                                           \
+                )                                                               \
+                mpl::int_<BOOST_PP_DEC(N)> BOOST_PP_CAT(idx, BOOST_PP_DEC(N));  \
+                switch(eval(cond, env))                                         \
+                {                                                               \
+                    BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_SWITCH_EVAL_R, _)  \
+                    default:                                                    \
+                        eval(                                                   \
+                            proto::child_c<0>(                                  \
+                                detail::switch_grammar()(                       \
+                                    cases                                       \
+                                  , BOOST_PP_CAT(idx, BOOST_PP_DEC(N))          \
+                                  , size                                        \
+                                )                                               \
+                            )                                                   \
+                            , env                                               \
+                        ); \
                 } \
             } \
         /**/
@@ -228,17 +280,33 @@ namespace boost { namespace phoenix
     {};
 
     template <int N, typename A>
-    typename proto::result_of::make_expr<tag::switch_case, default_domain_with_basic_expr, mpl::int_<N>, A>::type const
+    typename proto::result_of::make_expr<
+        tag::switch_case
+      , default_domain_with_basic_expr
+      , mpl::int_<N>
+      , A
+    >::type const
     case_(A const & a)
     {
-        return proto::make_expr<tag::switch_case, default_domain_with_basic_expr>(mpl::int_<N>(), a);
+        return
+            proto::make_expr<tag::switch_case, default_domain_with_basic_expr>(
+                mpl::int_<N>()
+              , a
+            );
     }
 
     template <typename A>
-    typename proto::result_of::make_expr<tag::switch_default_case, default_domain_with_basic_expr, A>::type const
+    typename proto::result_of::make_expr<
+        tag::switch_default_case
+      , default_domain_with_basic_expr
+      , A
+    >::type const
     default_(A const& a)
     {
-        return proto::make_expr<tag::switch_default_case, default_domain_with_basic_expr>(a);
+        return
+            proto::make_expr<
+                tag::switch_default_case, default_domain_with_basic_expr
+            >(a);
     }
 
     template <typename Cond>
@@ -253,12 +321,39 @@ namespace boost { namespace phoenix
         >::type
         operator[](Cases const& cases) const
         {
-            BOOST_MPL_ASSERT((proto::matches<Cases, detail::switch_grammar>));
-
-            return expression::switch_<Cond, Cases>::make(cond, cases);
+            return
+                this->generate(
+                    cases
+                  , proto::matches<Cases, detail::switch_grammar>()
+                );
         }
 
-        Cond const& cond;
+        private:
+            Cond const& cond;
+
+            template <typename Cases>
+            typename expression::switch_<
+                Cond
+              , Cases
+            >::type
+            generate(Cases const & cases, mpl::true_) const
+            {
+                return expression::switch_<Cond, Cases>::make(cond, cases);
+            }
+            
+            template <typename Cases>
+            typename expression::switch_<
+                Cond
+              , Cases
+            >::type
+            generate(Cases const & cases, mpl::false_) const
+            {
+                BOOST_MPL_ASSERT_MSG(
+                    false
+                  , INVALID_SWITCH_CASE_STATEMENT
+                  , (Cases)
+                );
+            }
     };
 
     template <typename Cond>
