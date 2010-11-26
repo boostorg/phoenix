@@ -4,20 +4,23 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
+
+#define PHOENIX_LIMIT 10
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/phoenix/core.hpp>
 #include <boost/phoenix/statement.hpp>
 #include <boost/phoenix/operator.hpp>
-#include <boost/phoenix/core.hpp>
 
 int
 main()
 {
     using boost::phoenix::arg_names::_1;
     using boost::phoenix::case_;
-    using boost::phoenix::default_;
+    //using boost::phoenix::default_;
     using boost::phoenix::switch_;
     using boost::phoenix::ref;
     using boost::phoenix::val;
@@ -30,6 +33,7 @@ main()
     int init[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     vector<int> v(init, init+10);
 
+    /*
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
@@ -37,6 +41,7 @@ main()
             case_<4>(cout << val("<4>") << endl)
         ]
     );
+    */
 
     cout << endl;
     for_each(v.begin(), v.end(),
@@ -49,6 +54,7 @@ main()
 
     cout << endl;
     
+    /*
     for_each(v.begin(), v.end(),
         switch_(_1)
         [
@@ -58,6 +64,7 @@ main()
             case_<4>(cout << val("<4>") << endl)
         ]
     );
+    */
 
     cout << endl;
 
