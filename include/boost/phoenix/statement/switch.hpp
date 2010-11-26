@@ -77,7 +77,7 @@ namespace boost { namespace phoenix
                 proto::when<
                     proto::comma<
                         switch_case_is_nullary
-                      , rule::switch_default_case
+                      , proto::or_<rule::switch_default_case, rule::switch_case>
                     >
                   , mpl::and_<
                         switch_case_is_nullary(proto::_child_c<0>, proto::_state)
@@ -85,22 +85,8 @@ namespace boost { namespace phoenix
                     >()
                 >
               , proto::when<
-                    proto::comma<
-                        switch_case_is_nullary
-                      , rule::switch_case
-                    >
-                  , mpl::and_<
-                        switch_case_is_nullary(proto::_child_c<0>, proto::_state)
-                      , evaluator(proto::_child_c<1>(proto::_child_c<1>), proto::_state)
-                    >()
-                >
-              , proto::when<
-                    rule::switch_default_case
+                    proto::or_<rule::switch_default_case, rule::switch_case>
                   , evaluator(proto::_child_c<0>, proto::_state)
-                >
-              , proto::when<
-                    rule::switch_case
-                  , evaluator(proto::_child_c<1>, proto::_state)
                 >
             >
         {};
@@ -116,17 +102,41 @@ namespace boost { namespace phoenix
         {};
         struct switch_case_grammar
             : proto::or_<
-                proto::comma<switch_case_grammar, rule::switch_case>
-              , rule::switch_case
+                proto::when<
+                    proto::comma<switch_case_grammar, rule::switch_case>
+                  , proto::if_<
+                        is_same<mpl::prior<proto::_data>(), proto::_state>()
+                      , proto::_child_c<1>
+                      , switch_case_grammar(proto::_child_c<0>, proto::_state, mpl::prior<proto::_data>())
+                    >
+                >
+              , proto::when<rule::switch_case, proto::_>
             >
         {};
 
         struct switch_case_with_default_grammar
             : proto::or_<
-                proto::comma<switch_case_grammar, rule::switch_default_case>
-              , rule::switch_default_case
+                proto::when<
+                    proto::comma<switch_case_grammar, rule::switch_default_case>
+                  , proto::if_<
+                        is_same<mpl::prior<proto::_data>(), proto::_state>()
+                      , proto::_child_c<1>
+                      , switch_case_grammar(proto::_child_c<0>, proto::_state, mpl::prior<proto::_data>())
+                    >
+                >
+              , proto::when<rule::switch_default_case, proto::_>
             >
         {};
+
+        struct switch_size
+            : proto::or_<
+                proto::when<
+                    proto::comma<switch_size, proto::_>
+                  , mpl::next<switch_size(proto::_left)>()
+                >
+              , proto::when<proto::_, mpl::int_<1>()>
+            >
+	    {};
     }
 
     struct switch_eval
@@ -143,46 +153,67 @@ namespace boost { namespace phoenix
         result_type
         operator()(Env & env, Cond const & cond, Cases const & cases) const
         {
-            /*
-            typedef typename fusion::result_of::as_vector<Cases>::type as_vector;
-            std::cout << typeid(Cases).name() << "\n";
-            std::cout << fusion::result_of::size<Cases>::value << "\n";
-            std::cout << typeid(typename fusion::result_of::at_c<as_vector, 0>::type).name() << "\n";
-            std::cout << typeid(typename proto::matches<typename Cases::expr_type, detail::switch_case_with_default_grammar>::type).name() << "\n";
-            */
-            //std::cout << typeid(typename fusion::result_of::at_c<flattened_expr, 2>::type).name() << "\n";
-            this->evaluate(env, cond, fusion::as_vector(cases), mpl::int_<fusion::result_of::size<Cases>::value>(), typename proto::matches<typename Cases::expr_type, detail::switch_case_with_default_grammar>::type());
+            this->evaluate(
+                    env
+                  , cond
+                  , cases
+                  , typename boost::result_of<detail::switch_size(Cases)>::type()
+                  , typename proto::matches<Cases, detail::switch_case_with_default_grammar>::type()
+                );
         }
 
-        //proto::result_of::child_c<typename fusion::result_of::at_c<Cases, N>::type, 0>::type::value :
         private:
-        #define PHOENIX_SWITCH_EVAL_R(Z, N, DATA) \
-        case \
-            proto::value< \
-                typename proto::result_of::child_c<\
-                    typename fusion::result_of::at_c<Cases, N>::type \
-                  , 0 \
+        #define PHOENIX_SWITCH_EVAL_TYPEDEF_R(Z, N, DATA) \
+            typedef                                       \
+                typename boost::result_of<                \
+                    detail::switch_grammar(               \
+                        Cases                             \
+                      , mpl::int_<N>                      \
+                      , mpl::int_<DATA>                   \
+                    )                                     \
+                >::type                                   \
+                BOOST_PP_CAT(case, N);                    \
+            typedef \
+                typename proto::result_of::value<         \
+                    typename proto::result_of::child_c<   \
+                        BOOST_PP_CAT(case, N)             \
+                      , 0                                 \
+                    >::type \
                 >::type \
-            >::type::value : \
-            eval(proto::child_c<1>(fusion::at_c<N>(cases)), env);
+                BOOST_PP_CAT(case_label, N); \
+            mpl::int_<N> BOOST_PP_CAT(idx, N); \
         /**/
+
+        #define PHOENIX_SWITCH_EVAL_R(Z, N, DATA) \
+        case BOOST_PP_CAT(case_label, N)::value : \
+            eval(proto::child_c<1>(detail::switch_grammar()(cases, BOOST_PP_CAT(idx, N), size)), env); \
+            break;
+        /**/
+
         #define PHOENIX_SWITCH_EVAL(Z, N, DATA) \
             template <typename Env, typename Cond, typename Cases> \
-            result_type evaluate(Env & env, Cond const & cond, Cases const & cases, mpl::int_<N>, mpl::false_) const\
+            result_type evaluate(Env & env, Cond const & cond, Cases const & cases, mpl::int_<N> size, mpl::false_) const\
             { \
+                BOOST_PP_REPEAT(N, PHOENIX_SWITCH_EVAL_TYPEDEF_R, N) \
+                switch(eval(cond, env)) \
+                { \
+                    BOOST_PP_REPEAT(N, PHOENIX_SWITCH_EVAL_R, _) \
+                } \
             } \
             \
             template <typename Env, typename Cond, typename Cases> \
-            result_type evaluate(Env & env, Cond const & cond, Cases const & cases, mpl::int_<N>, mpl::true_) const\
+            result_type evaluate(Env & env, Cond const & cond, Cases const & cases, mpl::int_<N> size, mpl::true_) const\
             { \
+                BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_SWITCH_EVAL_TYPEDEF_R, N) \
+                mpl::int_<BOOST_PP_DEC(N)> BOOST_PP_CAT(idx, BOOST_PP_DEC(N)); \
                 switch(eval(cond, env)) \
                 { \
                     BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_SWITCH_EVAL_R, _) \
-                    default: eval(fusion::at_c<N-1>(cases), env); \
+                    default: eval(proto::child_c<0>(detail::switch_grammar()(cases, BOOST_PP_CAT(idx, BOOST_PP_DEC(N)), size)), env); \
                 } \
             } \
         /**/
-        BOOST_PP_REPEAT(PHOENIX_LIMIT, PHOENIX_SWITCH_EVAL, _)
+        BOOST_PP_REPEAT_FROM_TO(0, PHOENIX_LIMIT, PHOENIX_SWITCH_EVAL, _)
     };
     
     template <typename Dummy>
@@ -191,7 +222,7 @@ namespace boost { namespace phoenix
             switch_eval(
                 _env
               , proto::_child_c<0> // Cond
-              , proto::functional::flatten(proto::_child_c<1>) // Cases
+              , proto::_child_c<1> // Cases
             )
           >
     {};

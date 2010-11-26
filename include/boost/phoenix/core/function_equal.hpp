@@ -9,6 +9,9 @@
 #define PHOENIX_CORE_FUNCTION_EQUAL_HPP
 
 #include <boost/phoenix/core/terminal.hpp>
+#include <boost/preprocessor/control/if.hpp>
+#include <boost/preprocessor/facilities/empty.hpp>
+#include <boost/preprocessor/facilities/identity.hpp>
 
 namespace boost
 {
@@ -33,12 +36,17 @@ namespace boost { namespace phoenix
             // hard wiring reference_wrapper and weak_ptr here ...
             // **TODO** find out why boost bind does this ...
             template <typename A0, typename A1>
-            result_type operator()(reference_wrapper<A0> const & a0, reference_wrapper<A1> const & a1) const
+            result_type
+            operator()(
+                reference_wrapper<A0> const & a0
+              , reference_wrapper<A1> const & a1
+            ) const
             {
                 return a0.get_pointer() == a1.get_pointer();
             }
             template <typename A0, typename A1>
-            result_type operator()(weak_ptr<A0> const & a0, weak_ptr<A1> const & a1) const
+            result_type
+            operator()(weak_ptr<A0> const & a0, weak_ptr<A1> const & a1) const
             {
                 return !(a0 < a1) && !(a1 < a0);
             }
@@ -51,19 +59,28 @@ namespace boost { namespace phoenix
                 proto::if_<
                     proto::matches<proto::_, proto::_state>()
                   , proto::or_<
-                        /*proto::when<
-                            rule::custom_terminal
-                          , compare(proto::_value, proto::_value(proto::_state))
-                        >
-                      ,*/ proto::when<
+                        proto::when<
                             proto::terminal<proto::_>
                           , proto::if_<
                                 mpl::false_()//is_custom_terminal<proto::_value>()
                               , compare(
-                                    proto::lazy<custom_terminal<proto::_value>(proto::_value)>
-                                  , proto::lazy<custom_terminal<proto::_value(proto::_state)>(proto::_value(proto::_state))>
+                                    proto::lazy<
+                                        custom_terminal<proto::_value>(
+                                            proto::_value
+                                        )
+                                    >
+                                  , proto::lazy<
+                                        custom_terminal<
+                                            proto::_value(proto::_state)
+                                        >(
+                                            proto::_value(proto::_state)
+                                        )
+                                    >
                                 )
-                              , compare(proto::_value, proto::_value(proto::_state))
+                              , compare(
+                                    proto::_value
+                                  , proto::_value(proto::_state)
+                                )
                             >
                         >
                       , proto::otherwise<test(proto::_, proto::_state)>
@@ -86,27 +103,53 @@ namespace boost { namespace phoenix
             template <typename Expr1>
             result_type operator()(Expr1 const& e1, Expr1 const& e2) const
             {
-                return eval(e1, e2, typename proto::arity_of<Expr1>::type());
+                return
+                    this->evaluate(
+                        e1
+                      , e2
+                      , typename proto::arity_of<Expr1>::type()
+                    );
             }
 
             private:
-                #define FUNCTION_EQUAL_R(Z, N, DATA)                            \
-                    BOOST_PP_IF(N, &&, BOOST_PP_EMPTY())                        \
-                    function_equal_()(                                          \
+                #define PHOENIX_FUNCTION_EQUAL_R(Z, N, DATA)                    \
+                    && function_equal_()(                                       \
                             proto::child_c< N >(e1)                             \
                           , proto::child_c< N >(e2)                             \
                         )                                                       \
                 /**/
 
-                #define FUNCTION_EQUAL(Z, N, DATA) \
-                    template <typename Expr1> \
-                    result_type eval(Expr1 const& e1, Expr1 const& e2, mpl::long_< N >) const \
-                    { \
-                        return BOOST_PP_REPEAT(N, FUNCTION_EQUAL_R, _); \
-                    } \
+                #define PHOENIX_FUNCTION_EQUAL(Z, N, DATA)                      \
+                    template <typename Expr1>                                   \
+                    result_type                                                 \
+                    evaluate(                                                   \
+                        Expr1 const& e1                                         \
+                      , Expr1 const& e2                                         \
+                      , mpl::long_< N >                                         \
+                    ) const                                                     \
+                    {                                                           \
+                        return                                                  \
+                            function_equal_()(                                  \
+                                proto::child_c<0>(e1)                           \
+                              , proto::child_c<0>(e2)                           \
+                            )                                                   \
+                            BOOST_PP_REPEAT_FROM_TO(                            \
+                                1                                               \
+                              , N                                               \
+                              , PHOENIX_FUNCTION_EQUAL_R                        \
+                              , _                                               \
+                            );                                                  \
+                    }                                                           \
                 /**/
 
-                BOOST_PP_REPEAT(BOOST_PROTO_MAX_ARITY, FUNCTION_EQUAL, _)
+                BOOST_PP_REPEAT_FROM_TO(
+                    1
+                  , BOOST_PROTO_MAX_ARITY
+                  , PHOENIX_FUNCTION_EQUAL
+                  , _
+                )
+                #undef PHOENIX_FUNCTION_EQUAL_R
+                #undef PHOENIX_FUNCTION_EQUAL
         };
     }
 
