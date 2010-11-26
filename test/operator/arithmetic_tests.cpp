@@ -5,6 +5,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
+
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
@@ -51,6 +52,16 @@ main()
         BOOST_TEST((123 * val(456))() == 123 * 456);
         BOOST_TEST((123 / val(456))() == 123 / 456);
         BOOST_TEST((123 % val(456))() == 123 % 456);
+    }
+    {
+        // testcase contributed from Philip Reh, failed in Phoenix V2
+        using boost::phoenix::arg_names::arg1;
+        using boost::phoenix::arg_names::arg2;
+
+        int x[2];
+
+        BOOST_TEST((&arg1 - &arg2)(x[0], x[1]) == &x[0] - &x[1]);
+        BOOST_TEST((arg1 - arg2)(&x[0], &x[1]) == &x[0] - &x[1]);
     }
 
     return boost::report_errors();
