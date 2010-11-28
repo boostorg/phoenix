@@ -22,19 +22,19 @@ namespace boost { namespace phoenix
     template <
         template <typename> class Actor
       , typename Tag
-      , PHOENIX_typename_A_void(PHOENIX_LIMIT)
+      , PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)
       , typename Dummy = void>
     struct expr_ext;
 
-	template <typename Tag, PHOENIX_typename_A_void(PHOENIX_LIMIT), typename Dummy = void>
-	struct expr : expr_ext<actor, Tag, PHOENIX_A(PHOENIX_LIMIT)> {};
+	template <typename Tag, PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT), typename Dummy = void>
+	struct expr : expr_ext<actor, Tag, PHOENIX_A(PHOENIX_COMPOSITE_LIMIT)> {};
 
     struct default_domain_with_basic_expr
         : proto::domain<proto::use_basic_expr<proto::default_generator> >
     {};
 
     #define PHOENIX_ITERATION_PARAMS                                            \
-        (3, (1, PHOENIX_ACTOR_LIMIT,                                            \
+        (3, (1, PHOENIX_COMPOSITE_LIMIT,                                        \
         <boost/phoenix/core/expression.hpp>))
     #include PHOENIX_ITERATE()
 

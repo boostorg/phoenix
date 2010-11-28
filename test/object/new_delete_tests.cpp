@@ -57,15 +57,3 @@ main()
     BOOST_TEST(n == 0);
     return boost::report_errors();
 }
-//PHOENIX_DEFINE_EXPRESSION_VARARG(new_, (proto::terminal<detail::target<proto::_> >)(meta_grammar), PHOENIX_LIMIT)
-
-/*
-#include <boost/preprocessor/comparison/equal.hpp>
-
-
-#define SEQ (h)
-
-BOOST_PP_SEQ_ELEM(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(SEQ)), SEQ)
-
-BOOST_PP_IF(BOOST_PP_EQUAL(1, BOOST_PP_SEQ_SIZE(SEQ)), BOOST_PP_EMPTY(), BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_POP_BACK(SEQ)))
-*/

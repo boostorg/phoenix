@@ -12,12 +12,148 @@
 #ifndef PHOENIX_STATEMENT_TRY_CATCH_HPP
 #define PHOENIX_STATEMENT_TRY_CATCH_HPP
 
-#include <boost/phoenix/core/compose.hpp>
-#include <boost/phoenix/support/element_at.hpp>
+#include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 
 namespace boost { namespace phoenix
 {
+    template <typename Expr>
+    struct try_catch_actor;
+
+    template <typename>
+    struct catch_exception {};
+
+    PHOENIX_DEFINE_EXPRESSION_EXT(
+        try_catch_actor
+      , try_
+      , (meta_grammar)
+    )
+    
+    PHOENIX_DEFINE_EXPRESSION(
+        catch_
+      , (proto::terminal<catch_exception<proto::_> >)
+        (meta_grammar)
+    )
+    
+    /*
+    PHOENIX_DEFINE_EXPRESSION(
+        catch_all
+      , (proto::terminal<catch_exception<mpl::na> >)
+    )
+
+    namespace tag
+    {
+        struct try_catch;
+    }
+
+    namespace detail
+    {
+        struct try_catch_grammar
+            : proto::nary_expr<
+              , tag::try_catch
+              , rule::try_
+              , proto::vararg<rule::catch_>
+              , proto::or_<
+                    rule::catch_
+                  , rule::catch_all
+                >
+            >
+        {};
+    }
+    */
+    
+    PHOENIX_DEFINE_EXPRESSION_VARARG(
+        try_catch
+      , (proto::_)
+      , PHOENIX_CATCH_LIMIT
+    )
+
+    template <typename TryCatch>
+    struct catch_all_gen
+    {
+        template <typename Expr>
+        void
+        operator[](Expr const & expr)
+        {
+        }
+    };
+
+    namespace detail
+    {
+        template <typename TryCatch, typename Exception, typename Expr, long Arity = proto::arity_of<TryCatch>::value>
+        struct catch_push_back;
+
+        template <typename TryCatch, typename Exception, typename Expr>
+        struct catch_push_back<TryCatch, Exception, Expr, 1>
+        {
+            typedef typename expression::catch_<Exception, Expr>::type const catch_expr;
+            typedef expression::try_catch<TryCatch, catch_expr> gen_type;
+            typedef typename gen_type::type type;
+
+            static type make(TryCatch const& try_catch, Expr const& catch_)
+            {
+                return gen_type::make(try_catch, catch_expr::make);
+            }
+        };
+    }
+
+    template <typename TryCatch, typename Exception>
+    struct catch_gen
+    {
+        catch_gen(TryCatch const& try_catch) : try_catch(try_catch) {}
+
+        template <typename Expr>
+        detail::catch_push_back<TryCatch, Exception, Expr>
+        operator[](Expr const& expr) const
+        {
+            typedef typename expression::catch_<Exception, Expr>::type const catch_expr;
+
+            std::cout << "Catch gen\n";
+            std::cout << typeid(TryCatch).name() << "\n";
+            std::cout << typeid(detail::catch_push_back<TryCatch, catch_expr>).name() << "\n";a
+
+            return detail::catch_push_back<TryCatch
+        }
+
+        TryCatch const & try_catch;
+    };
+
+    template <
+        typename Expr
+    >
+    struct try_catch_actor;
+
+    template <typename Expr>
+    struct try_catch_actor
+        : actor<Expr>
+    {
+        typedef try_catch_actor<Expr> that_type;
+        typedef actor<Expr> base_type;
+
+        try_catch_actor(base_type const& expr) : base_type(expr) {};
+
+        template <typename Exception>
+        catch_gen<that_type, Exception> const
+        catch_() const
+        {
+            return catch_gen<that_type, Exception>(*this);
+        }
+
+        catch_all_gen<that_type> catch_all;
+    };
+
+    struct try_gen
+    {
+        template <typename Try>
+        typename expression::try_<Try>::type const
+        operator[](Try const & try_) const
+        {
+            return expression::try_<Try>::make(try_);
+        }
+    };
+
+    try_gen const try_ = {};
+    /*
     namespace result_of
     {
         template <typename Env, PHOENIX_typename_A_void(PHOENIX_CATCH_LIMIT)>
@@ -185,6 +321,7 @@ namespace boost { namespace phoenix
     };
 
     try_gen const try_ = try_gen();
+*/
 
 }}
 

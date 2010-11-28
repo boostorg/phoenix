@@ -16,6 +16,10 @@
 #pragma warning(disable: 4514)  // unreferenced inline removed
 #endif
 
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/bind.hpp>
+#include <boost/detail/lightweight_test.hpp>
+
 #if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 #pragma warning(push, 3)
 #endif
@@ -26,10 +30,6 @@
 #if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 #pragma warning(pop)
 #endif
-
-#include <boost/phoenix/core.hpp>
-#include <boost/phoenix/bind.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 int f( int x )
 {

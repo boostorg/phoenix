@@ -9,19 +9,41 @@
 #ifndef PHOENIX_STATEMENT_THROW_HPP
 #define PHOENIX_STATEMENT_THROW_HPP
 
-#include <boost/phoenix/core/compose.hpp>
-#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/expression.hpp>
 
 namespace boost { namespace phoenix
 {
-    namespace result_of
+    namespace tag
     {
-        template <typename Env, typename ThrowExpr = void, typename Dummy=void>
-        struct throw_
-        {
-            typedef void type;
-        };
+        struct throw_ {};
     }
+
+    namespace expression
+    {
+        template <typename A = mpl::na>
+        struct throw_
+            : expr<tag::throw_, A>
+        {};
+    }
+
+    namespace rule
+    {
+        struct throw_
+            : expression::throw_<meta_grammar>
+        {};
+
+        struct rethrow_
+            : expression::throw_<proto::terminal<mpl::na> >
+        {};
+    }
+
+    template <typename Dummy>
+    struct meta_grammar::case_<tag::throw_, Dummy>
+        : proto::or_<
+            proto::when<rule::rethrow_, proto::external_transform>
+          , proto::when<rule::throw_, proto::external_transform>
+        >
+    {};
 
     struct throw_eval
     {
@@ -41,21 +63,28 @@ namespace boost { namespace phoenix
             throw eval(throw_expr, env);
         }
     };
+    
+    template <typename Dummy>
+    struct default_actions::when<rule::rethrow_, Dummy>
+        : proto::call<throw_eval(_env)>
+    {};
 
-    template <typename ThrowExpr = void>
-    struct make_throw : compose<throw_eval, ThrowExpr> {};
+    template <typename Dummy>
+    struct default_actions::when<rule::throw_, Dummy>
+        : proto::call<throw_eval(_env, proto::_child_c<0>)>
+    {};
 
-    make_throw<>::type const
+    expression::throw_<>::type const
     throw_()
     {
-        return make_throw<>()();
+        return expression::throw_<>::make(mpl::na());
     }
 
     template <typename ThrowExpr>
-    typename make_throw<ThrowExpr>::type const
+    typename expression::throw_<ThrowExpr>::type const
     throw_(ThrowExpr const& throw_expr)
     {
-        return make_throw<ThrowExpr>()(throw_expr);
+        return expression::throw_<ThrowExpr>::make(throw_expr);
     }
 
 }}

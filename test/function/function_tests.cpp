@@ -4,12 +4,17 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying 
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
   ==============================================================================*/
+
 #include <iostream>
 #include <cmath>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/function.hpp>
+
+#define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
+#include <boost/mpl/multiplies.hpp>
+#undef BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
 
 struct test_impl
 {

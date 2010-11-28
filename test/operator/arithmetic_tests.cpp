@@ -54,7 +54,7 @@ main()
         BOOST_TEST((123 % val(456))() == 123 % 456);
     }
     {
-        // testcase contributed from Philip Reh, failed in Phoenix V2
+        // Testcase contributed from Philipp Reh, failed in Phoenix V2
         using boost::phoenix::arg_names::arg1;
         using boost::phoenix::arg_names::arg2;
 

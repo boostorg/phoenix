@@ -36,7 +36,6 @@ int main()
             BOOST_TEST(err.what() == string("error"));
         }
     }
-
     {
         try
         {
@@ -56,6 +55,17 @@ int main()
         }
     }
     {
+        try_
+        [
+            throw_(runtime_error("error"))
+        ]
+        .catch_<exception>()
+        [
+            std::cout << ref("caught ...\n")
+        ];
+    }
+    /*
+    {
         bool caught_exception = false;
 
         try_
@@ -65,7 +75,6 @@ int main()
 
         BOOST_TEST(caught_exception);
     }
-
     {
         bool caught_exception = false;
         try_
@@ -98,5 +107,6 @@ int main()
 
         BOOST_TEST(caught_correct_exception);
     }
+*/
     return boost::report_errors();
 }
