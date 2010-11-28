@@ -71,12 +71,24 @@
 # error "PHOENIX_LOCAL_LIMIT is set too low"
 #endif
 
-
 #if !defined(FUSION_MAX_VECTOR_SIZE)
 # define FUSION_MAX_VECTOR_SIZE PHOENIX_LIMIT
 #elif (FUSION_MAX_VECTOR_SIZE < PHOENIX_LIMIT)
 # error "FUSION_MAX_VECTOR_SIZE < PHOENIX_LIMIT"
 #endif
+
+#if !defined(BOOST_PROTO_MAX_ARITY)
+#   define BOOST_PROTO_MAX_ARITY PHOENIX_COMPOSITE_LIMIT
+#   if !defined(BOOST_MPL_LIMIT_METAFUNCTION_ARITY)
+#       define BOOST_MPL_LIMIT_METAFUNCTION_ARITY BOOST_PROTO_MAX_ARITY
+#       define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
+#   endif
+#elif (BOOST_PROTO_MAX_ARITY < PHOENIX_COMPOSE_LIMIT)
+#   error "BOOST_PROTO_MAX_ARITY < PHOENIX_COMPOSE_LIMIT"
+#endif
+
+// this include will set the limit for the proto expression arity
+#include <boost/proto/proto_fwd.hpp>
 
 // this include will bring in mpl::vectorN and 
 // fusion::vectorN where N is PHOENIX_LIMIT
@@ -96,18 +108,5 @@
 #if PHOENIX_LIMIT > 50
 #error "PHOENIX_LIMIT too high!"
 #endif
-
-#if !defined(BOOST_PROTO_MAX_ARITY)
-#define BOOST_PROTO_MAX_ARITY PHOENIX_COMPOSITE_LIMIT
-#ifdef BOOST_MPL_LIMIT_METAFUNCTION_ARITY
-#undef BOOST_MPL_LIMIT_METAFUNCTION_ARITY
-#endif
-#define BOOST_MPL_LIMIT_METAFUNCTION_ARITY BOOST_PROTO_MAX_ARITY
-#elif (BOOST_PROTO_MAX_ARITY < BOOST_PP_INC(PHOENIX_COMPOSE_LIMIT))
-#error "BOOST_PROTO_MAX_ARITY < PHOENIX_COMPOSE_LIMIT + 1"
-#endif
-
-// this include will set the limit for the proto expression arity
-#include <boost/proto/proto_fwd.hpp>
 
 #endif
