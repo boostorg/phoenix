@@ -62,6 +62,14 @@ int main()
         .catch_<exception>()
         [
             std::cout << ref("caught ...\n")
+        ]
+        .catch_<exception>()
+        [
+            std::cout << ref("caught ...\n")
+        ]
+        .catch_<exception>()
+        [
+            std::cout << ref("caught ...\n")
         ];
     }
     /*

@@ -62,8 +62,9 @@ namespace boost { namespace phoenix
     }
     */
     
-    PHOENIX_DEFINE_EXPRESSION_VARARG(
-        try_catch
+    PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(
+        try_catch_actor
+      , try_catch
       , (proto::_)
       , PHOENIX_CATCH_LIMIT
     )
@@ -86,13 +87,70 @@ namespace boost { namespace phoenix
         template <typename TryCatch, typename Exception, typename Expr>
         struct catch_push_back<TryCatch, Exception, Expr, 1>
         {
-            typedef typename expression::catch_<Exception, Expr>::type const catch_expr;
-            typedef expression::try_catch<TryCatch, catch_expr> gen_type;
+            typedef expression::catch_<catch_exception<Exception>, Expr> catch_expr;
+            
+            typedef expression::try_catch<
+                TryCatch//typename proto::result_of::child_c<TryCatch, 0>::type
+              , typename catch_expr::type> gen_type;
             typedef typename gen_type::type type;
 
             static type make(TryCatch const& try_catch, Expr const& catch_)
             {
-                return gen_type::make(try_catch, catch_expr::make);
+                std::cout << typeid(TryCatch).name() << "\n\n";
+                std::cout << typeid(type).name() << "\n\n";
+                return
+                    gen_type::make(
+                        try_catch//proto::child_c<0>(try_catch)
+                      , catch_expr::make(catch_exception<Exception>(), catch_)
+                    );
+            }
+        };
+
+        template <typename TryCatch, typename Exception, typename Expr>
+        struct catch_push_back<TryCatch, Exception, Expr, 2>
+        {
+            typedef expression::catch_<catch_exception<Exception>, Expr> catch_expr;
+
+            typedef expression::try_catch<
+                typename proto::result_of::child_c<TryCatch, 0>::type
+              , typename proto::result_of::child_c<TryCatch, 1>::type
+              , typename catch_expr::type> gen_type;
+            typedef typename gen_type::type type;
+
+            static type make(TryCatch const& try_catch, Expr const& catch_)
+            {
+                std::cout << typeid(TryCatch).name() << "\n\n";
+                std::cout << typeid(type).name() << "\n";
+                return
+                    gen_type::make(
+                        proto::child_c<0>(try_catch)
+                      , proto::child_c<1>(try_catch)
+                      , catch_expr::make(catch_exception<Exception>(), catch_)
+                    );
+            }
+        };
+        
+        template <typename TryCatch, typename Exception, typename Expr>
+        struct catch_push_back<TryCatch, Exception, Expr, 3>
+        {
+            typedef expression::catch_<catch_exception<Exception>, Expr> catch_expr;
+
+            typedef expression::try_catch<
+                typename proto::result_of::child_c<TryCatch, 0>::type
+              , typename proto::result_of::child_c<TryCatch, 1>::type
+              , typename proto::result_of::child_c<TryCatch, 2>::type
+              , typename catch_expr::type> gen_type;
+            typedef typename gen_type::type type;
+
+            static type make(TryCatch const& try_catch, Expr const& catch_)
+            {
+                return
+                    gen_type::make(
+                        proto::child_c<0>(try_catch)
+                      , proto::child_c<1>(try_catch)
+                      , proto::child_c<2>(try_catch)
+                      , catch_expr::make(catch_exception<Exception>(), catch_)
+                    );
             }
         };
     }
@@ -103,16 +161,10 @@ namespace boost { namespace phoenix
         catch_gen(TryCatch const& try_catch) : try_catch(try_catch) {}
 
         template <typename Expr>
-        detail::catch_push_back<TryCatch, Exception, Expr>
+        typename detail::catch_push_back<TryCatch, Exception, Expr>::type
         operator[](Expr const& expr) const
         {
-            typedef typename expression::catch_<Exception, Expr>::type const catch_expr;
-
-            std::cout << "Catch gen\n";
-            std::cout << typeid(TryCatch).name() << "\n";
-            std::cout << typeid(detail::catch_push_back<TryCatch, catch_expr>).name() << "\n";a
-
-            return detail::catch_push_back<TryCatch
+            return detail::catch_push_back<TryCatch, Exception, Expr>::make(try_catch, expr);
         }
 
         TryCatch const & try_catch;
