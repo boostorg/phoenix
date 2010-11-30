@@ -9,89 +9,87 @@
 #define PHOENIX_SCOPE_SCOPED_ENVIRONMENT_HPP
 
 #include <boost/mpl/int.hpp>
+#include <boost/fusion/sequence/sequence_facade.hpp>
+#include <boost/fusion/sequence/intrinsic/begin.hpp>
+#include <boost/fusion/sequence/intrinsic/end.hpp>
+#include <boost/fusion/sequence/intrinsic/size.hpp>
+#include <boost/fusion/sequence/intrinsic/value_at.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
-#include <boost/phoenix/core/environment.hpp>
+#include <boost/phoenix/core/limits.hpp>
 
 namespace boost { namespace phoenix
 {
-    template <typename Env, typename OuterEnv, typename Locals, typename Map>
-    struct scoped_environment;
-
-    template <typename Env, typename Dummy = void>
-    struct is_scoped_environment : mpl::false_ {};
-
-    template <typename Env, typename OuterEnv, typename Locals, typename Map>
-    struct is_scoped_environment<scoped_environment<Env, OuterEnv, Locals, Map> >
-        : mpl::true_
-    {};
-
-    template <typename Env, typename OuterEnv, typename Locals, typename Map>
-    struct is_scoped_environment<scoped_environment<Env, OuterEnv, Locals, Map> const>
-        : mpl::true_
-    {};
-
-    // overload result_of::get_environment_argument to return the correct result type
-    namespace result_of
-    {
-        template <typename Env, typename OuterEnv, typename Locals, typename Map, typename N>
-        struct get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map> const, N>
-            : fusion::result_of::at_c<Env, N::value>
-        {};
-        
-        template <typename Env, typename OuterEnv, typename Locals, typename Map, typename N>
-        struct get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, N>
-            : fusion::result_of::at_c<Env, N::value>
-        {};
-    }
-    
-    // overload get_environment_argument to return the correct argument
-    template <typename N, typename Env, typename OuterEnv, typename Locals, typename Map>
-    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, N>::type
-    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map>& env)
-    {
-        return fusion::at_c<N::value>(env.env);
-    }
-    
-    template <typename N, typename Env, typename OuterEnv, typename Locals, typename Map>
-    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, N>::type
-    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map> const& env)
-    {
-        return fusion::at_c<N::value>(env.env);
-    }
-
-
-    // overload get_environment_argument_c to return the correct argument
-    template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>
-    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
-    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map>& env)
-    {
-        return fusion::at_c<N>(env.env);
-    }
-    
-    template <int N, typename Env, typename OuterEnv, typename Locals, typename Map>
-    typename result_of::get_environment_argument<scoped_environment<Env, OuterEnv, Locals, Map>, mpl::int_<N> >::type
-    get_environment_argument_c(scoped_environment<Env, OuterEnv, Locals, Map> const& env)
-    {
-        return fusion::at_c<N>(env.env);
-    }
-
-    template <typename Env, typename OuterEnv, typename Locals, typename Map>
+    template<typename Env, typename OuterEnv, typename Locals>
     struct scoped_environment
+        : fusion::sequence_facade<
+            scoped_environment<Env, OuterEnv, Locals>
+          , fusion::random_access_traversal_tag
+        >
     {
+        typedef Env env_type;
         typedef OuterEnv outer_env_type;
         typedef Locals locals_type;
-        typedef Map map_type;
 
         scoped_environment(Env& env, OuterEnv& outer_env, Locals const& locals)
             : env(env)
             , outer_env(outer_env)
-            , locals(locals) {}
+            , locals(locals)
+        {}
 
         Env& env;
         OuterEnv& outer_env;
         Locals locals;
+    
+        #define PHOENIX_ADAPT_SCOPED_ENVIRONMENT(INTRINSIC)                     \
+        template <typename Seq>                                                 \
+        struct INTRINSIC                                                        \
+        {                                                                       \
+            typedef typename Seq::env_type env_type;                            \
+            typedef typename fusion::result_of::INTRINSIC<env_type>::type type; \
+                                                                                \
+            static type call(Seq & seq)                                         \
+            {                                                                   \
+                return fusion::INTRINSIC(seq);                                  \
+            }                                                                   \
+        }                                                                       \
+        /**/
+        PHOENIX_ADAPT_SCOPED_ENVIRONMENT(begin);
+        PHOENIX_ADAPT_SCOPED_ENVIRONMENT(end);
+        PHOENIX_ADAPT_SCOPED_ENVIRONMENT(size);
+        #undef PHOENIX_ADAPT_SCOPED_ENVIRONMENT
+    
+        template <typename Seq, typename N>
+        struct value_at
+        {
+            typedef typename Seq::env_type env_type;
+            typedef typename fusion::result_of::value_at<env_type, N>::type type;
+        };
+        
+        template <typename Seq, typename N>
+        struct at
+        {
+            typedef typename Seq::env_type env_type;
+            typedef typename fusion::result_of::at<env_type, N>::type type;
+
+            static type call(Seq & seq)
+            {
+                return fusion::at<N>(seq);
+            }
+        };
     };
 
+    template <typename Env, typename Dummy = void>
+    struct is_scoped_environment : mpl::false_ {};
+
+    template <typename Env, typename OuterEnv, typename Locals>
+    struct is_scoped_environment<scoped_environment<Env, OuterEnv, Locals> >
+        : mpl::true_
+    {};
+
+    template <typename Env, typename OuterEnv, typename Locals>
+    struct is_scoped_environment<scoped_environment<Env, OuterEnv, Locals> const>
+        : mpl::true_
+    {};
 }}
 
 #endif

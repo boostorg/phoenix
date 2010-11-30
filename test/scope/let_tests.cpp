@@ -11,14 +11,16 @@
 
 #define PHOENIX_LIMIT 6
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/fusion/tuple.hpp>
-#include <boost/phoenix/scope.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/function.hpp>
-#include <boost/phoenix/fusion.hpp>
+//#include <boost/phoenix/fusion.hpp>
+#include <boost/phoenix/scope.hpp>
 
 #include <typeinfo>
+
+namespace fusion = boost::fusion;
+namespace mpl = boost::mpl;
 
 int
 main()
@@ -37,6 +39,15 @@ main()
     using boost::phoenix::local_names::_y;
     using boost::phoenix::local_names::_z;
     using boost::phoenix::placeholders::arg1;
+
+    {
+        BOOST_TEST(let()[val(1)]() == 1);
+
+        //_a();
+        let(_a = val(9)+ 10, _b = val(9) + 3.0)[_a]();
+    }
+
+#if 0
 /*
     {
         int x = 1;
@@ -185,6 +196,7 @@ main()
         BOOST_TEST(i == 2);
     }
 */
+#endif
     return boost::report_errors();
 }
 

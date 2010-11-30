@@ -26,7 +26,11 @@ namespace boost { namespace phoenix
       , typename Dummy = void>
     struct expr_ext;
 
-	template <typename Tag, PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT), typename Dummy = void>
+	template <
+        typename Tag
+      , PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)
+      , typename Dummy = void
+    >
 	struct expr : expr_ext<actor, Tag, PHOENIX_A(PHOENIX_COMPOSITE_LIMIT)> {};
 
     struct default_domain_with_basic_expr
@@ -211,7 +215,7 @@ namespace boost { namespace phoenix
             1                                                                   \
           , BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR)))       \
           , PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R                              \
-          , (NAME, BOOST_PP_SEQ_POP_BACK(GRAMMAR), ACTOR)                    \
+          , (NAME, BOOST_PP_SEQ_POP_BACK(GRAMMAR), ACTOR)                       \
         )                                                                       \
     }                                                                           \
                                                                                 \
@@ -247,13 +251,29 @@ namespace boost { namespace phoenix
     struct expr_ext<Actor, Tag, PHOENIX_A>
         : proto::transform<expr_ext<Actor, Tag, PHOENIX_A>, int>
     {
-        typedef typename proto::result_of::make_expr<Tag, default_domain_with_basic_expr, PHOENIX_A>::type base_type;
+        typedef
+            typename proto::result_of::make_expr<
+                Tag
+              , default_domain_with_basic_expr
+              , PHOENIX_A
+            >::type
+            base_type;
+
         typedef Actor<base_type> type;
-        typedef typename proto::nary_expr<Tag, PHOENIX_A>::proto_grammar proto_grammar;
+
+        typedef
+            typename proto::nary_expr<Tag, PHOENIX_A>::proto_grammar
+            proto_grammar;
         
         static type make(PHOENIX_A_a)
         {
-            actor<base_type> const e = {proto::make_expr<Tag, default_domain_with_basic_expr>(PHOENIX_a)};
+            actor<base_type> const e =
+                {
+                    proto::make_expr<
+                        Tag
+                      , default_domain_with_basic_expr
+                    >(PHOENIX_a)
+                };
             return e;
         }
 
@@ -263,7 +283,9 @@ namespace boost { namespace phoenix
         {};
         
         typedef Tag proto_tag;
-        #define BOOST_PHOENIX_ENUM_CHILDREN(_, N, __) typedef BOOST_PP_CAT(A, N) BOOST_PP_CAT(proto_child, N);
+        #define BOOST_PHOENIX_ENUM_CHILDREN(_, N, __)                           \
+        typedef BOOST_PP_CAT(A, N) BOOST_PP_CAT(proto_child, N);                \
+        /**/
         BOOST_PP_REPEAT(PHOENIX_ITERATION, BOOST_PHOENIX_ENUM_CHILDREN, _)
         #undef BOOST_PHOENIX_ENUM_CHILDREN
     };

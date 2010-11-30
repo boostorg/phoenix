@@ -16,14 +16,22 @@
 
 namespace boost { namespace phoenix
 {
+    namespace expression
+    {
+        template <typename A0, typename A1>
+        struct sequence
+            : expr<proto::tag::comma, A0, A1>
+        {};
+    }
+
 	namespace rule
 	{
-		struct sequence
-		  : proto::binary_expr<
-		    proto::tag::comma
-		  , meta_grammar
-		  , meta_grammar>
-		{};
+        struct sequence
+            : expression::sequence<
+                meta_grammar
+              , meta_grammar
+            >
+        {};
 	}
 
 	template <typename Dummy>

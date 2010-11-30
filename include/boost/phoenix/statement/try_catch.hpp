@@ -33,17 +33,26 @@ namespace boost { namespace phoenix
 
     namespace expression
     {
-        template <typename Try, PHOENIX_typename_A_void(PHOENIX_CATCH_LIMIT), typename Dummy = void>
+        template <
+            typename Try
+          , PHOENIX_typename_A_void(PHOENIX_CATCH_LIMIT)
+          , typename Dummy = void
+        >
         struct try_catch;
 
-#define PHOENIX_TRY_CATCH_EXPRESSION(Z, N, DATA)                                \
-        template <typename Try BOOST_PP_COMMA_IF(N) PHOENIX_typename_A(N)>                          \
-        struct try_catch<Try BOOST_PP_COMMA_IF(N) PHOENIX_A(N)>                                     \
-            : expr_ext<try_catch_actor, tag::try_catch, Try BOOST_PP_COMMA_IF(N) PHOENIX_A(N)>      \
+        #define PHOENIX_TRY_CATCH_EXPRESSION(Z, N, DATA)                        \
+        template <typename Try BOOST_PP_COMMA_IF(N) PHOENIX_typename_A(N)>      \
+        struct try_catch<Try BOOST_PP_COMMA_IF(N) PHOENIX_A(N)>                 \
+            : expr_ext<                                                         \
+                try_catch_actor                                                 \
+              , tag::try_catch                                                  \
+              , Try                                                             \
+              BOOST_PP_COMMA_IF(N) PHOENIX_A(N)>                                \
         {};                                                                     \
         /**/
 
         BOOST_PP_REPEAT(PHOENIX_CATCH_LIMIT, PHOENIX_TRY_CATCH_EXPRESSION, _)
+        #undef PHOENIX_TRY_CATCH_EXPRESSION
 
         template <typename A0, typename A1>
         struct catch_
@@ -96,47 +105,61 @@ namespace boost { namespace phoenix
         typedef void result_type;
 
 #define PHOENIX_TRY_CATCH_EVAL_R(Z, N, DATA) \
-            catch(typename proto::result_of::value<typename proto::result_of::child_c<BOOST_PP_CAT(A, N), 0>::type>::type::type &) \
-            { \
-                eval(proto::child_c<1>(BOOST_PP_CAT(a, N)), env); \
-            } \
+            catch(                                                              \
+                typename proto::result_of::value<                               \
+                    typename proto::result_of::child_c<                         \
+                        BOOST_PP_CAT(A, N)                                      \
+                      , 0                                                       \
+                    >::type                                                     \
+                >::type::type &                                                 \
+            )                                                                   \
+            {                                                                   \
+                eval(proto::child_c<1>(BOOST_PP_CAT(a, N)), env);               \
+            }                                                                   \
         /**/
 
-#define PHOENIX_TRY_CATCH_EVAL(Z, N, DATA) \
-        template <typename Env, typename Try, PHOENIX_typename_A(N)> \
-        typename boost::enable_if< \
-            proto::matches<BOOST_PP_CAT(A, BOOST_PP_DEC(N)), rule::catch_> \
-          , result_type \
-        >::type \
+#define PHOENIX_TRY_CATCH_EVAL(Z, N, DATA)                                      \
+        template <typename Env, typename Try, PHOENIX_typename_A(N)>            \
+        typename boost::enable_if<                                              \
+            proto::matches<BOOST_PP_CAT(A, BOOST_PP_DEC(N)), rule::catch_>      \
+          , result_type                                                         \
+        >::type                                                                 \
         operator()(Env & env, Try const & try_, PHOENIX_A_const_ref_a(N)) const \
-        { \
-            try \
-            { \
-                eval(proto::child_c<0>(try_), env); \
-            } \
-            BOOST_PP_REPEAT(N, PHOENIX_TRY_CATCH_EVAL_R, _) \
-        } \
-        \
-        template <typename Env, typename Try, PHOENIX_typename_A(N)> \
-        typename boost::disable_if< \
-            proto::matches<BOOST_PP_CAT(A, BOOST_PP_DEC(N)), rule::catch_> \
-          , result_type \
-        >::type \
+        {                                                                       \
+            try                                                                 \
+            {                                                                   \
+                eval(proto::child_c<0>(try_), env);                             \
+            }                                                                   \
+            BOOST_PP_REPEAT(N, PHOENIX_TRY_CATCH_EVAL_R, _)                     \
+        }                                                                       \
+                                                                                \
+        template <typename Env, typename Try, PHOENIX_typename_A(N)>            \
+        typename boost::disable_if<                                             \
+            proto::matches<BOOST_PP_CAT(A, BOOST_PP_DEC(N)), rule::catch_>      \
+          , result_type                                                         \
+        >::type                                                                 \
         operator()(Env & env, Try const & try_, PHOENIX_A_const_ref_a(N)) const \
-        { \
-            try \
-            { \
-                eval(proto::child_c<0>(try_), env); \
-            } \
-            BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_TRY_CATCH_EVAL_R, _) \
-            catch(...) \
-            { \
+        {                                                                       \
+            try                                                                 \
+            {                                                                   \
+                eval(proto::child_c<0>(try_), env);                             \
+            }                                                                   \
+            BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_TRY_CATCH_EVAL_R, _)       \
+            catch(...)                                                          \
+            {                                                                   \
                 eval(proto::child_c<0>(BOOST_PP_CAT(a, BOOST_PP_DEC(N))), env); \
-            } \
-        } \
+            }                                                                   \
+        }                                                                       \
         /**/
 
-        BOOST_PP_REPEAT_FROM_TO(1, PHOENIX_CATCH_LIMIT, PHOENIX_TRY_CATCH_EVAL, _)
+        BOOST_PP_REPEAT_FROM_TO(
+            1
+          , PHOENIX_CATCH_LIMIT
+          , PHOENIX_TRY_CATCH_EVAL
+          , _
+        )
+        #undef PHOENIX_TRY_CATCH_EVAL
+        #undef PHOENIX_TRY_CATCH_EVAL_R
     };
 
     template <typename Dummy>
@@ -165,7 +188,11 @@ namespace boost { namespace phoenix
                           , mpl::true_()
                           , mpl::and_<
                                 proto::_state
-                              , try_catch_is_nullary(proto::_, int(), proto::_data)
+                              , try_catch_is_nullary(
+                                    proto::_
+                                  , int()
+                                  , proto::_data
+                                )
                             >()
                         >
                     >()
@@ -178,7 +205,12 @@ namespace boost { namespace phoenix
             : proto::call<try_catch_is_nullary(proto::_, int(), _env)>
         {};
 
-        template <typename TryCatch, typename Exception, typename Expr, long Arity = proto::arity_of<TryCatch>::value>
+        template <
+            typename TryCatch
+          , typename Exception
+          , typename Expr
+          , long Arity = proto::arity_of<TryCatch>::value
+        >
         struct catch_push_back;
 
         template <typename TryCatch, typename Exception, typename Expr>
@@ -214,16 +246,16 @@ namespace boost { namespace phoenix
             }
         };
 
-#define PHOENIX_CATCH_PUSH_BACK_R0(Z, N, DATA)                                  \
+        #define PHOENIX_CATCH_PUSH_BACK_R0(Z, N, DATA)                          \
         BOOST_PP_COMMA_IF(N)                                                    \
         typename proto::result_of::child_c<TryCatch, N>::type                   \
         /**/
 
-#define PHOENIX_CATCH_PUSH_BACK_R1(Z, N, DATA)                                  \
+        #define PHOENIX_CATCH_PUSH_BACK_R1(Z, N, DATA)                          \
         BOOST_PP_COMMA_IF(N) proto::child_c<N>(try_catch)                       \
         /**/
 
-#define PHOENIX_CATCH_PUSH_BACK(Z, N, DATA)                                     \
+        #define PHOENIX_CATCH_PUSH_BACK(Z, N, DATA)                             \
         template <typename TryCatch, typename Exception, typename Expr>         \
         struct catch_push_back<TryCatch, Exception, Expr, N>                    \
         {                                                                       \
@@ -259,9 +291,19 @@ namespace boost { namespace phoenix
         };                                                                      \
         /**/
 
-        BOOST_PP_REPEAT_FROM_TO(2, PHOENIX_CATCH_LIMIT, PHOENIX_CATCH_PUSH_BACK, _)
+        BOOST_PP_REPEAT_FROM_TO(
+            2
+          , PHOENIX_CATCH_LIMIT
+          , PHOENIX_CATCH_PUSH_BACK
+          , _
+        )
+        #undef PHOENIX_CATCH_PUSH_BACK
         
-        template <typename TryCatch, typename Expr, long Arity = proto::arity_of<TryCatch>::value>
+        template <
+            typename TryCatch
+          , typename Expr
+          , long Arity = proto::arity_of<TryCatch>::value
+        >
         struct catch_all_push_back;
 
         template <typename TryCatch, typename Expr>
@@ -296,7 +338,7 @@ namespace boost { namespace phoenix
             }
         };
 
-#define PHOENIX_CATCH_ALL_PUSH_BACK(Z, N, DATA)                                 \
+        #define PHOENIX_CATCH_ALL_PUSH_BACK(Z, N, DATA)                         \
         template <typename TryCatch, typename Expr>                             \
         struct catch_all_push_back<TryCatch, Expr, N>                           \
         {                                                                       \
@@ -331,7 +373,15 @@ namespace boost { namespace phoenix
         };                                                                      \
         /**/
         
-        BOOST_PP_REPEAT_FROM_TO(2, PHOENIX_CATCH_LIMIT, PHOENIX_CATCH_ALL_PUSH_BACK, _)
+        BOOST_PP_REPEAT_FROM_TO(
+            2
+          , PHOENIX_CATCH_LIMIT
+          , PHOENIX_CATCH_ALL_PUSH_BACK
+          , _
+        )
+        #undef PHOENIX_CATCH_ALL_PUSH_BACK
+        #undef PHOENIX_CATCH_PUSH_BACK_R0
+        #undef PHOENIX_CATCH_PUSH_BACK_R1
     }
 
     template <typename TryCatch, typename Exception>
@@ -352,7 +402,10 @@ namespace boost { namespace phoenix
         >::type
         operator[](Expr const& expr) const
         {
-            return detail::catch_push_back<TryCatch, Exception, Expr>::make(try_catch, expr);
+            return
+                detail::catch_push_back<TryCatch, Exception, Expr>::make(
+                    try_catch, expr
+                );
         }
 
         TryCatch const & try_catch;
@@ -376,7 +429,9 @@ namespace boost { namespace phoenix
         >::type
         operator[](Expr const& expr) const
         {
-            return detail::catch_all_push_back<TryCatch, Expr>::make(try_catch, expr);
+            return detail::catch_all_push_back<TryCatch, Expr>::make(
+                try_catch, expr
+            );
         }
 
         TryCatch const & try_catch;
