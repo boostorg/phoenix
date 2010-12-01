@@ -23,23 +23,92 @@ namespace boost { namespace phoenix
 {
     PHOENIX_DEFINE_EXPRESSION(
         let
-      , (proto::_)//(rule::local_variables)
-        (proto::_)//(rule::let_grammar)
+      , (rule::local_var_def_list)
+        (meta_grammar)
     )
 
     struct let_eval
     {
-        typedef void result_type;
+        template <typename Sig>
+        struct result;
+
+        template <typename This, typename Env, typename Locals, typename Let>
+        struct result<This(Env, Locals const&, Let const&)>
+        {
+            typedef
+                typename boost::result_of<
+                    functional::args(Env)
+                >::type
+                args_type;
+
+            typedef
+                typename boost::result_of<
+                    functional::actions(Env)
+                >::type
+                actions_type;
+
+            typedef
+                typename boost::result_of<
+                    rule::local_var_def_list(
+                        Locals
+                      , args_type
+                      , actions_type
+                    )
+                >::type
+                locals_type;
+
+            typedef
+                typename boost::result_of<
+                    evaluator(
+                        Let const &
+                      , fusion::vector2<scoped_environment<args_type, args_type, locals_type> &, actions_type&>&
+                    )
+                >::type
+                type;
+        };
 
         template <typename Env, typename Locals, typename Let>
-        result_type
+        typename result<let_eval(Env&, Locals const&, Let const&)>::type
         operator()(Env & env, Locals const & locals, Let const & let) const
         {
-            std::cout << "yeha!\n";
-            std::cout << typeid(Locals).name() << "\n\n";
-            std::cout << typeid(rule::local_var_def_list()(locals, functional::args()(env), functional::actions()(env))).name() << "\n\n-------\n";
-            std::cout << typeid(find_local()(rule::local_var_def_list()(locals, functional::args()(env), functional::actions()(env)), _a)).name() << "\n\n-------\n";
-            scope_grammar()(let, functional::args()(env), functional::actions()(env));
+            typedef
+                typename boost::result_of<
+                    functional::args(Env &)
+                >::type
+                args_type;
+
+            typedef
+                typename boost::result_of<
+                    functional::actions(Env &)
+                >::type
+                actions_type;
+
+            typedef
+                typename boost::result_of<
+                    rule::local_var_def_list(
+                        Locals
+                      , args_type
+                      , actions_type
+                    )
+                >::type
+                locals_type;
+
+            args_type & old_env = functional::args()(env);
+            actions_type & actions = functional::actions()(env);
+
+            scoped_environment<args_type, args_type, locals_type>
+                scoped_env(
+                    old_env
+                  , old_env
+                  , rule::local_var_def_list()(
+                      locals
+                    , old_env
+                    , actions
+                    )
+                );
+
+            fusion::vector2<scoped_environment<args_type, args_type, locals_type> &, actions_type&> new_env(scoped_env, actions);
+            return eval(let, new_env);
         }
     };
 
@@ -166,7 +235,6 @@ namespace boost { namespace phoenix
         > const
         operator()(Expr0 const& expr0, Expr1 const& expr1) const
         {
-            std::cout << typeid(typename detail::make_locals<Expr0, Expr1>::type).name() << "\n\n";
             return detail::make_locals<Expr0, Expr1>::make(expr0, expr1);
         }
 
@@ -176,7 +244,6 @@ namespace boost { namespace phoenix
         > const
         operator()(Expr0 const& expr0, Expr1 const& expr1, Expr2 const& expr2) const
         {
-            std::cout << typeid(typename detail::make_locals<Expr0, Expr1, Expr2>::type).name() << "\n\n";
             return detail::make_locals<Expr0, Expr1, Expr2>::make(expr0, expr1, expr2);
         }
 
@@ -186,7 +253,6 @@ namespace boost { namespace phoenix
         > const
         operator()(Expr0 const& expr0, Expr1 const& expr1, Expr2 const& expr2, Expr3 const & expr3) const
         {
-            std::cout << typeid(typename detail::make_locals<Expr0, Expr1, Expr2, Expr3>::type).name() << "\n\n";
             return detail::make_locals<Expr0, Expr1, Expr2, Expr3>::make(expr0, expr1, expr2, expr3);
         }
     };

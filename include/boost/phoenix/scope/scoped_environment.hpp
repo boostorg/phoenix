@@ -44,7 +44,11 @@ namespace boost { namespace phoenix
         template <typename Seq>                                                 \
         struct INTRINSIC                                                        \
         {                                                                       \
-            typedef typename Seq::env_type env_type;                            \
+            typedef                                                             \
+                typename boost::remove_reference<                               \
+                    typename Seq::env_type                                      \
+                >::type                                                         \
+                env_type;                                                       \
             typedef typename fusion::result_of::INTRINSIC<env_type>::type type; \
                                                                                 \
             static type call(Seq & seq)                                         \
@@ -61,14 +65,22 @@ namespace boost { namespace phoenix
         template <typename Seq, typename N>
         struct value_at
         {
-            typedef typename Seq::env_type env_type;
+            typedef
+                typename boost::remove_reference<
+                    typename Seq::env_type
+                >::type
+                env_type;
             typedef typename fusion::result_of::value_at<env_type, N>::type type;
         };
         
         template <typename Seq, typename N>
         struct at
         {
-            typedef typename Seq::env_type env_type;
+            typedef
+                typename boost::remove_reference<
+                    typename Seq::env_type
+                >::type
+                env_type;
             typedef typename fusion::result_of::at<env_type, N>::type type;
 
             static type call(Seq & seq)

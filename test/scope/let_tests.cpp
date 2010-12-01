@@ -16,6 +16,7 @@
 #include <boost/phoenix/function.hpp>
 //#include <boost/phoenix/fusion.hpp>
 #include <boost/phoenix/scope.hpp>
+#include <boost/fusion/container/vector.hpp>
 
 #include <typeinfo>
 
@@ -40,15 +41,6 @@ main()
     using boost::phoenix::local_names::_z;
     using boost::phoenix::placeholders::arg1;
 
-    {
-        BOOST_TEST(let()[val(1)]() == 1);
-
-        //_a();
-        let(_a = val(9)+ 10, _b = val(9) + 3.0)[_a]();
-    }
-
-#if 0
-/*
     {
         int x = 1;
         BOOST_TEST(
@@ -100,6 +92,7 @@ main()
         );
     }
 
+    /*
     {
         int x = 999;
         BOOST_TEST(
@@ -112,7 +105,9 @@ main()
         
         BOOST_TEST(x == 888 + 999);    
     }
+    */
 
+    /*
     {
         int x = 999;
         BOOST_TEST(
@@ -126,6 +121,8 @@ main()
         BOOST_TEST(x == 999);
     }
     */
+
+    /*
     {
         // FIXME do not require a argument to return int
         BOOST_TEST(
@@ -150,7 +147,8 @@ main()
             (0)
         ).name() << "\n";
     }
-  /*  
+    */
+
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST
     {
         // disallow this:
@@ -167,20 +165,25 @@ main()
         BOOST_TEST(x == 1);
     }
 
+    /*
     {
         // show that this code returns an lvalue
         int i = 1;
         let(_a = arg1)[ _a ](i)++;
         BOOST_TEST(i == 2);
     }
+    */
 
+    /*
     {
         // show that what you put in is what you get out
         int i = 1;
         int& j = let(_a = arg1)[_a](i);
         BOOST_TEST(&i == &j);
     }
+    */
 
+    /*
     {
         using boost::phoenix::at_c;
 
@@ -189,14 +192,16 @@ main()
 
         BOOST_TEST( i == 0 );
     }
+    */
 
+    /*
     {
         int i = 0;
         let(_a = _1)[_a = _2](i, 2);
         BOOST_TEST(i == 2);
     }
-*/
-#endif
+    */
+
     return boost::report_errors();
 }
 

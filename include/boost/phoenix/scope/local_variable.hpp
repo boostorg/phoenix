@@ -82,34 +82,128 @@ namespace boost { namespace phoenix
     namespace detail
     {
         struct local_var_not_found {};
-    }
 
-    struct find_local
-        : proto::or_<
-            proto::when<
-                proto::comma<find_local, rule::local_var_def>
-              , proto::if_<
-                    proto::matches<proto::_right, proto::_state>()
-                  , proto::_value(proto::_right(proto::_right))
-                  , find_local(proto::_left, proto::_state)
+        struct find_local
+            : proto::or_<
+                proto::when<
+                    proto::comma<find_local, rule::local_var_def>
+                  , proto::if_<
+                        proto::matches<proto::_left(proto::_right), proto::_state>()
+                      , proto::_value(proto::_right(proto::_right))
+                      , find_local(proto::_left, proto::_state)
+                    >
                 >
-          , proto::when<
-                rule::local_var_def
-              , proto::if_<
-                    proto::matches<proto::_right, proto::_state>()
-                  , proto::_value(proto::_right(proto::_right))
-                  , detail::local_var_not_found()
+              , proto::when<
+                    rule::local_var_def
+                  , proto::if_<
+                        proto::matches<proto::_left, proto::_state>()
+                      , proto::_value(proto::_right)
+                      , detail::local_var_not_found()
+                    >
                 >
             >
-        >
-    {};
-                
+        {};
 
+        template<typename This, typename Env, typename Key>
+        struct get_local_result_impl
+            : mpl::if_<
+                is_same<
+                    typename boost::result_of<
+                        detail::find_local(typename Env::locals_type, Key)
+                    >::type
+                  , detail::local_var_not_found
+                >
+              , typename boost::result_of<
+                    This(typename Env::outer_env_type&)
+                >::type
+              , typename boost::result_of<
+                    detail::find_local(typename Env::locals_type, Key)
+              >::type
+            >
+        {};
+    }
+
+    template <typename Key>
+    struct get_local
+    {
+        template <typename Sig>
+        struct result;
+
+        template <typename This, typename Env>
+        struct result<This(Env &)>
+            : mpl::eval_if<
+                is_scoped_environment<Env>
+              , detail::get_local_result_impl<This, Env, Key>
+              , mpl::identity<detail::local_var_not_found>
+            >
+        {};
+
+        template <typename Env>
+        typename result<get_local<Key>(Env&)>::type
+        operator()(Env &env) const
+        {
+            typedef typename result<get_local<Key>(Env&)>::type result_type;
+
+            return this->evaluate(
+                env
+              , typename is_scoped_environment<Env>::type()
+            );
+        }
+
+        private:
+            
+            // is a scoped environment
+            template <typename Env>
+            typename result<get_local<Key>(Env&)>::type
+            evaluate(Env & env, mpl::true_) const
+            {
+                return
+                    this->evaluate_scoped(
+                        env
+                      , typename is_same<
+                            typename boost::result_of<detail::find_local(typename Env::locals_type, Key)>::type
+                          , detail::local_var_not_found
+                        >::type()
+                    );
+            }
+
+            // is a scoped environment, and we have the local in our environment
+            template <typename Env>
+            typename result<get_local<Key>(Env&)>::type
+            evaluate_scoped(Env & env, mpl::false_) const
+            {
+                return detail::find_local()(env.locals, Key());
+            }
+            
+            // is a scoped environment, and we need to look in the outer environment
+            template <typename Env>
+            typename result<get_local<Key>(Env&)>::type
+            evaluate_scoped(Env & env, mpl::true_) const
+            {
+                return get_local<Key>()(env.outer_env);
+            }
+            
+            template <typename Env>
+            typename result<get_local<Key>(Env&)>::type
+            evaluate(Env & env, mpl::false_) const
+            {
+                return detail::local_var_not_found();
+            }
+
+    };
+
+    /*
     struct scope_grammar
         : proto::or_<
             proto::when<rule::local_variable, proto::external_transform>
           , meta_grammar
         >
+    {};
+    */
+    
+    template<typename T>
+    struct is_custom_terminal<local_variable<T> >
+      : mpl::true_
     {};
 
     struct local_var_eval
@@ -118,22 +212,47 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Env, typename Local>
-        struct result<This(Env&, Local)>
+        template <typename This, typename Local, typename Env>
+        struct result<This(Local const &, Env)>
         {
-            typedef int type;
+            typedef
+                proto::terminal< local_variable<typename Local::type> >
+                lookup_grammar;
+            typedef
+                typename boost::result_of<
+                    functional::args(Env)
+                >::type
+                args_type;
+            typedef
+                typename boost::result_of<get_local<lookup_grammar>(args_type&)>::type
+                type;
         };
 
-        typedef int result_type;
-
-        template <typename Env, typename Local>
-        typename result<local_var_eval(Env&, Local)>::type
-        operator()(Env & env, Local local)
+        template <typename Local, typename Env>
+        typename result<local_var_eval(Local const &, Env&)>::type
+        operator()(Local const& local, Env & env)
         {
-            std::cout << "blubb\n";
-            return 5;
+            typedef
+                proto::terminal< local_variable<typename Local::type> >
+                lookup_grammar;
+            typedef
+                typename boost::result_of<
+                    functional::args(Env)
+                >::type
+                args_type;
+
+            std::cout << typeid(Env).name() << "\n";
+            std::cout << typeid(Local).name() << "\n";
+            //std::cout << typeid(typename boost::result_of<get_local<lookup_grammar>(args_type&)>::type).name() << "\n";
+            //std::cout << detail::find_local()(functional::args()(env).locals, lookup_grammar()) << "\n";
+            return get_local<lookup_grammar>()(functional::args()(env));
         }
     };
+    
+    template<typename T>
+    struct custom_terminal<local_variable<T> >
+        : local_var_eval
+    {};
 
     template <typename Dummy>
     struct default_actions::when<rule::local_variable, Dummy>
