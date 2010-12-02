@@ -16,6 +16,9 @@
 
 namespace boost { namespace phoenix
 {
+    template <typename Expr>
+    struct is_nullary;
+
 	namespace detail
 	{
 		struct is_nullary_
@@ -40,7 +43,7 @@ namespace boost { namespace phoenix
 
 		template <typename Dummy>
 		struct is_nullary_::when<rule::custom_terminal, Dummy>
-			: proto::make<mpl::true_()>
+            : proto::lazy<is_nullary<custom_terminal<proto::_value> >(proto::_, _env)>//               proto::lazy<is_nullary<proto::_value>()>
 		{};
 
 		template <typename Dummy>
@@ -53,6 +56,12 @@ namespace boost { namespace phoenix
 	struct is_nullary
 		: boost::result_of<evaluator(Expr const&, fusion::vector2<fusion::vector0<>&, detail::is_nullary_>&)>
 	{};
+
+    template <typename T>
+    struct is_nullary<custom_terminal<T> >
+        : proto::make<mpl::true_()>
+    {};
+
 
 }}
 

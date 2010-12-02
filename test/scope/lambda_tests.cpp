@@ -14,10 +14,10 @@
 #define PHOENIX_LIMIT 5
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/phoenix/scope.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/function.hpp>
+#include <boost/phoenix/scope.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -75,13 +75,14 @@ main()
     using boost::phoenix::local_names::_a;
     using boost::phoenix::local_names::_b;
     using boost::phoenix::placeholders::arg1;
-/*
+
     {
         int x = 1;
         int y = lambda[_1]()(x);
         BOOST_TEST(x == y);
     }
     
+/*
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -102,7 +103,6 @@ main()
             (x, z)(y) == x + y + z
         );
     }
-*/
     {
         int x = 4;
         int y = 5;
@@ -114,7 +114,6 @@ main()
         BOOST_TEST(x == 555);
         (void)y;
     }
-/*
     {
         int x = 1;
         long x2 = 2;

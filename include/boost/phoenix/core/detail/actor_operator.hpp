@@ -65,7 +65,7 @@
                 args_type;
             args_type args(PHOENIX_a);
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
-
+            
             return eval(*this, env);
         }
 
@@ -84,7 +84,7 @@
                 args_type;
             args_type args(PHOENIX_a);
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
-
+            
             return eval(*this, env);
         }
 

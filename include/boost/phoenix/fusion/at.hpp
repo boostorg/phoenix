@@ -9,22 +9,27 @@
 #ifndef PHOENIX_FUSION_AT_HPP
 #define PHOENIX_FUSION_AT_HPP
 
-#include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/fusion/sequence/intrinsic/at_c.hpp>
 #include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/expression.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 
 namespace boost { namespace phoenix
 {
+    PHOENIX_DEFINE_EXPRESSION(
+        at_c
+      , (proto::terminal<proto::_>)
+        (meta_grammar)
+    )
+
     namespace result_of
     {
         template <typename Env, typename Tuple, int N>
-        struct at
+        struct at_c
             : fusion::result_of::at_c<
                 typename boost::remove_reference<
                     typename boost::result_of<
-                        eval_grammar(Tuple const&, Env&)
+                        evaluator(Tuple const&, Env)
                     >::type
                 >::type
               , N
@@ -32,42 +37,37 @@ namespace boost { namespace phoenix
         {};
     }
 
-    template <int N>
+
+    template <typename N>
     struct at_eval
     {
         template <typename Sig>
         struct result;
 
         template <typename This, typename Env, typename Tuple>
-        struct result<This(Env&, Tuple const&)>
-            : result_of::at<Env, Tuple, N>
+        struct result<This(Env, Tuple const&)>
+            : result_of::at_c<Env, Tuple, N::value>
         {};
 
         template <typename Env, typename Tuple>
-        typename result_of::at<Env, Tuple, N>::type
+        typename result_of::at_c<Env &, Tuple, N::value>::type
         operator()(Env& env, Tuple const& tuple) const
         {
-            return fusion::at_c<N>(eval(tuple, env));
+            return fusion::at_c<N::value>(eval(tuple, env));
         }
     };
 
-    template <int N, typename Tuple>
-    struct make_at : compose<at_eval<N>, Tuple> {};
+    template <typename Dummy>
+    struct default_actions::when<rule::at_c, Dummy>
+        : proto::lazy<at_eval<proto::_value(proto::_child_c<0>)>(_env, proto::_child_c<1>)>
+    {};
 
     template <int N, typename Tuple>
-    typename make_at<N, Tuple>::type const
+    typename expression::at_c<mpl::int_<N>, Tuple>::type
     at_c(Tuple const& tuple)
     {
-        return make_at<N, Tuple>()(tuple);
+        return expression::at_c<mpl::int_<N>, Tuple>::make(mpl::int_<N>(), tuple);
     }
-
-    template <typename N, typename Tuple>
-    typename make_at<N::value, Tuple>::type const
-    at(Tuple const& tuple)
-    {
-        return make_at<N::value, Tuple>()(tuple);
-    }
-
 }}
 
 #endif

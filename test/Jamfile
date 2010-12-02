@@ -74,7 +74,7 @@ test-suite phoenix_container :
 
 test-suite phoenix_scope :
 #    [ run scope/lambda_tests.cpp ] 
-#    [ run scope/let_tests.cpp ] 
+    [ run scope/let_tests.cpp ] 
 #    [ run scope/dynamic_tests.cpp ] 
 #    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
     ;
@@ -100,8 +100,8 @@ test-suite phoenix_boost_bind_compatibility :
     [ run boost_bind_compatibility/bind_eq_test.cpp ]
     [ run boost_bind_compatibility/bind_eq2_test.cpp ]
     [ run boost_bind_compatibility/bind_eq3_test.cpp ]
-	#[ run boost_bind_compatibility/bind_fastcall_mf_test.cpp ] # problem: result_of can't handle the fastcall attribute
-	#[ run boost_bind_compatibility/bind_fastcall_test.cpp ] # problem: result_of can't handle the fastcall attribute
+	#[ run boost_bind_compatibility/bind_fastcall_mf_test.cpp ]
+	#[ run boost_bind_compatibility/bind_fastcall_test.cpp ]
     [ run boost_bind_compatibility/bind_fn2_test.cpp ]
     [ run boost_bind_compatibility/bind_function_test.cpp ]
     [ run boost_bind_compatibility/bind_mf2_test.cpp ]
@@ -112,8 +112,8 @@ test-suite phoenix_boost_bind_compatibility :
     [ run boost_bind_compatibility/bind_rvalue_test.cpp ]
     [ run boost_bind_compatibility/bind_rv_sp_test.cpp ]
     [ run boost_bind_compatibility/bind_stateful_test.cpp ]
-	 #[ run boost_bind_compatibility/bind_stdcall_mf_test.cpp ] # problem: result_of can't handle the stdcall attribute
-	 #[ run boost_bind_compatibility/bind_stdcall_test.cpp ] # problem: result_of can't handle the stdcall attribute
+	#[ run boost_bind_compatibility/bind_stdcall_mf_test.cpp ]
+	#[ run boost_bind_compatibility/bind_stdcall_test.cpp ]
     [ run boost_bind_compatibility/bind_test.cpp ]
 	 ;
 

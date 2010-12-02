@@ -33,27 +33,6 @@ namespace boost { namespace phoenix
 		(divides)
 		(modulus)
 	)
-
-    /*
-    struct blubb
-        : proto::callable
-    {
-        typedef int result_type;
-
-        template <typename Env, typename Lhs, typename Rhs>
-        result_type
-        operator()(Env& env, Lhs const& lhs, Rhs const& rhs) const
-        {
-            std::cout << "ok ....\n";
-            return 5;
-        }
-    };
-
-    template <typename Dummy>
-    struct default_actions::when<rule::plus_assign, Dummy>
-        : proto::call<blubb(_env, proto::_child_c<0>, proto::_child_c<0>)>
-    {};
-    */
 }}
 
 #endif

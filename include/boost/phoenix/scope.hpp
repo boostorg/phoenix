@@ -10,7 +10,7 @@
 
 #include <boost/phoenix/version.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
-//#include <boost/phoenix/scope/lambda.hpp>
+#include <boost/phoenix/scope/lambda.hpp>
 #include <boost/phoenix/scope/let.hpp>
 #include <boost/phoenix/scope/local_variable.hpp>
 

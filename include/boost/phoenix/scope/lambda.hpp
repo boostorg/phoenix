@@ -9,6 +9,7 @@
 #ifndef PHOENIX_SCOPE_LAMBDA_HPP
 #define PHOENIX_SCOPE_LAMBDA_HPP
 
+/*
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/mpl.hpp>
@@ -18,9 +19,85 @@
 #include <boost/phoenix/scope/detail/local_variable.hpp>
 #include <boost/phoenix/support/element_at.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+*/
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/scope/local_variable.hpp>
 
 namespace boost { namespace phoenix
 {
+    PHOENIX_DEFINE_EXPRESSION(
+        lambda
+      , (rule::local_var_def_list)
+        (meta_grammar)
+    )
+
+    template <typename Locals = void, typename Dummy = void>
+    struct lambda_actor_gen;
+
+    template <>
+    struct lambda_actor_gen<void, void>
+    {
+        template <typename Expr>
+        Expr const &
+        operator[](Expr const & expr) const
+        {
+            return expr;
+        }
+    };
+
+    template <typename Locals>
+    struct lambda_actor_gen<Locals>
+    {
+        lambda_actor_gen(Locals const & locals)
+            : locals(locals)
+        {}
+
+        template <typename Expr>
+        typename expression::lambda<
+            Locals
+          , Expr
+        >::type const
+        operator[](Expr const & expr) const
+        {
+            return expression::lambda<Locals, Expr>::make(locals, expr);
+        }
+
+        Locals locals;
+    };
+
+    struct lambda_local_gen
+    {
+        lambda_actor_gen<> const
+        operator()() const
+        {
+            return lambda_actor_gen<>();
+        }
+
+        template <typename Expr0>
+        lambda_actor_gen<Expr0> const
+        operator()(Expr0 const& expr0) const
+        {
+            return expr0;
+        }
+
+#define PHOENIX_LAMBDA_LOCAL_GEN(Z, N, DATA) \
+        template <PHOENIX_typename_A(N)> \
+        lambda_actor_gen< \
+            typename detail::make_locals<PHOENIX_A(N)>::type \
+        > const \
+        operator()(PHOENIX_A_const_ref_a(N)) const \
+        { \
+            return detail::make_locals<PHOENIX_A(N)>::make(PHOENIX_a(N)); \
+        } \
+        /**/
+        BOOST_PP_REPEAT_FROM_TO(2, PHOENIX_LOCAL_LIMIT, PHOENIX_LAMBDA_LOCAL_GEN, _)
+
+    };
+
+    lambda_local_gen const lambda = {};
+
+#if 0
     namespace result_of
     {
         template <typename Env, typename Expr, typename OuterEnv, typename Locals, typename Map>
@@ -224,6 +301,7 @@ namespace boost { namespace phoenix
     };
 
     lambda_gen const lambda = lambda_gen();
+#endif
 }}
 
 #endif

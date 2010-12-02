@@ -35,18 +35,10 @@ namespace boost { namespace phoenix
     {
         typedef actor<typename proto::terminal<T* >::type> type;
     };
-    
-    template <typename T>
-    typename value<T const>::type
-    val(T const & t)
-    {
-        typename value<T const>::type const e = {{t}};
-        return e;
-    }
 
     template <typename T>
-    typename value<T>::type
-    val(T & t)
+    typename value<T>::type const
+    val(T t)
     {
         typename value<T>::type const e = {{t}};
         return e;
@@ -75,12 +67,17 @@ namespace boost { namespace phoenix
         {};     
 
         template <typename Env>
-        typename result<custom_terminal(actor<Expr> const &, Env &)>::type
-        operator()(actor<Expr> const& expr, Env & env) const
+        typename result<custom_terminal(actor<Expr> &, Env &)>::type
+        operator()(actor<Expr> const & expr, Env & env) const
         {
             return eval(expr, env);
         }
     };
+
+    template <typename T>
+    struct is_nullary<custom_terminal<actor<T> > >
+        : proto::make<typename is_nullary<T>::type()>
+    {};
 
     /*
     namespace result_of

@@ -11,6 +11,7 @@
 #define PHOENIX_STATEMENT_TRY_CATCH_HPP
 
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 
 namespace boost { namespace phoenix

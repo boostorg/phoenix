@@ -46,7 +46,7 @@ namespace boost { namespace phoenix
 
         Env env;
         OuterEnv outer_env;
-        Locals const & locals;
+        Locals locals;
     
         #define PHOENIX_ADAPT_SCOPED_ENVIRONMENT(INTRINSIC)                     \
         template <typename Seq>                                                 \

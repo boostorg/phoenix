@@ -14,14 +14,19 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/function.hpp>
-//#include <boost/phoenix/fusion.hpp>
+#include <boost/phoenix/fusion.hpp>
 #include <boost/phoenix/scope.hpp>
-#include <boost/fusion/container/vector.hpp>
+#include <boost/fusion/tuple.hpp>
 
 #include <typeinfo>
 
 namespace fusion = boost::fusion;
 namespace mpl = boost::mpl;
+
+int test()
+{
+    return 5;
+}
 
 int
 main()
@@ -41,24 +46,6 @@ main()
     using boost::phoenix::local_names::_z;
     using boost::phoenix::placeholders::arg1;
 
-    {
-        int x = 999;
-        //BOOST_TEST(
-            let(_x = val(_1)) // _x holds x by value 
-            [
-                val(_x)// += val(888))
-            ]
-            (x);// == x + 888*/
-            std::cout << typeid(
-            let(_x = val(_1)) // _x holds x by value 
-            [
-                val(_x)// += val(888))
-            ]
-            (x)).name() << "\n";// == x + 888*/
-        //);
-        
-        BOOST_TEST(x == 999);
-    }
 #if 0
     {
         int x = 1;
@@ -83,18 +70,16 @@ main()
     }
 
     {
-        // TODO: fixme
         int x = 1, y = 10, z = 13;
         BOOST_TEST(
             let(_x = _1, _y = _2)
             [
                 let(_z = _3)
                 [
-                    _z
-                    //_x + _y + _z
+                    _x + _y + _z
                 ]
             ]
-            (x, y, z) == z//x + y + z
+            (x, y, z) == x + y + z
         );
     }
 
@@ -128,44 +113,39 @@ main()
 
     {
         int x = 999;
-        //BOOST_TEST(
+        BOOST_TEST(
+            let(_x = val(_1)) // _x holds x by value 
+            [
+                _x += 888
+            ]
+            (x) == x + 888
+        );
+        
+        BOOST_TEST(x == 999);
+
+        BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value 
             [
                 val(_x += 888)
             ]
-            (x);// == x + 888
-        //);
+            (x) == x + 888
+        );
         
         BOOST_TEST(x == 999);
     }
+#endif
 
-    /*
     {
-        // FIXME do not require a argument to return int
         BOOST_TEST(
             let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
             [
                 _a + _b + _c + _d + _e
             ]
-            (0) == 1 + 2 + 3 + 4 + 5
+            () == 1 + 2 + 3 + 4 + 5
         );
-        std::cout << typeid(
-            let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
-            [
-                _a + _b + _c + _d + _e
-            ]
-            ()
-        ).name() << "\n";
-        std::cout << typeid(
-            let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
-            [
-                _a + _b + _c + _d + _e
-            ]
-            (0)
-        ).name() << "\n";
     }
-    */
 
+#if 0
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST
     {
         // disallow this:
@@ -174,7 +154,6 @@ main()
     }
 #endif
     
-    /*
     {
         // show that we can return a local from an outer scope
         int y = 0;
@@ -182,7 +161,6 @@ main()
 
         BOOST_TEST(x == 1);
     }
-    */
 
     {
         // show that this code returns an lvalue
@@ -198,7 +176,6 @@ main()
         BOOST_TEST(&i == &j);
     }
 
-    /*
     {
         using boost::phoenix::at_c;
 
@@ -207,7 +184,6 @@ main()
 
         BOOST_TEST( i == 0 );
     }
-    */
 
     {
         int i = 0;

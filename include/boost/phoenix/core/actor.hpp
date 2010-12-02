@@ -133,7 +133,7 @@ namespace boost { namespace phoenix
             typedef fusion::vector0<> args_type;
             args_type args;
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
-
+            
             return eval(*this, env);
         }
 
@@ -147,7 +147,7 @@ namespace boost { namespace phoenix
             typedef fusion::vector0<> args_type;
             args_type args;
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
-
+            
             return eval(*this, env);
         }
         

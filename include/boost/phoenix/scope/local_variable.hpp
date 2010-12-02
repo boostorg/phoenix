@@ -10,7 +10,7 @@
 
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/expression.hpp>
-//#include <boost/phoenix/scope/detail/local_variable.hpp>
+#include <boost/phoenix/statement/sequence.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -24,14 +24,25 @@ namespace boost { namespace phoenix
     {
         template <typename Key>
         struct local_variable
+            : proto::terminal< ::boost::phoenix::local_variable<Key> >
         {
-            typedef proto::terminal< ::boost::phoenix::local_variable<Key> > proto_grammar;
-            typedef typename proto_grammar::type base_type;
-            typedef base_type type;
+            typedef
+                actor<
+                    typename proto::terminal<
+                        ::boost::phoenix::local_variable<Key>
+                    >::type
+                >
+                type;
             
-            static type make()
+            static
+            actor<
+                typename proto::terminal<
+                    ::boost::phoenix::local_variable<Key>
+                >::type
+            >
+            make()
             {
-                base_type e = {local_variable<Key>()};
+                actor<type> e = {{local_variable<Key>()}};
                 return e;
             }
         };
@@ -47,101 +58,71 @@ namespace boost { namespace phoenix
             : proto::assign<local_variable, meta_grammar>
         {};
 
-        struct test_eval
+        struct local_eval
             : proto::callable
         {
             template <typename Sig>
             struct result;
 
             template <typename This, typename Expr, typename Env>
-            struct result<This(Expr const&, Env)>
+            struct result<This(Expr&, Env)>
             {
                 typedef 
                     typename boost::result_of<
                         evaluator(Expr const &, Env &)
                     >::type
                     result_type;
-                /*
-                typedef
-                    typename proto::terminal<
-                        typename mpl::if_<
-                            is_reference<result_type>
-                          , reference_wrapper<
-                                typename boost::remove_reference<
-                                    result_type
-                                >::type
-                            >
-                          , result_type
-                        >::type
-                    >::type
-                    type;
-                */
                 typedef
                     typename mpl::eval_if<
                         is_reference<result_type>
                       , reference<typename boost::remove_reference<result_type>::type>
-                      , value<result_type>//typename boost::remove_reference<result_type>::type>
+                      , value<result_type>
                     >::type
                     type;
             };
 
             template <typename Expr, typename Env>
-            typename result<test_eval(Expr const&, Env&)>::type
-            operator()(Expr const& expr, Env & env) const
+            typename result<local_eval(Expr&, Env&)>::type
+            operator()(Expr& expr, Env & env) const
             {
-                typedef typename result<test_eval(Expr const&, Env&)>::result_type result_type;
+                typedef typename result<local_eval(Expr const&, Env&)>::result_type result_type;
                     
-                std::cout << "precompute locals ... ";
-
                 return this->make(expr, env, typename is_reference<result_type>::type());
             }
 
             private:
                 template <typename Expr, typename Env>
-                typename result<test_eval(Expr const&, Env&)>::type
+                typename result<local_eval(Expr const&, Env&)>::type
                 make(Expr const& expr, Env & env, mpl::true_) const
                 {
                     typedef
                         typename remove_reference<
-                            typename result<test_eval(Expr const&, Env&)>::result_type
+                            typename result<local_eval(Expr const&, Env&)>::result_type
                         >::type
                         result_type;
                 
-                    std::cout << "as reference ... ";
-
-                    return this->make_ref(expr, env, typename is_const<result_type>::type());//phoenix::ref(eval(expr, env));
+                    return this->make_ref(expr, env, typename is_const<result_type>::type());
                 }
                 
                 template <typename Expr, typename Env>
-                typename result<test_eval(Expr const&, Env&)>::type
+                typename result<local_eval(Expr const&, Env&)>::type
                 make_ref(Expr const& expr, Env & env, mpl::true_) const
                 {
-                    std::cout << "const ...\n";
-                    std::cout << typeid(Expr).name() << "\n";
                     return phoenix::cref(eval(expr, env));
                 }
                 
                 template <typename Expr, typename Env>
-                typename result<test_eval(Expr const&, Env&)>::type
+                typename result<local_eval(Expr const&, Env&)>::type
                 make_ref(Expr const& expr, Env & env, mpl::false_) const
                 {
-                    std::cout << "non-const ...\n";
-                    std::cout << typeid(phoenix::ref(eval(expr, env))).name() << "\n";
-                    //int &i = eval(expr, env);
                     return phoenix::ref(eval(expr, env));
                 }
                 
                 template <typename Expr, typename Env>
-                typename result<test_eval(Expr const&, Env&)>::type
+                typename result<local_eval(Expr const&, Env&)>::type
                 make(Expr const& expr, Env & env, mpl::false_) const
                 {
-                    typedef typename result<test_eval(Expr const&, Env&)>::result_type result_type;
-                    result_type i = eval(expr, env);
-                    std::cout << "as value\n";
-                    std::cout << typeid(Expr).name() << "\n";
-                    std::cout << typeid(boost::ref(fusion::at_c<0>(env))).name() << "\n";
-                    std::cout << typeid(reference_wrapper<typename boost::result_of<evaluator(Expr const &, Env &)>::type>).name() << "\n";
-                    return phoenix::val(i);//eval(expr, env));
+                    return phoenix::val(eval(expr, env));
                 }
 
         };
@@ -162,21 +143,10 @@ namespace boost { namespace phoenix
                     local_var_def
                   , proto::assign<
                         proto::_left
-                      , test_eval(proto::_right, proto::_state)
-                      /*, proto::terminal<
-                            evaluator(proto::_right, _env)
-                        >
-                        */
+                      , local_eval(proto::_right, proto::_state)
                     >(
                         proto::_left
-                      , test_eval(proto::_right, proto::_state)
-                      /*
-                      , proto::terminal<
-                            evaluator(proto::_right, _env)
-                        >(
-                            evaluator(proto::_right, _env)
-                        )
-                        */
+                      , local_eval(proto::_right, proto::_state)
                     )
                 >
             >
@@ -185,7 +155,28 @@ namespace boost { namespace phoenix
 
     namespace detail
     {
-        struct local_var_not_found {};
+        struct local_var_not_found
+        {
+            template <typename T>
+            T const & operator=(T const & t)
+            {
+                return t;
+            }
+        };
+
+        template <typename T>
+        T operator+(local_var_not_found const&, T const & t)
+        {
+            return t;
+        }
+
+        /*
+        template <typename T>
+        T operator+(T const & t, local_var_not_found const&)
+        {
+            return t;
+        }
+        */
 
         struct find_local
             : proto::or_<
@@ -194,8 +185,6 @@ namespace boost { namespace phoenix
                   , proto::if_<
                         proto::matches<proto::_left(proto::_right), proto::_data>()
                       , evaluator(proto::_right(proto::_right), proto::_state)
-                      //, proto::_value(proto::_right(proto::_right))
-                      //, proto::_right(proto::_right)
                       , find_local(proto::_left, proto::_state, proto::_data)
                     >
                 >
@@ -204,8 +193,6 @@ namespace boost { namespace phoenix
                   , proto::if_<
                         proto::matches<proto::_left, proto::_data>()
                       , evaluator(proto::_right, proto::_state)
-                      //, proto::_value(proto::_right)
-                      //, proto::_right
                       , detail::local_var_not_found()
                     >
                 >
@@ -218,7 +205,7 @@ namespace boost { namespace phoenix
                 typename is_same<
                     typename proto::detail::uncvref<
                         typename boost::result_of<
-                            detail::find_local(typename Args::locals_type, Env, Key)
+                            detail::find_local(typename Args::locals_type &, Env, Key)
                        >::type
                     >::type
                   , detail::local_var_not_found
@@ -226,11 +213,9 @@ namespace boost { namespace phoenix
               , typename boost::result_of<
                     This(typename Args::outer_env_type&)
                 >::type
-              , //typename proto::result_of::value<
-                    typename boost::result_of<
-                        detail::find_local(typename Args::locals_type, Env, Key)
-                    >::type
-                //>::type
+              , typename boost::result_of<
+                    detail::find_local(typename Args::locals_type &, Env, Key)
+                >::type
             >
         {};
     }
@@ -265,8 +250,6 @@ namespace boost { namespace phoenix
         typename result<get_local<Key>(Env&)>::type
         operator()(Env &env) const
         {
-            typedef typename result<get_local<Key>(Env&)>::type result_type;
-
             typedef
                 typename proto::detail::uncvref<
                     typename boost::result_of<
@@ -274,8 +257,6 @@ namespace boost { namespace phoenix
                     >::type
                 >::type
                 env_type;
-            std::cout << "getting local var\n";
-            //std::cout << typeid(boost::ref(this->evaluate(env, typename is_scoped_environment<env_type>::type()))).name() << "\n";
 
             return this->evaluate(
                 env
@@ -336,136 +317,64 @@ namespace boost { namespace phoenix
 
     };
 
-    /*
-    struct scope_grammar
-        : proto::or_<
-            proto::when<rule::local_variable, proto::external_transform>
-          , meta_grammar
-        >
-    {};
-    */
-    
     template<typename T>
     struct is_custom_terminal<local_variable<T> >
       : mpl::true_
     {};
 
-    struct local_var_eval
+    template<typename T>
+    struct custom_terminal<local_variable<T> >
         : proto::callable
     {
         template <typename Sig>
         struct result;
 
         template <typename This, typename Local, typename Env>
-        struct result<This(Local const &, Env)>
+        struct result<This(Local &, Env)>
         {
             typedef
                 proto::terminal< local_variable<typename Local::type> >
                 lookup_grammar;
-            /*
-            typedef
-                typename boost::result_of<
-                    functional::args(Env &)
-                >::type
-                args_type;
-            */
+
             typedef
                 typename boost::result_of<get_local<lookup_grammar>(Env)>::type
                 type;
         };
 
-        //typedef int result_type;
-
         template <typename Local, typename Env>
-        typename result<local_var_eval(Local const &, Env&)>::type
-        operator()(Local const& local, Env & env)
+        typename result<custom_terminal(Local const &, Env&)>::type
+        operator()(Local & local, Env & env)
         {
             typedef
                 proto::terminal< local_variable<typename Local::type> >
                 lookup_grammar;
 
-
-            std::cout << "local_var_eval\n";
-
-            //std::cout << "local_var_eval\n";
-            //std::cout << typeid(typename boost::result_of<functional::args(Env&)>::type).name() << "\n";
-            //std::cout << typeid(Local).name() << "\n\n";
-            //std::cout << typeid(typename boost::result_of<get_local<lookup_grammar>(typename boost::result_of<functional::args(Env &)>::type&)>::type).name() << "\n";
-            //std::cout << detail::find_local()(functional::args()(env).locals, lookup_grammar()) << "\n";
-            //std::cout << get_local<lookup_grammar>()(functional::args()(env)) << "\n";
-            //std::cout << typeid(boost::ref(get_local<lookup_grammar>()(env))).name() << "\n";
-            //get_local<lookup_grammar>()(env);
-            return get_local<lookup_grammar>()(env);//functional::args()(env));
+            return get_local<lookup_grammar>()(env);
         }
     };
-    
-    template<typename T>
-    struct custom_terminal<local_variable<T> >
-        : local_var_eval
-    {};
 
-    /*
-    template <typename Dummy>
-    struct default_actions::when<rule::local_variable, Dummy>
-        : proto::call<local_var_eval(_env, proto::_value)>
-    {};
-    */
-
-    /*
-    template <typename Env, typename OuterEnv, typename Locals, typename Map>
-    struct scoped_environment;
-
-    namespace result_of
+    struct foo
+        : proto::callable
     {
-        template <typename Env, typename Key>
-        struct local_variable
-            : boost::phoenix::detail::apply_local<
-                Key//typename boost::result_of<eval_grammar(Key const&)>::type
-              , Env>
-        {};
-    }
-    
-
-    template <typename Key>
-    struct local_variable
-    {
-
-        typedef Key key_type;
-
         template <typename Sig>
         struct result;
 
         template <typename This, typename Env>
-        struct result<This(Env&)>
-            : result_of::local_variable<Env, Key>
+        struct result<This(Env)>
+            : is_scoped_environment<Env>
         {};
-
-        template <typename Env>
-        typename result_of::local_variable<Env, Key>::type
-        operator()(Env & env)
-        {
-            typedef typename result_of::local_variable<Env, Key>::type return_type;
-            typedef typename Env::map_type map_type;
-            typedef typename 
-                detail::get_index<map_type, Key>::type 
-            index_type;
-
-            typedef detail::eval_local<Key> eval_local;
-
-            return eval_local::template get<return_type>(
-                env
-              , index_type());
-        }
     };
-
-    template <typename Key>
-    struct make_local_variable : compose<local_variable<Key> > {};
     
-    template <typename Key, typename Dummy>
-    struct enable_nullary<local_variable<Key>, Dummy>
-        : mpl::false_
+    template <typename T>
+    struct is_nullary<custom_terminal<local_variable<T> > >
+        //: proto::make<mpl::false_()>
+        : proto::if_<
+            //is_scoped_environment<functional::args(proto::_state)>()
+            foo(functional::args(proto::_state))
+          , mpl::false_()
+          , mpl::true_()
+        >
     {};
-    */
 
     namespace local_names
     {
@@ -495,6 +404,60 @@ namespace boost { namespace phoenix
         expression::local_variable<struct _x_key>::type const _x = {};
         expression::local_variable<struct _y_key>::type const _y = {};
         expression::local_variable<struct _z_key>::type const _z = {};
+    }
+    
+    namespace detail
+    {
+        template <PHOENIX_typename_A_void(PHOENIX_LOCAL_LIMIT)>
+        struct make_locals;
+
+        template <typename A0, typename A1>
+        struct make_locals<A0, A1>
+        {
+            typedef
+                typename expression::sequence<A0, A1>::type
+                type;
+
+            static type make(A0 a0, A1 a1)
+            {
+                return expression::sequence<A0, A1>::make(a0, a1);
+            }
+        };
+
+        #define PHOENIX_MAKE_LOCALS(Z, N, DATA)                                 \
+        template <PHOENIX_typename_A(N)>                                        \
+        struct make_locals<PHOENIX_A(N)>                                        \
+        {                                                                       \
+            typedef                                                             \
+                typename make_locals<PHOENIX_A(BOOST_PP_DEC(N))>::type          \
+                type0;                                                          \
+                                                                                \
+            typedef                                                             \
+                typename expression::sequence<                                  \
+                    type0                                                       \
+                  , BOOST_PP_CAT(A, BOOST_PP_DEC(N))                            \
+                >::type                                                         \
+                type;                                                           \
+                                                                                \
+            static type make(PHOENIX_A_a(N))                                    \
+            {                                                                   \
+                return                                                          \
+                    expression::sequence<                                       \
+                        type0                                                   \
+                      , BOOST_PP_CAT(A, BOOST_PP_DEC(N))                        \
+                    >::make(                                                    \
+                        make_locals<                                            \
+                            PHOENIX_A(BOOST_PP_DEC(N))                          \
+                        >::make(                                                \
+                            PHOENIX_a(BOOST_PP_DEC(N))                          \
+                        )                                                       \
+                      , BOOST_PP_CAT(a, BOOST_PP_DEC(N))                        \
+                    );                                                          \
+            }                                                                   \
+        };                                                                      \
+        /**/
+        BOOST_PP_REPEAT_FROM_TO(3, PHOENIX_LOCAL_LIMIT, PHOENIX_MAKE_LOCALS, _)
+        #undef PHOENIX_MAKE_LOCALS
     }
 }}
 
