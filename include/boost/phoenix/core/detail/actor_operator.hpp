@@ -35,8 +35,17 @@
         typename result_of::actor<Expr, PHOENIX_A_ref>::type
         operator()(PHOENIX_A_ref_a)
         {
+            /*
             typedef make_basic_environment<default_actions, PHOENIX_A_ref> env_type;
             typename env_type::type env = env_type::make(PHOENIX_a);
+            */
+            typedef
+                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
+                    PHOENIX_A_ref
+                >
+                args_type;
+            args_type args(PHOENIX_a);
+            fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
             return eval(*this, env);
         }
@@ -45,8 +54,17 @@
         typename result_of::actor<Expr, PHOENIX_A_ref>::type
         operator()(PHOENIX_A_ref_a) const
         {
+            /*
             typedef make_basic_environment<default_actions, PHOENIX_A_ref> env_type;
             typename env_type::type env = env_type::make(PHOENIX_a);
+            */
+            typedef
+                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
+                    PHOENIX_A_ref
+                >
+                args_type;
+            args_type args(PHOENIX_a);
+            fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
             return eval(*this, env);
         }
@@ -55,8 +73,17 @@
         typename result_of::actor<Expr, PHOENIX_A_const_ref>::type
         operator()(PHOENIX_A_const_ref_a)
         {
-            typedef make_basic_environment<default_actions, PHOENIX_A_const_ref> env_type;
+            /*
+            typedef make_basic_environment<default_actions, PHOENIX_A_ref> env_type;
             typename env_type::type env = env_type::make(PHOENIX_a);
+            */
+            typedef
+                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
+                    PHOENIX_A_const_ref
+                >
+                args_type;
+            args_type args(PHOENIX_a);
+            fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
             return eval(*this, env);
         }
@@ -65,8 +92,17 @@
         typename result_of::actor<Expr, PHOENIX_A_const_ref>::type
         operator()(PHOENIX_A_const_ref_a) const
         {
-            typedef make_basic_environment<default_actions, PHOENIX_A_const_ref> env_type;
+            /*
+            typedef make_basic_environment<default_actions, PHOENIX_A_ref> env_type;
             typename env_type::type env = env_type::make(PHOENIX_a);
+            */
+            typedef
+                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
+                    PHOENIX_A_const_ref
+                >
+                args_type;
+            args_type args(PHOENIX_a);
+            fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
             return eval(*this, env);
         }
@@ -86,11 +122,12 @@
         operator()(PHOENIX_PERM_A_a(I)) const                                   \
         {                                                                       \
             typedef                                                             \
-                make_basic_environment<                                         \
-                    default_actions, PHOENIX_PERM_A(I)                          \
-                >                                                               \
-                env_type;                                                       \
-            typename env_type::type env = env_type::make(PHOENIX_a);            \
+                typename fusion::result_of::make_vector<PHOENIX_PERM_A(I)>::type         \
+                args_type;                                                      \
+            args_type args(PHOENIX_a);                                          \
+            fusion::vector2<                                                    \
+                args_type&, default_actions                                     \
+            > env(args, default_actions());                                     \
                                                                                 \
             return eval(*this, env);                                            \
         }                                                                       \
@@ -100,11 +137,12 @@
         operator()(PHOENIX_PERM_A_a(I))                                         \
         {                                                                       \
             typedef                                                             \
-                make_basic_environment<                                         \
-                    default_actions, PHOENIX_PERM_A(I)                          \
-                >                                                               \
-                env_type;                                                       \
-            typename env_type::type env = env_type::make(PHOENIX_a);            \
+                typename fusion::result_of::make_vector<PHOENIX_PERM_A(I)>::type         \
+                args_type;                                                      \
+            args_type args(PHOENIX_a);                                          \
+            fusion::vector2<                                                    \
+                args_type&, default_actions                                     \
+            > env(args, default_actions());                                     \
                                                                                 \
             return eval(*this, env);                                            \
         }                                                                       \

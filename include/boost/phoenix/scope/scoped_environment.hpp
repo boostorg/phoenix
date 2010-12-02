@@ -36,9 +36,17 @@ namespace boost { namespace phoenix
             , locals(locals)
         {}
 
-        Env& env;
-        OuterEnv& outer_env;
-        Locals locals;
+        scoped_environment(scoped_environment const& o)
+            : env(o.env)
+            , outer_env(o.outer_env)
+            , locals(o.locals)
+        {
+            std::cout << "cctor called\n";
+        }
+
+        Env env;
+        OuterEnv outer_env;
+        Locals const & locals;
     
         #define PHOENIX_ADAPT_SCOPED_ENVIRONMENT(INTRINSIC)                     \
         template <typename Seq>                                                 \
@@ -46,7 +54,9 @@ namespace boost { namespace phoenix
         {                                                                       \
             typedef                                                             \
                 typename boost::remove_reference<                               \
-                    typename Seq::env_type                                      \
+                    typename boost::result_of<                                  \
+                        functional::args(typename Seq::env_type)                \
+                    >::type                                                     \
                 >::type                                                         \
                 env_type;                                                       \
             typedef typename fusion::result_of::INTRINSIC<env_type>::type type; \
@@ -67,7 +77,9 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename boost::remove_reference<
-                    typename Seq::env_type
+                    typename boost::result_of<
+                        functional::args(typename Seq::env_type)
+                    >::type
                 >::type
                 env_type;
             typedef typename fusion::result_of::value_at<env_type, N>::type type;
@@ -78,20 +90,25 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename boost::remove_reference<
-                    typename Seq::env_type
+                    typename boost::result_of<
+                        functional::args(typename Seq::env_type)
+                    >::type
                 >::type
                 env_type;
             typedef typename fusion::result_of::at<env_type, N>::type type;
 
             static type call(Seq & seq)
             {
-                return fusion::at<N>(seq);
+                return fusion::at<N>(functional::args()(seq.env));
             }
         };
     };
 
     template <typename Env, typename Dummy = void>
     struct is_scoped_environment : mpl::false_ {};
+    
+    template <typename Env>
+    struct is_scoped_environment<Env&> : is_scoped_environment<Env> {};
 
     template <typename Env, typename OuterEnv, typename Locals>
     struct is_scoped_environment<scoped_environment<Env, OuterEnv, Locals> >

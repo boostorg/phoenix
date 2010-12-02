@@ -15,6 +15,8 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>
 
+#include <typeinfo>
+
 namespace boost { namespace phoenix 
 {
     namespace functional
@@ -55,12 +57,12 @@ namespace boost { namespace phoenix
 
             template <typename This, typename N, typename Env>
             struct result<This(N, Env)>
-                : boost::result_of<at<N>(typename boost::result_of<args(Env)>::type)>
+                : boost::result_of<at<N>(typename boost::result_of<args(Env &)>::type)>
             {};
 
             template <typename N, typename Env>
             typename result<args_at(N, Env &)>::type
-            operator()(N const &, Env& env) const
+            operator()(N, Env& env) const
             {
                 return at<N>()(args()(env));
             }
@@ -138,18 +140,19 @@ namespace boost { namespace phoenix
     };
     */
     
+    /*
     template <typename Actions, PHOENIX_typename_A_void(PHOENIX_ARG_LIMIT), typename Dummy = void>
-    struct make_basic_environment;
+    struct make_environment;
     
     template <typename Actions>
-    struct make_basic_environment<Actions>
+    struct make_environment<Actions>
     {
 		 typedef fusion::vector0<>                     params_type;
-		 typedef fusion::vector2<params_type, Actions> type;
+		 typedef fusion::vector2<params_type &, Actions> type;
 
-		 static type make()
+		 static type make(params_type & params)
 		 {
-			 return type(params_type(), Actions());
+			 return type(params, Actions());
 		 }
 	 };
 
@@ -157,7 +160,7 @@ namespace boost { namespace phoenix
     struct make_basic_environment<Actions, A0>
     {
 		 typedef fusion::vector1<A0>                   params_type;
-		 typedef fusion::vector2<params_type, Actions> type;
+		 //typedef fusion::vector2<params_type, Actions> type;
 
 		 static type make(A0 a0)
 		 {
@@ -181,7 +184,7 @@ namespace boost { namespace phoenix
     template <typename Actions, typename A0, typename A1, typename A2>
     struct make_basic_environment<Actions, A0, A1, A2>
     {
-		 typedef fusion::vector3<A0, A1, A2>               params_type;
+		 typedef fusion::vector3<A0, A1, A2>           params_type;
 		 typedef fusion::vector2<params_type, Actions> type;
 
 		 static type make(A0 a0, A1 a1, A2 a2)
@@ -192,6 +195,7 @@ namespace boost { namespace phoenix
 
     // Bring in the rest
     #include <boost/phoenix/core/detail/make_basic_environment.hpp>
+    */
 }}
 
 #endif

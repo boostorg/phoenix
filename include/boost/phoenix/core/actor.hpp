@@ -11,6 +11,7 @@
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
+#include <boost/fusion/container/generation/make_vector.hpp>
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/environment.hpp>
 #include <boost/phoenix/core/is_nullary.hpp>
@@ -53,7 +54,7 @@ namespace boost { namespace phoenix
                   , boost::result_of<
                         evaluator(
                             Expr const &
-                          , typename make_basic_environment<default_actions>::type &
+                          , fusion::vector2<fusion::vector0<>&, default_actions>&
                         )
                     >
                   , mpl::identity<detail::error_expecting_arguments>
@@ -66,7 +67,7 @@ namespace boost { namespace phoenix
             : boost::result_of<
                 evaluator(
                     Expr const &
-                  , typename make_basic_environment<default_actions, A0>::type &
+                  , fusion::vector2<fusion::vector1<A0>&, default_actions>&
                 )
             >
         {};
@@ -76,7 +77,7 @@ namespace boost { namespace phoenix
             : boost::result_of<
                 evaluator(
                     Expr const&
-                  , typename make_basic_environment<default_actions, A0, A1>::type &
+                  , fusion::vector2<fusion::vector2<A0, A1>&, default_actions>&
                 )
             >
         {};
@@ -86,7 +87,7 @@ namespace boost { namespace phoenix
             : boost::result_of<
                 evaluator(
                     Expr const&
-                  , typename make_basic_environment<default_actions, A0, A1, A2>::type &
+                  , fusion::vector2<fusion::vector3<A0, A1, A2>&, default_actions>&
                 )
             >
         {};
@@ -125,8 +126,13 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr>::type
         operator()()
         {
+            /*
             typedef make_basic_environment<default_actions> env_type;
             typename env_type::type env = env_type::make();
+            */
+            typedef fusion::vector0<> args_type;
+            args_type args;
+            fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
             return eval(*this, env);
         }
@@ -134,8 +140,13 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr>::type
         operator()() const
         {
+            /*
             typedef make_basic_environment<default_actions> env_type;
             typename env_type::type env = env_type::make();
+            */
+            typedef fusion::vector0<> args_type;
+            args_type args;
+            fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
             return eval(*this, env);
         }

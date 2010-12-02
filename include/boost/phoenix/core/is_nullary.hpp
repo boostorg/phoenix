@@ -51,7 +51,7 @@ namespace boost { namespace phoenix
 
 	template <typename Expr>
 	struct is_nullary
-		: boost::result_of<evaluator(Expr const&, make_basic_environment<detail::is_nullary_>::type&)>
+		: boost::result_of<evaluator(Expr const&, fusion::vector2<fusion::vector0<>&, detail::is_nullary_>&)>
 	{};
 
 }}

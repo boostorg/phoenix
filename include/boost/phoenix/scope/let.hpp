@@ -35,25 +35,30 @@ namespace boost { namespace phoenix
         template <typename This, typename Env, typename Locals, typename Let>
         struct result<This(Env, Locals const&, Let const&)>
         {
+            /*
             typedef
-                typename boost::result_of<
-                    functional::args(Env)
+                typename proto::detail::uncvref<
+                    Env
                 >::type
-                args_type;
+                env_type;
+            */
 
             typedef
-                typename boost::result_of<
-                    functional::actions(Env)
+                typename proto::detail::uncvref<
+                    typename boost::result_of<
+                        functional::actions(Env)
+                    >::type
                 >::type
                 actions_type;
 
             typedef
-                typename boost::result_of<
-                    rule::local_var_def_list(
-                        Locals
-                      , args_type
-                      , actions_type
-                    )
+                typename proto::detail::uncvref<
+                    typename boost::result_of<
+                        rule::local_var_def_list(
+                            Locals const &
+                          , Env
+                        )
+                    >::type
                 >::type
                 locals_type;
 
@@ -61,7 +66,7 @@ namespace boost { namespace phoenix
                 typename boost::result_of<
                     evaluator(
                         Let const &
-                      , fusion::vector2<scoped_environment<args_type, args_type, locals_type> &, actions_type&>&
+                      , fusion::vector2<scoped_environment<Env, Env, locals_type> &, actions_type> &
                     )
                 >::type
                 type;
@@ -72,42 +77,40 @@ namespace boost { namespace phoenix
         operator()(Env & env, Locals const & locals, Let const & let) const
         {
             typedef
-                typename boost::result_of<
-                    functional::args(Env &)
-                >::type
-                args_type;
-
-            typedef
-                typename boost::result_of<
-                    functional::actions(Env &)
+                typename proto::detail::uncvref<
+                    typename boost::result_of<
+                        functional::actions(Env &)
+                    >::type
                 >::type
                 actions_type;
 
             typedef
-                typename boost::result_of<
-                    rule::local_var_def_list(
-                        Locals
-                      , args_type
-                      , actions_type
-                    )
+                typename proto::detail::uncvref<
+                    typename boost::result_of<
+                        rule::local_var_def_list(
+                            Locals const &
+                          , Env &
+                        )
+                    >::type
                 >::type
                 locals_type;
 
-            args_type & old_env = functional::args()(env);
-            actions_type & actions = functional::actions()(env);
-
-            scoped_environment<args_type, args_type, locals_type>
+            scoped_environment<Env, Env, locals_type>
                 scoped_env(
-                    old_env
-                  , old_env
+                    env
+                  , env
                   , rule::local_var_def_list()(
                       locals
-                    , old_env
-                    , actions
+                    , env
                     )
                 );
 
-            fusion::vector2<scoped_environment<args_type, args_type, locals_type> &, actions_type&> new_env(scoped_env, actions);
+            fusion::vector2<scoped_environment<Env, Env, locals_type> &, actions_type>
+                new_env(scoped_env, functional::actions()(env));
+
+            std::cout << "let_eval\n";
+            std::cout << typeid(Let).name() << "\n\n";
+
             return eval(let, new_env);
         }
     };
@@ -142,10 +145,12 @@ namespace boost { namespace phoenix
         typename expression::let<Locals, Expr>::type const
         operator[](Expr const& expr) const
         {
+            std::cout << "let_actor_gen\n";
+            std::cout << typeid(Expr).name() << "\n\n";
             return expression::let<Locals, Expr>::make(locals, expr);
         }
 
-        Locals const& locals;
+        Locals locals;
     };
 
     namespace detail
@@ -157,17 +162,12 @@ namespace boost { namespace phoenix
         struct make_locals<A0, A1>
         {
             typedef
-                typename proto::result_of::make_expr<
-                    proto::tag::comma
-                  , default_domain_with_basic_expr
-                  , A0
-                  , A1
-                >::type
+                typename expression::sequence<A0, A1>::type
                 type;
 
             static type make(A0 a0, A1 a1)
             {
-                return proto::make_expr<proto::tag::comma, default_domain_with_basic_expr>(a0, a1);
+                return expression::sequence<A0, A1>::make(a0, a1);
             }
         };
 
@@ -175,41 +175,39 @@ namespace boost { namespace phoenix
         struct make_locals<A0, A1, A2>
         {
             typedef
-                typename proto::result_of::make_expr<
-                    proto::tag::comma
-                  , default_domain_with_basic_expr
-                  , typename make_locals<A0, A1>::type
+                typename make_locals<A0, A1>::type
+                type0;
+
+            typedef
+                typename expression::sequence<
+                    type0
                   , A2
                 >::type
                 type;
             
             static type make(A0 a0, A1 a1, A2 a2)
             {
-                return proto::make_expr<proto::tag::comma, default_domain_with_basic_expr>(make_locals<A0, A1>::make(a0, a1), a2);
+                return expression::sequence<type0, A2>::make(make_locals<A0, A1>::make(a0, a1), a2);
             }
         };
 
         template <typename A0, typename A1, typename A2, typename A3>
         struct make_locals<A0, A1, A2, A3>
-            : proto::result_of::make_expr<
-                proto::tag::comma
-              , default_domain_with_basic_expr
-              , typename make_locals<A0, A1, A2>::type
-              , A3
-            >
         {
             typedef
-                typename proto::result_of::make_expr<
-                    proto::tag::comma
-                  , default_domain_with_basic_expr
-                  , typename make_locals<A0, A1, A2>::type
+                typename make_locals<A0, A1, A2>::type
+                type0;
+
+            typedef
+                typename expression::sequence<
+                    type0
                   , A3
                 >::type
                 type;
             
             static type make(A0 a0, A1 a1, A2 a2, A3 a3)
             {
-                return proto::make_expr<proto::tag::comma, default_domain_with_basic_expr>(make_locals<A0, A1, A2>::make(a0, a1, a2), a3);
+                return expression::sequence<type0, A3>::make(make_locals<A0, A1, A2>::make(a0, a1, a2), a3);
             }
         };
     }

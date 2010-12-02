@@ -25,7 +25,7 @@
 #define PHOENIX_ENV( A ) typename make_basic_environment<A>::type
 
         template <typename Expr, PHOENIX_typename_A>
-        struct actor<Expr, BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, A)>
+        struct actor<Expr, PHOENIX_A>
             /*: boost::result_of<eval_grammar(
                 ::boost::phoenix::actor<Expr> const &,
                     PHOENIX_ENV(PHOENIX_A)&)>
@@ -33,7 +33,13 @@
             : boost::result_of<
                 evaluator(
                     Expr const&
-                  , typename make_basic_environment<default_actions, PHOENIX_A>::type &
+                  //, typename make_basic_environment<default_actions, PHOENIX_A>::type &
+                  , fusion::vector2<
+                        BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
+                            PHOENIX_A
+                        >
+                      , default_actions
+                    >
                 )
             >
         {};
