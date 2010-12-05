@@ -35,7 +35,7 @@ namespace boost { namespace phoenix
     {
         typename reference<T>::type const e = {{boost::ref(t)}};
         return e;
-    };
+    }
 
     template <typename T>
     typename reference<T const>::type const
@@ -43,7 +43,7 @@ namespace boost { namespace phoenix
     {
         typename reference<T const>::type const e = {{boost::cref(t)}};
         return e;
-    };
+    }
 
     // Call out boost::reference_wrapper for special handling
     template<typename T>
