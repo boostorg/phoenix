@@ -14,16 +14,60 @@
 
 namespace boost { namespace phoenix
 {
-    template <typename Key>
-    struct local_variable
+
+    namespace detail
     {
-        typedef Key type;
-    };
+        template <typename Key>
+        struct local
+        {
+            typedef Key type;
+        };
+    }
+
+    namespace tag
+    {
+        struct local_variable {};
+    }
 
     namespace expression
     {
-        template <typename Key>
+        template <typename Key, typename _ = proto::is_proto_expr>
         struct local_variable
+        {
+            typedef expr<tag::local_variable, Key> expr_type;
+            typedef typename expr_type::type type;
+            typedef typename expr_type::proto_grammar proto_grammar;
+            //BOOST_PROTO_BASIC_EXTENDS(typename expr_type::type, local_variable, phoenix_domain)
+        };
+        /*    : proto::transform<local_variable<Key>, int>
+        {
+            typedef detail::local_expr<tag::local_variable, detail::local<Key> > type;
+            typedef detail::local_expr<tag::local_variable, detail::local<Key> > proto_grammar;
+
+            template <typename Expr, typename State, typename Data>
+            struct impl : proto::transform_impl<Expr, State, Data>
+            {
+                typedef Expr result_type;
+                
+                result_type
+                operator ()(
+                    typename impl::expr_param e
+                  , typename impl::state_param
+                  , typename impl::data_param
+                ) const
+                {
+                    return e;
+                }
+            };
+
+            /// INTERNAL ONLY
+            typedef tag::local_variable proto_tag;
+            /// INTERNAL ONLY
+            typedef detail::local<Key> proto_child0;
+
+        };
+        */
+        /*
             : proto::terminal< ::boost::phoenix::local_variable<Key> >
         {
             typedef
@@ -46,12 +90,14 @@ namespace boost { namespace phoenix
                 return e;
             }
         };
+        */
     }
 
     namespace rule
     {
         struct local_variable
-            : proto::terminal< ::boost::phoenix::local_variable<proto::_> >
+            : expression::local_variable<proto::_>
+            //: proto::terminal< ::boost::phoenix::local_variable<proto::_> >
         {};
 
         struct local_var_def
@@ -86,7 +132,7 @@ namespace boost { namespace phoenix
             operator()(Expr& expr, Env & env) const
             {
                 typedef typename result<local_eval(Expr const&, Env&)>::result_type result_type;
-                    
+
                 return this->make(expr, env, typename is_reference<result_type>::type());
             }
 
@@ -180,7 +226,8 @@ namespace boost { namespace phoenix
 
         struct find_local
             : proto::or_<
-                proto::when<
+                proto::when<proto::terminal<mpl::void_>, detail::local_var_not_found()>
+              , proto::when<
                     proto::comma<find_local, rule::local_var_def>
                   , proto::if_<
                         proto::matches<proto::_left(proto::_right), proto::_data>()
@@ -201,7 +248,33 @@ namespace boost { namespace phoenix
 
         template<typename This, typename Args, typename Env, typename Key>
         struct get_local_result_impl
-            : mpl::if_<
+            : mpl::eval_if<
+                is_same<
+                    typename Args::locals_type
+                  , mpl::void_
+                >
+              , boost::result_of<
+                    This(typename Args::outer_env_type&)
+                >
+              , mpl::eval_if<
+                    is_same<
+                        typename proto::detail::uncvref<
+                            typename boost::result_of<
+                                detail::find_local(typename Args::locals_type &, Env, Key)
+                            >::type
+                        >::type
+                      , detail::local_var_not_found
+                    >
+                  , boost::result_of<
+                        This(typename Args::outer_env_type&)
+                    >
+                  , boost::result_of<
+                        detail::find_local(typename Args::locals_type &, Env, Key)
+                    >
+                >
+            >
+        /*
+        : mpl::if_<
                 typename is_same<
                     typename proto::detail::uncvref<
                         typename boost::result_of<
@@ -216,6 +289,23 @@ namespace boost { namespace phoenix
               , typename boost::result_of<
                     detail::find_local(typename Args::locals_type &, Env, Key)
                 >::type
+            >
+            */
+        {};
+
+        struct local_var_def_is_nullary
+            : proto::or_<
+                proto::when<
+                    proto::comma<local_var_def_is_nullary, rule::local_var_def>
+                  , mpl::and_<
+                        local_var_def_is_nullary(proto::_left, _env)
+                      , evaluator(proto::_right(proto::_right), _env)
+                    >()
+                >
+              , proto::when<
+                    rule::local_var_def
+                  , evaluator(proto::_right, _env)
+                >
             >
         {};
     }
@@ -317,6 +407,7 @@ namespace boost { namespace phoenix
 
     };
 
+    /*
     template<typename T>
     struct is_custom_terminal<local_variable<T> >
       : mpl::true_
@@ -324,6 +415,9 @@ namespace boost { namespace phoenix
 
     template<typename T>
     struct custom_terminal<local_variable<T> >
+        : proto::callable
+        */
+    struct local_var_eval
         : proto::callable
     {
         template <typename Sig>
@@ -333,7 +427,7 @@ namespace boost { namespace phoenix
         struct result<This(Local &, Env)>
         {
             typedef
-                proto::terminal< local_variable<typename Local::type> >
+                typename expression::local_variable<Local>::type
                 lookup_grammar;
 
             typedef
@@ -342,17 +436,24 @@ namespace boost { namespace phoenix
         };
 
         template <typename Local, typename Env>
-        typename result<custom_terminal(Local const &, Env&)>::type
+        //typename result<custom_terminal(Local const &, Env&)>::type
+        typename result<local_var_eval(Local const &, Env&)>::type
         operator()(Local & local, Env & env)
         {
             typedef
-                proto::terminal< local_variable<typename Local::type> >
+                typename expression::local_variable<Local>::type
                 lookup_grammar;
-
+            std::cout << "muuh ...\n";
             return get_local<lookup_grammar>()(env);
         }
     };
 
+    template <typename Dummy>
+    struct default_actions::when<rule::local_variable, Dummy>
+        : proto::call<local_var_eval(proto::_value(proto::_child_c<0>), _env)>
+    {};
+
+#if 0
     struct foo
         : proto::callable
     {
@@ -367,43 +468,44 @@ namespace boost { namespace phoenix
     
     template <typename T>
     struct is_nullary<custom_terminal<local_variable<T> > >
-        //: proto::make<mpl::false_()>
-        : proto::if_<
+        : proto::make<mpl::false_()>
+        /*: proto::if_<
             //is_scoped_environment<functional::args(proto::_state)>()
             foo(functional::args(proto::_state))
           , mpl::false_()
           , mpl::true_()
-        >
+        >*/
     {};
-
+#endif
+    
     namespace local_names
     {
-        expression::local_variable<struct _a_key>::type const _a = {};
-        expression::local_variable<struct _b_key>::type const _b = {};
-        expression::local_variable<struct _c_key>::type const _c = {};
-        expression::local_variable<struct _d_key>::type const _d = {};
-        expression::local_variable<struct _e_key>::type const _e = {};
-        expression::local_variable<struct _f_key>::type const _f = {};
-        expression::local_variable<struct _g_key>::type const _g = {};
-        expression::local_variable<struct _h_key>::type const _h = {};
-        expression::local_variable<struct _i_key>::type const _i = {};
-        expression::local_variable<struct _j_key>::type const _j = {};
-        expression::local_variable<struct _k_key>::type const _k = {};
-        expression::local_variable<struct _l_key>::type const _l = {};
-        expression::local_variable<struct _m_key>::type const _m = {};
-        expression::local_variable<struct _n_key>::type const _n = {};
-        expression::local_variable<struct _o_key>::type const _o = {};
-        expression::local_variable<struct _p_key>::type const _p = {};
-        expression::local_variable<struct _q_key>::type const _q = {};
-        expression::local_variable<struct _r_key>::type const _r = {};
-        expression::local_variable<struct _s_key>::type const _s = {};
-        expression::local_variable<struct _t_key>::type const _t = {};
-        expression::local_variable<struct _u_key>::type const _u = {};
-        expression::local_variable<struct _v_key>::type const _v = {};
-        expression::local_variable<struct _w_key>::type const _w = {};
-        expression::local_variable<struct _x_key>::type const _x = {};
-        expression::local_variable<struct _y_key>::type const _y = {};
-        expression::local_variable<struct _z_key>::type const _z = {};
+        expression::local_variable<detail::local<struct _a_key> >::type const _a = {};
+        expression::local_variable<detail::local<struct _b_key> >::type const _b = {};
+        expression::local_variable<detail::local<struct _c_key> >::type const _c = {};
+        expression::local_variable<detail::local<struct _d_key> >::type const _d = {};
+        expression::local_variable<detail::local<struct _e_key> >::type const _e = {};
+        expression::local_variable<detail::local<struct _f_key> >::type const _f = {};
+        expression::local_variable<detail::local<struct _g_key> >::type const _g = {};
+        expression::local_variable<detail::local<struct _h_key> >::type const _h = {};
+        expression::local_variable<detail::local<struct _i_key> >::type const _i = {};
+        expression::local_variable<detail::local<struct _j_key> >::type const _j = {};
+        expression::local_variable<detail::local<struct _k_key> >::type const _k = {};
+        expression::local_variable<detail::local<struct _l_key> >::type const _l = {};
+        expression::local_variable<detail::local<struct _m_key> >::type const _m = {};
+        expression::local_variable<detail::local<struct _n_key> >::type const _n = {};
+        expression::local_variable<detail::local<struct _o_key> >::type const _o = {};
+        expression::local_variable<detail::local<struct _p_key> >::type const _p = {};
+        expression::local_variable<detail::local<struct _q_key> >::type const _q = {};
+        expression::local_variable<detail::local<struct _r_key> >::type const _r = {};
+        expression::local_variable<detail::local<struct _s_key> >::type const _s = {};
+        expression::local_variable<detail::local<struct _t_key> >::type const _t = {};
+        expression::local_variable<detail::local<struct _u_key> >::type const _u = {};
+        expression::local_variable<detail::local<struct _v_key> >::type const _v = {};
+        expression::local_variable<detail::local<struct _w_key> >::type const _w = {};
+        expression::local_variable<detail::local<struct _x_key> >::type const _x = {};
+        expression::local_variable<detail::local<struct _y_key> >::type const _y = {};
+        expression::local_variable<detail::local<struct _z_key> >::type const _z = {};
     }
     
     namespace detail

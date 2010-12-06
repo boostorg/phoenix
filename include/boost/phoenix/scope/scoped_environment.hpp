@@ -30,7 +30,7 @@ namespace boost { namespace phoenix
         typedef OuterEnv outer_env_type;
         typedef Locals locals_type;
 
-        scoped_environment(Env& env, OuterEnv& outer_env, Locals const& locals)
+        scoped_environment(Env& env, OuterEnv& outer_env, Locals & locals)
             : env(env)
             , outer_env(outer_env)
             , locals(locals)
@@ -40,13 +40,11 @@ namespace boost { namespace phoenix
             : env(o.env)
             , outer_env(o.outer_env)
             , locals(o.locals)
-        {
-            std::cout << "cctor called\n";
-        }
+        {}
 
-        Env env;
-        OuterEnv outer_env;
-        Locals locals;
+        Env &env;
+        OuterEnv &outer_env;
+        Locals &locals;
     
         #define PHOENIX_ADAPT_SCOPED_ENVIRONMENT(INTRINSIC)                     \
         template <typename Seq>                                                 \

@@ -44,19 +44,29 @@ namespace boost { namespace phoenix
         struct actor;
 
         template <typename Expr>
+        struct result_matches
+                  : mpl::eval_if<
+                        typename is_nullary<Expr>::type // avoid calling result_of::actor when this is false
+                      , boost::result_of<
+                            evaluator(
+                                Expr const &
+                              , fusion::vector2<fusion::vector0<>&, default_actions>&
+                            )
+                        >
+                      , mpl::identity<detail::error_expecting_arguments>
+                    >
+        {
+        };
+
+        template <typename Expr>
         struct actor<Expr>
         {
             //static const int arity = result_of::arity<Expr>::type::value;
 
-            typedef typename
-                mpl::eval_if<
-                    typename is_nullary<Expr>::type // avoid calling result_of::actor when this is false
-                  , boost::result_of<
-                        evaluator(
-                            Expr const &
-                          , fusion::vector2<fusion::vector0<>&, default_actions>&
-                        )
-                    >
+            typedef
+                typename mpl::eval_if<
+                    typename proto::matches<Expr, meta_grammar>::type
+                  , result_matches<Expr>
                   , mpl::identity<detail::error_expecting_arguments>
                 >::type
             type;

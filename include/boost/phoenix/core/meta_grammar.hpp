@@ -48,9 +48,9 @@ namespace boost { namespace phoenix
     // Set of default actions. Extend this whenever you add a new phoenix construct
     struct default_actions
     {
-        template <typename Rule, typename Dummy = void>
+        template <typename Rule, typename Grammar = meta_grammar>
         struct when
-            : proto::_default<meta_grammar>
+            : proto::_default<Grammar>
         {};
     };
 
