@@ -18,10 +18,16 @@
 namespace boost { namespace phoenix
 {
     struct let_grammar
-        : proto::or_<
-            proto::when<rule::local_variable, proto::external_transform>
-          , meta_grammar
-        >
+        : proto::switch_<let_grammar>
+    {
+        template <typename Tag>
+        struct case_ : meta_grammar::case_<Tag, let_grammar>
+        {};
+    };
+    
+    template <>
+    struct let_grammar::case_<tag::local_variable>
+        : proto::when<rule::local_variable, proto::external_transform>
     {};
     
     struct let_evaluator
@@ -42,12 +48,33 @@ namespace boost { namespace phoenix
         {};
     };
 
+    /*
+    template <>
+    struct meta_transform<let_actions>
+        : let_grammar
+    {};
+    */
+
     PHOENIX_DEFINE_EXPRESSION(
         let
       , (rule::local_var_def_list)
         (let_grammar)
         //(meta_grammar)
     )
+
+    namespace detail
+    {
+        template <typename Dummy>
+        struct is_nullary_::when<rule::let, Dummy>
+            : proto::make<
+                mpl::and_<
+                    detail::local_var_def_is_nullary(proto::_child_c<0>, _env)
+                  , mpl::true_()//let_evaluator(proto::_child_c<1>, _env)
+                >()
+            >
+            //: proto::make<mpl::true_()>
+        {};
+    }
 
     struct let_eval
     {
@@ -128,7 +155,7 @@ namespace boost { namespace phoenix
                 new_env(scoped_env, let_actions());//functional::actions()(env));
 
             std::cout << ":(\n";
-            std::cout << typeid(Let).name() << "\n";
+            //std::cout << typeid(Let).name() << "\n";
 
             return let_evaluator()(let, new_env);
             //return eval(let, new_env);
@@ -204,23 +231,6 @@ namespace boost { namespace phoenix
     };
 
     let_local_gen const let = {};
-
-    namespace detail
-    {
-        struct let_is_nullary
-            : proto::or_<
-                proto::when<rule::let, mpl::and_<let_is_nullary(proto::_child_c<0>, _env), let_is_nullary(proto::_child_c<1>, _env)>() >
-              , proto::when<rule::local_var_def_list, detail::local_var_def_is_nullary(proto::_, _env)>
-              , proto::when<rule::local_variable, mpl::true_()>
-              , proto::otherwise<evaluator(proto::_, _env)>
-            >
-        {};
-
-        template <typename Dummy>
-        struct is_nullary_::when<rule::let, Dummy>
-            : proto::make<let_is_nullary>
-        {};
-    }
 }}
 
 #endif

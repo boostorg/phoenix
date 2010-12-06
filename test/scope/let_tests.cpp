@@ -23,9 +23,22 @@
 namespace fusion = boost::fusion;
 namespace mpl = boost::mpl;
 
-int test()
+template <typename Expr>
+void fpp_test(Expr const & expr)
 {
-    return 5;
+    using boost::phoenix::let;
+    using boost::phoenix::local_names::_a;
+    using boost::phoenix::local_names::_b;
+    using boost::phoenix::local_names::_c;
+    using boost::phoenix::local_names::_d;
+    using boost::phoenix::local_names::_e;
+    using boost::phoenix::local_names::_x;
+    using boost::phoenix::local_names::_y;
+    using boost::phoenix::local_names::_z;
+    std::cout << typeid(typename boost::proto::matches<Expr, boost::phoenix::let_grammar>::type).name() << "\n";
+    std::cout << typeid(typename boost::proto::matches<Expr, boost::phoenix::meta_grammar>::type).name() << "\n";
+    std::cout << typeid(let(_a = 1, _b = 2, _c = 2, _d = 3, _e = 5)[expr]()).name() << "\n";
+    let(_a = 1, _b = 2, _c = 2, _d = 3, _e = 5)[expr]();
 }
 
 int
@@ -82,14 +95,13 @@ main()
         );
     }
 
-    /*
     {
         int x = 1, y = 10;
         BOOST_TEST(
             let(_x = _1) 
             [
                 _x +
-                    let(_x = _2) 
+                    let(_x = _2)
                     [
                         -_x
                     ]
@@ -123,6 +135,7 @@ main()
         
         BOOST_TEST(x == 999);
 
+        /*
         BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value 
             [
@@ -130,18 +143,18 @@ main()
             ]
             (x) == x + 888
         );
+        */
         
         BOOST_TEST(x == 999);
     }
 
     {
-        // FIXME
         BOOST_TEST(
             let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
             [
                 _a + _b + _c + _d + _e
             ]
-            (0) == 1 + 2 + 3 + 4 + 5
+            () == 1 + 2 + 3 + 4 + 5
         );
     }
 
@@ -152,7 +165,7 @@ main()
         (_a + _b)(i);
     }
 #endif
-    
+ 
     {
         // show that we can return a local from an outer scope
         int y = 0;
@@ -189,7 +202,6 @@ main()
         let(_a = _1)[_a = _2](i, 2);
         BOOST_TEST(i == 2);
     }
-    */
 
     return boost::report_errors();
 }

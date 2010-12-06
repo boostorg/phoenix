@@ -43,8 +43,8 @@ namespace boost { namespace phoenix
         {};
     }
 
-    template <typename Dummy>
-    struct meta_grammar::case_<proto::tag::terminal, Dummy>
+    template <typename Grammar>
+    struct meta_grammar::case_<proto::tag::terminal, Grammar>
         : proto::or_<
             proto::when<rule::argument       , proto::external_transform>
           , proto::when<rule::custom_terminal, proto::external_transform>
@@ -52,13 +52,13 @@ namespace boost { namespace phoenix
         >
     {};
 
-    template <typename Dummy>
-    struct default_actions::when<rule::custom_terminal, Dummy>
+    template <typename Grammar>
+    struct default_actions::when<rule::custom_terminal, Grammar>
         : proto::lazy<custom_terminal<proto::_value>(proto::_value, _env)>
     {};
     
-    template <typename Dummy>
-    struct default_actions::when<rule::argument, Dummy>
+    template <typename Grammar>
+    struct default_actions::when<rule::argument, Grammar>
         : proto::call<functional::args_at(proto::_value, _env)>
     {};
 }}

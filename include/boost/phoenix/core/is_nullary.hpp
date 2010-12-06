@@ -43,7 +43,7 @@ namespace boost { namespace phoenix
 
 		template <typename Dummy>
 		struct is_nullary_::when<rule::custom_terminal, Dummy>
-            : proto::lazy<is_nullary<custom_terminal<proto::_value> >(proto::_, _env)>//               proto::lazy<is_nullary<proto::_value>()>
+            : proto::lazy<is_nullary<custom_terminal<proto::_> >(proto::_, _env)>//proto::make<mpl::true_()>
 		{};
 
 		template <typename Dummy>
@@ -62,6 +62,20 @@ namespace boost { namespace phoenix
         : proto::make<mpl::true_()>
     {};
 
+    template <typename T>
+    struct is_nullary<T & >
+        : is_nullary<T>
+    {};
+
+    template <typename T>
+    struct is_nullary<T const & >
+        : is_nullary<T>
+    {};
+
+    template <typename T>
+    struct is_nullary<T const >
+        : is_nullary<T>
+    {};
 
 }}
 

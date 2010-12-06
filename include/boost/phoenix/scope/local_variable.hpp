@@ -198,6 +198,41 @@ namespace boost { namespace phoenix
             >
         {};
     }
+    namespace detail
+    {
+        template <typename Dummy>
+        struct is_nullary_::when<rule::local_variable, Dummy>
+            : proto::make<mpl::true_()>
+            /*: proto::if_<
+                //is_scoped_environment<functional::args(proto::_state)>()
+                foo(functional::args(proto::_state))
+              , mpl::false_()
+              , mpl::true_()
+            >*/
+        {};
+
+        struct local_var_def_is_nullary
+            : proto::or_<
+                proto::when<
+                    proto::comma<proto::_, proto::_>//local_var_def_is_nullary, rule::local_var_def>
+                  , mpl::and_<
+                        local_var_def_is_nullary(proto::_left, proto::_state)
+                      //, mpl::false_()//, local_var_def_is_nullary(proto::_right, proto::_state)
+                      //, evaluator(proto::_right(proto::_right), proto::_state)
+                      //, is_nullary<proto::_right(proto::_right)>()
+                      , evaluator(proto::_right(proto::_right), fusion::vector2<fusion::vector0<>, detail::is_nullary_>())
+                    >()
+                >
+              , proto::when<
+                    proto::_
+                  //, mpl::false_()
+                  , evaluator(proto::_child_c<1>, fusion::vector2<fusion::vector0<>, detail::is_nullary_>())
+                  //, is_nullary<proto::_child_c<1> >()
+                  //, proto::lazy<is_nullary<custom_terminal<proto::_child_c<1> > >(proto::_child_c<1>, _env)>
+                >
+            >
+        {};
+    }
 
     namespace detail
     {
@@ -293,21 +328,6 @@ namespace boost { namespace phoenix
             */
         {};
 
-        struct local_var_def_is_nullary
-            : proto::or_<
-                proto::when<
-                    proto::comma<local_var_def_is_nullary, rule::local_var_def>
-                  , mpl::and_<
-                        local_var_def_is_nullary(proto::_left, _env)
-                      , evaluator(proto::_right(proto::_right), _env)
-                    >()
-                >
-              , proto::when<
-                    rule::local_var_def
-                  , evaluator(proto::_right, _env)
-                >
-            >
-        {};
     }
 
     template <typename Key>
@@ -465,17 +485,6 @@ namespace boost { namespace phoenix
             : is_scoped_environment<Env>
         {};
     };
-    
-    template <typename T>
-    struct is_nullary<custom_terminal<local_variable<T> > >
-        : proto::make<mpl::false_()>
-        /*: proto::if_<
-            //is_scoped_environment<functional::args(proto::_state)>()
-            foo(functional::args(proto::_state))
-          , mpl::false_()
-          , mpl::true_()
-        >*/
-    {};
 #endif
     
     namespace local_names

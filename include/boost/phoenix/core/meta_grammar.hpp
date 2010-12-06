@@ -26,7 +26,7 @@ namespace boost { namespace phoenix
     struct meta_grammar
         : proto::switch_<meta_grammar>
     {
-        template <typename Tag, typename Dummy = void>
+        template <typename Tag, typename Grammar = meta_grammar>
         struct case_
             : proto::not_<proto::_>
         {};

@@ -8,37 +8,39 @@
 #define PHOENIX_OPERATOR_HPP
 
 #define PHOENIX_UNARY_RULE(_, __, name)                                         \
-		struct name                                                               \
-		  : proto::unary_expr<proto::tag::name, meta_grammar>                     \
-		{};                                                                       \
-	/**/
+        template <typename Grammar>                                             \
+        struct name                                                             \
+            : proto::unary_expr<proto::tag::name, Grammar>                      \
+        {};                                                                     \
+    /**/
 
 #define PHOENIX_BINARY_RULE(_, __, name)                                        \
-		struct name                                                               \
-		  : proto::binary_expr<proto::tag::name, meta_grammar, meta_grammar>      \
-		{};                                                                       \
-	/**/
+        template <typename Grammar>                                             \
+        struct name                                                             \
+            : proto::binary_expr<proto::tag::name, Grammar, Grammar>            \
+        {};                                                                     \
+    /**/
 
 #define PHOENIX_GRAMMAR(_, __, name)                                            \
-	template <typename Dummy>                                                    \
-	struct meta_grammar::case_<proto::tag::name, Dummy>                          \
-		: proto::when<rule::name, proto::external_transform>                      \
-	{};                                                                          \
-	/**/
+    template <typename Grammar>                                                 \
+    struct meta_grammar::case_<proto::tag::name, Grammar>                       \
+        : proto::when<rule::name<Grammar>, proto::external_transform>           \
+    {};                                                                         \
+    /**/
 
 #define PHOENIX_UNARY_OPERATORS(ops)                                            \
-	namespace rule {                                                             \
-		BOOST_PP_SEQ_FOR_EACH(PHOENIX_UNARY_RULE, _, ops)                         \
-	}                                                                            \
-	BOOST_PP_SEQ_FOR_EACH(PHOENIX_GRAMMAR, _, ops)                               \
-	/**/
+    namespace rule {                                                            \
+        BOOST_PP_SEQ_FOR_EACH(PHOENIX_UNARY_RULE, _, ops)                       \
+    }                                                                           \
+    BOOST_PP_SEQ_FOR_EACH(PHOENIX_GRAMMAR, _, ops)                              \
+    /**/
 
 #define PHOENIX_BINARY_OPERATORS(ops)                                           \
-	namespace rule {                                                             \
-		BOOST_PP_SEQ_FOR_EACH(PHOENIX_BINARY_RULE, _, ops)                        \
-	}                                                                            \
-	BOOST_PP_SEQ_FOR_EACH(PHOENIX_GRAMMAR, _, ops)                               \
-	/**/
+    namespace rule {                                                            \
+        BOOST_PP_SEQ_FOR_EACH(PHOENIX_BINARY_RULE, _, ops)                      \
+    }                                                                           \
+    BOOST_PP_SEQ_FOR_EACH(PHOENIX_GRAMMAR, _, ops)                              \
+    /**/
 
 #include <boost/phoenix/version.hpp>
 #include <boost/phoenix/operator/arithmetic.hpp>

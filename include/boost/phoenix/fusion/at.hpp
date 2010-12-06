@@ -53,7 +53,7 @@ namespace boost { namespace phoenix
         typename result_of::at_c<Env &, Tuple, N::value>::type
         operator()(Env& env, Tuple const& tuple) const
         {
-            return fusion::at_c<N::value>(eval(tuple, env));
+            return fusion::at_c<0>(eval(tuple, env));
         }
     };
 
@@ -63,7 +63,7 @@ namespace boost { namespace phoenix
     {};
 
     template <int N, typename Tuple>
-    typename expression::at_c<mpl::int_<N>, Tuple>::type
+    typename expression::at_c<mpl::int_<N>, Tuple>::type const
     at_c(Tuple const& tuple)
     {
         return expression::at_c<mpl::int_<N>, Tuple>::make(mpl::int_<N>(), tuple);
