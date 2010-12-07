@@ -55,8 +55,7 @@ namespace boost { namespace phoenix
                         >
                       , mpl::identity<detail::error_expecting_arguments>
                     >
-        {
-        };
+        {};
 
         template <typename Expr>
         struct actor<Expr>
@@ -157,6 +156,12 @@ namespace boost { namespace phoenix
             typedef fusion::vector0<> args_type;
             args_type args;
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
+
+            typedef typename proto::domain_of<actor<Expr> >::type domain_type;
+            typedef typename domain_type::proto_grammar grammar_type;
+
+            std::cout << typeid(actor<Expr>).name() << "\n";
+            std::cout << typeid(grammar_type).name() << "\n";
             
             return eval(*this, env);
         }

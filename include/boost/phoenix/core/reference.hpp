@@ -69,6 +69,13 @@ namespace boost { namespace phoenix
             return r;
         }
     };
+
+    /*
+    template <typename T>
+    struct is_nullary<custom_terminal<reference_wrapper<T> > >
+        : proto::make<mpl::true_()>
+    {};
+    */
 }}
 
 #endif

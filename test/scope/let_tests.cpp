@@ -135,7 +135,6 @@ main()
         
         BOOST_TEST(x == 999);
 
-        /*
         BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value 
             [
@@ -143,7 +142,6 @@ main()
             ]
             (x) == x + 888
         );
-        */
         
         BOOST_TEST(x == 999);
     }

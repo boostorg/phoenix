@@ -89,6 +89,10 @@ namespace boost { namespace phoenix
                 >
               , expression::try_catch<
                      meta_grammar
+                   , rule::catch_all
+                >
+              , expression::try_catch<
+                     meta_grammar
                    , proto::vararg<rule::catch_>
                    , rule::catch_all
                 >
@@ -173,12 +177,12 @@ namespace boost { namespace phoenix
         struct try_catch_is_nullary
             : proto::or_<
                 proto::when<
-                    rule::catch_
-                  , evaluator(proto::_child_c<1>, proto::_data)
-                >
-              , proto::when<
                     rule::catch_all
                   , evaluator(proto::_child_c<0>, proto::_data)
+                >
+              , proto::when<
+                    rule::catch_
+                  , evaluator(proto::_child_c<1>, proto::_data)
                 >
               , proto::when<
                     rule::try_catch
