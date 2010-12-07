@@ -41,7 +41,7 @@ namespace boost { namespace phoenix
         >
         struct try_catch;
 
-        #define PHOENIX_TRY_CATCH_EXPRESSION(Z, N, DATA)                        \
+    #define PHOENIX_TRY_CATCH_EXPRESSION(Z, N, DATA)                        \
         template <typename Try BOOST_PP_COMMA_IF(N) PHOENIX_typename_A(N)>      \
         struct try_catch<Try BOOST_PP_COMMA_IF(N) PHOENIX_A(N)>                 \
             : expr_ext<                                                         \
@@ -109,7 +109,7 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
 
-#define PHOENIX_TRY_CATCH_EVAL_R(Z, N, DATA) \
+    #define PHOENIX_TRY_CATCH_EVAL_R(Z, N, DATA)                                \
             catch(                                                              \
                 typename proto::result_of::value<                               \
                     typename proto::result_of::child_c<                         \
@@ -123,7 +123,7 @@ namespace boost { namespace phoenix
             }                                                                   \
         /**/
 
-#define PHOENIX_TRY_CATCH_EVAL(Z, N, DATA)                                      \
+    #define PHOENIX_TRY_CATCH_EVAL(Z, N, DATA)                                  \
         template <typename Env, typename Try, PHOENIX_typename_A(N)>            \
         typename boost::enable_if<                                              \
             proto::matches<BOOST_PP_CAT(A, BOOST_PP_DEC(N)), rule::catch_>      \
@@ -187,7 +187,7 @@ namespace boost { namespace phoenix
               , proto::when<
                     rule::try_catch
                   , mpl::and_<
-                        evaluator(proto::_child_c<0>, proto::_data)
+                        proto::call<evaluator(proto::_child_c<0>, proto::_data)>
                       , proto::fold<
                             proto::functional::pop_front(proto::_)
                           , mpl::true_()
@@ -251,16 +251,16 @@ namespace boost { namespace phoenix
             }
         };
 
-        #define PHOENIX_CATCH_PUSH_BACK_R0(Z, N, DATA)                          \
+    #define PHOENIX_CATCH_PUSH_BACK_R0(Z, N, DATA)                              \
         BOOST_PP_COMMA_IF(N)                                                    \
         typename proto::result_of::child_c<TryCatch, N>::type                   \
         /**/
 
-        #define PHOENIX_CATCH_PUSH_BACK_R1(Z, N, DATA)                          \
+    #define PHOENIX_CATCH_PUSH_BACK_R1(Z, N, DATA)                              \
         BOOST_PP_COMMA_IF(N) proto::child_c<N>(try_catch)                       \
         /**/
 
-        #define PHOENIX_CATCH_PUSH_BACK(Z, N, DATA)                             \
+    #define PHOENIX_CATCH_PUSH_BACK(Z, N, DATA)                                 \
         template <typename TryCatch, typename Exception, typename Expr>         \
         struct catch_push_back<TryCatch, Exception, Expr, N>                    \
         {                                                                       \
@@ -343,7 +343,7 @@ namespace boost { namespace phoenix
             }
         };
 
-        #define PHOENIX_CATCH_ALL_PUSH_BACK(Z, N, DATA)                         \
+    #define PHOENIX_CATCH_ALL_PUSH_BACK(Z, N, DATA)                             \
         template <typename TryCatch, typename Expr>                             \
         struct catch_all_push_back<TryCatch, Expr, N>                           \
         {                                                                       \

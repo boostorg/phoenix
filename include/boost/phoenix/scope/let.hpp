@@ -17,48 +17,10 @@
 
 namespace boost { namespace phoenix
 {
-    struct let_grammar
-        : proto::switch_<let_grammar>
-    {
-        template <typename Tag>
-        struct case_ : meta_grammar::case_<Tag, let_grammar>
-        {};
-    };
-    
-    template <>
-    struct let_grammar::case_<tag::local_variable>
-        : proto::when<rule::local_variable, proto::external_transform>
-    {};
-    
-    struct let_evaluator
-        : proto::call<
-            let_grammar(
-                proto::_
-              , functional::args(proto::_state)
-              , functional::actions(proto::_state)
-            )
-        >
-    {};
-
-    struct let_actions
-    {
-        template <typename Rule>
-        struct when
-            : default_actions::when<Rule, let_grammar>
-        {};
-    };
-
-    /*
-    template <>
-    struct meta_transform<let_actions>
-        : let_grammar
-    {};
-    */
-
     PHOENIX_DEFINE_EXPRESSION(
         let
       , (rule::local_var_def_list)
-        (let_grammar)
+        (scope_grammar)
         //(meta_grammar)
     )
 
@@ -69,7 +31,9 @@ namespace boost { namespace phoenix
             : proto::make<
                 mpl::and_<
                     detail::local_var_def_is_nullary(proto::_child_c<0>, _env)
-                  , mpl::true_()//let_evaluator(proto::_child_c<1>, _env)
+                    //mpl::true_()
+                  //, mpl::true_()//let_evaluator(proto::_child_c<1>, _env)
+                  , evaluator(proto::_child_c<1>, _env, int())
                 >()
             >
             //: proto::make<mpl::true_()>
@@ -105,9 +69,10 @@ namespace boost { namespace phoenix
 
             typedef
                 typename boost::result_of<
-                    let_evaluator(
+                    evaluator(
                         Let const &
-                      , fusion::vector2<scoped_environment<Env, Env, locals_type&> &, let_actions>&//actions_type> &
+                      , fusion::vector2<scoped_environment<Env, Env, locals_type&> &, actions_type> &
+                      //, fusion::vector2<scoped_environment<Env, Env, locals_type&> &, let_actions>&//actions_type> &
                     )
                 >::type
                 type;
@@ -117,7 +82,6 @@ namespace boost { namespace phoenix
         typename result<let_eval(Env&, Locals const &, Let const &)>::type
         operator()(Env & env, Locals const & locals, Let const & let) const
         {
-            /*
             typedef
                 typename proto::detail::uncvref<
                     typename boost::result_of<
@@ -125,7 +89,6 @@ namespace boost { namespace phoenix
                     >::type
                 >::type
                 actions_type;
-            */
 
             typedef
                 typename proto::detail::uncvref<
@@ -151,13 +114,16 @@ namespace boost { namespace phoenix
                   , l
                 );
 
-            fusion::vector2<scoped_environment<Env, Env, locals_type &> &, let_actions>
-                new_env(scoped_env, let_actions());//functional::actions()(env));
+            fusion::vector2<scoped_environment<Env, Env, locals_type &> &, actions_type>
+            //fusion::vector2<scoped_environment<Env, Env, locals_type &> &, let_actions>
+                new_env(scoped_env, functional::actions()(env));
+                //new_env(scoped_env, let_actions());//functional::actions()(env));
 
             std::cout << ":(\n";
             //std::cout << typeid(Let).name() << "\n";
 
-            return let_evaluator()(let, new_env);
+            return evaluator()(let, new_env);
+            //return let_evaluator()(let, new_env);
             //return eval(let, new_env);
         }
     };

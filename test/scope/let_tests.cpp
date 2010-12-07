@@ -35,10 +35,21 @@ void fpp_test(Expr const & expr)
     using boost::phoenix::local_names::_x;
     using boost::phoenix::local_names::_y;
     using boost::phoenix::local_names::_z;
-    std::cout << typeid(typename boost::proto::matches<Expr, boost::phoenix::let_grammar>::type).name() << "\n";
+    std::cout << typeid(typename boost::phoenix::detail::grammar_of<Expr>::type).name() << "\n";
+    std::cout << typeid(typename boost::proto::matches<Expr, boost::phoenix::scope_grammar>::type).name() << "\n";
     std::cout << typeid(typename boost::proto::matches<Expr, boost::phoenix::meta_grammar>::type).name() << "\n";
     std::cout << typeid(let(_a = 1, _b = 2, _c = 2, _d = 3, _e = 5)[expr]()).name() << "\n";
-    let(_a = 1, _b = 2, _c = 2, _d = 3, _e = 5)[expr]();
+    //let(_a = 1/*, _b = 2, _c = 2, _d = 3, _e = 5*/)[expr]();
+    //let(_a = 1, _b = 2, _c = 2, _d = 3, _e = 5)[expr]();
+
+}
+
+template <typename Expr0, typename Expr1>
+void fpp_test(Expr0 const & expr0, Expr1 const & expr1)
+{
+    fpp_test(expr0);
+    fpp_test(expr1);
+    fpp_test(expr0 + expr1);
 }
 
 int
@@ -59,6 +70,13 @@ main()
     using boost::phoenix::local_names::_z;
     using boost::phoenix::placeholders::arg1;
 
+    //fpp_test(_a);
+    /*
+    std::cout << typeid(_a).name() << "\n";
+    fpp_test(_a, _b);
+    //std::cout << typeid(_a + _b).name() << "\n";
+    */
+
     {
         int x = 1;
         BOOST_TEST(
@@ -70,6 +88,7 @@ main()
         );
     }
 
+    /*
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -145,16 +164,19 @@ main()
         
         BOOST_TEST(x == 999);
     }
+    */
 
+    /*
     {
         BOOST_TEST(
             let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
             [
-                _a + _b + _c + _d + _e
+                _a// + _b + _c + _d + _e
             ]
             () == 1 + 2 + 3 + 4 + 5
         );
     }
+    */
 
 #ifdef PHOENIX_SHOULD_NOT_COMPILE_TEST
     {
@@ -195,11 +217,13 @@ main()
         BOOST_TEST( i == 0 );
     }
 
+    /*
     {
         int i = 0;
         let(_a = _1)[_a = _2](i, 2);
         BOOST_TEST(i == 2);
     }
+    */
 
     return boost::report_errors();
 }

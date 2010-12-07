@@ -7,24 +7,22 @@
 #ifndef PHOENIX_OPERATOR_HPP
 #define PHOENIX_OPERATOR_HPP
 
-#define PHOENIX_UNARY_RULE(_, __, name)                                         \
-        template <typename Grammar>                                             \
+#define PHOENIX_UNARY_RULE(__, ___, name)                                         \
         struct name                                                             \
-            : proto::unary_expr<proto::tag::name, Grammar>                      \
+            : proto::unary_expr<proto::tag::name, proto::_>                 \
         {};                                                                     \
     /**/
 
-#define PHOENIX_BINARY_RULE(_, __, name)                                        \
-        template <typename Grammar>                                             \
+#define PHOENIX_BINARY_RULE(__, ___, name)                                        \
         struct name                                                             \
-            : proto::binary_expr<proto::tag::name, Grammar, Grammar>            \
+            : proto::binary_expr<proto::tag::name, proto::_, proto::_>  \
         {};                                                                     \
     /**/
 
 #define PHOENIX_GRAMMAR(_, __, name)                                            \
-    template <typename Grammar>                                                 \
-    struct meta_grammar::case_<proto::tag::name, Grammar>                       \
-        : proto::when<rule::name<Grammar>, proto::external_transform>           \
+    template <typename Dummy>                                                   \
+    struct meta_grammar::case_<proto::tag::name, Dummy>                         \
+        : proto::when<rule::name, proto::external_transform>           \
     {};                                                                         \
     /**/
 

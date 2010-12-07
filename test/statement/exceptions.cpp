@@ -68,6 +68,7 @@ int main()
 
     {
         bool caught_exception = false;
+
         try_
         [ throw_(runtime_error("error")) ]
         .catch_all
@@ -77,6 +78,7 @@ int main()
 
     {
         bool caught_correct_exception = false;
+
         try_
             [ throw_(runtime_error("error")) ]
         .catch_<string>()
@@ -89,6 +91,7 @@ int main()
 
     {
         bool caught_correct_exception = false;
+
         try_
             [ throw_(runtime_error("error")) ]
         .catch_<string>()

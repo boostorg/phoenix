@@ -10,6 +10,7 @@
 
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/scope/scope_actor.hpp>
 #include <boost/phoenix/statement/sequence.hpp>
 
 namespace boost { namespace phoenix
@@ -34,9 +35,23 @@ namespace boost { namespace phoenix
         template <typename Key, typename _ = proto::is_proto_expr>
         struct local_variable
         {
-            typedef expr<tag::local_variable, Key> expr_type;
+            typedef
+                typename proto::result_of::make_expr<
+                    tag::local_variable
+                  , default_domain_with_basic_expr
+                  , Key
+                >::type
+                base_type;
+
+            typedef scope_actor<base_type> type;
+
+            typedef
+                typename proto::nary_expr<tag::local_variable, Key>::proto_grammar
+                proto_grammar;
+                
+            /*typedef expr<tag::local_variable, Key> expr_type;
             typedef typename expr_type::type type;
-            typedef typename expr_type::proto_grammar proto_grammar;
+            typedef typename expr_type::proto_grammar proto_grammar;*/
             //BOOST_PROTO_BASIC_EXTENDS(typename expr_type::type, local_variable, phoenix_domain)
         };
         /*    : proto::transform<local_variable<Key>, int>
@@ -198,6 +213,12 @@ namespace boost { namespace phoenix
             >
         {};
     }
+
+    template <typename Dummy>
+    struct scope_grammar::case_<tag::local_variable, Dummy>
+        : proto::when<rule::local_variable, proto::external_transform>
+    {};
+
     namespace detail
     {
         template <typename Dummy>
@@ -214,19 +235,20 @@ namespace boost { namespace phoenix
         struct local_var_def_is_nullary
             : proto::or_<
                 proto::when<
-                    proto::comma<proto::_, proto::_>//local_var_def_is_nullary, rule::local_var_def>
+                    proto::comma<local_var_def_is_nullary, rule::local_var_def>
                   , mpl::and_<
                         local_var_def_is_nullary(proto::_left, proto::_state)
                       //, mpl::false_()//, local_var_def_is_nullary(proto::_right, proto::_state)
                       //, evaluator(proto::_right(proto::_right), proto::_state)
                       //, is_nullary<proto::_right(proto::_right)>()
-                      , evaluator(proto::_right(proto::_right), fusion::vector2<fusion::vector0<>, detail::is_nullary_>())
+                      , evaluator(proto::_right(proto::_right), fusion::vector2<fusion::vector0<>, detail::is_nullary_>(), int())
                     >()
                 >
               , proto::when<
-                    proto::_
+                    //proto::_
+                    rule::local_var_def
                   //, mpl::false_()
-                  , evaluator(proto::_child_c<1>, fusion::vector2<fusion::vector0<>, detail::is_nullary_>())
+                  , evaluator(proto::_child_c<1>, fusion::vector2<fusion::vector0<>, detail::is_nullary_>(), int())
                   //, is_nullary<proto::_child_c<1> >()
                   //, proto::lazy<is_nullary<custom_terminal<proto::_child_c<1> > >(proto::_child_c<1>, _env)>
                 >
@@ -266,7 +288,9 @@ namespace boost { namespace phoenix
                     proto::comma<find_local, rule::local_var_def>
                   , proto::if_<
                         proto::matches<proto::_left(proto::_right), proto::_data>()
-                      , evaluator(proto::_right(proto::_right), proto::_state)
+                      //, evaluator(proto::_right(proto::_right), proto::_state)
+                      , evaluator(proto::_right, proto::_state, int())
+                      //, int()
                       , find_local(proto::_left, proto::_state, proto::_data)
                     >
                 >
@@ -274,7 +298,8 @@ namespace boost { namespace phoenix
                     rule::local_var_def
                   , proto::if_<
                         proto::matches<proto::_left, proto::_data>()
-                      , evaluator(proto::_right, proto::_state)
+                      , evaluator(proto::_right, proto::_state, int())
+                      //, int()
                       , detail::local_var_not_found()
                     >
                 >
@@ -351,6 +376,7 @@ namespace boost { namespace phoenix
                 typename mpl::eval_if<
                     is_scoped_environment<env_type>
                   , detail::get_local_result_impl<This, env_type, Env, Key>
+                  //, mpl::identity<int>
                   , mpl::identity<detail::local_var_not_found>
                 >::type
                 type;
@@ -381,6 +407,9 @@ namespace boost { namespace phoenix
             typename result<get_local<Key>(Env&)>::type
             evaluate(Env & env, mpl::true_) const
             {
+                //Key k;
+                //detail::find_local()(functional::args()(env).locals, env, k);
+                //return 5;
                 typedef
                     typename proto::detail::uncvref<
                         typename boost::result_of<

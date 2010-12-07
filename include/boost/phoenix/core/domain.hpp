@@ -24,7 +24,8 @@ namespace boost { namespace phoenix
     struct phoenix_domain
         : proto::domain<
             proto::pod_generator<actor>
-          , meta_grammar//proto::_
+          , meta_grammar
+          //, proto::_
           , proto::default_domain
         >
     {
