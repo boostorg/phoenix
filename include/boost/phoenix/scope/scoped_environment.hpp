@@ -107,7 +107,7 @@ namespace boost { namespace phoenix
     
     template <typename Env>
     struct is_scoped_environment<Env&> : is_scoped_environment<Env> {};
-
+    
     template <typename Env, typename OuterEnv, typename Locals>
     struct is_scoped_environment<scoped_environment<Env, OuterEnv, Locals> >
         : mpl::true_

@@ -187,7 +187,7 @@ namespace boost { namespace phoenix
               , proto::when<
                     rule::try_catch
                   , mpl::and_<
-                        proto::call<evaluator(proto::_child_c<0>, proto::_data)>
+                        evaluator(proto::_child_c<0>, proto::_data)
                       , proto::fold<
                             proto::functional::pop_front(proto::_)
                           , mpl::true_()

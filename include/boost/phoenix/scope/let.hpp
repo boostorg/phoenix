@@ -26,6 +26,18 @@ namespace boost { namespace phoenix
 
     namespace detail
     {
+        struct let_is_nullary_actions
+        {
+            template <typename Rule, typename Dummy = void>
+            struct when : is_nullary_::when<Rule, Dummy>
+            {};
+        };
+
+        template <typename Dummy>
+        struct let_is_nullary_actions::when<rule::local_variable, Dummy>
+            : proto::make<mpl::true_()>
+        {};
+
         template <typename Dummy>
         struct is_nullary_::when<rule::let, Dummy>
             : proto::make<
@@ -33,7 +45,9 @@ namespace boost { namespace phoenix
                     detail::local_var_def_is_nullary(proto::_child_c<0>, _env)
                     //mpl::true_()
                   //, mpl::true_()//let_evaluator(proto::_child_c<1>, _env)
-                  , evaluator(proto::_child_c<1>, _env, int())
+                  , evaluator(proto::_child_c<1>, //fusion::vector2<scoped_environment<_env, _env, mpl::void_()>(), functional::actions(_env)>()
+                          fusion::vector2<fusion::vector0<>&, let_is_nullary_actions>()
+                          )
                 >()
             >
             //: proto::make<mpl::true_()>
@@ -122,9 +136,8 @@ namespace boost { namespace phoenix
             std::cout << ":(\n";
             //std::cout << typeid(Let).name() << "\n";
 
-            return evaluator()(let, new_env);
             //return let_evaluator()(let, new_env);
-            //return eval(let, new_env);
+            return eval(let, new_env);
         }
     };
 

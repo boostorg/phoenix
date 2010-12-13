@@ -34,6 +34,12 @@ namespace boost { namespace phoenix
             template <typename T>
             error_expecting_arguments(T const&) {}
         };
+        
+        struct error_invalid_lambda_expr
+        {
+            template <typename T>
+            error_invalid_lambda_expr(T const&) {}
+        };
     }
 
     namespace result_of
@@ -66,7 +72,7 @@ namespace boost { namespace phoenix
                 typename mpl::eval_if<
                     typename proto::matches<Expr, meta_grammar>::type
                   , result_matches<Expr>
-                  , mpl::identity<detail::error_expecting_arguments>
+                  , mpl::identity<detail::error_invalid_lambda_expr>
                 >::type
             type;
         };

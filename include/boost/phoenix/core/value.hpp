@@ -78,7 +78,7 @@ namespace boost { namespace phoenix
     struct is_nullary<custom_terminal<actor<T> > >
         //: proto::make<typename is_nullary<T>::type()>
         //: proto::make<mpl::false_()>
-        : proto::call<evaluator(proto::_value, fusion::vector2<fusion::vector0<>, detail::is_nullary_>())>
+        : proto::call<evaluator(proto::_value)>//, fusion::vector2<fusion::vector0<>, detail::is_nullary_>())>
     {};
 
     /*
