@@ -69,7 +69,7 @@ main()
     using boost::phoenix::local_names::_y;
     using boost::phoenix::local_names::_z;
     using boost::phoenix::placeholders::arg1;
-
+    
     {
         int x = 1;
         BOOST_TEST(
@@ -136,7 +136,7 @@ main()
 
     {
         int x = 999;
-    /*
+
         BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value 
             [
@@ -146,13 +146,11 @@ main()
         );
         
         BOOST_TEST(x == 999);
-    */
 
         BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value 
             [
-                //val(_x += 888)
-                val(888 + 999)
+                val(_x += 888)
             ]
             (x) == x + 888
         );
