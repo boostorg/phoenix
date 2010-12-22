@@ -77,7 +77,22 @@ main()
     using boost::phoenix::local_names::_b;
     using boost::phoenix::placeholders::arg1;
 
-    /*
+    {
+        int x = 1;
+        long x2 = 2;
+        short x3 = 3;
+        char const* y = "hello";
+        zzz z;
+
+        //BOOST_TEST(lambda[_1](x)(y) == y);
+        //BOOST_TEST(lambda(_a = _1)[_a](x)(y) == x);
+        lambda(_a = _1)[lambda[_a]](x)(y)(z);
+        //BOOST_TEST(lambda(_a = _1)[lambda[_a]](x)(y)(z) == x);
+        //BOOST_TEST(lambda(_a = _1)[lambda[_a + _1]](x)(y)(x) == 2);
+        //BOOST_TEST(lambda(_a = _1)[lambda(_b = _1)[_a + _b + _1]](x)(x2)(x3) == 6);
+    }
+
+#if 0
     {
         int x = 1;
         int y = lambda[_1]()(x);
@@ -133,8 +148,8 @@ main()
             (_1 + lambda(_a = _1)[_a + _1 + 2])(x)(y) == 1+1+10+2
         );
     }
-    */
 
+    /*
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -158,8 +173,8 @@ main()
             )
             (x)(y)(y) << "\n";
     }
+    */
 
-    /*
     {
         using boost::phoenix::for_each;
 
@@ -196,32 +211,19 @@ main()
             (x, z)(y) == x + y + z
         );
     }
-    */
 
-    /*
     {
-        // $$$ Fixme. This should not be failing $$$
         int x = (let(_a = lambda[val(1)])[_a])()();
-        //BOOST_TEST(x == 1);
+        BOOST_TEST(x == 1);
     }
-    */
 
-    /*
-    {
-        // $$$ Fixme. This should not be failing $$$
-        int x = (let(_a = lambda[val(1)])[_a])(0);
-        //BOOST_TEST(x == 1);
-    }
-    */
-
-    /*
     {
         int i = 0;
         int j = 2;
         BOOST_TEST(lambda[let(_a = _1)[_a = _2]]()(i, j) == j);
         BOOST_TEST(i == j);
     }
-    */
+#endif
 
     return boost::report_errors();
 }

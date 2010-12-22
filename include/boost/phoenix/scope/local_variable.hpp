@@ -271,6 +271,20 @@ namespace boost { namespace phoenix
 
     namespace detail
     {
+        
+        struct scope_is_nullary_actions
+        {
+            template <typename Rule, typename Dummy = void>
+            struct when : is_nullary_::when<Rule, Dummy>
+            {};
+        };
+
+        template <typename Dummy>
+        struct scope_is_nullary_actions::when<rule::local_variable, Dummy>
+            : proto::make<mpl::true_()>
+        {};
+
+
         struct local_var_not_found
         {
             template <typename T>

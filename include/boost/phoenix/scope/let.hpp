@@ -20,24 +20,11 @@ namespace boost { namespace phoenix
     PHOENIX_DEFINE_EXPRESSION(
         let
       , (rule::local_var_def_list)
-        (scope_grammar)
-        //(meta_grammar)
+        (meta_grammar)
     )
 
     namespace detail
     {
-        struct let_is_nullary_actions
-        {
-            template <typename Rule, typename Dummy = void>
-            struct when : is_nullary_::when<Rule, Dummy>
-            {};
-        };
-
-        template <typename Dummy>
-        struct let_is_nullary_actions::when<rule::local_variable, Dummy>
-            : proto::make<mpl::true_()>
-        {};
-
         template <typename Dummy>
         struct is_nullary_::when<rule::let, Dummy>
             : proto::make<
@@ -46,7 +33,7 @@ namespace boost { namespace phoenix
                     //mpl::true_()
                   //, mpl::true_()//let_evaluator(proto::_child_c<1>, _env)
                   , evaluator(proto::_child_c<1>, //fusion::vector2<scoped_environment<_env, _env, mpl::void_()>(), functional::actions(_env)>()
-                          fusion::vector2<fusion::vector0<>&, let_is_nullary_actions>()
+                          fusion::vector2<fusion::vector0<>&, scope_is_nullary_actions>()
                           )
                 >()
             >

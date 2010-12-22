@@ -98,9 +98,10 @@ namespace boost { namespace phoenix
                 );
 
             std::cout << typeid(env).name() << "\n";
+            std::cout << typeid(outer_env).name() << "\n";
             std::cout << typeid(fusion::at_c<0>(env)).name() << "\n";
             std::cout << typeid(fusion::at_c<0>(outer_env)).name() << "\n";
-            std::cout << fusion::at_c<0>(fusion::at_c<0>(env)) << "\n";
+            //std::cout << fusion::at_c<0>(fusion::at_c<0>(env)) << "\n";
             std::cout << "fuuu\n";
             //std::cout << fusion::at_c<0>(fusion::at_c<0>(outer_env)) << "\n";
             //std::cout << fusion::at_c<0>(outer_env) << "\n";
@@ -133,7 +134,7 @@ namespace boost { namespace phoenix
                   , rule::local_var_def_list
                   , meta_grammar
                 >
-              , evaluator(proto::_child_c<2>, _env)
+              , evaluator(proto::_child_c<2>, fusion::vector2<fusion::vector0<>&, scope_is_nullary_actions>())
             >
         {};
     }
@@ -262,7 +263,9 @@ namespace boost { namespace phoenix
             typedef typename proto::detail::uncvref<Env>::type env_type;
             static env_type e(env);
 
+            std::cout << "outer env - begin\n";
             std::cout << typeid(env).name() << "\n";
+            std::cout << "outer env - end\n";
 
             return expression::lambda<env_type, locals_type, Lambda>::make(e, l, lambda);
         }
