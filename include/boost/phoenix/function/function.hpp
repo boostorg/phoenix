@@ -97,35 +97,6 @@ namespace boost { namespace phoenix
             return proto::make_expr<proto::tag::function, phoenix_domain>(f);
         }
         
-        template <typename This, typename A0>
-        struct result<This(A0 const&)>
-            : result_of::function<F, A0>
-        {};
-
-        template <typename A0>
-        typename result_of::function<F, A0>::type const
-        operator()(A0 const& a0) const
-        {
-            return proto::make_expr<
-                proto::tag::function, phoenix_domain>(f, a0);
-        }
-
-        template <typename A0, typename A1>
-        typename result_of::function<F, A0, A1>::type const
-        operator()(A0 const& a0, A1 const& a1) const
-        {
-            return proto::make_expr<
-                proto::tag::function, phoenix_domain>(f, a0, a1);
-        }
-
-        template <typename A0, typename A1, typename A2>
-        typename result_of::function<F, A0, A1, A2>::type const
-        operator()(A0 const& a0, A1 const& a1, A2 const& a2) const
-        {
-            return proto::make_expr<
-                proto::tag::function, phoenix_domain>(f, a0, a1, a2);
-        }
-        
         // Bring in the rest
         #include <boost/phoenix/function/detail/function_operator.hpp>
 

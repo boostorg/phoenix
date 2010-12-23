@@ -12,18 +12,30 @@
 #define PHOENIX_FUNCTION_DETAIL_FUNCTION_OPERATOR_HPP
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (4, PHOENIX_ACTOR_LIMIT,                                            \
+        (3, (1, PHOENIX_ACTOR_LIMIT,                                            \
         <boost/phoenix/function/detail/function_operator.hpp>))
 #include PHOENIX_ITERATE()
 
 #endif
 
 #else
+        template <typename This, PHOENIX_typename_A>
+        struct result<This(PHOENIX_A)>
+            :result<This(PHOENIX_A_const_ref)>//: result_of::function<F, PHOENIX_A>
+        {};
 
         template <typename This, PHOENIX_typename_A>
-        struct result<This(PHOENIX_A_const_ref)>
+        struct result<This(PHOENIX_A_ref)>
             : result_of::function<F, PHOENIX_A>
         {};
+
+        template <PHOENIX_typename_A>
+        typename result_of::function<F, PHOENIX_A>::type const
+        operator()(PHOENIX_A_ref_a) const
+        {
+            return proto::make_expr<
+                proto::tag::function, phoenix_domain>(f, PHOENIX_a);
+        }
 
         template <PHOENIX_typename_A>
         typename result_of::function<F, PHOENIX_A>::type const
