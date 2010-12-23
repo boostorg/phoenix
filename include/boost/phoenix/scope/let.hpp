@@ -47,7 +47,7 @@ namespace boost { namespace phoenix
         struct result;
 
         template <typename This, typename Env, typename Locals, typename Let>
-        struct result<This(Env, Locals const &, Let const&)>
+        struct result<This(Env, Locals &, Let &)>
         {
             typedef
                 typename proto::detail::uncvref<
@@ -72,8 +72,7 @@ namespace boost { namespace phoenix
                 typename boost::result_of<
                     evaluator(
                         Let const &
-                      , fusion::vector2<scoped_environment<Env, Env, locals_type&> &, actions_type> &
-                      //, fusion::vector2<scoped_environment<Env, Env, locals_type&> &, let_actions>&//actions_type> &
+                      , fusion::vector2<scoped_environment<Env, Env, locals_type> &, actions_type> &
                     )
                 >::type
                 type;
@@ -116,14 +115,8 @@ namespace boost { namespace phoenix
                 );
 
             fusion::vector2<scoped_environment<Env, Env, locals_type &> &, actions_type>
-            //fusion::vector2<scoped_environment<Env, Env, locals_type &> &, let_actions>
                 new_env(scoped_env, functional::actions()(env));
-                //new_env(scoped_env, let_actions());//functional::actions()(env));
 
-            std::cout << ":(\n";
-            //std::cout << typeid(Let).name() << "\n";
-
-            //return let_evaluator()(let, new_env);
             return eval(let, new_env);
         }
     };

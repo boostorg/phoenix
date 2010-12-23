@@ -21,7 +21,7 @@ namespace boost { namespace phoenix
 {
     namespace functional
     {
-        template <typename N, typename Callable = proto::callable>
+        template <typename N>
         struct at
             : proto::callable
         {
@@ -32,14 +32,16 @@ namespace boost { namespace phoenix
 
             template <typename This, typename Seq>
             struct result<This(Seq)>
-                : fusion::result_of::at_c<
-                    typename boost::remove_reference<Seq>::type
-                  , index::value
-                >
+                : result<This(Seq const&)>
+            {};
+
+            template <typename This, typename Seq>
+            struct result<This(Seq &)>
+                : fusion::result_of::at_c<Seq, index::value>
             {};
 
             template <typename Seq>
-            typename result<at(Seq &)>::type
+            typename fusion::result_of::at_c<Seq, index::value>::type
             operator()(Seq& seq) const
             {
                 return fusion::at_c<index::value>(seq);
@@ -57,7 +59,14 @@ namespace boost { namespace phoenix
 
             template <typename This, typename N, typename Env>
             struct result<This(N, Env)>
-                : boost::result_of<at<N>(typename boost::result_of<args(Env &)>::type)>
+                : result<This(N, Env const&)>
+            {};
+
+            template <typename This, typename N, typename Env>
+            struct result<This(N, Env &)>
+                : boost::result_of<
+                    at<N>(typename args::result<args(Env &)>::type)
+                >
             {};
 
             template <typename N, typename Env>
@@ -91,111 +100,12 @@ namespace boost { namespace phoenix
 
     template <typename T, typename Enable = void>
     struct is_environment : fusion::traits::is_sequence<T> {};
-    
-    /*
-    namespace result_of 
-    {
-        template <typename Env, typename N, typename Dummy = void>
-        struct get_environment_argument
-            : fusion::result_of::at_c<Env, N::value> {};
-    }
+}}
 
-    template <int N, typename Env>
-    typename boost::enable_if<
-        is_environment<Env>
-      , typename result_of::get_environment_argument<Env, mpl::int_<N> >::type
-    >::type
-    get_environment_argument_c(Env& env)
-    {
-        return fusion::at_c<N>(env);
-    }
-
-    template <typename N, typename Env>
-    typename boost::enable_if<
-        is_environment<Env>
-      , typename result_of::get_environment_argument<Env, N>::type
-    >::type
-    get_environment_argument_c(Env& env)
-    {
-        return fusion::at_c<N::value>(env);
-    }
-
-    // Get the Nth argument from the environment
-    struct get_environment_argument
-    {
-        template <typename Sig>
-        struct result;
-        
-        template <typename This, typename Env, typename N>
-        struct result<This(Env&, N)>
-            : result_of::get_environment_argument<Env, N> {};
-        
-        template <typename Env, typename N>
-        typename result_of::get_environment_argument<Env, N>::type
-        operator()(Env& env, N) const
-        {
-            return get_environment_argument_c<N::value>(env);
-            //return fusion::at_c<N::value>(env);
-        }
-    };
-    */
-    
-    /*
-    template <typename Actions, PHOENIX_typename_A_void(PHOENIX_ARG_LIMIT), typename Dummy = void>
-    struct make_environment;
-    
-    template <typename Actions>
-    struct make_environment<Actions>
-    {
-		 typedef fusion::vector0<>                     params_type;
-		 typedef fusion::vector2<params_type &, Actions> type;
-
-		 static type make(params_type & params)
-		 {
-			 return type(params, Actions());
-		 }
-	 };
-
-    template <typename Actions, typename A0>
-    struct make_basic_environment<Actions, A0>
-    {
-		 typedef fusion::vector1<A0>                   params_type;
-		 //typedef fusion::vector2<params_type, Actions> type;
-
-		 static type make(A0 a0)
-		 {
-			 return type(params_type(a0), Actions());
-		 }
-	 };
-
-    template <typename Actions, typename A0, typename A1>
-    struct make_basic_environment<Actions, A0, A1>
-    {
-		 typedef fusion::vector2<A0, A1>               params_type;
-		 typedef fusion::vector2<params_type, Actions> type;
-
-		 static type make(A0 a0, A1 a1)
-		 {
-			 params_type params(a0, a1);
-			 return type(params, Actions());
-		 }
-	 };
-
-    template <typename Actions, typename A0, typename A1, typename A2>
-    struct make_basic_environment<Actions, A0, A1, A2>
-    {
-		 typedef fusion::vector3<A0, A1, A2>           params_type;
-		 typedef fusion::vector2<params_type, Actions> type;
-
-		 static type make(A0 a0, A1 a1, A2 a2)
-		 {
-			 return type(params_type(a0, a1, a2), Actions());
-		 }
-	 };
-
-    // Bring in the rest
-    #include <boost/phoenix/core/detail/make_basic_environment.hpp>
-    */
+namespace boost { namespace proto
+{
+    template <typename N>
+    struct is_callable<boost::phoenix::functional::at<N> > : mpl::true_ {};
 }}
 
 #endif

@@ -52,14 +52,6 @@ namespace boost { namespace phoenix
         template <typename Expr>
         struct result_matches
                   : mpl::eval_if<
-                        typename is_nullary<Expr>::type // avoid calling result_of::actor when this is false
-                      , boost::result_of<
-                            evaluator(
-                                Expr const &
-                              , fusion::vector2<fusion::vector0<>&, default_actions>&
-                            )
-                        >
-                      , mpl::identity<detail::error_expecting_arguments>
                     >
         {};
 
@@ -70,42 +62,18 @@ namespace boost { namespace phoenix
 
             typedef
                 typename mpl::eval_if<
-                    typename proto::matches<Expr, meta_grammar>::type
-                  , result_matches<Expr>
-                  , mpl::identity<detail::error_invalid_lambda_expr>
+                    typename is_nullary<Expr>::type // avoid calling result_of::actor when this is false
+                  , boost::result_of<
+                        evaluator(
+                            Expr const &
+                          , fusion::vector2<fusion::vector0<>&, default_actions>&
+                        )
+                    >
+                    //evaluator<Expr const &, fusion::vector2<fusion::vector0<>&, default_actions>&>
+                  , mpl::identity<detail::error_expecting_arguments>
                 >::type
             type;
         };
-
-        template <typename Expr, typename A0>
-        struct actor<Expr, A0>
-            : boost::result_of<
-                evaluator(
-                    Expr const &
-                  , fusion::vector2<fusion::vector1<A0>&, default_actions>&
-                )
-            >
-        {};
-
-        template <typename Expr, typename A0, typename A1>
-        struct actor<Expr, A0, A1>
-            : boost::result_of<
-                evaluator(
-                    Expr const&
-                  , fusion::vector2<fusion::vector2<A0, A1>&, default_actions>&
-                )
-            >
-        {};
-
-        template <typename Expr, typename A0, typename A1, typename A2>
-        struct actor<Expr, A0, A1, A2>
-            : boost::result_of<
-                evaluator(
-                    Expr const&
-                  , fusion::vector2<fusion::vector3<A0, A1, A2>&, default_actions>&
-                )
-            >
-        {};
 
         // Bring in the rest
         #include <boost/phoenix/core/detail/actor_result_of.hpp>
@@ -166,9 +134,6 @@ namespace boost { namespace phoenix
             typedef typename proto::domain_of<actor<Expr> >::type domain_type;
             typedef typename domain_type::proto_grammar grammar_type;
 
-            std::cout << typeid(actor<Expr>).name() << "\n";
-            std::cout << typeid(grammar_type).name() << "\n";
-            
             return eval(*this, env);
         }
         

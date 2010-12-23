@@ -14,7 +14,7 @@
 #include <boost/phoenix/support/iterate.hpp>
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (4, PHOENIX_ACTOR_LIMIT,                                                \
+    (3, (1, PHOENIX_ACTOR_LIMIT,                                                \
     <boost/phoenix/core/detail/actor_result_of.hpp>))
 #include PHOENIX_ITERATE()
 
@@ -31,7 +31,7 @@
                     PHOENIX_ENV(PHOENIX_A)&)>
 						  */
             : boost::result_of<
-                evaluator(
+                phoenix::evaluator(
                     Expr const&
                   //, typename make_basic_environment<default_actions, PHOENIX_A>::type &
                   , fusion::vector2<

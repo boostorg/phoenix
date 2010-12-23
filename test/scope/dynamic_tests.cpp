@@ -14,23 +14,25 @@
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/scope/dynamic.hpp>
 
+/*
 struct my_dynamic : ::boost::phoenix::dynamic<int, std::string, double>
 {
-    my_dynamic() : num(init<0>(*this)), message(init<1>(*this)), real(init<2>(*this)) {}
+    my_dynamic() : num(init<0>(this)), message(init<1>(this)), real(init<2>(this)) {}
 
     member1 num;
     member2 message;
     member3 real;
 };
+*/
 
 //  You may also use the macro below to achieve the same as above:
 //
-//  PHOENIX_DYNAMIC(
-//      my_dynamic,
-//          (int, num)
-//          (std::string, message)
-//          (double, real)
-//  );
+BOOST_PHOENIX_DYNAMIC(
+    my_dynamic,
+        (int, num)
+        (std::string, message)
+        (double, real)
+);
 
 int
 main()
@@ -66,7 +68,7 @@ main()
             (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
             BOOST_TEST(clos.num() == 987);
             BOOST_TEST(clos.real() == clos.num() * 1e30);
-            BOOST_TEST(clos.message() == "Abracadabra ");        
+            BOOST_TEST(clos.message() == "Abracadabra ");
         }
 
         (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();

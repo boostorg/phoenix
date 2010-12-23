@@ -16,7 +16,10 @@
 #else
 
 #define PHOENIX_SCOPE_DYNAMIC_MEMBER_I(_, n, __) \
-    typedef typename make_dynamic_member<n, self_type>::type BOOST_PP_CAT(member, BOOST_PP_INC(n));
+        typedef typename expression::dynamic_member<mpl::int_<n>, self_type>::type BOOST_PP_CAT(member, BOOST_PP_INC(n));
+    
+
+//typedef typename make_dynamic_member<n, self_type>::type BOOST_PP_CAT(member, BOOST_PP_INC(n));
 
 #define PHOENIX_SCOPE_DYNAMIC_MEMBER BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_SCOPE_DYNAMIC_MEMBER_I, _)
 
@@ -31,10 +34,11 @@
             : frame(0) {}
 
         template <int N>
-        static typename make_dynamic_member<N, self_type>::type
+        static
+        void //typename make_dynamic_member<N, self_type>::type
         init(self_type& scope)
         {
-            return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
+            //return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
         }
 
         PHOENIX_SCOPE_DYNAMIC_MEMBER

@@ -36,79 +36,10 @@ namespace boost { namespace phoenix
         template <typename Key, typename _ = proto::is_proto_expr>
         struct local_variable
         {
-            /*
-            typedef
-                typename proto::result_of::make_expr<
-                    tag::local_variable
-                  , default_domain_with_basic_expr
-                  , Key
-                >::type
-                base_type;
-
-            typedef scope_actor<base_type> type;
-
-            typedef
-                typename proto::nary_expr<tag::local_variable, Key>::proto_grammar
-                proto_grammar;
-            */
-                
             typedef expr<tag::local_variable, Key> expr_type;
             typedef typename expr_type::type type;
             typedef typename expr_type::proto_grammar proto_grammar;
-            //BOOST_PROTO_BASIC_EXTENDS(typename expr_type::type, local_variable, phoenix_domain)
         };
-        /*    : proto::transform<local_variable<Key>, int>
-        {
-            typedef detail::local_expr<tag::local_variable, detail::local<Key> > type;
-            typedef detail::local_expr<tag::local_variable, detail::local<Key> > proto_grammar;
-
-            template <typename Expr, typename State, typename Data>
-            struct impl : proto::transform_impl<Expr, State, Data>
-            {
-                typedef Expr result_type;
-                
-                result_type
-                operator ()(
-                    typename impl::expr_param e
-                  , typename impl::state_param
-                  , typename impl::data_param
-                ) const
-                {
-                    return e;
-                }
-            };
-
-            /// INTERNAL ONLY
-            typedef tag::local_variable proto_tag;
-            /// INTERNAL ONLY
-            typedef detail::local<Key> proto_child0;
-
-        };
-        */
-        /*
-            : proto::terminal< ::boost::phoenix::local_variable<Key> >
-        {
-            typedef
-                actor<
-                    typename proto::terminal<
-                        ::boost::phoenix::local_variable<Key>
-                    >::type
-                >
-                type;
-            
-            static
-            actor<
-                typename proto::terminal<
-                    ::boost::phoenix::local_variable<Key>
-                >::type
-            >
-            make()
-            {
-                actor<type> e = {{local_variable<Key>()}};
-                return e;
-            }
-        };
-        */
     }
 
     namespace rule
@@ -136,6 +67,11 @@ namespace boost { namespace phoenix
 
             template <typename This, typename Expr, typename Env>
             struct result<This(Expr&, Env)>
+                : result<This(Expr&, Env const&)>
+            {};
+
+            template <typename This, typename Expr, typename Env>
+            struct result<This(Expr&, Env &)>
             {
                 typedef 
                     typename boost::result_of<
@@ -152,8 +88,8 @@ namespace boost { namespace phoenix
             };
 
             template <typename Expr, typename Env>
-            typename result<local_eval(Expr&, Env&)>::type
-            operator()(Expr& expr, Env & env) const
+            typename result<local_eval(Expr const&, Env&)>::type
+            operator()(Expr const& expr, Env & env) const
             {
                 typedef typename result<local_eval(Expr const&, Env&)>::result_type result_type;
 
@@ -219,6 +155,7 @@ namespace boost { namespace phoenix
                       , local_eval(proto::_right, proto::_state)
                     )
                 >
+              , proto::terminal<mpl::void_>
             >
         {};
     }
@@ -387,9 +324,14 @@ namespace boost { namespace phoenix
     {
         template <typename Sig>
         struct result;
-
+        
         template <typename This, typename Env>
         struct result<This(Env)>
+            : result<This(Env const &)>
+        {};
+
+        template <typename This, typename Env>
+        struct result<This(Env &)>
         {
             typedef
                 typename proto::detail::uncvref<
@@ -480,16 +422,6 @@ namespace boost { namespace phoenix
 
     };
 
-    /*
-    template<typename T>
-    struct is_custom_terminal<local_variable<T> >
-      : mpl::true_
-    {};
-
-    template<typename T>
-    struct custom_terminal<local_variable<T> >
-        : proto::callable
-        */
     struct local_var_eval
         : proto::callable
     {
@@ -509,15 +441,12 @@ namespace boost { namespace phoenix
         };
 
         template <typename Local, typename Env>
-        //typename result<custom_terminal(Local const &, Env&)>::type
         typename result<local_var_eval(Local const &, Env&)>::type
         operator()(Local & local, Env & env)
         {
             typedef
                 typename expression::local_variable<Local>::type
                 lookup_grammar;
-            std::cout << "muuh ...\n";
-            std::cout << typeid(lookup_grammar).name() << "\n";
             return get_local<lookup_grammar>()(env);
         }
     };
@@ -526,20 +455,6 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::local_variable, Dummy>
         : proto::call<local_var_eval(proto::_value(proto::_child_c<0>), _env)>
     {};
-
-#if 0
-    struct foo
-        : proto::callable
-    {
-        template <typename Sig>
-        struct result;
-
-        template <typename This, typename Env>
-        struct result<This(Env)>
-            : is_scoped_environment<Env>
-        {};
-    };
-#endif
     
     namespace local_names
     {

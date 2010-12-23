@@ -58,11 +58,42 @@ namespace boost { namespace phoenix
 
 #else // PHOENIX_IS_ITERATING
         
-        template<typename This, typename Env, typename T1, typename T2 BOOST_PP_ENUM_TRAILING_PARAMS(PHOENIX_ITERATION, typename A)>
-        struct result<This(Env, T1 const&, T2 const& BOOST_PP_ENUM_TRAILING_BINARY_PARAMS(PHOENIX_ITERATION, A, const & BOOST_PP_INTERCEPT))>
+        
+        template<typename This, typename Env, typename T1, typename T2 BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_typename_A>
+        struct result<
+            This(
+                Env
+              , T1 const&
+              , T2 const&
+              BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_A_const_ref
+            )
+        >
+            : result<
+                This(
+                    Env const &
+                  , T1 const&
+                  , T2 const&
+                  BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_A_const_ref
+                )
+            >
+        {};
+        
+        template<typename This, typename Env, typename T1, typename T2 BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_typename_A>
+        struct result<
+            This(
+                Env &
+              , T1 const&
+              , T2 const&
+              BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_A_const_ref)
+        >
             : boost::result_of<
-                typename boost::remove_reference<typename boost::result_of<evaluator(T2 const &, Env&)>::type>::type(
-                    typename boost::result_of<evaluator(T1 const&, Env&)>::type
+                typename boost::remove_reference<
+                    typename boost::result_of<
+                        evaluator(T2 const &, Env&)>::type
+                >::type(
+                    typename boost::result_of<
+                        evaluator(T1 const&, Env&)
+                    >::type
                     BOOST_PP_ENUM_TRAILING(PHOENIX_ITERATION, PHOENIX_MEMBER_RESULT_OF, _)
                 )
             >

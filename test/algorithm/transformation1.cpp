@@ -379,6 +379,7 @@ namespace
 
 int main()
 {
+    swap_test();
     copy_test();
     copy_backward_test();
     transform_test();

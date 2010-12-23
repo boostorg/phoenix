@@ -26,8 +26,6 @@
 
 namespace boost { namespace phoenix
 {
-    //template <typename> struct lambda_actor;
-    
     PHOENIX_DEFINE_EXPRESSION(
         lambda
       , (proto::terminal<proto::_>) // OuterEnv 
@@ -42,8 +40,25 @@ namespace boost { namespace phoenix
         struct result;
 
         template <typename This, typename Env, typename OuterEnv, typename Locals, typename Lambda>
-        struct result<This(Env, OuterEnv, Locals &, Lambda &)>
+        struct result<This(Env, OuterEnv, Locals, Lambda)>
+            : result<This(Env const &, OuterEnv &, Locals &, Lambda &)>
+        {};
+
+        template <typename This, typename Env, typename OuterEnv, typename Locals, typename Lambda>
+        struct result<This(Env, OuterEnv &, Locals &, Lambda &)>
+            : result<This(Env const &, OuterEnv &, Locals &, Lambda &)>
+        {};
+
+        template <typename This, typename Env, typename OuterEnv, typename Locals, typename Lambda>
+        struct result<This(Env &, OuterEnv &, Locals &, Lambda &)>
         {
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<
+                        functional::args(Env)
+                    >::type
+                >::type
+                args_type;
             typedef
                 typename proto::detail::uncvref<
                     typename boost::result_of<
@@ -51,22 +66,17 @@ namespace boost { namespace phoenix
                     >::type
                 >::type
                 actions_type;
+            typedef fusion::vector2<args_type, actions_type> env_type;
 
             typedef typename proto::detail::uncvref<Locals>::type locals_type;
+
             typedef typename proto::detail::uncvref<OuterEnv>::type outer_env_type;
-            typedef typename proto::detail::uncvref<Env>::type env_type;
-            typedef scoped_environment<env_type const, outer_env_type const, locals_type const> scoped_env;
+
+            typedef scoped_environment<env_type, outer_env_type const, locals_type const> scoped_env;
+
             typedef fusion::vector2<scoped_env, actions_type&> new_env_type;
-            typedef
-                typename mpl::eval_if<
-                    /*proto::matches<
-                        typename proto::detail::uncvref<Locals>::type
-                      , proto::terminal<mpl::void_>
-                    >*/mpl::false_
-                  , boost::result_of<evaluator(Lambda &, Env)>
-                  , boost::result_of<evaluator(Lambda &, new_env_type)>
-                >::type type;
-            //typedef int type;
+
+            typedef typename boost::result_of<evaluator(Lambda const &, new_env_type &)>::type type;
         };
         
         template <typename Env, typename OuterEnv, typename Locals, typename Lambda>
@@ -76,45 +86,34 @@ namespace boost { namespace phoenix
             typedef
                 typename proto::detail::uncvref<
                     typename boost::result_of<
+                        functional::args(Env &)
+                    >::type
+                >::type
+                args_type;
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<
                         functional::actions(Env &)
                     >::type
                 >::type
                 actions_type;
+            typedef fusion::vector2<args_type, actions_type> env_type;
             
             typedef typename proto::detail::uncvref<Locals>::type locals_type;
             typedef typename proto::detail::uncvref<OuterEnv>::type outer_env_type;
-            typedef typename proto::detail::uncvref<Env>::type env_type;
-            typedef scoped_environment<env_type const, outer_env_type const, locals_type const> scoped_env_type;
+            typedef scoped_environment<env_type, OuterEnv const, locals_type const> scoped_env_type;
 
-            outer_env_type o = outer_env;
-            env_type e = env;
-            locals_type l = locals;
+            env_type e(functional::args()(env), functional::actions()(env));
 
             scoped_env_type
                 scoped_env(
                     e
-                  , o
-                  , l
+                  , outer_env
+                  , locals
                 );
 
-            std::cout << typeid(env).name() << "\n";
-            std::cout << typeid(outer_env).name() << "\n";
-            std::cout << typeid(fusion::at_c<0>(env)).name() << "\n";
-            std::cout << typeid(fusion::at_c<0>(outer_env)).name() << "\n";
-            //std::cout << fusion::at_c<0>(fusion::at_c<0>(env)) << "\n";
-            std::cout << "fuuu\n";
-            //std::cout << fusion::at_c<0>(fusion::at_c<0>(outer_env)) << "\n";
-            //std::cout << fusion::at_c<0>(outer_env) << "\n";
-            
             fusion::vector2<scoped_env_type, actions_type>
                 new_env(scoped_env, functional::actions()(env));
-
-            //std::cout << eval(lambda, new_env) << "\n";
-            /*
-            //std::cout << "success!\n";
-            return eval(lambda, new_env);
-            */
-            //std::cout << typeid(Locals).name() << "\n";
             return eval(lambda, new_env);
         }
     };
@@ -177,7 +176,7 @@ namespace boost { namespace phoenix
             : proto::or_<
                 proto::when<
                     expression::lambda_actor<meta_grammar>
-                  , mpl::true_()
+                  , mpl::true_()//evaluator(proto::_child_c<0>, _env)
                 >
               , proto::when<
                     expression::lambda_actor<
@@ -206,7 +205,22 @@ namespace boost { namespace phoenix
         struct result<This(Env, Lambda &)>
         {
             typedef typename proto::detail::uncvref<Env>::type env_type;
-            typedef typename expression::lambda<env_type, mpl::void_, typename proto::detail::uncvref<Lambda>::type>::type const type;
+
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::args(Env)>::type
+                >::type
+                args_type;
+
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::actions(Env)>::type
+                >::type
+                actions_type;
+
+            typedef fusion::vector2<args_type, actions_type> outer_env_type;
+
+            typedef typename expression::lambda<outer_env_type, mpl::void_, typename proto::detail::uncvref<Lambda>::type>::type type;
         };
 
         template <typename This, typename Env, typename Locals, typename Lambda>
@@ -223,9 +237,23 @@ namespace boost { namespace phoenix
                 >::type
                 locals_type;
             typedef typename proto::detail::uncvref<Env>::type env_type;
+
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::args(Env)>::type
+                >::type
+                args_type;
+
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::actions(Env)>::type
+                >::type
+                actions_type;
+
+            typedef fusion::vector2<args_type, actions_type> outer_env_type;
             
             typedef
-                typename expression::lambda<env_type, locals_type, typename proto::detail::uncvref<Lambda>::type>::type const type;
+                typename expression::lambda<outer_env_type, locals_type, typename proto::detail::uncvref<Lambda>::type>::type const type;
         };
 
         template <typename Env, typename Lambda>
@@ -233,10 +261,25 @@ namespace boost { namespace phoenix
         operator()(Env & env, Lambda const& lambda) const
         {
             typedef typename proto::detail::uncvref<Env>::type env_type;
-            //proto::terminal<mpl::void_>::type t = {mpl::void_()};
-            //return expression::lambda<env_type, proto::terminal<mpl::void_>::type, Lambda>::make(env, t, lambda);
+
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::args(Env)>::type
+                >::type
+                args_type;
+
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::actions(Env)>::type
+                >::type
+                actions_type;
+
+            typedef fusion::vector2<args_type, actions_type> outer_env_type;
+
+            outer_env_type outer_env(fusion::at_c<0>(env), fusion::at_c<1>(env));
+
             mpl::void_ t;
-            return expression::lambda<env_type, mpl::void_, Lambda>::make(env, t, lambda);
+            return expression::lambda<outer_env_type, mpl::void_, Lambda>::make(outer_env, t, lambda);
         }
 
         template <typename Env, typename Locals, typename Lambda>
@@ -260,14 +303,23 @@ namespace boost { namespace phoenix
                     , env
                     );
 
-            typedef typename proto::detail::uncvref<Env>::type env_type;
-            static env_type e(env);
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::args(Env)>::type
+                >::type
+                args_type;
 
-            std::cout << "outer env - begin\n";
-            std::cout << typeid(env).name() << "\n";
-            std::cout << "outer env - end\n";
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<functional::actions(Env)>::type
+                >::type
+                actions_type;
 
-            return expression::lambda<env_type, locals_type, Lambda>::make(e, l, lambda);
+            typedef fusion::vector2<args_type, actions_type> outer_env_type;
+
+            outer_env_type outer_env(fusion::at_c<0>(env), fusion::at_c<1>(env));
+
+            return expression::lambda<outer_env_type, locals_type, Lambda>::make(outer_env, l, lambda);
         }
     };
 
@@ -276,19 +328,6 @@ namespace boost { namespace phoenix
         : proto::call<lambda_actor_eval(_env, unpack)>
     {};
     
-    /*
-    template <typename Expr>
-    struct lambda_actor
-        : actor<Expr>
-    {
-        typedef actor< Expr > base_type;
-
-        lambda_actor(base_type const & base)
-            : base_type( base )
-        {}
-    };
-    */
-
     template <typename Locals = void, typename Dummy = void>
     struct lambda_actor_gen;
 
@@ -355,211 +394,6 @@ namespace boost { namespace phoenix
 
     lambda_local_gen const lambda = lambda_local_gen();
 
-#if 0
-    namespace result_of
-    {
-        template <typename Env, typename Expr, typename OuterEnv, typename Locals, typename Map>
-        struct lambda
-        {
-            typedef scoped_environment<
-                Env
-              , typename proto::result_of::value<OuterEnv>::type
-              , typename proto::result_of::value<Locals>::type
-              , Map
-            > environment;
-
-            typedef typename boost::result_of<eval_grammar(Expr const&, environment&)>::type type;
-        };
-    }
-
-    template <typename Map>
-    struct lambda_eval
-    {
-        template <typename Sig>
-        struct result;
-
-        template <typename This, typename Env, typename Expr, typename OuterEnv, typename Locals>
-        struct result<This(Env&, Expr const&, OuterEnv const&, Locals const&)>
-              : result_of::lambda<Env, Expr, OuterEnv, Locals, Map>
-        {};
-
-        template <typename Env, typename Expr, typename OuterEnv, typename Locals>
-        typename result_of::lambda<Env, Expr, OuterEnv, Locals, Map>::type
-        operator()(Env& env, Expr const& expr, OuterEnv const& outer_env, Locals const& locals) const
-        {
-            typedef typename result_of::lambda<Env, Expr, OuterEnv, Locals, Map>::environment environment;
-
-            typename remove_const<
-                typename remove_reference<
-                    typename boost::result_of<eval_grammar(OuterEnv const&)>::type
-                >::type
-            >::type a(eval(outer_env));
-
-            environment args(env, a, proto::value(locals));
-
-            return eval(expr, args);
-        }
-    };
-    
-    template <typename Expr, typename OuterEnv, typename Locals, typename Map>
-    struct make_lambda : compose<lambda_eval<Map>, Expr, OuterEnv, Locals> {};
-
-    template <typename Vars>
-    struct lambda_actor_eval
-    {
-        template <typename Sig>
-        struct result;
-
-        template <typename This, typename Env, typename A>
-        struct result<This(Env&, A const&)>
-            : boost::result_of<typename proto::result_of::value<A>::type(Env&)>
-        {};
-
-        template <typename Env, typename A>
-        typename result<lambda_actor_eval(Env&, A const&)>::type const
-        operator()(Env& env, A const& a) const
-        {
-            return proto::value(a)(env);
-        }
-    };
-    
-    template <typename Vars, typename Dummy>
-    struct enable_nullary<lambda_actor_eval<Vars>, Dummy>
-        : mpl::false_/*mpl::not_< typename mpl::fold<
-            Vars
-          , mpl::false_
-          , detail::compute_no_nullary
-        >::type >*/
-    {};
-
-
-    template <typename Expr, typename Vars, typename Map>
-    struct lambda_actor
-    {
-        lambda_actor() {}
-
-        lambda_actor(Expr const& expr, Vars const& vars)
-            : expr(expr)
-            , vars(vars)
-        {}
-
-        template <typename Sig>
-        struct result;
-        
-        template <typename This, typename Env>
-        struct result<This(Env&)>
-        {
-            typedef typename
-                fusion::result_of::as_vector<
-                    typename fusion::result_of::transform<
-                        Vars
-                      , detail::initialize_local<Env>
-                    >::type
-                >::type
-            locals_type;
-
-            typedef typename make_lambda<Expr, Env, locals_type, Map>::type type;
-        };
-
-        template <typename Env>
-        typename result<lambda_actor(Env&)>::type const
-        operator()(Env& env) const
-        {
-            typedef typename result<lambda_actor(Env&)>::locals_type locals_type;
-
-            return make_lambda<
-                    Expr, Env, locals_type, Map
-                    >()(expr, env, fusion::as_vector(fusion::transform(vars, detail::initialize_local<Env>(env))));
-        }
-
-        Expr expr;
-        Vars vars;
-    };
-
-    template <typename Expr, typename Vars, typename Map>
-    struct make_lambda_actor: compose<lambda_actor_eval<Vars>, lambda_actor<Expr, Vars, Map> > {};
-    
-    template <typename Vars, typename Map>
-    struct lambda_actor_gen
-    {
-
-        template <typename Expr>
-        typename make_lambda_actor<Expr, Vars, Map>::type const
-        operator[](Expr const& expr) const
-        {
-            return make_lambda_actor<Expr, Vars, Map>()(lambda_actor<Expr, Vars, Map>(expr, vars));
-        }
-
-        lambda_actor_gen(Vars const& vars)
-            : vars(vars) {}
-
-        Vars vars;
-    };
-
-    struct lambda_gen
-        : lambda_actor_gen<
-            fusion::vector0<>
-          , detail::map_local_index_to_tuple<> >
-    {
-        typedef lambda_actor_gen<fusion::vector0<>, detail::map_local_index_to_tuple<> > base_type;
-
-        lambda_gen()
-            : base_type(fusion::vector0<>())
-        {}
-
-        template <typename A0>
-        lambda_actor_gen<
-            fusion::vector1<typename proto::result_of::child_c<A0, 1>::type>
-          , detail::map_local_index_to_tuple<
-                typename proto::result_of::value<
-                    typename proto::result_of::child_c<
-                        typename proto::result_of::child_c<A0, 0>::type, 0
-                    >::type
-                >::type::type::key_type
-            >
-        > const
-        operator()( A0 const& a0) const
-        {
-            return fusion::vector1<typename proto::result_of::child_c<A0, 1>::type>(proto::child_c<1>(a0));
-        }
-
-        template <typename A0, typename A1>
-        lambda_actor_gen<
-            fusion::vector2<
-                typename proto::result_of::child_c<A0, 1>::type
-              , typename proto::result_of::child_c<A1, 1>::type
-            >
-          , detail::map_local_index_to_tuple<
-                typename proto::result_of::value<
-                    typename proto::result_of::child_c<
-                        typename proto::result_of::child_c<A0, 0>::type, 0
-                    >::type
-                >::type::type::key_type
-              , typename proto::result_of::value<
-                    typename proto::result_of::child_c<
-                        typename proto::result_of::child_c<A1, 0>::type, 0
-                    >::type
-                >::type::type::key_type
-            >
-        > const
-        operator()(A0 const& a0, A1 const& a1) const
-        {
-            return fusion::vector2<
-                typename proto::result_of::child_c<A0, 1>::type
-              , typename proto::result_of::child_c<A1, 1>::type
-            >(
-                proto::child_c<1>(a0)
-              , proto::child_c<1>(a1)
-            );
-        }
-
-          #define PHOENIX_LOCAL_GEN_NAME lambda_actor_gen
-          #include <boost/phoenix/scope/detail/local_gen.hpp>
-          #undef PHOENIX_LOCAL_GEN_NAME
-    };
-
-    lambda_gen const lambda = lambda_gen();
-#endif
 }}
 
 #endif

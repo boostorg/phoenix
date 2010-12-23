@@ -73,12 +73,23 @@ namespace boost { namespace phoenix { namespace impl
 
         template<typename This, class R, class I>
         struct result<This(R&, I)>
+            : result<This(R&, I const &)>
+        {};
+
+        template<typename This, class R, class I>
+        struct result<This(R&, I &)>
         {
-            typedef typename remove_reference<I>::type type;
+            typedef I type;
         };
 
         template<class R, class I>
-        typename remove_reference<I>::type operator()(R& r, I i) const
+        I operator()(R& r, I & i) const
+        {
+            return std::copy_backward(detail::begin_(r), detail::end_(r), i);
+        }
+
+        template<class R, class I>
+        I const operator()(R& r, I const & i) const
         {
             return std::copy_backward(detail::begin_(r), detail::end_(r), i);
         }
@@ -779,12 +790,22 @@ namespace boost { namespace phoenix { namespace impl
 
         template <typename This, typename R, typename I, typename T>
         struct result<This(R&, I, T)>
+            : result<This(R&, I const &, T)>
+        {};
+
+        template <typename This, typename R, typename I, typename T>
+        struct result<This(R&, I, T &)>
         {
             typedef T type;
         };
 
         template <typename This, typename R, typename I, typename T, typename C1, typename C2>
         struct result<This(R&, I, T, C1, C2)>
+            : result<This(R&, I, T const &, C1, C2)>
+        {};
+
+        template <typename This, typename R, typename I, typename T, typename C1, typename C2>
+        struct result<This(R&, I, T &, C1, C2)>
         {
             typedef T type;
         };

@@ -29,6 +29,11 @@ namespace impl
 
         template<typename This, class R, class F>
         struct result<This(R&, F)>
+            : result<This(R&, F const &)>
+        {};
+
+        template<typename This, class R, class F>
+        struct result<This(R&, F &)>
         {
             typedef F type;
         };
@@ -47,12 +52,22 @@ namespace impl
         
         template<typename This, class R, class I>
         struct result<This(R&, I)>
+            : result<This(R&, I const &)>
+        {};
+        
+        template<typename This, class R, class I>
+        struct result<This(R&, I &)>
         {
             typedef I type;
         };
-
+        
         template<typename This, class R, class I, class C>
         struct result<This(R&, I, C)>
+            : result<This(R&, I const &, C)>
+        {};
+
+        template<typename This, class R, class I, class C>
+        struct result<This(R&, I &, C)>
         {
             typedef I type;
         };

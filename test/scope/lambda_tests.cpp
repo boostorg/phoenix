@@ -79,22 +79,6 @@ main()
 
     {
         int x = 1;
-        long x2 = 2;
-        short x3 = 3;
-        char const* y = "hello";
-        zzz z;
-
-        //BOOST_TEST(lambda[_1](x)(y) == y);
-        //BOOST_TEST(lambda(_a = _1)[_a](x)(y) == x);
-        lambda(_a = _1)[lambda[_a]](x)(y)(z);
-        //BOOST_TEST(lambda(_a = _1)[lambda[_a]](x)(y)(z) == x);
-        //BOOST_TEST(lambda(_a = _1)[lambda[_a + _1]](x)(y)(x) == 2);
-        //BOOST_TEST(lambda(_a = _1)[lambda(_b = _1)[_a + _b + _1]](x)(x2)(x3) == 6);
-    }
-
-#if 0
-    {
-        int x = 1;
         int y = lambda[_1]()(x);
         BOOST_TEST(x == y);
     }
@@ -137,9 +121,9 @@ main()
 
         BOOST_TEST(lambda[_1](x)(y) == y);
         BOOST_TEST(lambda(_a = _1)[_a](x)(y) == x);
-        //BOOST_TEST(lambda(_a = _1)[lambda[_a]](x)(y)(z) == x);
-        //BOOST_TEST(lambda(_a = _1)[lambda[_a + _1]](x)(y)(x) == 2);
-        //BOOST_TEST(lambda(_a = _1)[lambda(_b = _1)[_a + _b + _1]](x)(x2)(x3) == 6);
+        BOOST_TEST(lambda(_a = _1)[lambda[_a]](x)(y)(z) == x);
+        BOOST_TEST(lambda(_a = _1)[lambda[_a + _1]](x)(y)(x) == 2);
+        BOOST_TEST(lambda(_a = _1)[lambda(_b = _1)[_a + _b + _1]](x)(x2)(x3) == 6);
     }
 
     {
@@ -149,7 +133,6 @@ main()
         );
     }
 
-    /*
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -157,23 +140,12 @@ main()
                 _1 + 
                 lambda(_a = _1)
                 [
-                    //_a + lambda[_a + 2]
                     _a + lambda[_a + 2]
                 ]
             )
             (x)(y)(y) == 1+1+1+2
         );
-        std::cout << (
-                _1 + 
-                lambda(_a = _1)
-                [
-                    //_a + lambda[_a + 2]
-                    _1 + lambda(_b = _1)[_a + 2]
-                ]
-            )
-            (x)(y)(y) << "\n";
     }
-    */
 
     {
         using boost::phoenix::for_each;
@@ -213,7 +185,7 @@ main()
     }
 
     {
-        int x = (let(_a = lambda[val(1)])[_a])()();
+        int x = (let(_a = lambda[val(1)])[_a])();
         BOOST_TEST(x == 1);
     }
 
@@ -223,7 +195,6 @@ main()
         BOOST_TEST(lambda[let(_a = _1)[_a = _2]]()(i, j) == j);
         BOOST_TEST(i == j);
     }
-#endif
 
     return boost::report_errors();
 }

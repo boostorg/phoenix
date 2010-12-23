@@ -10,16 +10,6 @@
 
 #include <boost/is_placeholder.hpp>
 
-/*
-namespace boost
-{
-    template <typename T>
-    struct is_placeholder
-        : mpl::false_
-    {};
-}
-*/
-
 namespace boost { namespace phoenix
 {
     template <typename T>

@@ -43,10 +43,15 @@ namespace boost { namespace phoenix
         typedef typename I::value_type value_type;
         static value_type const value = I::value;
 
-        template <typename I2>
-        bool operator==(argument<I2> const&) const
+        bool operator==(argument) const
         {
-            return value == I2::value;
+            return true;
+        }
+
+        template <typename I2>
+        bool operator==(argument<I2>) const
+        {
+            return false;
         }
     };
 

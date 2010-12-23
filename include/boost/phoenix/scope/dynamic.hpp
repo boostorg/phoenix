@@ -12,12 +12,61 @@
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
-#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
+#include <boost/preprocessor/seq/fold_left.hpp>
+#include <boost/preprocessor/punctuation/comma.hpp>
+
+#define BOOST_PHOENIX_DYNAMIC_TEMPLATE_PARAMS(R, DATA, I, ELEM)                 \
+      BOOST_PP_COMMA_IF(I) BOOST_PP_TUPLE_ELEM(2, 0, ELEM)                      \
+/**/
+
+#define BOOST_PHOENIX_DYNAMIC_CTOR_INIT(R, DATA, I, ELEM)                       \
+    BOOST_PP_COMMA_IF(I) BOOST_PP_TUPLE_ELEM(2, 1, ELEM)(init<I>(this))         \
+/**/
+
+#define BOOST_PHOENIX_DYNAMIC_MEMBER(R, DATA, I, ELEM)                          \
+    BOOST_PP_CAT(member, BOOST_PP_INC(I)) BOOST_PP_TUPLE_ELEM(2, 1, ELEM);      \
+/**/
+
+#define BOOST_PHOENIX_DYNAMIC_FILLER_0(X, Y)                                    \
+    ((X, Y)) BOOST_PHOENIX_DYNAMIC_FILLER_1                                     \
+/**/
+
+#define BOOST_PHOENIX_DYNAMIC_FILLER_1(X, Y)                                    \
+    ((X, Y)) BOOST_PHOENIX_DYNAMIC_FILLER_0                                     \
+/**/
+
+#define BOOST_PHOENIX_DYNAMIC_FILLER_0_END
+#define BOOST_PHOENIX_DYNAMIC_FILLER_1_END
+
+#define BOOST_PHOENIX_DYNAMIC_BASE(NAME, MEMBER)                                \
+struct NAME                                                                     \
+    : ::boost::phoenix::dynamic<                                                \
+        BOOST_PP_SEQ_FOR_EACH_I(                                                \
+                BOOST_PHOENIX_DYNAMIC_TEMPLATE_PARAMS                           \
+              , _                                                               \
+              , MEMBER)                                                         \
+    >                                                                           \
+{                                                                               \
+    NAME()                                                                      \
+        : BOOST_PP_SEQ_FOR_EACH_I(BOOST_PHOENIX_DYNAMIC_CTOR_INIT, _, MEMBER)   \
+    {}                                                                          \
+                                                                                \
+    BOOST_PP_SEQ_FOR_EACH_I(BOOST_PHOENIX_DYNAMIC_MEMBER, _, MEMBER)            \
+}                                                                               \
+/**/
+
+#define BOOST_PHOENIX_DYNAMIC(NAME, MEMBER)                                     \
+    BOOST_PHOENIX_DYNAMIC_BASE(                                                 \
+        NAME                                                                    \
+      , BOOST_PP_CAT(BOOST_PHOENIX_DYNAMIC_FILLER_0 MEMBER,_END)                \
+    )                                                                           \
+/**/
 
 namespace boost { namespace phoenix
 {
-
     template <typename DynamicScope>
     struct dynamic_frame : noncopyable
     {
@@ -54,59 +103,44 @@ namespace boost { namespace phoenix
             DynamicScope const& scope;
     };
 
-    namespace result_of
-    {
-        template <typename Env, typename Data>
-        struct dynamic_member
-        {
-            typedef typename proto::result_of::value<Data>::type::result_type type;
-        };
-    }
+    PHOENIX_DEFINE_EXPRESSION(
+        dynamic_member
+      , (proto::terminal<proto::_>)
+        (proto::terminal<proto::_>)
+    )
 
-    struct dynamic_member
+    struct dynamic_member_eval
     {
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Env, typename Data>
-        struct result<This(Env&, Data)>
-            : result_of::dynamic_member<Env, typename remove_reference<Data>::type >
-        {};
-
-        template <typename This, typename Env, typename Data>
-        struct result<This(Env&, Data const&)>
-            : result_of::dynamic_member<Env, Data>
-        {};
-
-        template <typename Env, typename Data>
-        typename result_of::dynamic_member<Env, Data>::type
-        operator()(Env& env, Data const& data)
+        template <typename This, typename Env, typename N, typename Scope>
+        struct result<This(Env, N, Scope)>
         {
-            return proto::value(data)();
+            typedef
+                typename boost::remove_pointer<
+                    typename proto::detail::uncvref<Scope>::type
+                >::type
+                scope_type;
+            typedef typename scope_type::dynamic_frame_type::tuple_type tuple_type;
+
+            typedef typename fusion::result_of::at_c<tuple_type, proto::detail::uncvref<N>::type::value>::type type;
+
+        };
+
+        template <typename Env, typename N, typename Scope>
+        typename result<dynamic_member_eval(Env, N, Scope)>::type
+        operator()(Env & env, N, Scope s) const
+        {
+            return fusion::at_c<N::value>(s->frame->data());
         }
     };
 
-    template <int N, typename DynamicScope>
-    struct dynamic_member_data
-    {
-
-        typedef typename fusion::result_of::at_c<typename DynamicScope::tuple_type, N>::type result_type;
-
-        dynamic_member_data(DynamicScope const& scope) : scope(scope) {};
-
-        result_type
-        operator()() const
-        {
-            BOOST_ASSERT(scope.frame != 0);
-            return fusion::at_c<N>(scope.frame->data());
-        }
-
-        DynamicScope const& scope;
-    };
-
-    template <int N, typename DynamicScope>
-    struct make_dynamic_member: compose<dynamic_member, dynamic_member_data<N, DynamicScope> > {};
-
+    template <typename Dummy>
+    struct default_actions::when<rule::dynamic_member, Dummy>
+        : proto::call<dynamic_member_eval(_env, proto::_value(proto::_child_c<0>), proto::_value(proto::_child_c<1>))>
+    {};
+    
     template <PHOENIX_typename_A_void(PHOENIX_DYNAMIC_LIMIT), typename Dummy = void>
     struct dynamic;
     
@@ -121,13 +155,15 @@ namespace boost { namespace phoenix
             : frame(0) {}
 
         template <int N>
-        static typename make_dynamic_member<N, self_type>::type
+        static
+        void//typename make_dynamic_member<N, self_type>::type
         init(self_type& scope)
         {
-            return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
+            //return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
         }
 
-        typedef typename make_dynamic_member<0, self_type>::type member1;
+        //typedef typename make_dynamic_member<0, self_type>::type member1;
+        typedef typename expression::dynamic_member<mpl::int_<0>, self_type>::type member1;
 
         mutable dynamic_frame_type* frame;
     };
@@ -143,14 +179,17 @@ namespace boost { namespace phoenix
             : frame(0) {}
 
         template <int N>
-        static typename make_dynamic_member<N, self_type>::type
+        static 
+        void//typename make_dynamic_member<N, self_type>::type
         init(self_type& scope)
         {
-            return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
+            //return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
         }
 
-        typedef typename make_dynamic_member<0, self_type>::type member1;
-        typedef typename make_dynamic_member<1, self_type>::type member2;
+        //typedef typename make_dynamic_member<0, self_type>::type member1;
+        typedef typename expression::dynamic_member<mpl::int_<0>, self_type>::type member1;
+        //typedef typename make_dynamic_member<1, self_type>::type member2;
+        typedef typename expression::dynamic_member<mpl::int_<1>, self_type>::type member2;
 
         mutable dynamic_frame_type* frame;
     };
@@ -166,15 +205,16 @@ namespace boost { namespace phoenix
             : frame(0) {}
 
         template <int N>
-        static typename make_dynamic_member<N, self_type>::type
-        init(self_type& scope)
+        static
+        typename expression::dynamic_member<mpl::int_<N>, self_type *>::type
+        init(self_type * scope)
         {
-            return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
+            return expression::dynamic_member<mpl::int_<N>, self_type *>::make(mpl::int_<N>(), scope);
         }
 
-        typedef typename make_dynamic_member<0, self_type>::type member1;
-        typedef typename make_dynamic_member<1, self_type>::type member2;
-        typedef typename make_dynamic_member<2, self_type>::type member3;
+        typedef typename expression::dynamic_member<mpl::int_<0>, dynamic *>::type member1;
+        typedef typename expression::dynamic_member<mpl::int_<1>, dynamic *>::type member2;
+        typedef typename expression::dynamic_member<mpl::int_<2>, dynamic *>::type member3;
 
         mutable dynamic_frame_type* frame;
     };

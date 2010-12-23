@@ -169,9 +169,10 @@ namespace
         BOOST_TEST(array2[0] == 1);
         BOOST_TEST(array2[1] == 2);
 
-        boost::phoenix::partial_sort(arg1, arg2, std::greater<int>())(array, array2);
+        boost::phoenix::partial_sort_copy(arg1, arg2, std::greater<int>())(array, array2);
         BOOST_TEST(array2[0] == 4);
         BOOST_TEST(array2[1] == 3);
+
         return;
     }
 }
@@ -186,5 +187,6 @@ int main()
     sort_test();
     stable_sort_test();
     partial_sort_test();
+    partial_sort_copy_test();
     return boost::report_errors();
 }
