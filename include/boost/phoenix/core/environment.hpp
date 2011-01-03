@@ -12,6 +12,7 @@
 #include <boost/fusion/container/vector.hpp>
 #include <boost/fusion/support/is_sequence.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/proto/functional/fusion/at.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>
 
@@ -21,39 +22,43 @@ namespace boost { namespace phoenix
 {
     namespace functional
     {
-        template <typename N>
-        struct at
-            : proto::callable
-        {
-            typedef typename boost::remove_reference<N>::type index;
+    #define BOOST_PHOENIX_GET_ENVIRONMENT(NAME, N)                              \
+        struct NAME                                                             \
+        {                                                                       \
+            BOOST_PROTO_CALLABLE()                                              \
+                                                                                \
+            template <typename Sig>                                             \
+            struct result;                                                      \
+                                                                                \
+            template <typename This, typename Env>                              \
+            struct result<This(Env)>                                            \
+                : boost::result_of<proto::functional::at(Env, mpl::int_<N>)>    \
+            {};                                                                 \
+                                                                                \
+            template <typename Env>                                             \
+            typename result<NAME(Env const &)>::type                            \
+            operator()(Env const & env) const                                   \
+            {                                                                   \
+                return proto::functional::at()(env, mpl::int_<N>());              \
+            }                                                                   \
+                                                                                \
+            template <typename Env>                                             \
+            typename result<args(Env &)>::type                                  \
+            operator()(Env & env) const                                         \
+            {                                                                   \
+                return proto::functional::at()(env, mpl::int_<N>());              \
+            }                                                                   \
+        };                                                                      \
+        /**/
+        BOOST_PHOENIX_GET_ENVIRONMENT(args, 0)
+        BOOST_PHOENIX_GET_ENVIRONMENT(actions, 1)
+    #undef BOOST_PHOENIX_GET_ENVIRONMENT
 
-            template <typename Sig>
-            struct result;
-
-            template <typename This, typename Seq>
-            struct result<This(Seq)>
-                : result<This(Seq const&)>
-            {};
-
-            template <typename This, typename Seq>
-            struct result<This(Seq &)>
-                : fusion::result_of::at_c<Seq, index::value>
-            {};
-
-            template <typename Seq>
-            typename fusion::result_of::at_c<Seq, index::value>::type
-            operator()(Seq& seq) const
-            {
-                return fusion::at_c<index::value>(seq);
-            }
-        };
-
-        typedef at<mpl::int_<0> > args;
-        typedef at<mpl::int_<1> > actions;
 
         struct args_at
-            : proto::callable
         {
+            BOOST_PROTO_CALLABLE()
+
             template <typename Sig>
             struct result;
 
@@ -64,16 +69,14 @@ namespace boost { namespace phoenix
 
             template <typename This, typename N, typename Env>
             struct result<This(N, Env &)>
-                : boost::result_of<
-                    at<N>(typename args::result<args(Env &)>::type)
-                >
+                : boost::result_of<proto::functional::at(typename args::result<args(Env &)>::type, N)>
             {};
 
             template <typename N, typename Env>
             typename result<args_at(N, Env &)>::type
-            operator()(N, Env& env) const
+            operator()(N const & n, Env& env) const
             {
-                return at<N>()(args()(env));
+                return proto::functional::at()(args()(env), n);
             }
         };
     }
@@ -100,12 +103,6 @@ namespace boost { namespace phoenix
 
     template <typename T, typename Enable = void>
     struct is_environment : fusion::traits::is_sequence<T> {};
-}}
-
-namespace boost { namespace proto
-{
-    template <typename N>
-    struct is_callable<boost::phoenix::functional::at<N> > : mpl::true_ {};
 }}
 
 #endif

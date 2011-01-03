@@ -21,6 +21,7 @@
 #include <boost/phoenix/support/iterate.hpp>
 */
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/mpl/int.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/scope/local_variable.hpp>
 
@@ -326,6 +327,21 @@ namespace boost { namespace phoenix
     template <typename Dummy>
     struct default_actions::when<rule::lambda_actor, Dummy>
         : proto::call<lambda_actor_eval(_env, unpack)>
+        /*
+            : proto::or_<
+                proto::when<
+                    expression::lambda_actor<meta_grammar>
+                  , lambda_actor_eval(_env, unpack)//lambda_actor_eval(_env, proto::_child_c<0>)
+                >
+              , proto::when<
+                    expression::lambda_actor<
+                        rule::local_var_def_list
+                      , meta_grammar
+                    >
+                  , lambda_actor_eval(_env, proto::_child_c<0>, proto::_child_c<1>)
+                >
+            >
+            */
     {};
     
     template <typename Locals = void, typename Dummy = void>
