@@ -37,9 +37,10 @@ namespace boost { namespace phoenix
         : proto::domain<proto::use_basic_expr<proto::default_generator> >
     {};
 
-    #define PHOENIX_ITERATION_PARAMS                                            \
-        (3, (1, PHOENIX_COMPOSITE_LIMIT,                                        \
-        <boost/phoenix/core/expression.hpp>))
+#define PHOENIX_ITERATION_PARAMS                                                \
+    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+    <boost/phoenix/core/expression.hpp>))                                       \
+/**/
     #include PHOENIX_ITERATE()
 
 }}
@@ -93,7 +94,7 @@ namespace boost { namespace phoenix
             )                                                                   \
         >                                                                       \
     {};                                                                         \
-    /**/
+/**/
 
 #define PHOENIX_DEFINE_EXPRESSION_VARARG(NAME, GRAMMAR, LIMIT)                  \
     namespace tag {                                                             \
@@ -141,7 +142,7 @@ namespace boost { namespace phoenix
     struct meta_grammar::case_<tag:: NAME, Dummy>                               \
         : proto::when<rule:: NAME, proto::external_transform>                   \
     {};                                                                         \
-    /**/
+/**/
 
 #define PHOENIX_DEFINE_EXPRESSION_EXT(ACTOR, NAME, SEQ)                         \
     namespace tag {                                                             \
@@ -168,7 +169,7 @@ namespace boost { namespace phoenix
     struct meta_grammar::case_<tag:: NAME, Dummy>                               \
         : proto::when<rule:: NAME, proto::external_transform>                   \
     {};                                                                         \
-    /**/
+/**/
 
 #define PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R(_, N, NAME)                      \
     template <                                                                  \
@@ -242,7 +243,7 @@ namespace boost { namespace phoenix
     struct meta_grammar::case_<tag:: NAME, Dummy>                               \
         : proto::when<rule:: NAME, proto::external_transform>                   \
     {};                                                                         \
-    /**/
+/**/
 
 #endif
 
@@ -283,11 +284,11 @@ namespace boost { namespace phoenix
         {};
         
         typedef Tag proto_tag;
-        #define BOOST_PHOENIX_ENUM_CHILDREN(_, N, __)                           \
+    #define BOOST_PHOENIX_ENUM_CHILDREN(_, N, __)                               \
         typedef BOOST_PP_CAT(A, N) BOOST_PP_CAT(proto_child, N);                \
-        /**/
+    /**/
         BOOST_PP_REPEAT(PHOENIX_ITERATION, BOOST_PHOENIX_ENUM_CHILDREN, _)
-        #undef BOOST_PHOENIX_ENUM_CHILDREN
+    #undef BOOST_PHOENIX_ENUM_CHILDREN
     };
 
 #endif

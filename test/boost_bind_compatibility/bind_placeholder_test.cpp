@@ -51,9 +51,8 @@ namespace boost
 {
 
 template< int I > struct is_placeholder< custom_placeholder< I > >
-    : mpl::true_
 {
-    enum { value = I };
+    enum { value = I + 1};
 };
 
 } // namespace boost

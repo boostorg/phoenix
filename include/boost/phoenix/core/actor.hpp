@@ -58,18 +58,16 @@ namespace boost { namespace phoenix
         template <typename Expr>
         struct actor<Expr>
         {
-            //static const int arity = result_of::arity<Expr>::type::value;
-
             typedef
+                // avoid calling result_of::actor when this is false
                 typename mpl::eval_if<
-                    typename is_nullary<Expr>::type // avoid calling result_of::actor when this is false
+                    typename is_nullary<Expr>::type
                   , boost::result_of<
                         evaluator(
                             Expr const &
                           , fusion::vector2<fusion::vector0<>&, default_actions>&
                         )
                     >
-                    //evaluator<Expr const &, fusion::vector2<fusion::vector0<>&, default_actions>&>
                   , mpl::identity<detail::error_expecting_arguments>
                 >::type
             type;
@@ -98,21 +96,9 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        /*
-        template <typename This>
-        struct result<This()>
-            : result_of::actor<Expr>
-        {};
-        */
-        //BOOST_MPL_ASSERT((proto::matches<actor<Expr>, meta_grammar>));
-
         typename result_of::actor<Expr>::type
         operator()()
         {
-            /*
-            typedef make_basic_environment<default_actions> env_type;
-            typename env_type::type env = env_type::make();
-            */
             typedef fusion::vector0<> args_type;
             args_type args;
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
@@ -123,10 +109,6 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr>::type
         operator()() const
         {
-            /*
-            typedef make_basic_environment<default_actions> env_type;
-            typename env_type::type env = env_type::make();
-            */
             typedef fusion::vector0<> args_type;
             args_type args;
             fusion::vector2<args_type&, default_actions> env(args, default_actions());

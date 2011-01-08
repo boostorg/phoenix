@@ -66,7 +66,10 @@ namespace boost { namespace phoenix
         typename expression::for_<Init, Cond, Step, Do>::type const
         operator[](Do const& do_) const
         {
-            return expression::for_<Init, Cond, Step, Do>::make(init, cond, step, do_);
+            return
+                expression::
+                    for_<Init, Cond, Step, Do>::
+                        make(init, cond, step, do_);
         }
 
         Init const& init;

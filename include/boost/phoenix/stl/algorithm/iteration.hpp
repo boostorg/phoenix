@@ -20,76 +20,76 @@
 #include <boost/phoenix/function/function.hpp>
 
 namespace boost { namespace phoenix {
-namespace impl
-{
-    struct for_each
+    namespace impl
     {
-        template <typename Sig>
-        struct result;
-
-        template<typename This, class R, class F>
-        struct result<This(R&, F)>
-            : result<This(R&, F const &)>
-        {};
-
-        template<typename This, class R, class F>
-        struct result<This(R&, F &)>
+        struct for_each
         {
-            typedef F type;
+            template <typename Sig>
+            struct result;
+
+            template<typename This, class R, class F>
+            struct result<This(R&, F)>
+                : result<This(R&, F const &)>
+            {};
+
+            template<typename This, class R, class F>
+            struct result<This(R&, F &)>
+            {
+                typedef F type;
+            };
+
+            template<class R, class F>
+            F operator()(R& r, F fn) const
+            {        
+                return std::for_each(detail::begin_(r), detail::end_(r), fn);
+            }
         };
 
-        template<class R, class F>
-        F operator()(R& r, F fn) const
-        {        
-            return std::for_each(detail::begin_(r), detail::end_(r), fn);
-        }
-    };
-
-    struct accumulate
-    {
-        template <typename Sig>
-        struct result;
-        
-        template<typename This, class R, class I>
-        struct result<This(R&, I)>
-            : result<This(R&, I const &)>
-        {};
-        
-        template<typename This, class R, class I>
-        struct result<This(R&, I &)>
+        struct accumulate
         {
-            typedef I type;
+            template <typename Sig>
+            struct result;
+            
+            template<typename This, class R, class I>
+            struct result<This(R&, I)>
+                : result<This(R&, I const &)>
+            {};
+            
+            template<typename This, class R, class I>
+            struct result<This(R&, I &)>
+            {
+                typedef I type;
+            };
+            
+            template<typename This, class R, class I, class C>
+            struct result<This(R&, I, C)>
+                : result<This(R&, I const &, C)>
+            {};
+
+            template<typename This, class R, class I, class C>
+            struct result<This(R&, I &, C)>
+            {
+                typedef I type;
+            };
+
+            template<class R, class I>
+            I
+            operator()(R& r, I i) const
+            {
+                return std::accumulate(detail::begin_(r), detail::end_(r), i);
+            }
+
+            template<class R, class I, class C>
+            I
+            operator()(R& r, I i, C c) const
+            {
+                return std::accumulate(detail::begin_(r), detail::end_(r), i, c);
+            }
         };
-        
-        template<typename This, class R, class I, class C>
-        struct result<This(R&, I, C)>
-            : result<This(R&, I const &, C)>
-        {};
+    }
 
-        template<typename This, class R, class I, class C>
-        struct result<This(R&, I &, C)>
-        {
-            typedef I type;
-        };
-
-        template<class R, class I>
-        I
-        operator()(R& r, I i) const
-        {
-            return std::accumulate(detail::begin_(r), detail::end_(r), i);
-        }
-
-        template<class R, class I, class C>
-        I
-        operator()(R& r, I i, C c) const
-        {
-            return std::accumulate(detail::begin_(r), detail::end_(r), i, c);
-        }
-    };
-}
-
-function<impl::for_each> const for_each = impl::for_each();
-function<impl::accumulate> const accumulate = impl::accumulate();
+    function<impl::for_each> const for_each = impl::for_each();
+    function<impl::accumulate> const accumulate = impl::accumulate();
 
 }}
 

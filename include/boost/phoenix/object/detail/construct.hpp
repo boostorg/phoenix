@@ -12,8 +12,8 @@
 #define PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (1, PHOENIX_COMPOSITE_LIMIT,                                        \
-        <boost/phoenix/object/detail/construct.hpp>))
+    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+    <boost/phoenix/object/detail/construct.hpp>))
 #include PHOENIX_ITERATE()
 
 #endif
@@ -24,7 +24,10 @@
     typename expression::construct<detail::target<T>, PHOENIX_A>::type const
     construct(PHOENIX_A_const_ref_a)
     {
-        return expression::construct<detail::target<T>, PHOENIX_A>::make(detail::target<T>(), PHOENIX_a);
+        return
+            expression::
+                construct<detail::target<T>, PHOENIX_A>::
+                    make(detail::target<T>(), PHOENIX_a);
     }
 
 #endif

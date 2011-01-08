@@ -14,40 +14,48 @@
 #endif
 
 #define PHOENIX_ITERATION_PARAMS_SIZE                                           \
-    BOOST_PP_TUPLE_ELEM(2, 0, PHOENIX_ITERATION_PARAMS)
+    BOOST_PP_TUPLE_ELEM(2, 0, PHOENIX_ITERATION_PARAMS)                         \
+/**/
 
 #define PHOENIX_ITERATION_TUPLE                                                 \
-    BOOST_PP_TUPLE_ELEM(2, 1, PHOENIX_ITERATION_PARAMS)
+    BOOST_PP_TUPLE_ELEM(2, 1, PHOENIX_ITERATION_PARAMS)                         \
+/**/
 
 #define PHOENIX_ITERATION_START                                                 \
     BOOST_PP_TUPLE_ELEM(                                                        \
-            PHOENIX_ITERATION_PARAMS_SIZE, 0, PHOENIX_ITERATION_TUPLE)
+        PHOENIX_ITERATION_PARAMS_SIZE, 0, PHOENIX_ITERATION_TUPLE)              \
+/**/
 
 #define PHOENIX_ITERATION_END                                                   \
     BOOST_PP_TUPLE_ELEM(                                                        \
-            PHOENIX_ITERATION_PARAMS_SIZE, 1, PHOENIX_ITERATION_TUPLE)
+        PHOENIX_ITERATION_PARAMS_SIZE, 1, PHOENIX_ITERATION_TUPLE)              \
+/**/
 
 
 #define PHOENIX_ITERATION_FILE()                                                \
     BOOST_PP_TUPLE_ELEM(                                                        \
-            PHOENIX_ITERATION_PARAMS_SIZE, 2, PHOENIX_ITERATION_TUPLE)
+        PHOENIX_ITERATION_PARAMS_SIZE, 2, PHOENIX_ITERATION_TUPLE)              \
+/**/
 
 #if PHOENIX_ITERATION_PARAMS_SIZE == 3
 
 #define BOOST_PP_ITERATION_PARAMS_1                                             \
     (3, (PHOENIX_ITERATION_START, PHOENIX_ITERATION_END,                        \
-    <boost/phoenix/support/detail/iterate.hpp>))
+    <boost/phoenix/support/detail/iterate.hpp>))                                \
+/**/
 
 #else
 
 #define PHOENIX_ITERATION_FLAG                                                  \
     BOOST_PP_TUPLE_ELEM(                                                        \
-            PHOENIX_ITERATION_PARAMS_SIZE, 3, PHOENIX_ITERATION_TUPLE)
+        PHOENIX_ITERATION_PARAMS_SIZE, 3, PHOENIX_ITERATION_TUPLE)              \
+/**/
 
 #define BOOST_PP_ITERATION_PARAMS_1                                             \
     (4, (PHOENIX_ITERATION_START, PHOENIX_ITERATION_END,                        \
     <boost/phoenix/support/detail/iterate.hpp>,                                 \
-    PHOENIX_ITERATION_FLAG))
+    PHOENIX_ITERATION_FLAG))                                                    \
+/**/
 
 #endif
 

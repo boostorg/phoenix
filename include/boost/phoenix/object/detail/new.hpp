@@ -24,7 +24,10 @@
     typename expression::new_<detail::target<T>, PHOENIX_A>::type const
     new_(PHOENIX_A_const_ref_a)
     {
-        return expression::new_<detail::target<T>, PHOENIX_A>::make(detail::target<T>(), PHOENIX_a);
+        return
+            expression::
+                new_<detail::target<T>, PHOENIX_A>::
+                    make(detail::target<T>(), PHOENIX_a);
     }
 
 #endif

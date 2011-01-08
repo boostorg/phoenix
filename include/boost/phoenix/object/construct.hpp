@@ -41,14 +41,21 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::construct, Dummy>
-        : proto::lazy<construct_eval<proto::_value(proto::_child_c<0>)>(_env, unpack(proto::functional::pop_front(proto::_)))>
+        : proto::lazy<
+            construct_eval<
+                proto::_value(proto::_child_c<0>)
+            >(_env, unpack(proto::functional::pop_front(proto::_)))
+        >
     {};
 
     template <typename T>
     typename expression::construct<detail::target<T> >::type const
     construct()
     {
-        return expression::construct<detail::target<T> >::make(detail::target<T>());
+        return
+            expression::
+                construct<detail::target<T> >::
+                    make(detail::target<T>());
     }
 
     // Bring in the rest

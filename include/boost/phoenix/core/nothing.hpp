@@ -7,29 +7,38 @@
 #ifndef PHOENIX_CORE_NOTHING_HPP
 #define PHOENIX_CORE_NOTHING_HPP
 
+#include <boost/mpl/void.hpp>
 #include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/compose.hpp>
+#include <boost/phoenix/core/expression.hpp>
 
 namespace boost { namespace phoenix
 {
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     //
     //  null_actor
     //
     //      An actor that does nothing (a "bum", if you will :-).
     //
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+    
+    PHOENIX_DEFINE_EXPRESSION(null, (proto::terminal<mpl::void_>::type))
     
     struct null_eval
     {
+        BOOST_PROTO_CALLABLE()
+
         typedef void result_type;
 
-        template <typename Env>
-        void eval(Env const&) const
+        void operator()() const
         {}
     };
 
-    compose<null_eval>::type const nothing = {};
+    template <typename Dummy>
+    struct default_actions::when<rule::null, Dummy>
+        : proto::call<null_eval()>
+    {};
+
+    expression::null<mpl::void_>::type const nothing = {};
 }}
 
 #endif

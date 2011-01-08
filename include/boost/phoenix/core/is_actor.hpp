@@ -23,10 +23,14 @@ namespace boost { namespace phoenix
     struct actor;
 
     template <typename T, typename Enable = void>
-    struct is_actor : mpl::false_ {};
+    struct is_actor
+        : mpl::false_
+    {};
 
     template <typename Expr>
-    struct is_actor<actor<Expr> > : mpl::true_ {};
+    struct is_actor<actor<Expr> >
+        : mpl::true_
+    {};
 }}
 
 #endif

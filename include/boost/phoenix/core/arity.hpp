@@ -22,63 +22,63 @@
 
 namespace boost { namespace phoenix
 {
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     //
     //  Calculate the arity of an expression using proto transforms
     //
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     
     struct argument;
 
-    template <typename F>
-    struct funcwrap;
-
-    struct env;
-
-    namespace detail
-    {
-        struct arity
-          : proto::or_<
-                proto::when<proto::terminal<proto::_>, mpl::int_<0>()>
-              , proto::when<
-                    proto::function<
-                        proto::terminal<funcwrap<argument> >
-                      , proto::terminal<env>
-                      , proto::_
-                    >
-                  , mpl::next<proto::_value(proto::_child2)>()
-                >
-              , proto::otherwise<
-                    proto::fold<
-                        proto::_
-                      , mpl::int_<0>()
-                      , mpl::max<arity, proto::_state>()
-                    >
-                >
-            >
-        {};
-    }
+    struct arity;
 
     namespace result_of
     {
         template <typename Expr>
         struct arity
-            : boost::result_of<detail::arity(Expr)>
+            : mpl::int_<
+                boost::result_of<
+                    evaluator(
+                        Expr const&
+                      , fusion::vector2<
+                            mpl::int_<0>
+                          , boost::phoenix::arity
+                        >&
+                    )
+                >::type::value
+            >
         {};
     }
 
-    template <typename Expr>
-    int arity()
+    struct arity
     {
-        return result_of::arity<Expr>::type::value;
-    }
+        template <typename Rule, typename Dummy = void>
+        struct when
+            : proto::fold<
+                proto::_
+              , mpl::int_<0>
+              , mpl::max<
+                    proto::_state
+                  , evaluator(proto::_, _env)
+                >()
+            >
+        {};
+    };
 
-    template <typename Expr>
-    int arity(Expr const&)
-    {
-        return result_of::arity<Expr>::type::value;
-    }
-
+    template <typename Dummy>
+    struct arity::when<rule::argument, Dummy>
+        : proto::make<is_placeholder<proto::_value>()>
+    {};
+    
+    template <typename Dummy>
+    struct arity::when<rule::custom_terminal, Dummy>
+        : proto::make<mpl::int_<0>()>
+    {};
+    
+    template <typename Dummy>
+    struct arity::when<rule::terminal, Dummy>
+        : proto::make<mpl::int_<0>()>
+    {};
 }}
 
 #endif

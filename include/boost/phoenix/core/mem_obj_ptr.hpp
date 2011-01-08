@@ -8,7 +8,6 @@
 #ifndef PHOENIX_CORE_MEM_OBJ_PTR_HPP
 #define PHOENIX_CORE_MEM_OBJ_PTR_HPP
 
-#include <boost/phoenix/core/compose.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
@@ -27,6 +26,8 @@ namespace boost { namespace phoenix
     //         To be used in bind and operator->*
     //
     ////////////////////////////////////////////////////////////////////////////
+    
+    /* FIXME
     namespace meta
     {
         template <typename T>
@@ -64,7 +65,6 @@ namespace boost { namespace phoenix
     {
         template <typename Env, typename Object, typename MemPtr>
         struct mem_obj_ptr
-            : boost::result_of<eval_grammar()>
         {
             typedef typename meta::object_type<
                 typename remove_const<
@@ -166,6 +166,7 @@ namespace boost { namespace phoenix
 
         };
     }
+    */
 
 }}
 

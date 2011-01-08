@@ -7,24 +7,24 @@
 #==============================================================================
 
 project phoenix/doc ;
-import boostbook ;
+
 import quickbook ;
 
 path-constant images : html ;
 
-boostbook quickbook
+boostbook phoenix-doc
     :
         phoenix3.qbk
     :
         <xsl:param>boost.root=../../../..
-		  <xsl:param>chunk.section.depth=4
-		  <xsl:param>chunk.first.sections=1
-		  <xsl:param>toc.section.depth=4
-		  <xsl:param>toc.max.depth=4
-		  <xsl:param>generate.section.toc.level=4
+        <xsl:param>chunk.section.depth=4
+        <xsl:param>chunk.first.sections=1
+        <xsl:param>toc.section.depth=4
+        <xsl:param>toc.max.depth=4
+        <xsl:param>generate.section.toc.level=4
         <xsl:param>boost.libraries=../../../libraries.htm
         <xsl:param>html.stylesheet=../../../../doc/html/boostbook.css
-		  <format>html:<xsl:param>admon.graphics.path=images/
+        <format>html:<xsl:param>admon.graphics.path=images/
         <format>pdf:<xsl:param>img.src.path=$(images)/
         <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/phoenix/doc/html
     ;

@@ -12,7 +12,7 @@
 #define PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (4, PHOENIX_ACTOR_LIMIT,                                                \
+    (3, (1, PHOENIX_ACTOR_LIMIT,                                                \
     <boost/phoenix/function/detail/function_result_of.hpp>))
 #include PHOENIX_ITERATE()
 
@@ -22,11 +22,12 @@
 
         template <typename F, PHOENIX_typename_A>
         struct function<F, PHOENIX_A>
-          : proto::result_of::make_expr<
+            : proto::result_of::make_expr<
                 proto::tag::function
               , phoenix_domain
               , F
-              , PHOENIX_A>
+              , PHOENIX_A
+            >
         {};
 
 #endif

@@ -30,7 +30,11 @@ namespace boost { namespace phoenix
         typedef typename boost::remove_reference<OuterEnv>::type outer_env_type;
         typedef typename boost::remove_reference<Locals>::type locals_type;
 
-        scoped_environment(env_type& env, outer_env_type& outer_env, locals_type & locals)
+        scoped_environment(
+            env_type& env
+          , outer_env_type& outer_env
+          , locals_type & locals
+        )
             : env(env)
             , outer_env(outer_env)
             , locals(locals)
@@ -80,7 +84,9 @@ namespace boost { namespace phoenix
                     >::type
                 >::type
                 env_type;
-            typedef typename fusion::result_of::value_at<env_type, N>::type type;
+            typedef
+                typename fusion::result_of::value_at<env_type, N>::type
+                type;
         };
         
         template <typename Seq, typename N>

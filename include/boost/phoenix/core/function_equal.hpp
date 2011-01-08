@@ -9,9 +9,6 @@
 #define PHOENIX_CORE_FUNCTION_EQUAL_HPP
 
 #include <boost/phoenix/core/terminal.hpp>
-#include <boost/preprocessor/control/if.hpp>
-#include <boost/preprocessor/facilities/empty.hpp>
-#include <boost/preprocessor/facilities/identity.hpp>
 
 namespace boost
 {
@@ -44,6 +41,7 @@ namespace boost { namespace phoenix
             {
                 return a0.get_pointer() == a1.get_pointer();
             }
+
             template <typename A0, typename A1>
             result_type
             operator()(weak_ptr<A0> const & a0, weak_ptr<A1> const & a1) const
@@ -61,27 +59,10 @@ namespace boost { namespace phoenix
                   , proto::or_<
                         proto::when<
                             proto::terminal<proto::_>
-                          , proto::if_<
-                                mpl::false_()//is_custom_terminal<proto::_value>()
-                              , compare(
-                                    proto::lazy<
-                                        custom_terminal<proto::_value>(
-                                            proto::_value
-                                        )
-                                    >
-                                  , proto::lazy<
-                                        custom_terminal<
-                                            proto::_value(proto::_state)
-                                        >(
-                                            proto::_value(proto::_state)
-                                        )
-                                    >
-                                )
-                              , compare(
-                                    proto::_value
-                                  , proto::_value(proto::_state)
-                                )
-                            >
+                          , compare(
+                                proto::_value
+                              , proto::_value(proto::_state)
+                            )
                         >
                       , proto::otherwise<test(proto::_, proto::_state)>
                     >

@@ -25,12 +25,12 @@ namespace boost { namespace phoenix
         : proto::domain<
             proto::pod_generator<actor>
           , meta_grammar
-          //, proto::_
           , proto::default_domain
         >
     {
         template <typename T>
-        struct as_child : as_expr<T>
+        struct as_child
+            : as_expr<T>
         {};
     };
 }}

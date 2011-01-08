@@ -24,12 +24,6 @@
 #include <boost/proto/proto.hpp>
 #include <boost/proto/functional.hpp>
 
-#define UNPACK_CHOICES \
-    (phoenix::unpack) \
-    (phoenix::unpack()) \
-    (phoenix::unpack(Seq)) \
-    (phoenix::unpack(Seq, Fun))
-
 namespace boost { namespace phoenix
 {
     struct unpack {};
@@ -54,23 +48,20 @@ namespace boost { namespace phoenix
     }
 }}
 
+#define PHOENIX_UNPACK_CHOICES                                                  \
+    (phoenix::unpack)                                                           \
+    (phoenix::unpack())                                                         \
+    (phoenix::unpack(Seq))                                                      \
+    (phoenix::unpack(Seq, Fun))                                                 \
+/**/
+
 #define BOOST_PP_ITERATION_PARAMS_1                                             \
-            (3, (1, BOOST_PP_SEQ_SIZE(UNPACK_CHOICES),                          \
+            (3, (1, BOOST_PP_SEQ_SIZE(PHOENIX_UNPACK_CHOICES),                  \
             <boost/phoenix/core/unpack.hpp>))                                   \
 /**/
 #include BOOST_PP_ITERATE()
 
-#undef M0
-#undef M1
-#undef M2
-#undef M3
-#undef M4
-#undef M5
-#undef I
-#undef J
-#undef K
-#undef L
-#undef UNPACK_CHOICES
+#undef PHOENIX_UNPACK_CHOICES
 
 #endif
 
@@ -78,12 +69,12 @@ namespace boost { namespace phoenix
 
 #if BOOST_PP_ITERATION_DEPTH() == 1
 
-#define I                                                                       \
+#define PHOENIX_UNPACK_I                                                        \
     BOOST_PP_DEC(BOOST_PP_FRAME_ITERATION(1))                                   \
 /**/
 
-#define UNPACK                                                                  \
-    BOOST_PP_SEQ_ELEM(I, UNPACK_CHOICES)                                        \
+#define PHOENIX_UNPACK                                                          \
+    BOOST_PP_SEQ_ELEM(PHOENIX_UNPACK_I, PHOENIX_UNPACK_CHOICES)                 \
 /**/
 
 #define BOOST_PP_ITERATION_PARAMS_2                                             \
@@ -91,50 +82,64 @@ namespace boost { namespace phoenix
     <boost/phoenix/core/unpack.hpp>))                                           \
 /**/
 #include BOOST_PP_ITERATE()
-#undef UNPACK
+
+#undef PHOENIX_UNPACK
+#undef PHOENIX_UNPACK_I
 
 #elif BOOST_PP_ITERATION_DEPTH() == 2
 
-#define J                                                                       \
+#define PHOENIX_UNPACK_J                                                        \
     BOOST_PP_FRAME_ITERATION(2)                                                 \
 /**/
 
 #define BOOST_PP_ITERATION_PARAMS_3                                             \
-    (3, (BOOST_PP_DEC(J), BOOST_PP_DEC(BOOST_PROTO_MAX_ARITY),                  \
+    (3, (BOOST_PP_DEC(PHOENIX_UNPACK_J), BOOST_PP_DEC(BOOST_PROTO_MAX_ARITY),   \
     <boost/phoenix/core/unpack.hpp>))                                           \
 /**/
 #include BOOST_PP_ITERATE()
 
+#undef PHOENIX_UNPACK_J
+
 #elif BOOST_PP_ITERATION_DEPTH() == 3
 
-#define K                                                                       \
+#define PHOENIX_UNPACK_K                                                        \
     BOOST_PP_FRAME_ITERATION(3)                                                 \
 /**/
 
-#define M0(Z, N, D)                                                             \
+#define PHOENIX_UNPACK_M0(Z, N, D)                                              \
     , A ## N                                                                    \
 /**/
 
-#define SIG                                                                     \
+#define PHOENIX_UNPACK_SIG                                                      \
     R(                                                                          \
-        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(J), A)                                \
-        BOOST_PP_COMMA_IF(BOOST_PP_DEC(J))                                      \
-        UNPACK                                                                  \
-        BOOST_PP_REPEAT_FROM_TO(BOOST_PP_FRAME_START(3), K, M0, _)              \
+        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(PHOENIX_UNPACK_J), A)                 \
+        BOOST_PP_COMMA_IF(BOOST_PP_DEC(PHOENIX_UNPACK_J))                       \
+        PHOENIX_UNPACK                                                          \
+        BOOST_PP_REPEAT_FROM_TO(                                                \
+            BOOST_PP_FRAME_START(3)                                             \
+          , PHOENIX_UNPACK_K                                                    \
+          , PHOENIX_UNPACK_M0                                                   \
+          , _                                                                   \
+        )                                                                       \
     )                                                                           \
 /**/
 
-#define M1(Z, N, D)                                                             \
+#define PHOENIX_UNPACK_M1(Z, N, D)                                              \
     BOOST_PP_COMMA_IF(BOOST_PP_NOT_EQUAL(N, D)) BOOST_PP_CAT(A, N)              \
 /**/
 
-#define M2(Z, N, D)                                                             \
+#define PHOENIX_UNPACK_M2(Z, N, D)                                              \
     , typename A ## N                                                           \
 /**/
 
-#define TYPENAME_SIG                                                            \
-    BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(J), typename A)                           \
-    BOOST_PP_REPEAT_FROM_TO(BOOST_PP_FRAME_START(3), K, M2, _)                  \
+#define PHOENIX_UNPACK_TYPENAME_SIG                                             \
+    BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(PHOENIX_UNPACK_J), typename A)            \
+    BOOST_PP_REPEAT_FROM_TO(                                                    \
+        BOOST_PP_FRAME_START(3)                                                 \
+      , PHOENIX_UNPACK_K                                                        \
+      , PHOENIX_UNPACK_M2                                                       \
+      , _                                                                       \
+    )                                                                           \
 /**/
     
 namespace boost { namespace phoenix
@@ -148,7 +153,8 @@ namespace boost { namespace phoenix
           , typename Seq
           , typename Fun
           , typename R
-          BOOST_PP_COMMA_IF(BOOST_PP_DEC(J)) TYPENAME_SIG
+          BOOST_PP_COMMA_IF(BOOST_PP_DEC(PHOENIX_UNPACK_J))
+          PHOENIX_UNPACK_TYPENAME_SIG
         >
         struct unpack_impl<
             Expr
@@ -156,7 +162,7 @@ namespace boost { namespace phoenix
           , Data
           , Seq
           , Fun
-          , SIG
+          , PHOENIX_UNPACK_SIG
           , 0
         >
             : proto::transform_impl<Expr, State, Data>
@@ -166,17 +172,20 @@ namespace boost { namespace phoenix
             typedef
                 proto::call<
                     R(
-                        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(J), A)
+                        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(PHOENIX_UNPACK_J), A)
                         BOOST_PP_COMMA_IF(
                             BOOST_PP_AND(
-                                BOOST_PP_DEC(J)
-                              , BOOST_PP_NOT_EQUAL(BOOST_PP_FRAME_START(3), K)
+                                BOOST_PP_DEC(PHOENIX_UNPACK_J)
+                              , BOOST_PP_NOT_EQUAL(
+                                    BOOST_PP_FRAME_START(3)
+                                  , PHOENIX_UNPACK_K
+                                )
                             )
                         )
                         BOOST_PP_REPEAT_FROM_TO(
                             BOOST_PP_FRAME_START(3)
-                          , K
-                          , M1
+                          , PHOENIX_UNPACK_K
+                          , PHOENIX_UNPACK_M1
                           , BOOST_PP_FRAME_START(3)
                         )
                     )
@@ -212,16 +221,17 @@ namespace boost { namespace phoenix
 namespace boost { namespace proto {
     template <
         typename R
-      #if I > 1
+      #if PHOENIX_UNPACK_I > 1
       , typename Seq
       #endif
-      #if I > 2
+      #if PHOENIX_UNPACK_I > 2
       , typename Fun
       #endif
-      BOOST_PP_COMMA_IF(BOOST_PP_DEC(J)) TYPENAME_SIG
+      BOOST_PP_COMMA_IF(BOOST_PP_DEC(PHOENIX_UNPACK_J))
+      PHOENIX_UNPACK_TYPENAME_SIG
       >
-    struct call<SIG>
-        : proto::transform<call<SIG> >
+    struct call<PHOENIX_UNPACK_SIG>
+        : proto::transform<call<PHOENIX_UNPACK_SIG> >
     {
         template <typename Expr, typename State, typename Data>
         struct impl
@@ -229,33 +239,38 @@ namespace boost { namespace proto {
                 Expr
               , State
               , Data
-              #if I > 1
+              #if PHOENIX_UNPACK_I > 1
               , Seq
               #else
               , proto::_
               #endif
-              #if I > 2
+              #if PHOENIX_UNPACK_I > 2
               , Fun
               #else
               , proto::_
               #endif
-              , SIG
+              , PHOENIX_UNPACK_SIG
             >
         {};
     };
 
 }}
 
+#undef PHOENIX_UNPACK_K
+#undef PHOENIX_UNPACK_SIG
+#undef PHOENIX_UNPACK_TYPENAME_SIG
+#undef PHOENIX_UNPACK_M0
+#undef PHOENIX_UNPACK_M1
+#undef PHOENIX_UNPACK_M2
+
 #else
 
-#define L BOOST_PP_FRAME_ITERATION(4)
+#define PHOENIX_UNPACK_L BOOST_PP_FRAME_ITERATION(4)
 
-//BOOST_PP_SUB(BOOST_PP_ADD(BOOST_PP_ADD(J, K), L), 2)
-#if J + K + L - 2 > BOOST_PROTO_MAX_ARITY
-//SIG J K L too much ...
+#if PHOENIX_UNPACK_J + PHOENIX_UNPACK_K + PHOENIX_UNPACK_L - 2 > BOOST_PROTO_MAX_ARITY
+//PHOENIX_UNPACK_SIG PHOENIX_UNPACK_J PHOENIX_UNPACK_K PHOENIX_UNPACK_L too much ...
 #else
-    #undef M5
-    #define M5(__, N, ___)                                                      \
+    #define PHOENIX_UNPACK_M5(__, N, ___)                                       \
         fun_type(proto::functional::at(Seq, mpl::int_<N>()))                    \
     /**/
 
@@ -266,7 +281,8 @@ namespace boost { namespace proto {
           , typename Seq
           , typename Fun
           , typename R
-          BOOST_PP_COMMA_IF(BOOST_PP_DEC(J)) TYPENAME_SIG
+          BOOST_PP_COMMA_IF(BOOST_PP_DEC(PHOENIX_UNPACK_J))
+          PHOENIX_UNPACK_TYPENAME_SIG
         >
         struct unpack_impl<
             Expr
@@ -274,8 +290,8 @@ namespace boost { namespace proto {
           , Data
           , Seq
           , Fun
-          , SIG
-          , L
+          , PHOENIX_UNPACK_SIG
+          , PHOENIX_UNPACK_L
         >
             : proto::transform_impl<Expr, State, Data>
         {
@@ -284,19 +300,25 @@ namespace boost { namespace proto {
             typedef
                 proto::call<
                     R(
-                        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(J), A)
-                        BOOST_PP_COMMA_IF(BOOST_PP_AND(BOOST_PP_DEC(J), L))
-                        BOOST_PP_ENUM(L, M5, _)
+                        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(PHOENIX_UNPACK_J), A)
+                        BOOST_PP_COMMA_IF(
+                            BOOST_PP_AND(BOOST_PP_DEC(PHOENIX_UNPACK_J)
+                          , PHOENIX_UNPACK_L)
+                        )
+                        BOOST_PP_ENUM(PHOENIX_UNPACK_L, PHOENIX_UNPACK_M5, _)
                         BOOST_PP_COMMA_IF(
                             BOOST_PP_AND(
-                                L
-                              , BOOST_PP_NOT_EQUAL(BOOST_PP_FRAME_START(3), K)
+                                PHOENIX_UNPACK_L
+                              , BOOST_PP_NOT_EQUAL(
+                                    BOOST_PP_FRAME_START(3)
+                                  , PHOENIX_UNPACK_K
+                                )
                             )
                         )
                         BOOST_PP_REPEAT_FROM_TO(
                             BOOST_PP_FRAME_START(3)
-                          , K
-                          , M1
+                          , PHOENIX_UNPACK_K
+                          , PHOENIX_UNPACK_M1
                           , BOOST_PP_FRAME_START(3)
                         )
                     )
@@ -321,7 +343,10 @@ namespace boost { namespace proto {
 
         };
 
+    #undef PHOENIX_UNPACK_M5
 #endif
+
+#undef PHOENIX_UNPACK_L
 
 #endif
 

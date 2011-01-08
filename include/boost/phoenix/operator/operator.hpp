@@ -8,8 +8,6 @@
 #ifndef PHOENIX_OPERATOR_OPERATOR_HPP
 #define PHOENIX_OPERATOR_OPERATOR_HPP
 
-#include <boost/phoenix/core/limits.hpp>
-#include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/proto/operators.hpp>
 
 #endif

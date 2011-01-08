@@ -18,15 +18,22 @@
 
 namespace boost { namespace phoenix
 {
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     // Functions
-    ////////////////////////////////////////////////////////////////////////////
-    
+    /////////////////////////////////////////////////////////////////////////////
+
+    namespace expression
+    {
+        using proto::function;
+    }
     
     namespace rule
     {
         struct function
-            : proto::nary_expr<proto::tag::function, proto::vararg<meta_grammar> >
+            : proto::nary_expr<
+                proto::tag::function
+              , proto::vararg<meta_grammar>
+            >
         {};
     }
 
@@ -37,9 +44,11 @@ namespace boost { namespace phoenix
 
     namespace result_of
     {
-        template <typename F,
-            PHOENIX_typename_A_void(PHOENIX_ACTOR_LIMIT),
-            typename Dummy = void>
+        template <
+            typename F
+          , PHOENIX_typename_A_void(PHOENIX_ACTOR_LIMIT)
+          , typename Dummy = void
+        >
         struct function;
 
         template <typename F>
@@ -48,30 +57,6 @@ namespace boost { namespace phoenix
                 proto::tag::function
               , phoenix_domain
               , F>
-        {};
-
-        template <typename F, typename A0>
-        struct function<F, A0>
-            : proto::result_of::make_expr<
-                proto::tag::function
-              , phoenix_domain
-              , F, A0>
-        {};
-
-        template <typename F, typename A0, typename A1>
-        struct function<F, A0, A1>
-            : proto::result_of::make_expr<
-                proto::tag::function
-              , phoenix_domain
-              , F, A0, A1>
-        {};
-
-        template <typename F, typename A0, typename A1, typename A2>
-        struct function<F, A0, A1, A2>
-            : proto::result_of::make_expr<
-                proto::tag::function
-              , phoenix_domain
-              , F, A0, A1, A2>
         {};
 
         // Bring in the rest

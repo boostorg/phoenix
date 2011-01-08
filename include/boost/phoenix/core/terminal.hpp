@@ -13,7 +13,8 @@
 namespace boost { namespace phoenix
 {
     template <typename T>
-    struct is_custom_terminal : mpl::false_ {};
+    struct is_custom_terminal
+        : mpl::false_ {};
 
     template <typename T>
     struct custom_terminal;
@@ -46,10 +47,24 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::custom_terminal, Grammar>
         : proto::lazy<custom_terminal<proto::_value>(proto::_value, _env)>
     {};
+
+    namespace detail
+    {
+        template <typename N>
+        struct placeholder_idx
+            : mpl::int_<N::value - 1>
+        {};
+    }
     
     template <typename Grammar>
     struct default_actions::when<rule::argument, Grammar>
-        : proto::call<functional::args_at(proto::_value, _env)>
+        : proto::call<
+            functional::args_at(
+                //mpl::prior<boost::is_placeholder<proto::_value>()>()
+                detail::placeholder_idx<boost::is_placeholder<proto::_value>()>()
+              , _env
+            )
+        >
     {};
 }}
 

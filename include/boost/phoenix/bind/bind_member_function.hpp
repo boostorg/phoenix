@@ -20,9 +20,9 @@ namespace boost { namespace phoenix
     template <typename RT, typename ClassT, typename ClassA>
     typename result_of::function<
         RT(ClassT::*)()
-      , ClassA// const&
+      , ClassA
     >::type
-    bind(RT(ClassT::*f)(), ClassA /*const&*/ obj)
+    bind(RT(ClassT::*f)(), ClassA obj)
     {
         return function<RT(ClassT::*)()>(f)(obj);
     }
@@ -30,34 +30,12 @@ namespace boost { namespace phoenix
     template <typename RT, typename ClassT, typename ClassA>
     typename result_of::function<
         RT(ClassT::*)() const
-      , ClassA// const&
+      , ClassA
     >::type
-    bind(RT(ClassT::*f)() const, ClassA /*const&*/ obj)
+    bind(RT(ClassT::*f)() const, ClassA obj)
     {
         return function<RT(ClassT::*)() const>(f)(obj);
     }
-
-    /*
-    template <typename RT, typename ClassT>
-    typename result_of::function<
-        RT(ClassT::*)()
-      , ClassT//&//typename make_reference<ClassT>::type const
-    >::type
-    bind(RT(ClassT::*f)(), ClassT& obj)
-    {
-        return function<RT(ClassT::*)()>(f)(obj);//ref(obj));
-    }
-
-    template <typename RT, typename ClassT>
-    typename result_of::function<
-        RT(ClassT::*)() const
-      , ClassT//&//typename make_reference<ClassT>::type const
-    >::type
-    bind(RT(ClassT::*f)() const, ClassT& obj)
-    {
-        return function<RT(ClassT::*)() const>(f)(obj);//ref(obj));
-    }
-    */
 
 #define PHOENIX_ITERATION_PARAMS                                                \
     (3, (1, PHOENIX_ARG_LIMIT,                                                  \
@@ -75,7 +53,8 @@ namespace boost { namespace phoenix
       , typename ClassT
       , BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, typename T)
       , typename ClassA
-      , PHOENIX_typename_A>
+      , PHOENIX_typename_A
+    >
     typename result_of::function<
         RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T))
       , ClassA const&
@@ -84,7 +63,8 @@ namespace boost { namespace phoenix
     bind(
         RT(ClassT::*f)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T))
       , ClassA const& obj
-      , PHOENIX_A_const_ref_a)
+      , PHOENIX_A_const_ref_a
+    )
     {
         return function<
             RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T))>(f)(
@@ -96,7 +76,8 @@ namespace boost { namespace phoenix
       , typename ClassT
       , BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, typename T)
       , typename ClassA
-      , PHOENIX_typename_A>
+      , PHOENIX_typename_A
+    >
     typename result_of::function<
         RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T)) const
       , ClassA const&
@@ -105,7 +86,8 @@ namespace boost { namespace phoenix
     bind(
         RT(ClassT::*f)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T)) const
       , ClassA const& obj
-      , PHOENIX_A_const_ref_a)
+      , PHOENIX_A_const_ref_a
+    )
     {
         return function<
             RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T)) const>(f)(
@@ -116,7 +98,8 @@ namespace boost { namespace phoenix
         typename RT
       , typename ClassT
       , BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, typename T)
-      , PHOENIX_typename_A>
+      , PHOENIX_typename_A
+    >
     typename result_of::function<
         RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T))
       , typename make_reference<ClassT>::type const
@@ -125,7 +108,8 @@ namespace boost { namespace phoenix
     bind(
         RT(ClassT::*f)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T))
       , ClassT& obj
-      , PHOENIX_A_const_ref_a)
+      , PHOENIX_A_const_ref_a
+    )
     {
         return function<
             RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T))>(f)(
@@ -136,7 +120,8 @@ namespace boost { namespace phoenix
         typename RT
       , typename ClassT
       , BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, typename T)
-      , PHOENIX_typename_A>
+      , PHOENIX_typename_A
+    >
     typename result_of::function<
         RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T)) const
       , typename make_reference<ClassT>::type const
@@ -147,8 +132,9 @@ namespace boost { namespace phoenix
       , ClassT& obj
       , PHOENIX_A_const_ref_a)
     {
-        return function<RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T)) const>(f)(
-            ref(obj), PHOENIX_a);
+        return function<
+            RT(ClassT::*)(BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, T)) const>(f)(
+                ref(obj), PHOENIX_a);
     }
 
 #endif

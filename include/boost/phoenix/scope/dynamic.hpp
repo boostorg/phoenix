@@ -123,9 +123,16 @@ namespace boost { namespace phoenix
                     typename proto::detail::uncvref<Scope>::type
                 >::type
                 scope_type;
-            typedef typename scope_type::dynamic_frame_type::tuple_type tuple_type;
+            typedef 
+                typename scope_type::dynamic_frame_type::tuple_type
+                tuple_type;
 
-            typedef typename fusion::result_of::at_c<tuple_type, proto::detail::uncvref<N>::type::value>::type type;
+            typedef
+                typename fusion::result_of::at_c<
+                    tuple_type
+                  , proto::detail::uncvref<N>::type::value
+                >::type
+                type;
 
         };
 
@@ -139,87 +146,21 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::dynamic_member, Dummy>
-        : proto::call<dynamic_member_eval(_env, proto::_value(proto::_child_c<0>), proto::_value(proto::_child_c<1>))>
+        : proto::call<
+            dynamic_member_eval(
+                _env
+              , proto::_value(proto::_child_c<0>)
+              , proto::_value(proto::_child_c<1>)
+            )
+        >
     {};
     
-    template <PHOENIX_typename_A_void(PHOENIX_DYNAMIC_LIMIT), typename Dummy = void>
+    template <
+        PHOENIX_typename_A_void(PHOENIX_DYNAMIC_LIMIT)
+      , typename Dummy = void
+    >
     struct dynamic;
     
-    template <typename A0>
-    struct dynamic<A0> : noncopyable
-    {
-        typedef fusion::vector1<A0> tuple_type;
-        typedef dynamic<A0> self_type;
-        typedef dynamic_frame<self_type> dynamic_frame_type;
-
-        dynamic()
-            : frame(0) {}
-
-        template <int N>
-        static
-        void//typename make_dynamic_member<N, self_type>::type
-        init(self_type& scope)
-        {
-            //return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
-        }
-
-        //typedef typename make_dynamic_member<0, self_type>::type member1;
-        typedef typename expression::dynamic_member<mpl::int_<0>, self_type>::type member1;
-
-        mutable dynamic_frame_type* frame;
-    };
-    
-    template <typename A0, typename A1>
-    struct dynamic<A0, A1> : noncopyable
-    {
-        typedef fusion::vector2<A0, A1> tuple_type;
-        typedef dynamic<A0, A1> self_type;
-        typedef dynamic_frame<self_type> dynamic_frame_type;
-
-        dynamic()
-            : frame(0) {}
-
-        template <int N>
-        static 
-        void//typename make_dynamic_member<N, self_type>::type
-        init(self_type& scope)
-        {
-            //return make_dynamic_member<N, self_type>()(dynamic_member_data<N, self_type>(static_cast<self_type &>(scope)));
-        }
-
-        //typedef typename make_dynamic_member<0, self_type>::type member1;
-        typedef typename expression::dynamic_member<mpl::int_<0>, self_type>::type member1;
-        //typedef typename make_dynamic_member<1, self_type>::type member2;
-        typedef typename expression::dynamic_member<mpl::int_<1>, self_type>::type member2;
-
-        mutable dynamic_frame_type* frame;
-    };
-    
-    template <typename A0, typename A1, typename A2>
-    struct dynamic<A0, A1, A2> : noncopyable
-    {
-        typedef fusion::vector3<A0, A1, A2> tuple_type;
-        typedef dynamic<A0, A1, A2> self_type;
-        typedef dynamic_frame<self_type> dynamic_frame_type;
-
-        dynamic()
-            : frame(0) {}
-
-        template <int N>
-        static
-        typename expression::dynamic_member<mpl::int_<N>, self_type *>::type
-        init(self_type * scope)
-        {
-            return expression::dynamic_member<mpl::int_<N>, self_type *>::make(mpl::int_<N>(), scope);
-        }
-
-        typedef typename expression::dynamic_member<mpl::int_<0>, dynamic *>::type member1;
-        typedef typename expression::dynamic_member<mpl::int_<1>, dynamic *>::type member2;
-        typedef typename expression::dynamic_member<mpl::int_<2>, dynamic *>::type member3;
-
-        mutable dynamic_frame_type* frame;
-    };
-
     // Bring in the rest ...
     #include <boost/phoenix/scope/detail/dynamic.hpp>
 }}

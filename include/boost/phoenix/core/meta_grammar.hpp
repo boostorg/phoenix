@@ -21,7 +21,7 @@
 
 namespace boost { namespace phoenix
 {
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     // The grammar defining valid phoenix expressions
     struct meta_grammar
         : proto::switch_<meta_grammar>
@@ -33,17 +33,24 @@ namespace boost { namespace phoenix
     };
 
     struct evaluator
-        : proto::call<
-            meta_grammar(
-                proto::_
-              , functional::args(proto::_state)
-              , functional::actions(proto::_state)
-            )
-        >
-    {};
+    {
+        BOOST_PROTO_TRANSFORM(evaluator)
+
+        template <typename Expr, typename State, typename Data>
+        struct impl
+            : proto::call<
+                meta_grammar(
+                    proto::_
+                  , functional::args(proto::_state)
+                  , functional::actions(proto::_state)
+                )
+            >::impl<Expr, State, Data>
+        {};
+    };
     
-    ////////////////////////////////////////////////////////////////////////////
-    // Set of default actions. Extend this whenever you add a new phoenix construct
+    /////////////////////////////////////////////////////////////////////////////
+    // Set of default actions. Extend this whenever you add a new phoenix
+    // construct
     struct default_actions
     {
         template <typename Rule, typename Dummy = void>
@@ -52,9 +59,9 @@ namespace boost { namespace phoenix
         {};
     };
 
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     // A function object we can call to evaluate our expression
-    evaluator const eval = evaluator();
+    evaluator const eval = {};
 }}
 
 #endif

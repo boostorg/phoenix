@@ -12,7 +12,6 @@
 
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/unpack.hpp>
-#include <boost/phoenix/support/iterate.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -41,19 +40,8 @@ namespace boost { namespace phoenix
         >
         struct try_catch;
 
-    #define PHOENIX_TRY_CATCH_EXPRESSION(Z, N, DATA)                        \
-        template <typename Try BOOST_PP_COMMA_IF(N) PHOENIX_typename_A(N)>      \
-        struct try_catch<Try BOOST_PP_COMMA_IF(N) PHOENIX_A(N)>                 \
-            : expr_ext<                                                         \
-                try_catch_actor                                                 \
-              , tag::try_catch                                                  \
-              , Try                                                             \
-              BOOST_PP_COMMA_IF(N) PHOENIX_A(N)>                                \
-        {};                                                                     \
-        /**/
-
-        BOOST_PP_REPEAT(PHOENIX_CATCH_LIMIT, PHOENIX_TRY_CATCH_EXPRESSION, _)
-        #undef PHOENIX_TRY_CATCH_EXPRESSION
+        // bring in the expression definitions
+        #include <boost/phoenix/statement/detail/try_catch_expression.hpp>
 
         template <typename A0, typename A1>
         struct catch_
@@ -109,62 +97,8 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
 
-    #define PHOENIX_TRY_CATCH_EVAL_R(Z, N, DATA)                                \
-            catch(                                                              \
-                typename proto::result_of::value<                               \
-                    typename proto::result_of::child_c<                         \
-                        BOOST_PP_CAT(A, N)                                      \
-                      , 0                                                       \
-                    >::type                                                     \
-                >::type::type &                                                 \
-            )                                                                   \
-            {                                                                   \
-                eval(proto::child_c<1>(BOOST_PP_CAT(a, N)), env);               \
-            }                                                                   \
-        /**/
-
-    #define PHOENIX_TRY_CATCH_EVAL(Z, N, DATA)                                  \
-        template <typename Env, typename Try, PHOENIX_typename_A(N)>            \
-        typename boost::enable_if<                                              \
-            proto::matches<BOOST_PP_CAT(A, BOOST_PP_DEC(N)), rule::catch_>      \
-          , result_type                                                         \
-        >::type                                                                 \
-        operator()(Env & env, Try const & try_, PHOENIX_A_const_ref_a(N)) const \
-        {                                                                       \
-            try                                                                 \
-            {                                                                   \
-                eval(proto::child_c<0>(try_), env);                             \
-            }                                                                   \
-            BOOST_PP_REPEAT(N, PHOENIX_TRY_CATCH_EVAL_R, _)                     \
-        }                                                                       \
-                                                                                \
-        template <typename Env, typename Try, PHOENIX_typename_A(N)>            \
-        typename boost::disable_if<                                             \
-            proto::matches<BOOST_PP_CAT(A, BOOST_PP_DEC(N)), rule::catch_>      \
-          , result_type                                                         \
-        >::type                                                                 \
-        operator()(Env & env, Try const & try_, PHOENIX_A_const_ref_a(N)) const \
-        {                                                                       \
-            try                                                                 \
-            {                                                                   \
-                eval(proto::child_c<0>(try_), env);                             \
-            }                                                                   \
-            BOOST_PP_REPEAT(BOOST_PP_DEC(N), PHOENIX_TRY_CATCH_EVAL_R, _)       \
-            catch(...)                                                          \
-            {                                                                   \
-                eval(proto::child_c<0>(BOOST_PP_CAT(a, BOOST_PP_DEC(N))), env); \
-            }                                                                   \
-        }                                                                       \
-        /**/
-
-        BOOST_PP_REPEAT_FROM_TO(
-            1
-          , PHOENIX_CATCH_LIMIT
-          , PHOENIX_TRY_CATCH_EVAL
-          , _
-        )
-        #undef PHOENIX_TRY_CATCH_EVAL
-        #undef PHOENIX_TRY_CATCH_EVAL_R
+        // bring in the operator overloads
+        #include <boost/phoenix/statement/detail/try_catch_eval.hpp>
     };
 
     template <typename Dummy>
@@ -250,59 +184,6 @@ namespace boost { namespace phoenix
                     );
             }
         };
-
-    #define PHOENIX_CATCH_PUSH_BACK_R0(Z, N, DATA)                              \
-        BOOST_PP_COMMA_IF(N)                                                    \
-        typename proto::result_of::child_c<TryCatch, N>::type                   \
-        /**/
-
-    #define PHOENIX_CATCH_PUSH_BACK_R1(Z, N, DATA)                              \
-        BOOST_PP_COMMA_IF(N) proto::child_c<N>(try_catch)                       \
-        /**/
-
-    #define PHOENIX_CATCH_PUSH_BACK(Z, N, DATA)                                 \
-        template <typename TryCatch, typename Exception, typename Expr>         \
-        struct catch_push_back<TryCatch, Exception, Expr, N>                    \
-        {                                                                       \
-            typedef                                                             \
-                typename proto::result_of::make_expr<                           \
-                    tag::catch_                                                 \
-                  , default_domain_with_basic_expr                              \
-                  , catch_exception<Exception>                                  \
-                  , Expr                                                        \
-                >::type                                                         \
-                catch_expr;                                                     \
-                                                                                \
-            typedef expression::try_catch<                                      \
-                BOOST_PP_REPEAT(N, PHOENIX_CATCH_PUSH_BACK_R0, _)               \
-              , catch_expr> gen_type;                                           \
-            typedef typename gen_type::type type;                               \
-                                                                                \
-            static type                                                         \
-            make(                                                               \
-                TryCatch const& try_catch                                       \
-              , Expr const& catch_                                              \
-            )                                                                   \
-            {                                                                   \
-                return                                                          \
-                    gen_type::make(                                             \
-                        BOOST_PP_REPEAT(N, PHOENIX_CATCH_PUSH_BACK_R1, _)       \
-                      , proto::make_expr<                                       \
-                            tag::catch_                                         \
-                          , default_domain_with_basic_expr                      \
-                        >(catch_exception<Exception>(), catch_)                 \
-                    );                                                          \
-            }                                                                   \
-        };                                                                      \
-        /**/
-
-        BOOST_PP_REPEAT_FROM_TO(
-            2
-          , PHOENIX_CATCH_LIMIT
-          , PHOENIX_CATCH_PUSH_BACK
-          , _
-        )
-        #undef PHOENIX_CATCH_PUSH_BACK
         
         template <
             typename TryCatch
@@ -342,51 +223,7 @@ namespace boost { namespace phoenix
                     );
             }
         };
-
-    #define PHOENIX_CATCH_ALL_PUSH_BACK(Z, N, DATA)                             \
-        template <typename TryCatch, typename Expr>                             \
-        struct catch_all_push_back<TryCatch, Expr, N>                           \
-        {                                                                       \
-            typedef                                                             \
-                typename proto::result_of::make_expr<                           \
-                    tag::catch_all                                              \
-                  , default_domain_with_basic_expr                              \
-                  , Expr                                                        \
-                >::type                                                         \
-                catch_expr;                                                     \
-                                                                                \
-            typedef expression::try_catch<                                      \
-                BOOST_PP_REPEAT(N, PHOENIX_CATCH_PUSH_BACK_R0, _)               \
-              , catch_expr> gen_type;                                           \
-            typedef typename gen_type::type type;                               \
-                                                                                \
-            static type                                                         \
-            make(                                                               \
-                TryCatch const& try_catch                                       \
-              , Expr const& catch_                                              \
-            )                                                                   \
-            {                                                                   \
-                return                                                          \
-                    gen_type::make(                                             \
-                        BOOST_PP_REPEAT(N, PHOENIX_CATCH_PUSH_BACK_R1, _)       \
-                      , proto::make_expr<                                       \
-                            tag::catch_all                                      \
-                          , default_domain_with_basic_expr                      \
-                        >(catch_)                                               \
-                    );                                                          \
-            }                                                                   \
-        };                                                                      \
-        /**/
-        
-        BOOST_PP_REPEAT_FROM_TO(
-            2
-          , PHOENIX_CATCH_LIMIT
-          , PHOENIX_CATCH_ALL_PUSH_BACK
-          , _
-        )
-        #undef PHOENIX_CATCH_ALL_PUSH_BACK
-        #undef PHOENIX_CATCH_PUSH_BACK_R0
-        #undef PHOENIX_CATCH_PUSH_BACK_R1
+        #include <boost/phoenix/statement/detail/catch_push_back.hpp>
     }
 
     template <typename TryCatch, typename Exception>

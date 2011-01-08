@@ -11,10 +11,7 @@
 
 #define PHOENIX_IS_ITERATING 0
 
-#define PHOENIX_ITERATE_RESULT_OF 1
-#define PHOENIX_ITERATE_OPERATOR 2
-
-#define PHOENIX_ITERATE() \
+#define PHOENIX_ITERATE()                                                       \
     <boost/phoenix/support/detail/iterate.hpp>
 
 #include <boost/phoenix/support/detail/iterate_define.hpp>

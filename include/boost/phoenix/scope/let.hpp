@@ -30,14 +30,15 @@ namespace boost { namespace phoenix
             : proto::make<
                 mpl::and_<
                     detail::local_var_def_is_nullary(proto::_child_c<0>, _env)
-                    //mpl::true_()
-                  //, mpl::true_()//let_evaluator(proto::_child_c<1>, _env)
-                  , evaluator(proto::_child_c<1>, //fusion::vector2<scoped_environment<_env, _env, mpl::void_()>(), functional::actions(_env)>()
-                          fusion::vector2<fusion::vector0<>&, scope_is_nullary_actions>()
-                          )
+                  , evaluator(
+                        proto::_child_c<1>
+                      , fusion::vector2<
+                            mpl::true_
+                          , scope_is_nullary_actions
+                        >()
+                    )
                 >()
             >
-            //: proto::make<mpl::true_()>
         {};
     }
 
@@ -72,7 +73,10 @@ namespace boost { namespace phoenix
                 typename boost::result_of<
                     evaluator(
                         Let const &
-                      , fusion::vector2<scoped_environment<Env, Env, locals_type> &, actions_type> &
+                      , fusion::vector2<
+                            scoped_environment<Env, Env, locals_type> &
+                          , actions_type
+                        > &
                     )
                 >::type
                 type;
@@ -114,8 +118,10 @@ namespace boost { namespace phoenix
                   , l
                 );
 
-            fusion::vector2<scoped_environment<Env, Env, locals_type &> &, actions_type>
-                new_env(scoped_env, functional::actions()(env));
+            fusion::vector2<
+                scoped_environment<Env, Env, locals_type &> &
+              , actions_type
+            > new_env(scoped_env, functional::actions()(env));
 
             return eval(let, new_env);
         }
@@ -176,17 +182,7 @@ namespace boost { namespace phoenix
             return expr0;
         }
 
-#define PHOENIX_LET_LOCAL_GEN(Z, N, DATA) \
-        template <PHOENIX_typename_A(N)> \
-        let_actor_gen< \
-            typename detail::make_locals<PHOENIX_A(N)>::type \
-        > const \
-        operator()(PHOENIX_A_const_ref_a(N)) const \
-        { \
-            return detail::make_locals<PHOENIX_A(N)>::make(PHOENIX_a(N)); \
-        } \
-        /**/
-        BOOST_PP_REPEAT_FROM_TO(2, PHOENIX_LOCAL_LIMIT, PHOENIX_LET_LOCAL_GEN, _)
+        #include <boost/phoenix/scope/detail/let_local_gen.hpp>
     };
 
     let_local_gen const let = {};

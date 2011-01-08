@@ -35,21 +35,29 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::static_cast_, Dummy>
-        : proto::lazy<static_cast_eval<evaluator(proto::_child_c<0>, _env) >(_env, proto::_child_c<1>)>
+        : proto::lazy<
+            static_cast_eval<evaluator(proto::_child_c<0>, _env)
+        >(_env, proto::_child_c<1>)>
     {};
 
     template <typename T, typename U>
     typename expression::static_cast_<detail::target<T>, U>::type const
     static_cast_(U const& u)
     {
-        return expression::static_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
+        return
+            expression::
+                static_cast_<detail::target<T>, U>::
+                    make(detail::target<T>(), u);
     }
     
     template <typename T, typename U>
     typename expression::static_cast_<detail::target<T>, U>::type const
     static_cast_(U & u)
     {
-        return expression::static_cast_<detail::target<T>, U>::make(detail::target<T>(), u);
+        return
+            expression::
+                static_cast_<detail::target<T>, U>::
+                    make(detail::target<T>(), u);
     }
 
 }}

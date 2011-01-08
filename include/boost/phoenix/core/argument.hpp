@@ -9,13 +9,6 @@
 #ifndef PHOENIX_CORE_ARGUMENT_HPP
 #define PHOENIX_CORE_ARGUMENT_HPP
 
-/*
-#include <boost/phoenix/core/compose.hpp>
-#include <boost/phoenix/core/actor.hpp>
-#include <boost/phoenix/core/no_nullary.hpp>
-#include <boost/phoenix/core/meta_grammar.hpp>
-#include <boost/phoenix/core/environment.hpp>
-*/
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/terminal.hpp>
@@ -60,7 +53,7 @@ namespace boost { namespace phoenix
 namespace boost {
     template <typename I>
     struct is_placeholder<phoenix::argument<I> >
-        : mpl::true_
+        : I
     {};
 }
 
@@ -68,7 +61,7 @@ namespace boost { namespace phoenix
 {
     #define BOOST_PHOENIX_ARGUMENT_N(_, N, name)                                \
     actor<                                                                      \
-        proto::terminal<argument<mpl::int_<N> > >::type                         \
+        proto::terminal<argument<mpl::int_<BOOST_PP_INC(N)> > >::type           \
     > const BOOST_PP_CAT(name, BOOST_PP_INC(N)) = {};
 
     namespace placeholders

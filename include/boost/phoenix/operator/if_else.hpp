@@ -8,16 +8,26 @@
 #ifndef PHOENIX_OPERATOR_IF_ELSE_HPP
 #define PHOENIX_OPERATOR_IF_ELSE_HPP
 
-//#include <boost/phoenix/core/compose.hpp>
-//#include <boost/utility/result_of.hpp>
-
 namespace boost { namespace phoenix
 {
+    namespace tag
+    {
+        typedef proto::tag::if_else_ if_else_operator;
+    }
+
+    namespace expression
+    {
+        template <typename A0, typename A1, typename A2>
+        struct if_else_operator
+            : expr<tag::if_else_operator, A0, A1, A2>
+        {};
+    }
+
 	namespace rule
 	{
-		struct if_else
+		struct if_else_operator
 		  : proto::nary_expr<
-		    proto::tag::if_else_
+		    tag::if_else_operator
 		  , meta_grammar
 		  , meta_grammar
 		  , meta_grammar>
@@ -25,8 +35,8 @@ namespace boost { namespace phoenix
 	}
 
 	template <typename Dummy>
-	struct meta_grammar::case_<proto::tag::if_else_, Dummy>
-		: proto::when<rule::if_else, proto::external_transform>
+	struct meta_grammar::case_<tag::if_else_operator, Dummy>
+		: proto::when<rule::if_else_operator, proto::external_transform>
 	{};
 
 	using proto::if_else;

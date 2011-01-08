@@ -15,13 +15,13 @@
 
 namespace boost { namespace phoenix
 {
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     //
     // reference
     //
     //      function for evaluating references, e.g. ref(123)
     //
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     template <typename T>
     struct reference
         : proto::terminal<reference_wrapper<T> >
@@ -57,25 +57,12 @@ namespace boost { namespace phoenix
     {
         typedef T &result_type;
 
-        T &operator()(boost::reference_wrapper<T> r) const
-        {
-            std::cout << "...\n";
-            return r;
-        }
-
         template <typename Env>
         T &operator()(boost::reference_wrapper<T> r, Env &) const
         {
             return r;
         }
     };
-
-    /*
-    template <typename T>
-    struct is_nullary<custom_terminal<reference_wrapper<T> > >
-        : proto::make<mpl::true_()>
-    {};
-    */
 }}
 
 #endif

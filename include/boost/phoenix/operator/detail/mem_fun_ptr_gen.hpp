@@ -95,7 +95,11 @@ namespace boost { namespace phoenix
 #elif BOOST_PP_ITERATION_FLAGS() == PHOENIX_ITERATE_OPERATOR
 
             template <PHOENIX_typename_A>
-            typename result_of::mem_fun_ptr_gen<Object, MemPtr, PHOENIX_A>::type const
+            typename result_of::mem_fun_ptr_gen<
+                Object
+              , MemPtr
+              , PHOENIX_A
+            >::type const
             operator()(PHOENIX_A_const_ref_a) const
             {
                 return proto::make_expr<
@@ -103,7 +107,11 @@ namespace boost { namespace phoenix
             }
 
             template <PHOENIX_typename_A>
-            typename result_of::mem_fun_ptr_gen<Object, MemPtr, PHOENIX_A>::type const
+            typename result_of::mem_fun_ptr_gen<
+                Object
+              , MemPtr
+              , PHOENIX_A
+            >::type const
             operator()(PHOENIX_A_ref_a) const
             {
                 return proto::make_expr<

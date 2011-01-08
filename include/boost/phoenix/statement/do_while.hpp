@@ -70,7 +70,7 @@ namespace boost { namespace phoenix
         }
     };
 
-    do_gen const do_ = do_gen();
+    do_gen const do_ = {};
 
 }}
 

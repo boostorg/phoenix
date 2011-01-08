@@ -18,15 +18,15 @@ namespace boost { namespace phoenix
     namespace detail
     {
         typedef std::ios_base&  (*iomanip_type)(std::ios_base&);
-          typedef std::istream&   (*imanip_type)(std::istream&);
-          typedef std::ostream&   (*omanip_type)(std::ostream&);
+        typedef std::istream&   (*imanip_type)(std::istream&);
+        typedef std::ostream&   (*omanip_type)(std::ostream&);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     //
     //  overloads for I/O manipulators.
     //
-    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     template <typename Expr>
     typename proto::result_of::make_expr<
           proto::tag::shift_left

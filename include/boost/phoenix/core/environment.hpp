@@ -39,17 +39,17 @@ namespace boost { namespace phoenix
             typename result<NAME(Env const &)>::type                            \
             operator()(Env const & env) const                                   \
             {                                                                   \
-                return proto::functional::at()(env, mpl::int_<N>());              \
+                return proto::functional::at()(env, mpl::int_<N>());            \
             }                                                                   \
                                                                                 \
             template <typename Env>                                             \
             typename result<args(Env &)>::type                                  \
             operator()(Env & env) const                                         \
             {                                                                   \
-                return proto::functional::at()(env, mpl::int_<N>());              \
+                return proto::functional::at()(env, mpl::int_<N>());            \
             }                                                                   \
         };                                                                      \
-        /**/
+    /**/
         BOOST_PHOENIX_GET_ENVIRONMENT(args, 0)
         BOOST_PHOENIX_GET_ENVIRONMENT(actions, 1)
     #undef BOOST_PHOENIX_GET_ENVIRONMENT
@@ -69,7 +69,12 @@ namespace boost { namespace phoenix
 
             template <typename This, typename N, typename Env>
             struct result<This(N, Env &)>
-                : boost::result_of<proto::functional::at(typename args::result<args(Env &)>::type, N)>
+                : boost::result_of<
+                    proto::functional::at(
+                        typename args::result<args(Env &)>::type
+                      , N
+                    )
+                >
             {};
 
             template <typename N, typename Env>
