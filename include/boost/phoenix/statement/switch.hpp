@@ -97,15 +97,6 @@ namespace boost { namespace phoenix
             >
         {};
 
-        template <typename Dummy>
-        struct is_nullary_::when<rule::switch_, Dummy>
-            : proto::make<
-                mpl::and_<
-                    evaluator(proto::_child_c<0>, _env)
-                  , switch_case_is_nullary(proto::_child_c<1>, _env)
-                >()
-            >
-        {};
         struct switch_case_grammar
             : proto::or_<
                 proto::when<
@@ -152,6 +143,16 @@ namespace boost { namespace phoenix
             >
 	    {};
     }
+
+    template <typename Dummy>
+    struct is_nullary::when<rule::switch_, Dummy>
+        : proto::make<
+            mpl::and_<
+                evaluator(proto::_child_c<0>, _env)
+              , detail::switch_case_is_nullary(proto::_child_c<1>, _env)
+            >()
+        >
+    {};
 
     struct switch_eval
     {

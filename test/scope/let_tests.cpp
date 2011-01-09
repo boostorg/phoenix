@@ -11,46 +11,17 @@
 
 #define PHOENIX_LIMIT 6
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/fusion/tuple.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/function.hpp>
 #include <boost/phoenix/fusion.hpp>
 #include <boost/phoenix/scope.hpp>
-#include <boost/fusion/tuple.hpp>
 
 #include <typeinfo>
 
 namespace fusion = boost::fusion;
 namespace mpl = boost::mpl;
-
-template <typename Expr>
-void fpp_test(Expr const & expr)
-{
-    using boost::phoenix::let;
-    using boost::phoenix::local_names::_a;
-    using boost::phoenix::local_names::_b;
-    using boost::phoenix::local_names::_c;
-    using boost::phoenix::local_names::_d;
-    using boost::phoenix::local_names::_e;
-    using boost::phoenix::local_names::_x;
-    using boost::phoenix::local_names::_y;
-    using boost::phoenix::local_names::_z;
-    //std::cout << typeid(typename boost::phoenix::detail::grammar_of<Expr>::type).name() << "\n";
-    std::cout << typeid(typename boost::proto::matches<Expr, boost::phoenix::meta_grammar>::type).name() << "\n";
-    std::cout << typeid(typename boost::phoenix::is_nullary<Expr>::type).name() << "\n";
-    //std::cout << typeid(let(_a = 1, _b = 2, _c = 2, _d = 3, _e = 5)[expr]()).name() << "\n";
-    //let(_a = 1/*, _b = 2, _c = 2, _d = 3, _e = 5*/)[expr]();
-    //let(_a = 1, _b = 2, _c = 2, _d = 3, _e = 5)[expr]();
-    std::cout << "\n";
-}
-
-template <typename Expr0, typename Expr1>
-void fpp_test(Expr0 const & expr0, Expr1 const & expr1)
-{
-    fpp_test(expr0);
-    fpp_test(expr1);
-    fpp_test(expr0 + expr1);
-}
 
 int
 main()
@@ -69,7 +40,7 @@ main()
     using boost::phoenix::local_names::_y;
     using boost::phoenix::local_names::_z;
     using boost::phoenix::placeholders::arg1;
-    
+
     {
         int x = 1;
         BOOST_TEST(
@@ -144,7 +115,7 @@ main()
             ]
             (x) == x + 888
         );
-        
+
         BOOST_TEST(x == 999);
 
         BOOST_TEST(

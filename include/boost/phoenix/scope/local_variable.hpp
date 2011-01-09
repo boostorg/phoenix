@@ -10,6 +10,8 @@
 
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/reference.hpp>
+#include <boost/phoenix/core/value.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
 #include <boost/phoenix/statement/sequence.hpp>
 
@@ -176,31 +178,31 @@ namespace boost { namespace phoenix
         >
     {};
 
+    template <typename Dummy>
+    struct is_nullary::when<rule::local_variable, Dummy>
+        : proto::make<mpl::false_()>/*proto::if_<
+            is_scoped_environment<functional::args(_env)>()
+          , mpl::true_()
+          , mpl::false_()
+        >*/
+    {};
+
     namespace detail
     {
-        template <typename Dummy>
-        struct is_nullary_::when<rule::local_variable, Dummy>
-            : proto::if_<
-                is_scoped_environment<functional::args(_env)>()
-              , mpl::true_()
-              , mpl::false_()
-            >
-        {};
-
         struct local_var_def_is_nullary
             : proto::or_<
                 proto::when<
                     proto::comma<
-                        local_var_def_is_nullary
+                        detail::local_var_def_is_nullary
                       , rule::local_var_def
                     >
                   , mpl::and_<
-                        local_var_def_is_nullary(proto::_left, proto::_state)
+                        detail::local_var_def_is_nullary(proto::_left, proto::_state)
                       , evaluator(
                             proto::_right(proto::_right)
                           , fusion::vector2<
                                 mpl::true_
-                              , detail::is_nullary_
+                              , boost::phoenix::is_nullary
                             >()
                         )
                     >()
@@ -211,21 +213,17 @@ namespace boost { namespace phoenix
                         proto::_child_c<1>
                       , fusion::vector2<
                             mpl::true_
-                          , detail::is_nullary_
+                          , boost::phoenix::is_nullary
                         >()
                     )
                 >
             >
         {};
-    }
-
-    namespace detail
-    {
         
         struct scope_is_nullary_actions
         {
             template <typename Rule, typename Dummy = void>
-            struct when : is_nullary_::when<Rule, Dummy>
+            struct when : boost::phoenix::is_nullary::when<Rule, Dummy>
             {};
         };
 
@@ -273,7 +271,6 @@ namespace boost { namespace phoenix
                   , proto::if_<
                         proto::matches<proto::_left, proto::_data>()
                       , evaluator(proto::_right, proto::_state)
-                      //, int()
                       , detail::local_var_not_found()
                     >
                 >

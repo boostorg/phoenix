@@ -61,7 +61,7 @@ namespace boost { namespace phoenix
             typedef
                 // avoid calling result_of::actor when this is false
                 typename mpl::eval_if<
-                    typename is_nullary<Expr>::type
+                    typename result_of::is_nullary<Expr>::type
                   , boost::result_of<
                         evaluator(
                             Expr const &

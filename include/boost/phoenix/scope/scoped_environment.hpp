@@ -16,6 +16,8 @@
 #include <boost/fusion/sequence/intrinsic/value_at.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/environment.hpp>
+#include <boost/utility/result_of.hpp>
 
 namespace boost { namespace phoenix
 {

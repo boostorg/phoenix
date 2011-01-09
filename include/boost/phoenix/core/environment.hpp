@@ -12,6 +12,7 @@
 #include <boost/fusion/container/vector.hpp>
 #include <boost/fusion/support/is_sequence.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/proto/proto.hpp>
 #include <boost/proto/functional/fusion/at.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>

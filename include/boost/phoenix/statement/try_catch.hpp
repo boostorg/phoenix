@@ -139,11 +139,6 @@ namespace boost { namespace phoenix
             >
         {};
 
-        template <typename Dummy>
-        struct is_nullary_::when<rule::try_catch, Dummy>
-            : proto::call<try_catch_is_nullary(proto::_, int(), _env)>
-        {};
-
         template <
             typename TryCatch
           , typename Exception
@@ -225,6 +220,11 @@ namespace boost { namespace phoenix
         };
         #include <boost/phoenix/statement/detail/catch_push_back.hpp>
     }
+
+    template <typename Dummy>
+    struct is_nullary::when<rule::try_catch, Dummy>
+        : proto::call<detail::try_catch_is_nullary(proto::_, int(), _env)>
+    {};
 
     template <typename TryCatch, typename Exception>
     struct catch_gen

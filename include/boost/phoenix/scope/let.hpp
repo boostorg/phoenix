@@ -23,25 +23,6 @@ namespace boost { namespace phoenix
         (meta_grammar)
     )
 
-    namespace detail
-    {
-        template <typename Dummy>
-        struct is_nullary_::when<rule::let, Dummy>
-            : proto::make<
-                mpl::and_<
-                    detail::local_var_def_is_nullary(proto::_child_c<0>, _env)
-                  , evaluator(
-                        proto::_child_c<1>
-                      , fusion::vector2<
-                            mpl::true_
-                          , scope_is_nullary_actions
-                        >()
-                    )
-                >()
-            >
-        {};
-    }
-
     struct let_eval
     {
         template <typename Sig>
@@ -186,6 +167,23 @@ namespace boost { namespace phoenix
     };
 
     let_local_gen const let = {};
+    
+    template <typename Dummy>
+    struct is_nullary::when<rule::let, Dummy>
+        : proto::make<
+            mpl::and_<
+                detail::local_var_def_is_nullary(proto::_child_c<0>, _env)
+              , evaluator(
+                    proto::_child_c<1>
+                  , fusion::vector2<
+                        mpl::true_
+                      , detail::scope_is_nullary_actions
+                    >()
+                )
+            >()
+        >
+    {};
+
 }}
 
 #endif

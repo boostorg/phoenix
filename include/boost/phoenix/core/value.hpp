@@ -73,12 +73,6 @@ namespace boost { namespace phoenix
             return eval(expr, env);
         }
     };
-
-    template <typename T>
-    struct is_nullary<custom_terminal<actor<T> > >
-        : proto::call<evaluator(proto::_value)>
-    {};
-
 }}
 
 #endif

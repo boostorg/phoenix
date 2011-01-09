@@ -12,6 +12,7 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/scope/local_variable.hpp>
 
 namespace boost { namespace phoenix
@@ -177,26 +178,23 @@ namespace boost { namespace phoenix
         >
     {};
 
-    namespace detail
-    {
-        template <typename Dummy>
-        struct is_nullary_::when<rule::lambda, Dummy>
-            : proto::when<
-                expression::lambda<
-                    proto::terminal<proto::_>
-                  , rule::local_var_def_list
-                  , meta_grammar
-                >
-              , evaluator(
-                    proto::_child_c<2>
-                  , fusion::vector2<
-                        mpl::true_
-                      , scope_is_nullary_actions
-                    >()
-                )
+    template <typename Dummy>
+    struct is_nullary::when<rule::lambda, Dummy>
+        : proto::when<
+            expression::lambda<
+                proto::terminal<proto::_>
+              , rule::local_var_def_list
+              , meta_grammar
             >
-        {};
-    }
+          , evaluator(
+                proto::_child_c<2>
+              , fusion::vector2<
+                    mpl::true_
+                  , detail::scope_is_nullary_actions
+                >()
+            )
+        >
+    {};
 
     namespace tag
     {
@@ -229,26 +227,22 @@ namespace boost { namespace phoenix
         {};
     }
 
-    namespace detail
-    {
-        template <typename Dummy>
-        struct is_nullary_::when<rule::lambda_actor, Dummy>
-            : proto::or_<
-                proto::when<
-                    expression::lambda_actor<meta_grammar>
-                  , mpl::true_()
-                >
-              , proto::when<
-                    expression::lambda_actor<
-                        rule::local_var_def_list
-                      , meta_grammar
-                    >
-                  , evaluator(proto::_child_c<1>, _env)
-                >
+    template <typename Dummy>
+    struct is_nullary::when<rule::lambda_actor, Dummy>
+        : proto::or_<
+            proto::when<
+                expression::lambda_actor<meta_grammar>
+              , mpl::true_()
             >
-        {};
-    }
-            
+          , proto::when<
+                expression::lambda_actor<
+                    rule::local_var_def_list
+                  , meta_grammar
+                >
+              , evaluator(proto::_child_c<1>, _env)
+            >
+        >
+    {};
 
     template <typename Dummy>
     struct meta_grammar::case_<tag::lambda_actor, Dummy>
