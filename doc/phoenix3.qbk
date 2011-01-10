@@ -42,13 +42,13 @@
 [include preface.qbk]
 [include introduction.qbk]
 [include starter_kit.qbk]
-[include advanced.qbk]
+[/include advanced.qbk]
 [include reference.qbk]
 
 [/include actors.qbk]
 [/include advanced.qbk]
 [/include notes.qbk]
-[include wrap_up.qbk]
-[include acknowledgment.qbk]
-[include references.qbk]
+[/include wrap_up.qbk]
+[/include acknowledgment.qbk]
+[/include references.qbk]
 
