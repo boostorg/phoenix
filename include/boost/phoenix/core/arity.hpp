@@ -37,15 +37,13 @@ namespace boost { namespace phoenix
         template <typename Expr>
         struct arity
             : mpl::int_<
-                boost::result_of<
-                    evaluator(
-                        Expr const&
-                      , fusion::vector2<
-                            mpl::int_<0>
-                          , boost::phoenix::arity
-                        >&
-                    )
-                >::type::value
+                evaluator::impl<
+                    Expr const&
+                  , fusion::vector2<
+                        mpl::int_<0>
+                      , boost::phoenix::arity
+                    >&
+                >::result_type::value
             >
         {};
     }

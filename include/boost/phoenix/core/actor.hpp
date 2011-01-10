@@ -50,10 +50,16 @@ namespace boost { namespace phoenix
         struct actor;
 
         template <typename Expr>
-        struct result_matches
-                  : mpl::eval_if<
-                    >
-        {};
+        struct nullary_actor_result
+        {
+            typedef
+                typename evaluator::impl<
+                    Expr const&
+                  , fusion::vector2<fusion::vector0<>&, default_actions>&
+                  , int
+                >::result_type
+                type;
+        };
 
         template <typename Expr>
         struct actor<Expr>
@@ -62,12 +68,7 @@ namespace boost { namespace phoenix
                 // avoid calling result_of::actor when this is false
                 typename mpl::eval_if<
                     typename result_of::is_nullary<Expr>::type
-                  , boost::result_of<
-                        evaluator(
-                            Expr const &
-                          , fusion::vector2<fusion::vector0<>&, default_actions>&
-                        )
-                    >
+                  , nullary_actor_result<Expr>
                   , mpl::identity<detail::error_expecting_arguments>
                 >::type
             type;

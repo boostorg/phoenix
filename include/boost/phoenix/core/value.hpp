@@ -60,14 +60,12 @@ namespace boost { namespace phoenix
         template <typename This, typename Actor, typename Env>
         struct result<This(Actor, Env)>
             : boost::remove_reference<
-                typename boost::result_of<
-                    evaluator(Actor, Env)
-                >::type
+                typename evaluator::impl<Actor, Env, int>::result_type
             >
         {};     
 
         template <typename Env>
-        typename result<custom_terminal(actor<Expr> &, Env &)>::type
+        typename result<custom_terminal(actor<Expr> const &, Env &)>::type
         operator()(actor<Expr> const & expr, Env & env) const
         {
             return eval(expr, env);

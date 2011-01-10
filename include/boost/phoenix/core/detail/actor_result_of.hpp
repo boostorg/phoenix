@@ -40,20 +40,6 @@
                     >::result_type
                 type;
         };
-        /*
-            : boost::result_of<
-                phoenix::evaluator(
-                    Expr const&
-                  , fusion::vector2<
-                        BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
-                            PHOENIX_A
-                        >
-                      , default_actions
-                    >
-                )
-            >
-        {};
-        */
 
 #endif
 

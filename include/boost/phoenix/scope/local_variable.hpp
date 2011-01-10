@@ -68,9 +68,7 @@ namespace boost { namespace phoenix
             struct result<This(Expr&, Env &)>
             {
                 typedef 
-                    typename boost::result_of<
-                        evaluator(Expr const &, Env &)
-                    >::type
+                    typename evaluator::impl<Expr const &, Env &, int>::result_type
                     result_type;
                 typedef
                     typename mpl::eval_if<
@@ -284,31 +282,25 @@ namespace boost { namespace phoenix
                     typename Args::locals_type
                   , mpl::void_
                 >
-              , boost::result_of<
-                    This(typename Args::outer_env_type&)
-                >
+              , typename This:: template result<This(typename Args::outer_env_type&)>
               , mpl::eval_if<
                     is_same<
                         typename proto::detail::uncvref<
-                            typename boost::result_of<
-                                detail::find_local(
-                                    typename Args::locals_type &
-                                  , Env
-                                  , Key
-                                )
-                            >::type
+                            typename detail::find_local::impl<
+                                typename Args::locals_type &
+                              , Env
+                              , Key
+                            >::result_type
                         >::type
                       , detail::local_var_not_found
                     >
-                  , boost::result_of<
-                        This(typename Args::outer_env_type&)
-                    >
-                  , boost::result_of<
-                        detail::find_local(
+                  , typename This:: template result<This(typename Args::outer_env_type&)>
+                  , mpl::identity<
+                        typename detail::find_local::impl<
                             typename Args::locals_type &
                           , Env
                           , Key
-                        )
+                        >::result_type
                     >
                 >
             >
@@ -332,7 +324,7 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
+                    typename functional::args::result<
                         functional::args(Env)
                     >::type
                 >::type
@@ -353,7 +345,7 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
+                    typename functional::args::result<
                         functional::args(Env)
                     >::type
                 >::type
@@ -373,7 +365,7 @@ namespace boost { namespace phoenix
             {
                 typedef
                     typename proto::detail::uncvref<
-                        typename boost::result_of<
+                        typename functional::args::result<
                             functional::args(Env)
                         >::type
                     >::type
@@ -442,8 +434,9 @@ namespace boost { namespace phoenix
                 typename expression::local_variable<Local>::type
                 lookup_grammar;
 
+            typedef get_local<lookup_grammar> get_local_type;
             typedef
-                typename boost::result_of<get_local<lookup_grammar>(Env)>::type
+                typename get_local_type::template result<get_local_type(Env)>::type
                 type;
         };
 

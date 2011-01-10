@@ -21,7 +21,6 @@
 
 namespace boost { namespace phoenix 
 {
-                //: boost::result_of<proto::functional::at(Env, mpl::int_<N>)>
     namespace functional
     {
     #define BOOST_PHOENIX_GET_ENVIRONMENT(NAME, N)                              \
@@ -76,11 +75,14 @@ namespace boost { namespace phoenix
 
             template <typename This, typename N, typename Env>
             struct result<This(N, Env &)>
-                : boost::result_of<
-                    proto::functional::at(
-                        typename args::result<args(Env &)>::type
-                      , N
-                    )
+                : fusion::result_of::at<
+                    typename boost::remove_reference<
+                        typename fusion::result_of::at<
+                            Env
+                          , mpl::int_<0>
+                        >::type
+                    >::type
+                  , typename proto::detail::uncvref<N>::type
                 >
             {};
 
