@@ -9,7 +9,6 @@
 #define PHOENIX_OBJECT_NEW_HPP
 
 #include <boost/phoenix/core/expression.hpp>
-#include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/fusion.hpp>
 
@@ -40,14 +39,43 @@ namespace boost { namespace phoenix
         #include <boost/phoenix/object/detail/new_eval.hpp>
     };
 
+#define PHOENIX_NEW_CHILD(Z, N, D) proto::_child_c<N>
+#define PHOENIX_NEW_CALL(Z, N, D)                                               \
+            proto::when<                                                        \
+                expression::new_<                                               \
+                    proto::terminal<proto::_>                                   \
+                  , BOOST_PP_ENUM_PARAMS(N, meta_grammar BOOST_PP_INTERCEPT)    \
+                >                                                               \
+              , proto::lazy<                                                    \
+                    new_eval<proto::_value(proto::_child_c<0>)>(                \
+                        _env                                                    \
+                      , BOOST_PP_ENUM_SHIFTED(                                  \
+                            BOOST_PP_INC(N)                                     \
+                          , PHOENIX_NEW_CHILD                                   \
+                          , _                                                   \
+                        )                                                       \
+                    )                                                           \
+                >                                                               \
+            >                                                                   \
+        /**/
+
     template <typename Dummy>
     struct default_actions::when<rule::new_, Dummy>
-        : proto::lazy<
-            new_eval<
-                proto::_value(proto::_child_c<0>)
-            >(_env, unpack(proto::functional::pop_front(proto::_)))
+        : proto::or_<
+            proto::when<
+                expression::new_<proto::terminal<proto::_> >
+              , proto::lazy<
+                    new_eval<
+                        proto::_value(proto::_child_c<0>)
+                    >(_env)
+                >
+            >
+          , BOOST_PP_ENUM_SHIFTED(PHOENIX_LIMIT, PHOENIX_NEW_CALL, _)
         >
+
     {};
+#undef PHOENIX_NEW_CHILD
+#undef PHOENIX_NEW_CALL
 
     template <typename T>
     typename expression::new_<detail::target<T> >::type const

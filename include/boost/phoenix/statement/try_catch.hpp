@@ -11,7 +11,6 @@
 #define PHOENIX_STATEMENT_TRY_CATCH_HPP
 
 #include <boost/phoenix/core/expression.hpp>
-#include <boost/phoenix/core/unpack.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -95,16 +94,44 @@ namespace boost { namespace phoenix
 
     struct try_catch_eval
     {
+        BOOST_PROTO_CALLABLE()
+
         typedef void result_type;
 
         // bring in the operator overloads
         #include <boost/phoenix/statement/detail/try_catch_eval.hpp>
     };
 
+#define PHOENIX_TRY_CATCH_CHILD(Z, N, D) proto::_child_c<N>
+#define PHOENIX_TRY_CATCH_CALL(Z, N, D)                                         \
+            proto::when<                                                        \
+                expression::try_catch<                                          \
+                  BOOST_PP_ENUM_PARAMS(N, proto::_ BOOST_PP_INTERCEPT)          \
+                >                                                               \
+               , try_catch_eval(                                                \
+                    _env                                                        \
+                  , BOOST_PP_ENUM(                                              \
+                        N                                                       \
+                      , PHOENIX_TRY_CATCH_CHILD                                 \
+                      , _                                                       \
+                    )                                                           \
+                )                                                               \
+            >                                                                   \
+        /**/
+
     template <typename Dummy>
     struct default_actions::when<rule::try_catch, Dummy>
-        : proto::call<try_catch_eval(_env, unpack(proto::_))>
+        : proto::or_<
+            BOOST_PP_ENUM_SHIFTED(
+                BOOST_PP_INC(PHOENIX_CATCH_LIMIT)
+              , PHOENIX_TRY_CATCH_CALL
+              , _
+            )
+        >   
     {};
+
+#undef PHOENIX_TRY_CATCH_CHILD
+#undef PHOENIX_TRY_CATCH_CALL
 
     namespace detail
     {

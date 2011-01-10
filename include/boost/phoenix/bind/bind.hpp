@@ -22,7 +22,7 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////
     
     template <typename F>
-    typename boost::result_of<function<F>()>::type const
+    typename result_of::function<F>::type
     bind(F f)
     {
         return function<F>(f)();

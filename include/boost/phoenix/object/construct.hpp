@@ -9,7 +9,6 @@
 #define PHOENIX_OBJECT_CONSTRUCT_HPP
 
 #include <boost/phoenix/core/expression.hpp>
-#include <boost/phoenix/core/unpack.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/fusion.hpp>
 
@@ -39,14 +38,43 @@ namespace boost { namespace phoenix
 
     };
 
+#define PHOENIX_CONSTRUCT_CHILD(Z, N, D) proto::_child_c<N>
+#define PHOENIX_CONSTRUCT_CALL(Z, N, D)                                         \
+            proto::when<                                                        \
+                expression::construct<                                          \
+                    proto::terminal<proto::_>                                   \
+                  , BOOST_PP_ENUM_PARAMS(N, meta_grammar BOOST_PP_INTERCEPT)    \
+                >                                                               \
+              , proto::lazy<                                                    \
+                    construct_eval<proto::_value(proto::_child_c<0>)>(          \
+                        _env                                                    \
+                      , BOOST_PP_ENUM_SHIFTED(                                  \
+                            BOOST_PP_INC(N)                                     \
+                          , PHOENIX_CONSTRUCT_CHILD                             \
+                          , _                                                   \
+                        )                                                       \
+                    )                                                           \
+                >                                                               \
+            >                                                                   \
+        /**/
+
     template <typename Dummy>
     struct default_actions::when<rule::construct, Dummy>
-        : proto::lazy<
-            construct_eval<
-                proto::_value(proto::_child_c<0>)
-            >(_env, unpack(proto::functional::pop_front(proto::_)))
+        : proto::or_<
+            proto::when<
+                expression::construct<proto::terminal<proto::_> >
+              , proto::lazy<
+                    construct_eval<
+                        proto::_value(proto::_child_c<0>)
+                    >(_env)
+                >
+            >
+          , BOOST_PP_ENUM_SHIFTED(PHOENIX_LIMIT, PHOENIX_CONSTRUCT_CALL, _)
         >
+
     {};
+#undef PHOENIX_CONSTRUCT_CHILD
+#undef PHOENIX_CONSTRUCT_CALL
 
     template <typename T>
     typename expression::construct<detail::target<T> >::type const
