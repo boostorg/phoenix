@@ -63,7 +63,7 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
+                    typename functional::args::result<
                         functional::args(Env)
                     >::type
                 >::type
@@ -71,7 +71,7 @@ namespace boost { namespace phoenix
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
+                    typename functional::actions::result<
                         functional::actions(Env)
                     >::type
                 >::type
@@ -120,16 +120,16 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        functional::args(Env &)
+                    typename functional::args::result<
+                        functional::args(Env)
                     >::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        functional::actions(Env &)
+                    typename functional::actions::result<
+                        functional::actions(Env)
                     >::type
                 >::type
                 actions_type;
@@ -263,13 +263,17 @@ namespace boost { namespace phoenix
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::args(Env)>::type
+                    typename functional::args::result<
+                        functional::args(Env)
+                    >::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::actions(Env)>::type
+                    typename functional::actions::result<
+                        functional::actions(Env)
+                    >::type
                 >::type
                 actions_type;
 
@@ -291,12 +295,11 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        rule::local_var_def_list(
-                            typename proto::detail::uncvref<Locals>::type &
-                          , Env
-                        )
-                    >::type
+                    typename rule::local_var_def_list::impl<
+                        typename proto::detail::uncvref<Locals>::type &
+                      , Env
+                      , int
+                    >::result_type
                 >::type
                 locals_type;
 
@@ -306,13 +309,17 @@ namespace boost { namespace phoenix
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::args(Env)>::type
+                    typename functional::args::result<
+                        functional::args(Env)
+                    >::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::actions(Env)>::type
+                    typename functional::actions::result<
+                        functional::actions(Env)
+                    >::type
                 >::type
                 actions_type;
 
@@ -339,13 +346,17 @@ namespace boost { namespace phoenix
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::args(Env)>::type
+                    typename functional::args::result<
+                        functional::args(Env)
+                    >::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::actions(Env)>::type
+                    typename functional::actions::result<
+                        functional::actions(Env)
+                    >::type
                 >::type
                 actions_type;
 
@@ -375,12 +386,11 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        rule::local_var_def_list(
-                            Locals &
-                          , Env &
-                        )
-                    >::type
+                    typename rule::local_var_def_list::impl<
+                        Locals &
+                      , Env
+                      , int
+                    >::result_type
                 >::type
                 locals_type;
 
@@ -392,13 +402,17 @@ namespace boost { namespace phoenix
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::args(Env)>::type
+                    typename functional::args::result<
+                        functional::args(Env)
+                    >::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<functional::actions(Env)>::type
+                    typename functional::actions::result<
+                        functional::actions(Env)
+                    >::type
                 >::type
                 actions_type;
 
