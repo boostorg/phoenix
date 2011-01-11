@@ -20,118 +20,91 @@
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast"></a><a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">Language
         Definition - The Pheonix AST</a>
 </h4></div></div></div>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl>
-<dt><span class="term"></span></dt>
-<dd>
-<p>
-                
-</p>
-<pre class="programlisting">int main()
-blubb
-    </pre>
-<p>
-              </p>
-</dd>
-</dl>
-</div>
-<p>
-          <code class="computeroutput">phoenix</code> &#8592;
-        </p>
-<div class="blockquote"><blockquote class="blockquote"><p>
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.terminals"><code class="computeroutput">terminals</code></a><br>
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator"><code class="computeroutput">operator</code></a>
-            <code class="computeroutput">/</code><br> <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator"><code class="computeroutput">statement</code></a>
-            <code class="computeroutput">/</code><br> <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.object"><code class="computeroutput">object</code></a>
-            <code class="computeroutput">/</code><br> <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.function"><code class="computeroutput">function</code></a>
-            <code class="computeroutput">/</code><br> <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.bind"><code class="computeroutput">bind</code></a>
-            <code class="computeroutput">/</code><br> <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.scope"><code class="computeroutput">scope</code></a>
-            <code class="computeroutput">/</code><br> <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.stl"><code class="computeroutput">stl</code></a>
-            <code class="computeroutput">/</code><br> <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.fusion"><code class="computeroutput">fusion</code></a>
-          </p></blockquote></div>
+<pre class="programlisting">phoenix &#8592; <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.terminals">terminals</a> /
+          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">operator</a>  /
+          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">statement</a> /
+          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.object">object</a>    /
+          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.function">function</a>  /
+          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.bind">bind</a>      /
+          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.scope">scope</a>     /
+          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.fusion">fusion</a>
+</pre>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.terminals"></a><h6>
-<a name="id807384"></a>
+<a name="id736311"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.terminals">Terminals</a>
         </h6>
-<p>
-          <code class="computeroutput">terminal</code> &#8592;
-        </p>
-<div class="blockquote"><blockquote class="blockquote"><p>
-            <code class="computeroutput">placeholder</code> <code class="computeroutput">/</code><br> <code class="computeroutput">custom terminal
-            </code>/<code class="computeroutput"></code><br> <code class="computeroutput">terminal</code>
-          </p></blockquote></div>
+<pre class="programlisting">terminal &#8592; placeholder /
+           custom_terminal /
+           terminal
+</pre>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.operator"></a><h6>
-<a name="id807443"></a>
+<a name="id736335"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">Operator</a>
         </h6>
-<p>
-          <code class="computeroutput">operator</code> &#8592;
-        </p>
-<div class="blockquote"><blockquote class="blockquote"><p>
-            <code class="computeroutput">arithmetic</code> <code class="computeroutput">/</code> <br> <code class="computeroutput">bitwise</code> <code class="computeroutput">/</code>
-            <br> <code class="computeroutput">comparision</code> <code class="computeroutput">/</code> <br> <code class="computeroutput">if_else</code>
-            <code class="computeroutput">/</code> <br> <code class="computeroutput">io</code> <code class="computeroutput">/</code> <br> <code class="computeroutput">logical</code>
-            <code class="computeroutput">/</code> <br> <code class="computeroutput">member</code> <code class="computeroutput">/</code> <br> <code class="computeroutput">self</code>
-          </p></blockquote></div>
-<p>
-          <code class="computeroutput">arithmetic</code> &#8592;
-        </p>
-<div class="blockquote"><blockquote class="blockquote"><p>
-            '-' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> '+' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> '++' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> '--' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            '++' <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            '--' <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">+=</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">-=</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">*=</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/=</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">%=</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">+</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">-</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">*</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">/</code> <br> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <code class="computeroutput">%</code> <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST"><code class="computeroutput">phoenix</code></a>
-            <br>
-          </p></blockquote></div>
+<pre class="programlisting">operator &#8592;  <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic">arithmetic</a>  /
+            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">bitwise</a>     /
+            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">comparision</a> /
+            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">if_else</a>     /
+            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">io</a>          /
+            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">logical</a>     /
+            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">member</a>      /
+            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">self</a>
+</pre>
+<a name="phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic"></a><pre class="programlisting">arithmetic &#8592; ( '-' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )          /
+             ( '+' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )          /
+             ( '++' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )         /
+             ( '--' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )         /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '++' )         /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '--' )         /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '+' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '-' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '*' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '/' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '%' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '+=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '-=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '*=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '/=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
+             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '%=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )
+</pre>
+<a name="phoenix.reference.phoenix_expressions.phoenix_ast.operator.bitwise"></a><pre class="programlisting">bitwise &#8592; '~' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a>             /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &amp; <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )   /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> | <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )   /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ^ <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )   /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &lt;&lt; <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &gt;&gt; <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &amp;= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> |= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ^= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &lt;&lt;= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
+          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &gt;&gt;= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
+</pre>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.statement"></a><h6>
-<a name="id807962"></a>
+<a name="id736675"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.statement">Statement</a>
         </h6>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.object"></a><h6>
-<a name="id807979"></a>
+<a name="id736692"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.object">Object</a>
         </h6>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.function"></a><h6>
-<a name="id807996"></a>
+<a name="id736710"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.function">Function</a>
         </h6>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.bind"></a><h6>
-<a name="id808012"></a>
+<a name="id736726"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.bind">Bind</a>
         </h6>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.scope"></a><h6>
-<a name="id808026"></a>
+<a name="id736740"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.scope">Scope</a>
         </h6>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.stl"></a><h6>
-<a name="id808041"></a>
+<a name="id736755"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.stl">Stl</a>
         </h6>
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast.fusion"></a><h6>
-<a name="id808057"></a>
+<a name="id736770"></a>
           <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.fusion">Fusion</a>
         </h6>
 </div>

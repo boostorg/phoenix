@@ -14,70 +14,89 @@
 [section:phoenix_ast Language Definition - The Pheonix AST]
 
 [teletype]
-[variablelist
-    [[]
-     [
-        ``
-    int main()
-    blubb
-        ``
-     ]
-]]
 
-`phoenix` \u2190
-[:[link phoenix.reference.phoenix_expressions.phoenix_ast.terminals `terminals`]\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.operator `operator`] `/`\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.operator `statement`] `/`\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.object `object`] `/`\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.function `function`] `/`\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.bind `bind`] `/`\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.scope `scope`] `/`\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.stl `stl`] `/`\n
- [link phoenix.reference.phoenix_expressions.phoenix_ast.fusion `fusion`] ]
+[def __phoenix_peg__ [link phoenix.reference.phoenix_expressions.phoenix_ast phoenix]]
+[def __phoenix_peg_terminals__ [link phoenix.reference.phoenix_expressions.phoenix_ast.terminals terminals]]
+[def __phoenix_peg_operator__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator operator]]
+[def __phoenix_peg_operator_arithmetic__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic arithmetic]]
+[def __phoenix_peg_operator_bitwise__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator bitwise]]
+[def __phoenix_peg_operator_comparision__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator comparision]]
+[def __phoenix_peg_operator_if_else__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator if_else]]
+[def __phoenix_peg_operator_io__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator io]]
+[def __phoenix_peg_operator_logical__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator logical]]
+[def __phoenix_peg_operator_member__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator member]]
+[def __phoenix_peg_operator_self__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator self]]
+[def __phoenix_peg_statement__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator statement]]
+[def __phoenix_peg_object__ [link phoenix.reference.phoenix_expressions.phoenix_ast.object object]]
+[def __phoenix_peg_function__ [link phoenix.reference.phoenix_expressions.phoenix_ast.function function]]
+[def __phoenix_peg_bind__ [link phoenix.reference.phoenix_expressions.phoenix_ast.bind bind]]
+[def __phoenix_peg_scope__ [link phoenix.reference.phoenix_expressions.phoenix_ast.scope scope]]
+[def __phoenix_peg_fusion__ [link phoenix.reference.phoenix_expressions.phoenix_ast.fusion fusion]]
+
+
+    phoenix ``\u2190`` __phoenix_peg_terminals__ /
+              __phoenix_peg_operator__  /
+              __phoenix_peg_statement__ /
+              __phoenix_peg_object__    /
+              __phoenix_peg_function__  /
+              __phoenix_peg_bind__      /
+              __phoenix_peg_scope__     /
+              __phoenix_peg_fusion__
+
+
 
 [heading Terminals]
     
-`terminal` \u2190
-[: `placeholder` `/`\n
-   `custom terminal `/``\n
-   `terminal`]
+    terminal ``\u2190`` placeholder /
+               custom_terminal /
+               terminal
 
 [heading Operator]
 
-[teletype]
-`operator`
-\u2190
-[:
-    `arithmetic` `/` \n
-    `bitwise` `/` \n
-    `comparision` `/` \n
-    `if_else` `/` \n
-    `io` `/` \n
-    `logical` `/` \n
-    `member` `/` \n
-    `self`
-]
+    operator ``\u2190``  __phoenix_peg_operator_arithmetic__  /
+                __phoenix_peg_operator_bitwise__     /
+                __phoenix_peg_operator_comparision__ /
+                __phoenix_peg_operator_if_else__     /
+                __phoenix_peg_operator_io__          /
+                __phoenix_peg_operator_logical__     /
+                __phoenix_peg_operator_member__      /
+                __phoenix_peg_operator_self__
 
-`arithmetic` \u2190
-[:
-    '-' [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    '+' [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    '++' [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    '--' [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] '++' `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] '--' `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `+=` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `-=` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `*=` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/=` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `%=` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `+` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `-` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `*` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `/` \n
-    [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] `%` [link phoenix.reference.phoenix_expressions.phoenix_ast `phoenix`] \n
-]
 
+[#phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic]
+
+    arithmetic ``\u2190`` ( '-' __phoenix_peg__ )          /
+                 ( '+' __phoenix_peg__ )          /
+                 ( '++' __phoenix_peg__ )         /
+                 ( '--' __phoenix_peg__ )         /
+                 ( __phoenix_peg__ '++' )         /
+                 ( __phoenix_peg__ '--' )         /
+                 ( __phoenix_peg__ '+' __phoenix_peg__ )  /
+                 ( __phoenix_peg__ '-' __phoenix_peg__ )  /
+                 ( __phoenix_peg__ '*' __phoenix_peg__ )  /
+                 ( __phoenix_peg__ '/' __phoenix_peg__ )  /
+                 ( __phoenix_peg__ '%' __phoenix_peg__ )  /
+                 ( __phoenix_peg__ '+=' __phoenix_peg__ ) /
+                 ( __phoenix_peg__ '-=' __phoenix_peg__ ) /
+                 ( __phoenix_peg__ '*=' __phoenix_peg__ ) /
+                 ( __phoenix_peg__ '/=' __phoenix_peg__ ) /
+                 ( __phoenix_peg__ '%=' __phoenix_peg__ )
+
+[#phoenix.reference.phoenix_expressions.phoenix_ast.operator.bitwise]
+    
+    bitwise ``\u2190`` '~' __phoenix_peg__             /
+              ( __phoenix_peg__ & __phoenix_peg__ )   /
+              ( __phoenix_peg__ | __phoenix_peg__ )   /
+              ( __phoenix_peg__ ^ __phoenix_peg__ )   /
+              ( __phoenix_peg__ << __phoenix_peg__ )  /
+              ( __phoenix_peg__ >> __phoenix_peg__ )  /
+              ( __phoenix_peg__ &= __phoenix_peg__ )  /
+              ( __phoenix_peg__ |= __phoenix_peg__ )  /
+              ( __phoenix_peg__ ^= __phoenix_peg__ )  /
+              ( __phoenix_peg__ <<= __phoenix_peg__ ) /
+              ( __phoenix_peg__ >>= __phoenix_peg__ ) /
+              
+              
 [heading Statement]
 [heading Object]
 [heading Function]
