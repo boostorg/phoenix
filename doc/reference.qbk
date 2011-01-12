@@ -83,7 +83,7 @@
                         [ ".catch_all[" phoenix "]" ]
 
     switch            := "switch_(" expression ")[" (
-                            ( case_statement ( "," case_statement )* [ "," default_statement ] |
+                            ( case_statement ( "," case_statement )* [ "," default_statement ] ) |
                             default_statement
                         )
 
