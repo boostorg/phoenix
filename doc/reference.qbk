@@ -51,18 +51,18 @@
 
     cast              := ( "static_cast_" | "dynamic_cast_" | "reinterpret_cast_" | "const_cast_" ) "<" T ">(" expression ")"
 
-    construction      := ( ( "construct" | "new" ) "<" T ">(" [ expression ( "," expression )* ] ")" ) |
+    construction      := ( ( "construct" | "new_" ) "<" T ">(" [ expression ( "," expression )* ] ")" ) |
                         ( "delete_(" expression ")" )
 
     bind              := "bind(" ( expression | function_pointer ) ( "," expression )* ")"
 
     scope             := let | lambda
 
-    local_var_def     := local_var_name "=" expression
+    local_var_def     := local_var "=" expression
 
-    let               := "let(" [ local_var_def ( "," local_var_def )* ] ")[" phoenix "]"
+    let               := "let(" [ local_var_def ( "," local_var_def )* ] ")[" ( phoenix | local_var )* "]"
 
-    lambda            := "lambda" [ "(" [ local_var_def ( "," local_var_def )* ] ")" ] "[" phoenix "]"
+    lambda            := "lambda" [ "(" [ local_var_def ( "," local_var_def )* ] ")" ] "[" ( phoenix | local_var )* "]"
 
     loops             := for_loop | while_loop | do_while_loop
 
@@ -79,7 +79,7 @@
     throw             := "throw_(" [ expression ] ")"
 
     try_catch         := "try_[" phoenix "]"
-                        ( ".catch_<" exception ">()[" phoenix "]" )*
+                        ( ".catch_<" E ">()[" phoenix "]" )*
                         [ ".catch_all[" phoenix "]" ]
 
     switch            := "switch_(" expression ")[" (
@@ -138,7 +138,7 @@
 
     multiplicative_op := member_pointer_op (
                             ( "*" member_pointer_op )* |
-                            ( "/" member_pointer_op )* |
+                            ( "/" member_pointer_op )*
                         )
 
     member_pointer_op := unary_op ( "->*" unary_op )*

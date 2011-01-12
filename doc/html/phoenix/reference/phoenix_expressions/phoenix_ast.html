@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Language Definition - The Phoenix AST</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
-<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../phoenix_expressions.html" title="Phoenix Expressions">
 <link rel="prev" href="../phoenix_expressions.html" title="Phoenix Expressions">
 </head>
@@ -15,7 +15,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../phoenix_expressions.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../phoenix_expressions.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast"></a><a class="link" href="phoenix_ast.html" title="Language Definition - The Phoenix AST">Language
         Definition - The Phoenix AST</a>
@@ -38,18 +38,18 @@ terminal          := value | reference | placeholder
 
 cast              := ( "static_cast_" | "dynamic_cast_" | "reinterpret_cast_" | "const_cast_" ) "&lt;" T "&gt;(" expression ")"
 
-construction      := ( ( "construct" | "new" ) "&lt;" T "&gt;(" [ expression ( "," expression )* ] ")" ) |
+construction      := ( ( "construct" | "new_" ) "&lt;" T "&gt;(" [ expression ( "," expression )* ] ")" ) |
                     ( "delete_(" expression ")" )
 
 bind              := "bind(" ( expression | function_pointer ) ( "," expression )* ")"
 
 scope             := let | lambda
 
-local_var_def     := local_var_name "=" expression
+local_var_def     := local_var "=" expression
 
-let               := "let(" [ local_var_def ( "," local_var_def )* ] ")[" phoenix "]"
+let               := "let(" [ local_var_def ( "," local_var_def )* ] ")[" ( phoenix | local_var )* "]"
 
-lambda            := "lambda" [ "(" [ local_var_def ( "," local_var_def )* ] ")" ] "[" phoenix "]"
+lambda            := "lambda" [ "(" [ local_var_def ( "," local_var_def )* ] ")" ] "[" ( phoenix | local_var )* "]"
 
 loops             := for_loop | while_loop | do_while_loop
 
@@ -66,7 +66,7 @@ exception         := throw | try_catch
 throw             := "throw_(" [ expression ] ")"
 
 try_catch         := "try_[" phoenix "]"
-                    ( ".catch_&lt;" exception "&gt;()[" phoenix "]" )*
+                    ( ".catch_&lt;" E "&gt;()[" phoenix "]" )*
                     [ ".catch_all[" phoenix "]" ]
 
 switch            := "switch_(" expression ")[" (
@@ -125,7 +125,7 @@ additive_op       := multiplicative_op (
 
 multiplicative_op := member_pointer_op (
                         ( "*" member_pointer_op )* |
-                        ( "/" member_pointer_op )* |
+                        ( "/" member_pointer_op )*
                     )
 
 member_pointer_op := unary_op ( "-&gt;*" unary_op )*
