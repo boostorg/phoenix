@@ -49,12 +49,7 @@
 
     terminal          := value | reference | placeholder
 
-    cast              := static_cast | dynamic_cast | reinterpret_cast | const_caste
-
-    static_cast       := "static_cast_<" T ">(" expression ")"
-    dynamic_cast      := "static_cast_<" T ">(" expression ")"
-    reinterpret_cast  := "static_cast_<" T ">(" expression ")"
-    const_cast        := "static_cast_<" T ">(" expression ")"
+    cast              := ( "static_cast_" | "dynamic_cast_" | "reinterpret_cast_" | "const_cast_" ) "<" T ">(" expression ")"
 
     construction      := ( ( "construct" | "new" ) "<" T ">(" [ expression ( "," expression )* ] ")" ) |
                         ( "delete_(" expression ")" )

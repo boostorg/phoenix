@@ -36,12 +36,7 @@ primary_expr      := terminal
 
 terminal          := value | reference | placeholder
 
-cast              := static_cast | dynamic_cast | reinterpret_cast | const_caste
-
-static_cast       := "static_cast_&lt;" T "&gt;(" expression ")"
-dynamic_cast      := "static_cast_&lt;" T "&gt;(" expression ")"
-reinterpret_cast  := "static_cast_&lt;" T "&gt;(" expression ")"
-const_cast        := "static_cast_&lt;" T "&gt;(" expression ")"
+cast              := ( "static_cast_" | "dynamic_cast_" | "reinterpret_cast_" | "const_cast_" ) "&lt;" T "&gt;(" expression ")"
 
 construction      := ( ( "construct" | "new" ) "&lt;" T "&gt;(" [ expression ( "," expression )* ] ")" ) |
                     ( "delete_(" expression ")" )
