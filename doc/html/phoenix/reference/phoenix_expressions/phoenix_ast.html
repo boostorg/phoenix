@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Language Definition - The Pheonix AST</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../phoenix_expressions.html" title="Phoenix Expressions">
 <link rel="prev" href="../phoenix_expressions.html" title="Phoenix Expressions">
 </head>
@@ -15,98 +15,142 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../phoenix_expressions.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../phoenix_expressions.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a>
 </div>
-<div class="section">
+<div class="section" lang="en">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="phoenix.reference.phoenix_expressions.phoenix_ast"></a><a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">Language
         Definition - The Pheonix AST</a>
 </h4></div></div></div>
-<pre class="programlisting">phoenix &#8592; <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.terminals">terminals</a> /
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">operator</a>  /
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">statement</a> /
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.object">object</a>    /
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.function">function</a>  /
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.bind">bind</a>      /
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.scope">scope</a>     /
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.fusion">fusion</a>
+<pre class="programlisting">phoenix           := statement ( "," statement )*
+
+statement         := expression | loops | if_statement | exception | switch
+
+expression        := operator
+
+primary_expr      := terminal
+                    | "if_else(" expression "," expression "," expression ")"
+                    | cast
+                    | construction
+                    | bind
+                    | scope
+                    | ( "(" expression ")" )
+
+terminal          := value | reference | placeholder
+
+cast              := static_cast | dynamic_cast | reinterpret_cast | const_caste
+
+static_cast       := "static_cast_&lt;" T "&gt;(" expression ")"
+dynamic_cast      := "static_cast_&lt;" T "&gt;(" expression ")"
+reinterpret_cast  := "static_cast_&lt;" T "&gt;(" expression ")"
+const_cast        := "static_cast_&lt;" T "&gt;(" expression ")"
+
+construction      := ( ( "construct" | "new" ) "&lt;" T "&gt;(" [ expression ( "," expression )* ] ")" ) |
+                    ( "delete_(" expression ")" )
+
+bind              := "bind(" ( expression | function_pointer ) ( "," expression )* ")"
+
+scope             := let | lambda
+
+local_var_def     := local_var_name "=" expression
+
+let               := "let(" [ local_var_def ( "," local_var_def )* ] ")[" phoenix "]"
+
+lambda            := "lambda" [ "(" [ local_var_def ( "," local_var_def )* ] ")" ] "[" phoenix "]"
+
+loops             := for_loop | while_loop | do_while_loop
+
+for_loop          := "for_(" expression "," expression "," expression ")[" phoenix "]"
+
+while_loop        := "while_(" expression ")[" phoenix "]"
+
+do_while_loop     := "do_[" phoenix "].while_(" expression ")"
+
+if_statement      := "if_(" expression ")[" statement "]" [ ".else_[" phoenix "]" ]
+
+exception         := throw | try_catch
+
+throw             := "throw_(" [ expression ] ")"
+
+try_catch         := "try_[" phoenix "]"
+                    ( ".catch_&lt;" exception "&gt;()[" phoenix "]" )*
+                    [ ".catch_all[" phoenix "]" ]
+
+switch            := "switch_(" expression ")[" (
+                        ( case_statement ( "," case_statement )* [ "," default_statement ] |
+                        default_statement
+                    )
+
+case_statement    := "case_&lt;" N "&gt;(" phoenix ")"
+default_statement := "default_(" phoenix ")"
+
+operator          := logical_or_op (
+                        ( "="   logical_or_op )* |
+                        ( "+="  logical_or_op )* |
+                        ( "-="  logical_or_op )* |
+                        ( "*="  logical_or_op )* |
+                        ( "/="  logical_or_op )* |
+                        ( "%="  logical_or_op )* |
+                        ( "&amp;="  logical_or_op )* |
+                        ( "^="  logical_or_op )* |
+                        ( "|="  logical_or_op )* |
+                        ( "&lt;&lt;=" logical_or_op )* |
+                        ( "&gt;&gt;=" logical_or_op )*
+                    )
+
+logical_or_op     := logical_and_op ( "||" logical_and_op )*
+
+logical_and_op    := bitwise_or_op  ( "&amp;&amp;" bitwise_or_op )*
+
+bitwise_or_op     := bitwise_xor_op ( "|" bitwise_xor_op )*
+
+bitwise_xor_op    := bitwise_and_op ( "^" bitwise_and_op )*
+
+bitwise_and_op    := equality_op    ( "&amp;" equality_op )*
+
+equality_op       := relational_op (
+                        ( "==" relational_op )* |
+                        ( "!=" relational_op )*
+                    )
+
+relational_op     := shift_op (
+                        ( "&lt;"  shift_op )* |
+                        ( "&gt;"  shift_op )* |
+                        ( "&lt;=" shift_op )* |
+                        ( "&gt;=" shift_op )*
+                    )
+
+shift_op          := additive_op (
+                        ( "&lt;&lt;" additive_op )* |
+                        ( "&gt;&gt;" additive_op )*
+                    )
+
+additive_op       := multiplicative_op (
+                        ( "+" multiplicative_op )* |
+                        ( "-" multiplicative_op )*
+                    )
+
+multiplicative_op := member_pointer_op (
+                        ( "*" member_pointer_op )* |
+                        ( "/" member_pointer_op )* |
+                    )
+
+member_pointer_op := unary_op ( "-&gt;*" unary_op )*
+
+unary_op          := unary_postfix_op
+                    | ( "*"  unary_postfix_op )
+                    | ( "&amp;"  unary_postfix_op )
+                    | ( "+"  unary_postfix_op )
+                    | ( "-"  unary_postfix_op )
+                    | ( "~"  unary_postfix_op )
+                    | ( "!"  unary_postfix_op )
+                    | ( "++" unary_postfix_op )
+                    | ( "--" unary_postfix_op )
+
+unary_postfix_op  := primary_expr
+                    | ( primary_expr "[" expression "]" )
+                    | ( primary_expr "(" expression ( "," expression )* ")" )
+                    | ( primary_expr "++" )
+                    | ( primary_expr "--" )
 </pre>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.terminals"></a><h6>
-<a name="id656029"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.terminals">Terminals</a>
-        </h6>
-<pre class="programlisting">terminal &#8592; placeholder /
-           custom_terminal /
-           terminal
-</pre>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.operator"></a><h6>
-<a name="id656053"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">Operator</a>
-        </h6>
-<pre class="programlisting">operator &#8592;  <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic">arithmetic</a>  /
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">bitwise</a>     /
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">comparision</a> /
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">if_else</a>     /
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">io</a>          /
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">logical</a>     /
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">member</a>      /
-            <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.operator">self</a>
-</pre>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic"></a><pre class="programlisting">arithmetic &#8592; ( '-' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )          /
-             ( '+' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )          /
-             ( '++' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )         /
-             ( '--' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )         /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '++' )         /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '--' )         /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '+' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '-' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '*' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '/' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '%' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '+=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '-=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '*=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '/=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
-             ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> '%=' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )
-</pre>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.operator.bitwise"></a><pre class="programlisting">bitwise &#8592; '~' <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a>             /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &amp; <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )   /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> | <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )   /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ^ <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )   /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &lt;&lt; <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &gt;&gt; <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &amp;= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> |= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ^= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> )  /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &lt;&lt;= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
-          ( <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> &gt;&gt;= <a class="link" href="phoenix_ast.html" title="Language Definition - The Pheonix AST">phoenix</a> ) /
-</pre>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.statement"></a><h6>
-<a name="id656393"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.statement">Statement</a>
-        </h6>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.object"></a><h6>
-<a name="id656411"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.object">Object</a>
-        </h6>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.function"></a><h6>
-<a name="id656428"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.function">Function</a>
-        </h6>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.bind"></a><h6>
-<a name="id656444"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.bind">Bind</a>
-        </h6>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.scope"></a><h6>
-<a name="id656458"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.scope">Scope</a>
-        </h6>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.stl"></a><h6>
-<a name="id656473"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.stl">Stl</a>
-        </h6>
-<a name="phoenix.reference.phoenix_expressions.phoenix_ast.fusion"></a><h6>
-<a name="id656489"></a>
-          <a class="link" href="phoenix_ast.html#phoenix.reference.phoenix_expressions.phoenix_ast.fusion">Fusion</a>
-        </h6>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

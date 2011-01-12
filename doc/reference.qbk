@@ -33,68 +33,202 @@
 [def __phoenix_peg_scope__ [link phoenix.reference.phoenix_expressions.phoenix_ast.scope scope]]
 [def __phoenix_peg_fusion__ [link phoenix.reference.phoenix_expressions.phoenix_ast.fusion fusion]]
 
+    phoenix           := statement ( "," statement )*
 
-    phoenix ``\u2190`` __phoenix_peg_terminals__ /
-              __phoenix_peg_operator__  /
-              __phoenix_peg_statement__ /
-              __phoenix_peg_object__    /
-              __phoenix_peg_function__  /
-              __phoenix_peg_bind__      /
-              __phoenix_peg_scope__     /
+    statement         := expression | loops | if_statement | exception | switch
+
+    expression        := operator
+
+    primary_expr      := terminal
+                        | "if_else(" expression "," expression "," expression ")"
+                        | cast
+                        | construction
+                        | bind
+                        | scope
+                        | ( "(" expression ")" )
+
+    terminal          := value | reference | placeholder
+
+    cast              := static_cast | dynamic_cast | reinterpret_cast | const_caste
+
+    static_cast       := "static_cast_<" T ">(" expression ")"
+    dynamic_cast      := "static_cast_<" T ">(" expression ")"
+    reinterpret_cast  := "static_cast_<" T ">(" expression ")"
+    const_cast        := "static_cast_<" T ">(" expression ")"
+
+    construction      := ( ( "construct" | "new" ) "<" T ">(" [ expression ( "," expression )* ] ")" ) |
+                        ( "delete_(" expression ")" )
+
+    bind              := "bind(" ( expression | function_pointer ) ( "," expression )* ")"
+
+    scope             := let | lambda
+
+    local_var_def     := local_var_name "=" expression
+
+    let               := "let(" [ local_var_def ( "," local_var_def )* ] ")[" phoenix "]"
+
+    lambda            := "lambda" [ "(" [ local_var_def ( "," local_var_def )* ] ")" ] "[" phoenix "]"
+
+    loops             := for_loop | while_loop | do_while_loop
+
+    for_loop          := "for_(" expression "," expression "," expression ")[" phoenix "]"
+
+    while_loop        := "while_(" expression ")[" phoenix "]"
+
+    do_while_loop     := "do_[" phoenix "].while_(" expression ")"
+
+    if_statement      := "if_(" expression ")[" statement "]" [ ".else_[" phoenix "]" ]
+
+    exception         := throw | try_catch
+
+    throw             := "throw_(" [ expression ] ")"
+
+    try_catch         := "try_[" phoenix "]"
+                        ( ".catch_<" exception ">()[" phoenix "]" )*
+                        [ ".catch_all[" phoenix "]" ]
+
+    switch            := "switch_(" expression ")[" (
+                            ( case_statement ( "," case_statement )* [ "," default_statement ] |
+                            default_statement
+                        )
+
+    case_statement    := "case_<" N ">(" phoenix ")"
+    default_statement := "default_(" phoenix ")"
+
+    operator          := logical_or_op (
+                            ( "="   logical_or_op )* |
+                            ( "+="  logical_or_op )* |
+                            ( "-="  logical_or_op )* |
+                            ( "*="  logical_or_op )* |
+                            ( "/="  logical_or_op )* |
+                            ( "%="  logical_or_op )* |
+                            ( "&="  logical_or_op )* |
+                            ( "^="  logical_or_op )* |
+                            ( "|="  logical_or_op )* |
+                            ( "<<=" logical_or_op )* |
+                            ( ">>=" logical_or_op )*
+                        )
+
+    logical_or_op     := logical_and_op ( "||" logical_and_op )*
+
+    logical_and_op    := bitwise_or_op  ( "&&" bitwise_or_op )*
+
+    bitwise_or_op     := bitwise_xor_op ( "|" bitwise_xor_op )*
+    
+    bitwise_xor_op    := bitwise_and_op ( "^" bitwise_and_op )*
+
+    bitwise_and_op    := equality_op    ( "&" equality_op )*
+
+    equality_op       := relational_op (
+                            ( "==" relational_op )* |
+                            ( "!=" relational_op )*
+                        )
+
+    relational_op     := shift_op (
+                            ( "<"  shift_op )* |
+                            ( ">"  shift_op )* |
+                            ( "<=" shift_op )* |
+                            ( ">=" shift_op )*
+                        )
+
+    shift_op          := additive_op (
+                            ( "<<" additive_op )* |
+                            ( ">>" additive_op )*
+                        )
+
+    additive_op       := multiplicative_op (
+                            ( "+" multiplicative_op )* |
+                            ( "-" multiplicative_op )*
+                        )
+
+    multiplicative_op := member_pointer_op (
+                            ( "*" member_pointer_op )* |
+                            ( "/" member_pointer_op )* |
+                        )
+
+    member_pointer_op := unary_op ( "->*" unary_op )*
+
+    unary_op          := unary_postfix_op
+                        | ( "*"  unary_postfix_op )
+                        | ( "&"  unary_postfix_op )
+                        | ( "+"  unary_postfix_op )
+                        | ( "-"  unary_postfix_op )
+                        | ( "~"  unary_postfix_op )
+                        | ( "!"  unary_postfix_op )
+                        | ( "++" unary_postfix_op )
+                        | ( "--" unary_postfix_op )
+
+    unary_postfix_op  := primary_expr
+                        | ( primary_expr "[" expression "]" )
+                        | ( primary_expr "(" expression ( "," expression )* ")" )
+                        | ( primary_expr "++" )
+                        | ( primary_expr "--" )
+
+
+
+
+[/
+    phoenix := __phoenix_peg_terminals__ |
+              __phoenix_peg_operator__  |
+              __phoenix_peg_statement__ |
+              __phoenix_peg_object__    |
+              __phoenix_peg_function__  |
+              __phoenix_peg_bind__      |
+              __phoenix_peg_scope__     |
               __phoenix_peg_fusion__
 
 
 
 [heading Terminals]
     
-    terminal ``\u2190`` placeholder /
-               custom_terminal /
+    terminal := placeholder |
+               custom_terminal |
                terminal
 
 [heading Operator]
 
-    operator ``\u2190``  __phoenix_peg_operator_arithmetic__  /
-                __phoenix_peg_operator_bitwise__     /
-                __phoenix_peg_operator_comparision__ /
-                __phoenix_peg_operator_if_else__     /
-                __phoenix_peg_operator_io__          /
-                __phoenix_peg_operator_logical__     /
-                __phoenix_peg_operator_member__      /
+    operator :=  __phoenix_peg_operator_arithmetic__  |
+                __phoenix_peg_operator_bitwise__     |
+                __phoenix_peg_operator_comparision__ |
+                __phoenix_peg_operator_if_else__     |
+                __phoenix_peg_operator_io__          |
+                __phoenix_peg_operator_logical__     |
+                __phoenix_peg_operator_member__      |
                 __phoenix_peg_operator_self__
 
 
 [#phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic]
 
-    arithmetic ``\u2190`` ( '-' __phoenix_peg__ )          /
-                 ( '+' __phoenix_peg__ )          /
-                 ( '++' __phoenix_peg__ )         /
-                 ( '--' __phoenix_peg__ )         /
-                 ( __phoenix_peg__ '++' )         /
-                 ( __phoenix_peg__ '--' )         /
-                 ( __phoenix_peg__ '+' __phoenix_peg__ )  /
-                 ( __phoenix_peg__ '-' __phoenix_peg__ )  /
-                 ( __phoenix_peg__ '*' __phoenix_peg__ )  /
-                 ( __phoenix_peg__ '/' __phoenix_peg__ )  /
-                 ( __phoenix_peg__ '%' __phoenix_peg__ )  /
-                 ( __phoenix_peg__ '+=' __phoenix_peg__ ) /
-                 ( __phoenix_peg__ '-=' __phoenix_peg__ ) /
-                 ( __phoenix_peg__ '*=' __phoenix_peg__ ) /
-                 ( __phoenix_peg__ '/=' __phoenix_peg__ ) /
+    arithmetic := ( '-' __phoenix_peg__ )          |
+                 ( '+' __phoenix_peg__ )          |
+                 ( '++' __phoenix_peg__ )         |
+                 ( '--' __phoenix_peg__ )         |
+                 ( __phoenix_peg__ '++' )         |
+                 ( __phoenix_peg__ '--' )         |
+                 ( __phoenix_peg__ '+' __phoenix_peg__ )  |
+                 ( __phoenix_peg__ '-' __phoenix_peg__ )  |
+                 ( __phoenix_peg__ '*' __phoenix_peg__ )  |
+                 ( __phoenix_peg__ '/' __phoenix_peg__ )  |
+                 ( __phoenix_peg__ '%' __phoenix_peg__ )  |
+                 ( __phoenix_peg__ '+=' __phoenix_peg__ ) |
+                 ( __phoenix_peg__ '-=' __phoenix_peg__ ) |
+                 ( __phoenix_peg__ '*=' __phoenix_peg__ ) |
+                 ( __phoenix_peg__ '/=' __phoenix_peg__ ) |
                  ( __phoenix_peg__ '%=' __phoenix_peg__ )
 
 [#phoenix.reference.phoenix_expressions.phoenix_ast.operator.bitwise]
     
-    bitwise ``\u2190`` '~' __phoenix_peg__             /
-              ( __phoenix_peg__ & __phoenix_peg__ )   /
-              ( __phoenix_peg__ | __phoenix_peg__ )   /
-              ( __phoenix_peg__ ^ __phoenix_peg__ )   /
-              ( __phoenix_peg__ << __phoenix_peg__ )  /
-              ( __phoenix_peg__ >> __phoenix_peg__ )  /
-              ( __phoenix_peg__ &= __phoenix_peg__ )  /
-              ( __phoenix_peg__ |= __phoenix_peg__ )  /
-              ( __phoenix_peg__ ^= __phoenix_peg__ )  /
-              ( __phoenix_peg__ <<= __phoenix_peg__ ) /
-              ( __phoenix_peg__ >>= __phoenix_peg__ ) /
+    bitwise := '~' __phoenix_peg__             |
+              ( __phoenix_peg__ & __phoenix_peg__ )   |
+              ( __phoenix_peg__ | __phoenix_peg__ )   |
+              ( __phoenix_peg__ ^ __phoenix_peg__ )   |
+              ( __phoenix_peg__ << __phoenix_peg__ )  |
+              ( __phoenix_peg__ >> __phoenix_peg__ )  |
+              ( __phoenix_peg__ &= __phoenix_peg__ )  |
+              ( __phoenix_peg__ |= __phoenix_peg__ )  |
+              ( __phoenix_peg__ ^= __phoenix_peg__ )  |
+              ( __phoenix_peg__ <<= __phoenix_peg__ ) |
+              ( __phoenix_peg__ >>= __phoenix_peg__ ) |
               
               
 [heading Statement]
@@ -104,6 +238,7 @@
 [heading Scope]
 [heading Stl]
 [heading Fusion]
+]
 
 [endsect]
 
