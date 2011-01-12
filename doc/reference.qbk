@@ -155,6 +155,7 @@
 
     unary_postfix_op  := primary_expr
                         | ( primary_expr "[" expression "]" )
+                        | ( primary_expr "()" )
                         | ( primary_expr "(" expression ( "," expression )* ")" )
                         | ( primary_expr "++" )
                         | ( primary_expr "--" )
