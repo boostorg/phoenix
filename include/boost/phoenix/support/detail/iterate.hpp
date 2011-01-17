@@ -10,7 +10,7 @@
 #include <boost/preprocessor/tuple/elem.hpp>
 
 #ifndef PHOENIX_ITERATION_PARAMS
-#error "PHOENIX_ITERATION_PARAMS not define"
+#error "PHOENIX_ITERATION_PARAMS not defined"
 #endif
 
 #define PHOENIX_ITERATION_PARAMS_SIZE                                           \

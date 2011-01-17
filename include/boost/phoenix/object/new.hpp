@@ -8,6 +8,7 @@
 #ifndef PHOENIX_OBJECT_NEW_HPP
 #define PHOENIX_OBJECT_NEW_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/fusion.hpp>
@@ -70,7 +71,7 @@ namespace boost { namespace phoenix
                     >(_env)
                 >
             >
-          , BOOST_PP_ENUM_SHIFTED(PHOENIX_LIMIT, PHOENIX_NEW_CALL, _)
+          , BOOST_PP_ENUM_SHIFTED(PHOENIX_COMPOSITE_LIMIT, PHOENIX_NEW_CALL, _)
         >
 
     {};

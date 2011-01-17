@@ -8,6 +8,7 @@
 #ifndef PHOENIX_OBJECT_REINTERPRET_CAST_HPP
 #define PHOENIX_OBJECT_REINTERPRET_CAST_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/object/detail/target.hpp>
 

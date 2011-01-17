@@ -18,8 +18,6 @@
 
 #endif
 
-#define PHOENIX_LIMIT 10
-
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
 

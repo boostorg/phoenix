@@ -24,17 +24,17 @@ namespace boost { namespace phoenix
         {};
     }
 
-	namespace rule
-	{
-		struct delete_
+    namespace rule
+    {
+        struct delete_
             : expression::delete_<meta_grammar>
-		{};
-	}
+        {};
+    }
 
-	template <typename Dummy>
-	struct meta_grammar::case_<tag::delete_, Dummy>
-		: proto::when<rule::delete_, proto::external_transform>
-	{};
+    template <typename Dummy>
+    struct meta_grammar::case_<tag::delete_, Dummy>
+        : proto::when<rule::delete_, proto::external_transform>
+    {};
 
     struct delete_eval
         : proto::callable
@@ -45,7 +45,7 @@ namespace boost { namespace phoenix
         result_type
         operator()(Env& env, P const& p) const
         {
-            return delete eval(p, env);
+            /*return*/ delete eval(p, env);
         }
     };
 

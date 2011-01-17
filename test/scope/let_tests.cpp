@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <vector>
 
-#define PHOENIX_LIMIT 6
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/fusion/tuple.hpp>
 #include <boost/phoenix/core.hpp>

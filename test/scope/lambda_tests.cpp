@@ -11,8 +11,6 @@
 
 #include <typeinfo>
 
-#define PHOENIX_LIMIT 5
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>

@@ -7,8 +7,6 @@
 #include <iostream>
 #include <string>
 
-#define PHOENIX_LIMIT 6
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>

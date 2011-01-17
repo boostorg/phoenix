@@ -42,41 +42,8 @@ namespace boost { namespace phoenix
         };
     }
 
-    namespace result_of
-    {
-        template <typename Expr
-            , PHOENIX_typename_A_void(PHOENIX_ACTOR_LIMIT)
-            , typename Dummy = void>
-        struct actor;
-
-        template <typename Expr>
-        struct nullary_actor_result
-        {
-            typedef
-                typename evaluator::impl<
-                    Expr const&
-                  , fusion::vector2<fusion::vector0<>&, default_actions>&
-                  , int
-                >::result_type
-                type;
-        };
-
-        template <typename Expr>
-        struct actor<Expr>
-        {
-            typedef
-                // avoid calling result_of::actor when this is false
-                typename mpl::eval_if<
-                    typename result_of::is_nullary<Expr>::type
-                  , nullary_actor_result<Expr>
-                  , mpl::identity<detail::error_expecting_arguments>
-                >::type
-            type;
-        };
-
-        // Bring in the rest
-        #include <boost/phoenix/core/detail/actor_result_of.hpp>
-    }
+    // Bring in the result_of::actor<>
+    #include <boost/phoenix/core/detail/actor_result_of.hpp>
 
     ////////////////////////////////////////////////////////////////////////////
     //
