@@ -32,8 +32,18 @@ namespace boost { namespace phoenix
         struct terminal
             : proto::terminal<proto::_>
         {};
+
+        template <typename Grammar>
+        struct expr::case_<proto::tag::terminal, Grammar>
+            : proto::or_<
+                proto::when<rule::argument       , proto::external_transform>
+              , proto::when<rule::custom_terminal, proto::external_transform>
+              , proto::when<rule::terminal       , proto::external_transform>
+            >
+        {};
     }
 
+    /*
     template <typename Grammar>
     struct meta_grammar::case_<proto::tag::terminal, Grammar>
         : proto::or_<
@@ -42,6 +52,7 @@ namespace boost { namespace phoenix
           , proto::when<rule::terminal       , proto::external_transform>
         >
     {};
+    */
 
     template <typename Grammar>
     struct default_actions::when<rule::custom_terminal, Grammar>
