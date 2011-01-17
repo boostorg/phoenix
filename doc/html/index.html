@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;Phoenix 3.0</title>
 <link rel="stylesheet" href="../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
-<link rel="start" href="index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="next" href="phoenix/introduction.html" title="Introduction">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav"><a accesskey="n" href="phoenix/introduction.html"><img src="images/next.png" alt="Next"></a></div>
-<div class="chapter" lang="en">
+<div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
 <a name="phoenix"></a>Chapter&#160;1.&#160;Phoenix 3.0</h2></div>
@@ -27,7 +27,7 @@
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller</p></div>
 <div><div class="legalnotice">
-<a name="id2813809"></a><p>
+<a name="id567005"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -44,10 +44,11 @@
 </dl></dd>
 <dt><span class="section"><a href="phoenix/reference.html">Reference</a></span></dt>
 <dd><dl><dt><span class="section"><a href="phoenix/reference/the_language.html">The Language</a></span></dt></dl></dd>
+<dt><span class="section"><a href="phoenix/ebnf.html">EBNF</a></span></dt>
 </dl>
 </div>
 <a name="phoenix.preface"></a><h2>
-<a name="id2813832"></a>
+<a name="id597702"></a>
     <a class="link" href="index.html#phoenix.preface">Preface</a>
   </h2>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -66,7 +67,7 @@
     <span class="inlinemediaobject"><img src="images/lambda_cpp.png" alt="lambda_cpp"></span>
   </p>
 <a name="phoenix.description"></a><h3>
-<a name="id2774111"></a>
+<a name="id565812"></a>
     <a class="link" href="index.html#phoenix.description">Description</a>
   </h3>
 <p>
@@ -84,7 +85,7 @@
     library is organized in highly independent modules and layers.
   </p>
 <a name="phoenix.how_to_use_this_manual"></a><h3>
-<a name="id2774163"></a>
+<a name="id565859"></a>
     <a class="link" href="index.html#phoenix.how_to_use_this_manual">How to use this manual</a>
   </h3>
 <p>
@@ -106,7 +107,7 @@
     icons precede some text to indicate:
   </p>
 <div class="table">
-<a name="id2774208"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
+<a name="id565894"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
 <div class="table-contents"><table class="table" summary="Icons">
 <colgroup>
 <col>
@@ -187,7 +188,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="sidebar">
-<p class="title"><b></b></p>
+<div class="titlepage"></div>
 <p>
     <span class="inlinemediaobject"><img src="images/note.png" alt="note"></span> Unless otherwise noted <code class="computeroutput"><span class="keyword">using</span>
     <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span></code>
@@ -195,145 +196,12 @@
   </p>
 </div>
 <a name="phoenix._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"></a><h3>
-<a name="id2773163"></a>
+<a name="id606658"></a>
     <a class="link" href="index.html#phoenix._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"><span class="bold"><strong><span class="emphasis"><em>...To my dear daughter, Phoenix</em></span></strong></span></a>
   </h3>
-<p>
-    [/
-  </p>
-<pre class="programlisting"><span class="identifier">phoenix</span>           <span class="special">:=</span> <span class="identifier">statement</span> <span class="special">(</span> <span class="string">","</span> <span class="identifier">statement</span> <span class="special">)*</span>
-
-<span class="identifier">statement</span>         <span class="special">:=</span> <span class="identifier">expression</span> <span class="special">|</span> <span class="identifier">loops</span> <span class="special">|</span> <span class="identifier">if_statement</span> <span class="special">|</span> <span class="identifier">exception</span> <span class="special">|</span> <span class="keyword">switch</span>
-
-<span class="identifier">expression</span>        <span class="special">:=</span> <span class="keyword">operator</span>
-
-<span class="identifier">primary_expr</span>      <span class="special">:=</span> <span class="identifier">terminal</span>
-                    <span class="special">|</span> <span class="string">"if_else("</span> <span class="identifier">expression</span> <span class="string">","</span> <span class="identifier">expression</span> <span class="string">","</span> <span class="identifier">expression</span> <span class="string">")"</span>
-                    <span class="special">|</span> <span class="identifier">cast</span>
-                    <span class="special">|</span> <span class="identifier">construction</span>
-                    <span class="special">|</span> <span class="identifier">bind</span>
-                    <span class="special">|</span> <span class="identifier">scope</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"("</span> <span class="identifier">expression</span> <span class="string">")"</span> <span class="special">)</span>
-
-<span class="identifier">terminal</span>          <span class="special">:=</span> <span class="identifier">value</span> <span class="special">|</span> <span class="identifier">reference</span> <span class="special">|</span> <span class="identifier">placeholder</span>
-
-<span class="identifier">cast</span>              <span class="special">:=</span> <span class="special">(</span> <span class="string">"static_cast_"</span> <span class="special">|</span> <span class="string">"dynamic_cast_"</span> <span class="special">|</span> <span class="string">"reinterpret_cast_"</span> <span class="special">|</span> <span class="string">"const_cast_"</span> <span class="special">)</span> <span class="string">"&lt;"</span> <span class="identifier">T</span> <span class="string">"&gt;("</span> <span class="identifier">expression</span> <span class="string">")"</span>
-
-<span class="identifier">construction</span>      <span class="special">:=</span> <span class="special">(</span> <span class="special">(</span> <span class="string">"construct"</span> <span class="special">|</span> <span class="string">"new_"</span> <span class="special">)</span> <span class="string">"&lt;"</span> <span class="identifier">T</span> <span class="string">"&gt;("</span> <span class="special">[</span> <span class="identifier">expression</span> <span class="special">(</span> <span class="string">","</span> <span class="identifier">expression</span> <span class="special">)*</span> <span class="special">]</span> <span class="string">")"</span> <span class="special">)</span> <span class="special">|</span>
-                    <span class="special">(</span> <span class="string">"delete_("</span> <span class="identifier">expression</span> <span class="string">")"</span> <span class="special">)</span>
-
-<span class="identifier">bind</span>              <span class="special">:=</span> <span class="string">"bind("</span> <span class="special">(</span> <span class="identifier">expression</span> <span class="special">|</span> <span class="identifier">function_pointer</span> <span class="special">)</span> <span class="special">(</span> <span class="string">","</span> <span class="identifier">expression</span> <span class="special">)*</span> <span class="string">")"</span>
-
-<span class="identifier">scope</span>             <span class="special">:=</span> <span class="identifier">let</span> <span class="special">|</span> <span class="identifier">lambda</span>
-
-<span class="identifier">local_var_def</span>     <span class="special">:=</span> <span class="identifier">local_var</span> <span class="string">"="</span> <span class="identifier">expression</span>
-
-<span class="identifier">let</span>               <span class="special">:=</span> <span class="string">"let("</span> <span class="special">[</span> <span class="identifier">local_var_def</span> <span class="special">(</span> <span class="string">","</span> <span class="identifier">local_var_def</span> <span class="special">)*</span> <span class="special">]</span> <span class="string">")["</span> <span class="special">(</span> <span class="identifier">phoenix</span> <span class="special">|</span> <span class="identifier">local_var</span> <span class="special">)*</span> <span class="string">"]"</span>
-
-<span class="identifier">lambda</span>            <span class="special">:=</span> <span class="string">"lambda"</span> <span class="special">[</span> <span class="string">"("</span> <span class="special">[</span> <span class="identifier">local_var_def</span> <span class="special">(</span> <span class="string">","</span> <span class="identifier">local_var_def</span> <span class="special">)*</span> <span class="special">]</span> <span class="string">")"</span> <span class="special">]</span> <span class="string">"["</span> <span class="special">(</span> <span class="identifier">phoenix</span> <span class="special">|</span> <span class="identifier">local_var</span> <span class="special">)*</span> <span class="string">"]"</span>
-
-<span class="identifier">loops</span>             <span class="special">:=</span> <span class="identifier">for_loop</span> <span class="special">|</span> <span class="identifier">while_loop</span> <span class="special">|</span> <span class="identifier">do_while_loop</span>
-
-<span class="identifier">for_loop</span>          <span class="special">:=</span> <span class="string">"for_("</span> <span class="identifier">expression</span> <span class="string">","</span> <span class="identifier">expression</span> <span class="string">","</span> <span class="identifier">expression</span> <span class="string">")["</span> <span class="identifier">phoenix</span> <span class="string">"]"</span>
-
-<span class="identifier">while_loop</span>        <span class="special">:=</span> <span class="string">"while_("</span> <span class="identifier">expression</span> <span class="string">")["</span> <span class="identifier">phoenix</span> <span class="string">"]"</span>
-
-<span class="identifier">do_while_loop</span>     <span class="special">:=</span> <span class="string">"do_["</span> <span class="identifier">phoenix</span> <span class="string">"].while_("</span> <span class="identifier">expression</span> <span class="string">")"</span>
-
-<span class="identifier">if_statement</span>      <span class="special">:=</span> <span class="string">"if_("</span> <span class="identifier">expression</span> <span class="string">")["</span> <span class="identifier">statement</span> <span class="string">"]"</span> <span class="special">[</span> <span class="string">".else_["</span> <span class="identifier">phoenix</span> <span class="string">"]"</span> <span class="special">]</span>
-
-<span class="identifier">exception</span>         <span class="special">:=</span> <span class="keyword">throw</span> <span class="special">|</span> <span class="identifier">try_catch</span>
-
-<span class="keyword">throw</span>             <span class="special">:=</span> <span class="string">"throw_("</span> <span class="special">[</span> <span class="identifier">expression</span> <span class="special">]</span> <span class="string">")"</span>
-
-<span class="identifier">try_catch</span>         <span class="special">:=</span> <span class="string">"try_["</span> <span class="identifier">phoenix</span> <span class="string">"]"</span>
-                    <span class="special">(</span> <span class="string">".catch_&lt;"</span> <span class="identifier">E</span> <span class="string">"&gt;()["</span> <span class="identifier">phoenix</span> <span class="string">"]"</span> <span class="special">)*</span>
-                    <span class="special">[</span> <span class="string">".catch_all["</span> <span class="identifier">phoenix</span> <span class="string">"]"</span> <span class="special">]</span>
-
-<span class="keyword">switch</span>            <span class="special">:=</span> <span class="string">"switch_("</span> <span class="identifier">expression</span> <span class="string">")["</span> <span class="special">(</span>
-                        <span class="special">(</span> <span class="identifier">case_statement</span> <span class="special">(</span> <span class="string">","</span> <span class="identifier">case_statement</span> <span class="special">)*</span> <span class="special">[</span> <span class="string">","</span> <span class="identifier">default_statement</span> <span class="special">]</span> <span class="special">)</span> <span class="special">|</span>
-                        <span class="identifier">default_statement</span>
-                    <span class="special">)</span>
-
-<span class="identifier">case_statement</span>    <span class="special">:=</span> <span class="string">"case_&lt;"</span> <span class="identifier">N</span> <span class="string">"&gt;("</span> <span class="identifier">phoenix</span> <span class="string">")"</span>
-<span class="identifier">default_statement</span> <span class="special">:=</span> <span class="string">"default_("</span> <span class="identifier">phoenix</span> <span class="string">")"</span>
-
-<span class="keyword">operator</span>          <span class="special">:=</span> <span class="identifier">logical_or_op</span> <span class="special">(</span>
-                        <span class="special">(</span> <span class="string">"="</span>   <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"+="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"-="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"*="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"/="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"%="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"&amp;="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"^="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"|="</span>  <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"&lt;&lt;="</span> <span class="identifier">logical_or_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"&gt;&gt;="</span> <span class="identifier">logical_or_op</span> <span class="special">)*</span>
-                    <span class="special">)</span>
-
-<span class="identifier">logical_or_op</span>     <span class="special">:=</span> <span class="identifier">logical_and_op</span> <span class="special">(</span> <span class="string">"||"</span> <span class="identifier">logical_and_op</span> <span class="special">)*</span>
-
-<span class="identifier">logical_and_op</span>    <span class="special">:=</span> <span class="identifier">bitwise_or_op</span>  <span class="special">(</span> <span class="string">"&amp;&amp;"</span> <span class="identifier">bitwise_or_op</span> <span class="special">)*</span>
-
-<span class="identifier">bitwise_or_op</span>     <span class="special">:=</span> <span class="identifier">bitwise_xor_op</span> <span class="special">(</span> <span class="string">"|"</span> <span class="identifier">bitwise_xor_op</span> <span class="special">)*</span>
-
-<span class="identifier">bitwise_xor_op</span>    <span class="special">:=</span> <span class="identifier">bitwise_and_op</span> <span class="special">(</span> <span class="string">"^"</span> <span class="identifier">bitwise_and_op</span> <span class="special">)*</span>
-
-<span class="identifier">bitwise_and_op</span>    <span class="special">:=</span> <span class="identifier">equality_op</span>    <span class="special">(</span> <span class="string">"&amp;"</span> <span class="identifier">equality_op</span> <span class="special">)*</span>
-
-<span class="identifier">equality_op</span>       <span class="special">:=</span> <span class="identifier">relational_op</span> <span class="special">(</span>
-                        <span class="special">(</span> <span class="string">"=="</span> <span class="identifier">relational_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"!="</span> <span class="identifier">relational_op</span> <span class="special">)*</span>
-                    <span class="special">)</span>
-
-<span class="identifier">relational_op</span>     <span class="special">:=</span> <span class="identifier">shift_op</span> <span class="special">(</span>
-                        <span class="special">(</span> <span class="string">"&lt;"</span>  <span class="identifier">shift_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"&gt;"</span>  <span class="identifier">shift_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"&lt;="</span> <span class="identifier">shift_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"&gt;="</span> <span class="identifier">shift_op</span> <span class="special">)*</span>
-                    <span class="special">)</span>
-
-<span class="identifier">shift_op</span>          <span class="special">:=</span> <span class="identifier">additive_op</span> <span class="special">(</span>
-                        <span class="special">(</span> <span class="string">"&lt;&lt;"</span> <span class="identifier">additive_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"&gt;&gt;"</span> <span class="identifier">additive_op</span> <span class="special">)*</span>
-                    <span class="special">)</span>
-
-<span class="identifier">additive_op</span>       <span class="special">:=</span> <span class="identifier">multiplicative_op</span> <span class="special">(</span>
-                        <span class="special">(</span> <span class="string">"+"</span> <span class="identifier">multiplicative_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"-"</span> <span class="identifier">multiplicative_op</span> <span class="special">)*</span>
-                    <span class="special">)</span>
-
-<span class="identifier">multiplicative_op</span> <span class="special">:=</span> <span class="identifier">member_pointer_op</span> <span class="special">(</span>
-                        <span class="special">(</span> <span class="string">"*"</span> <span class="identifier">member_pointer_op</span> <span class="special">)*</span> <span class="special">|</span>
-                        <span class="special">(</span> <span class="string">"/"</span> <span class="identifier">member_pointer_op</span> <span class="special">)*</span>
-                    <span class="special">)</span>
-
-<span class="identifier">member_pointer_op</span> <span class="special">:=</span> <span class="identifier">unary_op</span> <span class="special">(</span> <span class="string">"-&gt;*"</span> <span class="identifier">unary_op</span> <span class="special">)*</span>
-
-<span class="identifier">unary_op</span>          <span class="special">:=</span> <span class="identifier">unary_postfix_op</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"*"</span>  <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"&amp;"</span>  <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"+"</span>  <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"-"</span>  <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"~"</span>  <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"!"</span>  <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"++"</span> <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="string">"--"</span> <span class="identifier">unary_postfix_op</span> <span class="special">)</span>
-
-<span class="identifier">unary_postfix_op</span>  <span class="special">:=</span> <span class="identifier">primary_expr</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="identifier">primary_expr</span> <span class="string">"["</span> <span class="identifier">expression</span> <span class="string">"]"</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="identifier">primary_expr</span> <span class="string">"()"</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="identifier">primary_expr</span> <span class="string">"("</span> <span class="identifier">expression</span> <span class="special">(</span> <span class="string">","</span> <span class="identifier">expression</span> <span class="special">)*</span> <span class="string">")"</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="identifier">primary_expr</span> <span class="string">"++"</span> <span class="special">)</span>
-                    <span class="special">|</span> <span class="special">(</span> <span class="identifier">primary_expr</span> <span class="string">"--"</span> <span class="special">)</span>
-</pre>
-<p>
-    ]
-  </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: January 17, 2011 at 20:13:34 GMT</small></p></td>
+<td align="left"><p><small>Last revised: January 17, 2011 at 20:39:59 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

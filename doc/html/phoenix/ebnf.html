@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>EBNF</title>
+<link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<link rel="prev" href="reference/the_language.html" title="The Language">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="reference/the_language.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="phoenix.ebnf"></a><a class="link" href="ebnf.html" title="EBNF">EBNF</a>
+</h2></div></div></div>
+<pre class="programlisting">phoenix           := statement ( "," statement )*
+
+statement         := expression | loops | if_statement | exception | switch
+
+expression        := operator
+
+primary_expr      := terminal
+                    | "if_else(" expression "," expression "," expression ")"
+                    | cast
+                    | construction
+                    | bind
+                    | scope
+                    | ( "(" expression ")" )
+
+terminal          := value | reference | placeholder
+
+cast              := ( "static_cast_" | "dynamic_cast_" | "reinterpret_cast_" | "const_cast_" ) "&lt;" T "&gt;(" expression ")"
+
+construction      := ( ( "construct" | "new_" ) "&lt;" T "&gt;(" [ expression ( "," expression )* ] ")" ) |
+                    ( "delete_(" expression ")" )
+
+bind              := "bind(" ( expression | function_pointer ) ( "," expression )* ")"
+
+scope             := let | lambda
+
+local_var_def     := local_var "=" expression
+
+let               := "let(" [ local_var_def ( "," local_var_def )* ] ")[" ( phoenix | local_var )* "]"
+
+lambda            := "lambda" [ "(" [ local_var_def ( "," local_var_def )* ] ")" ] "[" ( phoenix | local_var )* "]"
+
+loops             := for_loop | while_loop | do_while_loop
+
+for_loop          := "for_(" expression "," expression "," expression ")[" phoenix "]"
+
+while_loop        := "while_(" expression ")[" phoenix "]"
+
+do_while_loop     := "do_[" phoenix "].while_(" expression ")"
+
+if_statement      := "if_(" expression ")[" statement "]" [ ".else_[" phoenix "]" ]
+
+exception         := throw | try_catch
+
+throw             := "throw_(" [ expression ] ")"
+
+try_catch         := "try_[" phoenix "]"
+                    ( ".catch_&lt;" E "&gt;()[" phoenix "]" )*
+                    [ ".catch_all[" phoenix "]" ]
+
+switch            := "switch_(" expression ")[" (
+                        ( case_statement ( "," case_statement )* [ "," default_statement ] ) |
+                        default_statement
+                    )
+
+case_statement    := "case_&lt;" N "&gt;(" phoenix ")"
+default_statement := "default_(" phoenix ")"
+
+operator          := logical_or_op (
+                        ( "="   logical_or_op )* |
+                        ( "+="  logical_or_op )* |
+                        ( "-="  logical_or_op )* |
+                        ( "*="  logical_or_op )* |
+                        ( "/="  logical_or_op )* |
+                        ( "%="  logical_or_op )* |
+                        ( "&amp;="  logical_or_op )* |
+                        ( "^="  logical_or_op )* |
+                        ( "|="  logical_or_op )* |
+                        ( "&lt;&lt;=" logical_or_op )* |
+                        ( "&gt;&gt;=" logical_or_op )*
+                    )
+
+logical_or_op     := logical_and_op ( "||" logical_and_op )*
+
+logical_and_op    := bitwise_or_op  ( "&amp;&amp;" bitwise_or_op )*
+
+bitwise_or_op     := bitwise_xor_op ( "|" bitwise_xor_op )*
+
+bitwise_xor_op    := bitwise_and_op ( "^" bitwise_and_op )*
+
+bitwise_and_op    := equality_op    ( "&amp;" equality_op )*
+
+equality_op       := relational_op (
+                        ( "==" relational_op )* |
+                        ( "!=" relational_op )*
+                    )
+
+relational_op     := shift_op (
+                        ( "&lt;"  shift_op )* |
+                        ( "&gt;"  shift_op )* |
+                        ( "&lt;=" shift_op )* |
+                        ( "&gt;=" shift_op )*
+                    )
+
+shift_op          := additive_op (
+                        ( "&lt;&lt;" additive_op )* |
+                        ( "&gt;&gt;" additive_op )*
+                    )
+
+additive_op       := multiplicative_op (
+                        ( "+" multiplicative_op )* |
+                        ( "-" multiplicative_op )*
+                    )
+
+multiplicative_op := member_pointer_op (
+                        ( "*" member_pointer_op )* |
+                        ( "/" member_pointer_op )*
+                    )
+
+member_pointer_op := unary_op ( "-&gt;*" unary_op )*
+
+unary_op          := unary_postfix_op
+                    | ( "*"  unary_postfix_op )
+                    | ( "&amp;"  unary_postfix_op )
+                    | ( "+"  unary_postfix_op )
+                    | ( "-"  unary_postfix_op )
+                    | ( "~"  unary_postfix_op )
+                    | ( "!"  unary_postfix_op )
+                    | ( "++" unary_postfix_op )
+                    | ( "--" unary_postfix_op )
+
+unary_postfix_op  := primary_expr
+                    | ( primary_expr "[" expression "]" )
+                    | ( primary_expr "()" )
+                    | ( primary_expr "(" expression ( "," expression )* ")" )
+                    | ( primary_expr "++" )
+                    | ( primary_expr "--" )
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="reference/the_language.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a>
+</div>
+</body>
+</html>

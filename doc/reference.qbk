@@ -253,13 +253,9 @@ bla
 
 [endsect]
 
-[/
+[section EBNF]
 
-[/section Phoenix Expressions]
-
-[/section:phoenix_ast Language Definition - The Phoenix AST]
-
-[/teletype]
+[teletype]
 
 [def __phoenix_peg__ [link phoenix.reference.phoenix_expressions.phoenix_ast phoenix]]
 [def __phoenix_peg_terminals__ [link phoenix.reference.phoenix_expressions.phoenix_ast.terminals terminals]]
@@ -409,82 +405,6 @@ bla
 
 
 
-[/
-    phoenix := __phoenix_peg_terminals__ |
-              __phoenix_peg_operator__  |
-              __phoenix_peg_statement__ |
-              __phoenix_peg_object__    |
-              __phoenix_peg_function__  |
-              __phoenix_peg_bind__      |
-              __phoenix_peg_scope__     |
-              __phoenix_peg_fusion__
-
-
-
-[heading Terminals]
-    
-    terminal := placeholder |
-               custom_terminal |
-               terminal
-
-[heading Operator]
-
-    operator :=  __phoenix_peg_operator_arithmetic__  |
-                __phoenix_peg_operator_bitwise__     |
-                __phoenix_peg_operator_comparision__ |
-                __phoenix_peg_operator_if_else__     |
-                __phoenix_peg_operator_io__          |
-                __phoenix_peg_operator_logical__     |
-                __phoenix_peg_operator_member__      |
-                __phoenix_peg_operator_self__
-
-
-[#phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic]
-
-    arithmetic := ( '-' __phoenix_peg__ )          |
-                 ( '+' __phoenix_peg__ )          |
-                 ( '++' __phoenix_peg__ )         |
-                 ( '--' __phoenix_peg__ )         |
-                 ( __phoenix_peg__ '++' )         |
-                 ( __phoenix_peg__ '--' )         |
-                 ( __phoenix_peg__ '+' __phoenix_peg__ )  |
-                 ( __phoenix_peg__ '-' __phoenix_peg__ )  |
-                 ( __phoenix_peg__ '*' __phoenix_peg__ )  |
-                 ( __phoenix_peg__ '/' __phoenix_peg__ )  |
-                 ( __phoenix_peg__ '%' __phoenix_peg__ )  |
-                 ( __phoenix_peg__ '+=' __phoenix_peg__ ) |
-                 ( __phoenix_peg__ '-=' __phoenix_peg__ ) |
-                 ( __phoenix_peg__ '*=' __phoenix_peg__ ) |
-                 ( __phoenix_peg__ '/=' __phoenix_peg__ ) |
-                 ( __phoenix_peg__ '%=' __phoenix_peg__ )
-
-[#phoenix.reference.phoenix_expressions.phoenix_ast.operator.bitwise]
-    
-    bitwise := '~' __phoenix_peg__             |
-              ( __phoenix_peg__ & __phoenix_peg__ )   |
-              ( __phoenix_peg__ | __phoenix_peg__ )   |
-              ( __phoenix_peg__ ^ __phoenix_peg__ )   |
-              ( __phoenix_peg__ << __phoenix_peg__ )  |
-              ( __phoenix_peg__ >> __phoenix_peg__ )  |
-              ( __phoenix_peg__ &= __phoenix_peg__ )  |
-              ( __phoenix_peg__ |= __phoenix_peg__ )  |
-              ( __phoenix_peg__ ^= __phoenix_peg__ )  |
-              ( __phoenix_peg__ <<= __phoenix_peg__ ) |
-              ( __phoenix_peg__ >>= __phoenix_peg__ ) |
-              
-              
-[heading Statement]
-[heading Object]
-[heading Function]
-[heading Bind]
-[heading Scope]
-[heading Stl]
-[heading Fusion]
-]
-
-[/endsect]
-
-[/endsect]
 
 [/include reference/basics.qbk]
 [/include reference/organisation.qbk]
@@ -505,6 +425,4 @@ bla
 
 [/endsect]
 
-[/endsect]
-
-]
+[endsect]
