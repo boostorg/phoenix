@@ -105,9 +105,34 @@ The definition of the language is split into the following parts:
 
     placeholder     := _1 | _2 | _3 | ... | _PHOENIX_ARG_LIMIT
 
-[section:blubb Value]
+Terminals are the core building blocks. Phoenix, by default distinguishes
+between 3 types of terminals:
 
-Values are one of the core building blocks of Phoenix.
+# Value Terminals
+# Reference Terminals
+# Placeholders
+
+The last two terminal types are handled by the terminal customization points.
+
+[section Value]
+
+Whenever we see a constant in a partially applied function, an
+
+    expression::value<T>::type
+
+(where T is the type of the constant) is automatically created for
+us. For instance:
+
+    add(arg1, 6)
+
+Passing a second argument, `6`, an `expression::value<int>::type` is implicitly created
+behind the scenes. This is also equivalent to:
+
+    add(arg1, val(6))
+
+`val(x)` generates an `expression::value<T>::type` where `T` is the type of `x`. In most
+cases, there's no need to explicitly use `val`, but, as we'll see later on,
+there are situations where this is unavoidable.
 
 [heading Synopsis]
     namespace expression
@@ -130,10 +155,12 @@ Values are one of the core building blocks of Phoenix.
     typename expression::value<T>::type
     val(T t);
 
-[table Parameters
+[heading Parameters]
+
+[table
     [[Parameter] [Requirement] [Description]]
-    [[T] [Model of Copy Constructible] [Operation's Argument]]
-    [[t] [Object of type T] [Operation's Argument]]
+    [[`T`] [Model of Copy Constructible] [Operation's Argument]]
+    [[`t`] [Object of type T] [Operation's Argument]]
 ]
 
 [heading Expression Semantics]
@@ -156,11 +183,47 @@ the supplied argument
 
 [*Semantics]: Calls `expression::value<T>::make(t)`, Automatically deduces type T
 
+[header Header]
+    #include <boost/phoenix/core/value.hpp>
+
+[header Example]
+
+TODO
+
 [endsect]
 
 [section Reference]
 
-References are one of the core building blocks of Phoenix.
+Values are immutable constants. Attempting to modify a value will result in a
+compile time error. When we want the function to modify the parameter, we use a
+reference instead. For instance, imagine a lazy function `add_assign`:
+
+    void add_assign(T& x, T y) { x += y; } // pseudo code
+
+Here, we want the first function argument, x, to be mutable. Obviously, we
+cannot write:
+
+    add_assign(1, 2) // error first argument is immutable
+
+In C++, we can pass in a reference to a variable as the first argument in our
+example above. Yet, by default, the library forces arguments passed to partially
+applied functions functions to be immutable values (see [link __phoenix_reference_value__]
+). To achieve our intent, we use:
+
+    expression::reference<T>::type
+
+This is similar to `expression::value<T>::type` before but instead holds a reference to a
+variable.
+
+We normally don't instantiate `expression::reference<T>::type` objects directly. Instead we
+use `ref`. For example (where `i` is an `int` variable):
+
+    add_assign(ref(i), 2)
+
+Another free function `cref(cv)` may also be used. `cref(cv)` creates an
+`expression::reference<T const>::type` object. This is similar to `expression::value<T>::type` but
+when the data to be passed as argument to a function is heavy and expensive to
+copy by value, the `cref(cv)` offers a lighter alternative.
 
 [heading Synopsis]
     namespace expression
@@ -170,7 +233,7 @@ References are one of the core building blocks of Phoenix.
         {
             typedef __unspecified__ type;
 
-            static type make(T t);
+            static type make(T &t);
         };
     }
 
@@ -182,7 +245,9 @@ References are one of the core building blocks of Phoenix.
     typename expression::reference<T const>::type
     cref(T const & t);
 
-[table Parameters
+[heading Parameters]
+
+[table
     [[Parameter] [Requirement] [Description]]
     [[T] [] [Operation's Argument]]
     [[t] [Object of type T] [Operation's Argument]]
@@ -199,8 +264,7 @@ References are one of the core building blocks of Phoenix.
 
 [*Return type]: `expression::reference<T>::type`
 
-[*Semantics]: Creates a Phoenix reference expression initialized with a copy of of
-the supplied argument
+[*Semantics]: Creates a Phoenix reference expression initialized with the supplied argument
     
     ref(t);
 
@@ -213,6 +277,13 @@ the supplied argument
 [*Return type]: `expression::reference<T const>::type`
 
 [*Semantics]: Calls `expression::reference<T const>::make(t)`, Automatically deduces type T
+
+[heading Header]
+    #include <boost/phoenix/core/reference.hpp>
+
+[heading Example]
+
+TODO
 
 [endsect]
 

@@ -29,40 +29,59 @@ namespace boost { namespace phoenix
     //
     ////////////////////////////////////////////////////////////////////////////
     
-    template <typename I>
-    struct argument
+    namespace detail
     {
-        typedef I type;
-        typedef typename I::value_type value_type;
-        static value_type const value = I::value;
-
-        bool operator==(argument) const
+        template <int I>
+        struct argument
+            : mpl::int_<I>
         {
-            return true;
-        }
+            bool operator==(argument) const
+            {
+                return true;
+            }
 
-        template <typename I2>
-        bool operator==(argument<I2>) const
-        {
-            return false;
-        }
-    };
+            template <int I2>
+            bool operator==(argument<I2>) const
+            {
+                return false;
+            }
+        };
+    }
 
 }}
 
 namespace boost {
-    template <typename I>
-    struct is_placeholder<phoenix::argument<I> >
-        : I
+    template <int I>
+    struct is_placeholder<phoenix::detail::argument<I> >
+        : mpl::int_<I>
     {};
 }
 
 namespace boost { namespace phoenix
 {
+    namespace expression
+    {
+        template <int I>
+        struct argument
+        {
+            typedef
+                actor<
+                    typename proto::terminal<detail::argument<I> >::type
+                >
+                type;
+
+            static const type make()
+            {
+                type const e = {};
+                return e;
+            }
+        };
+    }
+
     #define BOOST_PHOENIX_ARGUMENT_N(_, N, name)                                \
-    actor<                                                                      \
-        proto::terminal<argument<mpl::int_<BOOST_PP_INC(N)> > >::type           \
-    > const BOOST_PP_CAT(name, BOOST_PP_INC(N)) = {};
+    expression::argument<BOOST_PP_INC(N)>::type const                           \
+        BOOST_PP_CAT(name, BOOST_PP_INC(N)) = {};                               \
+    /**/
 
     namespace placeholders
     {
@@ -75,6 +94,8 @@ namespace boost { namespace phoenix
         BOOST_PP_REPEAT(PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, arg)
         BOOST_PP_REPEAT(PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, _)
     }
+
+    #undef BOOST_PHOENIX_ARGUMENT_N
 }}
 
 #endif

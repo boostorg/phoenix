@@ -73,10 +73,10 @@ namespace boost { namespace phoenix
                 typedef
                     typename mpl::eval_if<
                         is_reference<result_type>
-                      , reference<
+                      , expression::reference<
                             typename boost::remove_reference<result_type>::type
                         >
-                      , value<result_type>
+                      , expression::value<result_type>
                     >::type
                     type;
             };

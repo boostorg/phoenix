@@ -22,27 +22,48 @@ namespace boost { namespace phoenix
     //      function for evaluating references, e.g. ref(123)
     //
     /////////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    struct reference
-        : proto::terminal<reference_wrapper<T> >
+    
+    namespace expression
     {
-        typedef actor<typename proto::terminal<reference_wrapper<T> >::type> type;
-    };
+        template <typename T>
+        struct reference
+            : proto::terminal<reference_wrapper<T> >
+        {
+            typedef actor<typename proto::terminal<reference_wrapper<T> >::type> type;
 
-    template <typename T>
-    typename reference<T>::type const
-    ref(T & t)
-    {
-        typename reference<T>::type const e = {{boost::ref(t)}};
-        return e;
+            static const type make(T & t)
+            {
+                typename reference<T>::type const e = {{boost::ref(t)}};
+                return e;
+            }
+        };
+        
+        template <typename T>
+        struct reference<T const>
+            : proto::terminal<reference_wrapper<T const> >
+        {
+            typedef actor<typename proto::terminal<reference_wrapper<T const> >::type> type;
+
+            static const type make(T const & t)
+            {
+                typename reference<T const>::type const e = {{boost::cref(t)}};
+                return e;
+            }
+        };
     }
 
     template <typename T>
-    typename reference<T const>::type const
+    typename expression::reference<T>::type const
+    ref(T & t)
+    {
+        return expression::reference<T>::make(t);
+    }
+
+    template <typename T>
+    typename expression::reference<T const>::type const
     cref(T const & t)
     {
-        typename reference<T const>::type const e = {{boost::cref(t)}};
-        return e;
+        return expression::reference<T const>::make(t);
     }
 
     // Call out boost::reference_wrapper for special handling

@@ -30,7 +30,7 @@ namespace boost { namespace phoenix
         {
             typedef actor<typename proto::terminal<T>::type> type;
             
-            static type make(T t)
+            static const type make(T t)
             {
                 typename value<T>::type const e = {{t}};
                 return e;
@@ -43,7 +43,7 @@ namespace boost { namespace phoenix
         {
             typedef actor<typename proto::terminal<T* >::type> type;
 
-            static type make(T t[N])
+            static const type make(T t[N])
             {
                 typename value<T *>::type const e = {{t}};
                 return e;
