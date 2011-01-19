@@ -626,11 +626,9 @@ TODO
 
 [section Arguments]
 
-We use an instance of:
+[heading Description]
 
-    expression::argument<N>::type
-
-to represent the Nth function argument. The argument placeholder acts as an
+The argument placeholder acts as an
 imaginary data-bin where a function argument will be placed.
 
 [heading Predefined Arguments]
@@ -647,42 +645,42 @@ placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
     namespace expression
     {
         template <int I>
-		  struct argument
-		  {
-		      typedef __unspecified__ type;
-
-				static const type make();
-		  };
-    }
-
-    namespace placeholders
-    {
-		 expression::argument<1>::type const _1;
-		 expression::argument<2>::type const _2;
-		 expression::argument<3>::type const _3;
-		 // ...
-		 expression::argument<N>::type const _N;
-		 
-		 expression::argument<1>::type const arg1;
-		 expression::argument<2>::type const arg2;
-		 expression::argument<3>::type const arg3;
-		 // ...
-		 expression::argument<N>::type const argN;
+        struct argument
+        {
+            typedef __unspecified__ type;
+            
+            static const type make();
+        };
     }
     
-	 namespace arg_names
+    namespace placeholders
     {
-		 expression::argument<1>::type const _1;
-		 expression::argument<2>::type const _2;
-		 expression::argument<3>::type const _3;
-		 // ...
-		 expression::argument<N>::type const _N;
-		 
-		 expression::argument<1>::type const arg1;
-		 expression::argument<2>::type const arg2;
-		 expression::argument<3>::type const arg3;
-		 // ...
-		 expression::argument<N>::type const argN;
+        expression::argument<1>::type const _1;
+        expression::argument<2>::type const _2;
+        expression::argument<3>::type const _3;
+        ...
+        expression::argument<N>::type const _N;
+        
+        expression::argument<1>::type const arg1;
+        expression::argument<2>::type const arg2;
+        expression::argument<3>::type const arg3;
+        ...
+        expression::argument<N>::type const argN;
+    }
+
+    namespace arg_names
+    {
+        expression::argument<1>::type const _1;
+        expression::argument<2>::type const _2;
+        expression::argument<3>::type const _3;
+        ...
+        expression::argument<N>::type const _N;
+        
+        expression::argument<1>::type const arg1;
+        expression::argument<2>::type const arg2;
+        expression::argument<3>::type const arg3;
+        ...
+        expression::argument<N>::type const argN;
     }
 
 [heading Parameters]
@@ -698,6 +696,9 @@ placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
 [*Return type]: Returns a Phoenix Actor representing a placeholder expression
 
 [*Semantics]: A metafunction for generating a Phoenix placeholder expression type
+
+We use an instance of: expression::argument<N>::type to represent the Nth function
+argument. The argument placeholder acts as an
 
 [heading Header]
     #include <boost/phoenix/core/argument.hpp>

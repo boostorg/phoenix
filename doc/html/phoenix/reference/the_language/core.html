@@ -24,6 +24,7 @@
 <dt><span class="section"><a href="core/value.html">Value</a></span></dt>
 <dt><span class="section"><a href="core/reference.html">Reference</a></span></dt>
 <dt><span class="section"><a href="core/arguments.html">Arguments</a></span></dt>
+<dt><span class="section"><a href="core/nothing.html">Nothing</a></span></dt>
 </dl></div>
 <pre class="programlisting"><span class="identifier">terminal</span>        <span class="special">:=</span> <span class="identifier">value</span> <span class="special">|</span> <span class="identifier">reference</span> <span class="special">|</span> <span class="identifier">placeholder</span>
 
@@ -32,7 +33,8 @@
 <span class="identifier">reference</span>       <span class="special">:=</span> <span class="string">"ref"</span>  <span class="string">"("</span> <span class="identifier">C</span><span class="special">++</span> <span class="identifier">expression</span> <span class="string">")"</span>
                  <span class="special">|</span> <span class="string">"cref"</span> <span class="string">"("</span> <span class="identifier">C</span><span class="special">++</span> <span class="identifier">expression</span> <span class="string">")"</span>
 
-<span class="identifier">placeholder</span>     <span class="special">:=</span> <span class="identifier">_1</span> <span class="special">|</span> <span class="identifier">_2</span> <span class="special">|</span> <span class="identifier">_3</span> <span class="special">|</span> <span class="special">...</span> <span class="special">|</span> <span class="identifier">_PHOENIX_ARG_LIMIT</span>
+<span class="identifier">placeholder</span>     <span class="special">:=</span> <span class="identifier">_1</span> <span class="special">|</span> <span class="identifier">_2</span> <span class="special">|</span> <span class="identifier">_3</span> <span class="special">|</span> <span class="special">...</span> <span class="special">|</span> <span class="identifier">_N</span>
+				<span class="special">|</span> <span class="identifier">arg1</span> <span class="special">|</span> <span class="identifier">arg2</span> <span class="special">|</span> <span class="identifier">arg3</span> <span class="special">|</span> <span class="special">...</span> <span class="special">|</span> <span class="identifier">argN</span>
 </pre>
 <p>
           Terminals are the core building blocks. Phoenix, by default distinguishes
