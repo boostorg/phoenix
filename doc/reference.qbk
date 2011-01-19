@@ -439,7 +439,8 @@ The definition of the language is split into the following parts:
     reference       := "ref"  "(" C++ expression ")"
                      | "cref" "(" C++ expression ")"
 
-    placeholder     := _1 | _2 | _3 | ... | _PHOENIX_ARG_LIMIT
+    placeholder     := _1 | _2 | _3 | ... | _N
+	 						| arg1 | arg2 | arg3 | ... | argN
 
 Terminals are the core building blocks. Phoenix, by default distinguishes
 between 3 types of terminals:
@@ -625,8 +626,94 @@ TODO
 
 [section Arguments]
 
+We use an instance of:
+
+    expression::argument<N>::type
+
+to represent the Nth function argument. The argument placeholder acts as an
+imaginary data-bin where a function argument will be placed.
+
+[heading Predefined Arguments]
+
+There are a few predefined instances of `expression::argument<N>::type` named
+`arg1`..`argN`, and its __bll__ counterpart `_1`..`_N`. (where N is a predefined
+maximum).
+
+[note You can set `PHOENIX_ARG_LIMIT`, the predefined maximum
+placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
+(See [link phoenix.reference.concepts.actor Actor]).]
+
 [heading Synopsis]
+    namespace expression
+    {
+        template <int I>
+		  struct argument
+		  {
+		      typedef __unspecified__ type;
+
+				static const type make();
+		  };
+    }
+
+    namespace placeholders
+    {
+		 expression::argument<1>::type const _1;
+		 expression::argument<2>::type const _2;
+		 expression::argument<3>::type const _3;
+		 // ...
+		 expression::argument<N>::type const _N;
+		 
+		 expression::argument<1>::type const arg1;
+		 expression::argument<2>::type const arg2;
+		 expression::argument<3>::type const arg3;
+		 // ...
+		 expression::argument<N>::type const argN;
+    }
     
+	 namespace arg_names
+    {
+		 expression::argument<1>::type const _1;
+		 expression::argument<2>::type const _2;
+		 expression::argument<3>::type const _3;
+		 // ...
+		 expression::argument<N>::type const _N;
+		 
+		 expression::argument<1>::type const arg1;
+		 expression::argument<2>::type const arg2;
+		 expression::argument<3>::type const arg3;
+		 // ...
+		 expression::argument<N>::type const argN;
+    }
+
+[heading Parameters]
+
+[table
+    [[Parameter] [Requirement] [Description]]
+    [[I] [] [Operation's Argument]]
+]
+
+[heading Expression Semantics]
+    expression::argument<I>::type
+
+[*Return type]: Returns a Phoenix Actor representing a placeholder expression
+
+[*Semantics]: A metafunction for generating a Phoenix placeholder expression type
+
+[heading Header]
+    #include <boost/phoenix/core/argument.hpp>
+
+[heading Example]
+
+TODO
+
+[endsect]
+
+[section Nothing]
+
+Finally, the `expression::null::type` does nothing; (a "bum", if you will :-).
+There's a sole `expression::null::type` instance named "nothing". This actor is
+actually useful in situations where we don't want to do anything. (See
+[link phoenix.reference.modules.statement.for__statement for_ Statement] for example).
 
 [endsect]
 
