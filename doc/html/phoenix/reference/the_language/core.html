@@ -3,25 +3,54 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Core</title>
-<link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
 <link rel="start" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../the_language.html" title="The Language">
 <link rel="prev" href="../the_language.html" title="The Language">
-<link rel="next" href="actor.html" title="Actor">
+<link rel="next" href="core/value.html" title="Value">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../the_language.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_language.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="actor.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="../the_language.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_language.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="core/value.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="phoenix.reference.the_language.core"></a><a class="link" href="core.html" title="Core">Core</a>
 </h4></div></div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="core/value.html">Value</a></span></dt>
+<dt><span class="section"><a href="core/reference.html">Reference</a></span></dt>
+<dt><span class="section"><a href="core/arguments.html">Arguments</a></span></dt>
+</dl></div>
+<pre class="programlisting"><span class="identifier">terminal</span>        <span class="special">:=</span> <span class="identifier">value</span> <span class="special">|</span> <span class="identifier">reference</span> <span class="special">|</span> <span class="identifier">placeholder</span>
+
+<span class="identifier">value</span>           <span class="special">:=</span> <span class="string">"val"</span> <span class="string">"("</span> <span class="identifier">expression</span> <span class="string">")"</span>
+
+<span class="identifier">reference</span>       <span class="special">:=</span> <span class="string">"ref"</span>  <span class="string">"("</span> <span class="identifier">C</span><span class="special">++</span> <span class="identifier">expression</span> <span class="string">")"</span>
+                 <span class="special">|</span> <span class="string">"cref"</span> <span class="string">"("</span> <span class="identifier">C</span><span class="special">++</span> <span class="identifier">expression</span> <span class="string">")"</span>
+
+<span class="identifier">placeholder</span>     <span class="special">:=</span> <span class="identifier">_1</span> <span class="special">|</span> <span class="identifier">_2</span> <span class="special">|</span> <span class="identifier">_3</span> <span class="special">|</span> <span class="special">...</span> <span class="special">|</span> <span class="identifier">_PHOENIX_ARG_LIMIT</span>
+</pre>
 <p>
-          blubbv
+          Terminals are the core building blocks. Phoenix, by default distinguishes
+          between 3 types of terminals:
+        </p>
+<div class="orderedlist"><ol type="1">
+<li>
+              Value Terminals
+            </li>
+<li>
+              Reference Terminals
+            </li>
+<li>
+              Placeholders
+            </li>
+</ol></div>
+<p>
+          The last two terminal types are handled by the terminal customization points.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -34,7 +63,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../the_language.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_language.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="actor.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="../the_language.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../the_language.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="core/value.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
