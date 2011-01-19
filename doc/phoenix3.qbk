@@ -38,6 +38,10 @@
 [def __boost_mpl__      [@http://boost.org/libs/mpl/doc/index.html Boost.MPL]]
 [def __boost_range__    [@http://boost.org/libs/range/index.html Boost.Range]]
 [def __boost_result_of__ [@http://www.boost.org/doc/libs/1_43_0/libs/utility/utility.htm#result_of Boost.Result Of]]
+[def __phoenix_starter_kit__ [link phoenix.starter_kit Starter Kit]]
+[def __phoenix_evaluator__ [link phoenix.reference.core_mechanisms.evaluator Evaluator]]
+[def __phoenix_evaluator_default__ [link phoenix.reference.core_mechanisms.evaluator.default_actions Default Actions]]
+[def __phoenix_language__ [link phoenix.reference.the_language Phoenix Language Reference]]
 
 [include preface.qbk]
 [include introduction.qbk]

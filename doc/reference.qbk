@@ -87,6 +87,181 @@ This Generator is:
 * A function (can be a free function, operator, or member function)
 * An instance of a Phoenix Actor
 
+[section Core Mechanisms]
+
+[section `actor`]
+
+[heading Description]
+
+`actor` is main interface to evaluate any Phoenix expression. It is used to wrap
+the Phoenix Expression Templates and provides various operator() overloads.
+
+[heading Synopsis]
+    namespace result_of
+    {
+        template <
+            typename Expr
+          , typename A0 = void
+          , typename A1 = void
+          ...
+          , typename AN = void
+          , typename Dummy = void
+        >
+        struct actor
+        {
+            typedef __unspecified__ type;
+        };
+    }
+
+    template <typename Expr>
+    struct actor;
+
+[heading Template Parameters]
+
+[table
+    [[Parameter]    [Description]]
+    [[`Expr`]       [The type of the expression]]
+    [[`A0`...`AN`]  [The type of the supplied arguments]]
+]
+
+[variablelist Notation
+    [[`expr`] [An instance of a Phoenix actor]]
+    [[`a0`...`a1`] [Heterogenous values]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression] [Semantic]]
+    [[`result_of::actor<Expr, A0...AN>::type`] [The result type of the evaluated expression]]
+    [[`boost::result_of<actor<Expr>(A0...AN)>::type`] [Same as `result_of::actor<Expr, A0...AN>::type`]]
+    [[`expr(a0...aN)`] [Evaluates the expression]]
+]
+
+The expression is evaluated using the defined __phoenix_evaluator_default__.
+
+[heading Example]
+
+See the __phoenix_starter_kit__ and the __phoenix_language__ for examples
+
+[endsect]
+
+[section `meta_grammar`]
+
+[heading Description]
+
+`meta_grammar` is an open extensible set of __proto__ grammar rules.
+It is used to define what valid Phoenix Expressions are.
+
+[heading Synopsis]
+    struct meta_grammar
+        : proto::switch<meta_grammar>
+    {
+        template <typename Tag, typename Dummy = void>
+        struct case_
+            : proto::not<proto::_>
+        {};
+    };
+
+[heading Template Parameters]
+
+[table
+    [[Parameter] [Description]]
+    [[`Tag`] [The tag of the phoenix expression]]
+]
+
+[heading Expression Semantics]
+
+[variablelist Notation
+    [[`Expr`] [Any type]]
+]
+
+[table
+    [[Expression] [Semantic]]
+    [[`proto::matches<Expr, meta_grammar>::type`] [Calculates wether `Expr` matches meta_grammar]]
+]
+
+By default, `meta_grammar` matches nothing. By including the headers described in the __phoenix_language__ section,
+the appropriate rules are added to the grammar.
+
+[heading Example]
+    // Adding terminals to the set of valid Phoenix expressions
+    template <>
+    struct meta_grammar::case_<proto::tag::terminal>
+        : proto::terminal<proto::_>
+    {};
+    
+    // Adding terminals to the set of valid Phoenix expressions and supply a
+    // transform that is called whenever a terminal is found
+    template <>
+    struct meta_grammar::case_<proto::tag::terminal>
+        : proto::when<
+            proto::terminal<proto::_>
+          , proto::_value             // return the value of the terminal
+        >
+    {};
+
+    // Adding terminals to the set of valid Phoenix expressions and supply a
+    // transform that is supplied by an external transform.
+    template <>
+    struct meta_grammar::case_<proto::tag::terminal>
+        : proto::when<
+            proto::terminal<proto::_>
+          , proto::external_transform
+        >
+    {};
+
+[note
+    The last form is how phoenix grammar rules are defined in the library.
+    See __phoenix_evaluator__ for more details
+]
+
+[endsect]
+
+[section:evaluator `evaluator`]
+
+[section:default_actions `default_actions`]
+[endsect]
+
+[section:is_nullary `is_nullary`]
+[endsect]
+
+[section:arity `arity`]
+[endsect]
+
+[endsect]
+
+[section:expression `expression`]
+
+[endsect]
+
+[section:phoenix_define_expression `PHOENIX_DEFINE_EXPRESSION`]
+[endsect]
+
+[section:phoenix_define_expression_vararg `PHOENIX_DEFINE_EXPRESSION_VARARG`]
+[endsect]
+
+[section:phoenix_define_expression_ext `PHOENIX_DEFINE_EXPRESSION_EXT`]
+[endsect]
+
+[section:phoenix_define_expression_vararg_ext `PHOENIX_DEFINE_EXPRESSION_VARARG_EXT`]
+[endsect]
+
+[section Terminals]
+
+[section Placeholders]
+[endsect]
+
+[section `is_custom_terminal`]
+[endsect]
+
+[section `custom_terminal`]
+[endsect]
+
+[endsect]
+
+[endsect]
+
 [section The Language]
 
 The definition of the language is split into the following parts:
@@ -94,7 +269,7 @@ The definition of the language is split into the following parts:
 * formal language definition of the Phoenix Generators in EBNF notation
 * Synopsis of the C++ expressions
 
-[section Terminal]
+[section Core]
 
     terminal        := value | reference | placeholder
 
@@ -287,36 +462,12 @@ TODO
 
 [endsect]
 
-[section Placeholder]
+[section Arguments]
 
 [heading Synopsis]
-    template <int I>
-    struct argument
-        : mpl::int_<I>
-    {
-        bool operator==(argument) const;
-
-        template <int I2>
-        bool operator==(argument<I2>) const;
-    };
-
-    namespace placeholders
-    {
-
-    }
     
 
 [endsect]
-
-[section Customization Points]
-
-[endsect]
-
-[endsect]
-
-[section Actor]
-
-bla
 
 [endsect]
 
