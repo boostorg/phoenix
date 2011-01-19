@@ -140,6 +140,9 @@ the Phoenix Expression Templates and provides various operator() overloads.
 
 The expression is evaluated using the defined __phoenix_evaluator_default__.
 
+[header Header]
+    #include <boost/phoenix/core/actor.hpp>
+
 [heading Example]
 
 See the __phoenix_starter_kit__ and the __phoenix_language__ for examples
@@ -184,6 +187,9 @@ It is used to define what valid Phoenix Expressions are.
 By default, `meta_grammar` matches nothing. By including the headers described in the __phoenix_language__ section,
 the appropriate rules are added to the grammar.
 
+[header Header]
+    #include <boost/phoenix/core/meta_grammar.hpp>
+
 [heading Example]
     // Adding terminals to the set of valid Phoenix expressions
     template <>
@@ -218,33 +224,168 @@ the appropriate rules are added to the grammar.
 
 [endsect]
 
+[section:environment `environment`]
+
+[heading Description]
+To evaluate a phoenix expression, an environment needs to be provided. This
+environment is a Fusion Random Access Sequences.
+
+[heading Synopsis]
+    namespace result_of
+    {
+        template <typename Parameter, typename Actions>
+        struct environment
+        {
+            typedef __unspecified__ type;
+        };
+    }
+
+    template <typename Parameter, typename Actions>
+    typename environment<Parameter, Actions>::type
+    environment(Paramater & parameter, Actions const & actions);
+
+    struct _env;
+
+    struct _params;
+
+    struct _actions;
+
+[heading Template Parameter]
+
+[heading Expression Semantics]
+
+[heading Header]
+    #include <boost/phoenix/core/environment.hpp>
+
+[heading Examples]
+
+[endsect]
+
 [section:evaluator `evaluator`]
 
+[heading Description]
+`evaluator` is responsible for evaluating Phoenix expressions.
+
+[heading Synopsis]
+    struct evaluator;
+
+[heading Expression Semantics]
+
+[table
+    [[Expression] [Semantic]]
+    [[`eval(expr, env)`] [Evaluates `expr` with the parameters and actions supplied by `env`]]
+]
+
+[header Header]
+    #include <boost/phoenix/core/meta_grammar.hpp>
+
+[heading Examples]
+
 [section:default_actions `default_actions`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [section:is_nullary `is_nullary`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [section:arity `arity`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [endsect]
 
 [section:expression `expression`]
 
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
+
 [endsect]
 
 [section:phoenix_define_expression `PHOENIX_DEFINE_EXPRESSION`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [section:phoenix_define_expression_vararg `PHOENIX_DEFINE_EXPRESSION_VARARG`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [section:phoenix_define_expression_ext `PHOENIX_DEFINE_EXPRESSION_EXT`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [section:phoenix_define_expression_vararg_ext `PHOENIX_DEFINE_EXPRESSION_VARARG_EXT`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [section Terminals]
@@ -253,9 +394,29 @@ the appropriate rules are added to the grammar.
 [endsect]
 
 [section `is_custom_terminal`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [section `custom_terminal`]
+
+[heading Description]
+
+[heading Synopsis]
+
+[heading Expression Semantics]
+
+[header Header]
+
+[heading Examples]
 [endsect]
 
 [endsect]
