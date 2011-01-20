@@ -238,7 +238,7 @@ namespace boost { namespace phoenix
                     rule::local_var_def_list
                   , meta_grammar
                 >
-              , evaluator(proto::_child_c<1>, _env)
+              , detail::local_var_def_is_nullary(proto::_child_c<0>, _env)// mpl::true_()//evaluator(proto::_child_c<1>, _env)
             >
         >
     {};
