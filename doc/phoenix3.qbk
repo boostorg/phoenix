@@ -46,6 +46,8 @@
 [include preface.qbk]
 [include introduction.qbk]
 [include starter_kit.qbk]
+[include basics.qbk]
+[include organisation.qbk]
 [/include advanced.qbk]
 [include reference.qbk]
 
