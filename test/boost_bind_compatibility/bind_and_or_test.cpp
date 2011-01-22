@@ -35,7 +35,7 @@ h()
 
 template <typename F, typename A1, typename A2, typename R>
 void
-test(F f, A1 a1, A2 a2, R r)
+tester(F f, A1 a1, A2 a2, R r)
 {
     BOOST_TEST(f(a1, a2) == r);
 }
@@ -48,27 +48,27 @@ int main()
 
     // &&
 
-    test(bind(f, true) && bind(g, true), false, false, f(true) && g(true));
-    test(bind(f, true) && bind(g, false), false, false, f(true) && g(false));
+    tester(bind(f, true) && bind(g, true), false, false, f(true) && g(true));
+    tester(bind(f, true) && bind(g, false), false, false, f(true) && g(false));
 
-    test(bind(f, false) && bind(h), false, false, f(false) && h());
+    tester(bind(f, false) && bind(h), false, false, f(false) && h());
 
-    test(bind(f, _1) && bind(g, _2), true, true, f(true) && g(true));
-    test(bind(f, _1) && bind(g, _2), true, false, f(true) && g(false));
+    tester(bind(f, _1) && bind(g, _2), true, true, f(true) && g(true));
+    tester(bind(f, _1) && bind(g, _2), true, false, f(true) && g(false));
 
-    test(bind(f, _1) && bind(h), false, false, f(false) && h());
+    tester(bind(f, _1) && bind(h), false, false, f(false) && h());
 
     // ||
 
-    test(bind(f, false) || bind(g, true), false, false, f(false) || g(true));
-    test(bind(f, false) || bind(g, false), false, false, f(false) || g(false));
+    tester(bind(f, false) || bind(g, true), false, false, f(false) || g(true));
+    tester(bind(f, false) || bind(g, false), false, false, f(false) || g(false));
 
-    test(bind(f, true) || bind(h), false, false, f(true) || h());
+    tester(bind(f, true) || bind(h), false, false, f(true) || h());
 
-    test(bind(f, _1) || bind(g, _2), false, true, f(false) || g(true));
-    test(bind(f, _1) || bind(g, _2), false, false, f(false) || g(false));
+    tester(bind(f, _1) || bind(g, _2), false, true, f(false) || g(true));
+    tester(bind(f, _1) || bind(g, _2), false, false, f(false) || g(false));
 
-    test(bind(f, _1) || (h), true, false, f(true) || h());
+    tester(bind(f, _1) || (h), true, false, f(true) || h());
 
     //
 

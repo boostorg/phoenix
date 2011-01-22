@@ -21,6 +21,7 @@
 #include <boost/proto/extends.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/mpl/void.hpp>
+#include <cstring>
 
 namespace boost { namespace phoenix
 {
@@ -40,6 +41,54 @@ namespace boost { namespace phoenix
             template <typename T>
             error_invalid_lambda_expr(T const&) {}
         };
+
+        struct do_assign
+        {
+            BOOST_PROTO_CALLABLE()
+
+            typedef void result_type;
+
+            template <typename T1, typename T2>
+            void operator()(T1 & t1, T2 const & t2) const
+            {
+                proto::value(t1) = proto::value(t2);
+            }
+        };
+
+
+    #define PHOENIX_ACTOR_ASSIGN_CHILD(Z, N, D)                                 \
+        assign(proto::_child_c<N>, proto::_child_c<N>(proto::_state))           \
+    /**/
+    #define PHOENIX_ACTOR_ASSIGN_CALL(Z, N, D)                                  \
+            proto::when<                                                        \
+                proto::nary_expr<proto::_ ,                                     \
+                  BOOST_PP_ENUM_PARAMS(N, proto::_ BOOST_PP_INTERCEPT)          \
+                >                                                               \
+               , proto::and_<                                                   \
+                  BOOST_PP_ENUM(                                                \
+                        N                                                       \
+                      , PHOENIX_ACTOR_ASSIGN_CHILD                              \
+                      , _                                                       \
+                    )                                                           \
+                >                                                               \
+            >                                                                   \
+      /**/
+
+        struct assign
+            : proto::or_<
+                BOOST_PP_ENUM_SHIFTED(
+                    PHOENIX_LIMIT
+                  , PHOENIX_ACTOR_ASSIGN_CALL
+                  , _
+                )
+              , proto::when<
+                    proto::terminal<proto::_>
+                  , do_assign(proto::_, proto::_state)
+                >
+            >
+        {};
+    #undef PHOENIX_ACTOR_ASSIGN_CALL
+    #undef PHOENIX_ACTOR_ASSIGN_CHILD
     }
 
     // Bring in the result_of::actor<>
@@ -58,7 +107,19 @@ namespace boost { namespace phoenix
     struct actor
     {
         BOOST_PROTO_BASIC_EXTENDS(Expr, actor<Expr>, phoenix_domain)
-        BOOST_PROTO_EXTENDS_ASSIGN()
+
+        // providing operator= to be assignable
+        actor& operator=(actor const& other)
+        {
+            detail::assign()(*this, other);
+            return *this;
+        }
+        actor& operator=(actor & other)
+        {
+            detail::assign()(*this, other);
+            return *this;
+        }
+        BOOST_PROTO_EXTENDS_ASSIGN_()
         BOOST_PROTO_EXTENDS_SUBSCRIPT()
 
         template <typename Sig>

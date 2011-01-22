@@ -32,7 +32,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-template<class F, class A1, class R> void test( F f, A1 a1, R r )
+template<class F, class A1, class R> void tester( F f, A1 a1, R r )
 {
     BOOST_TEST( f(a1) == r );
 }
@@ -52,10 +52,10 @@ int main()
     using boost::phoenix::bind;
     using boost::phoenix::placeholders::_1;
 
-    test( !bind( f, true ), 0, !f( true ) );
-    test( !bind( g, _1 ), 5, !g( 5 ) );
-    test( bind( f, !bind( f, true ) ), 0, f( !f( true ) ) );
-    test( bind( f, !bind( f, _1 ) ), true, f( !f( true ) ) );
+    tester( !bind( f, true ), 0, !f( true ) );
+    tester( !bind( g, _1 ), 5, !g( 5 ) );
+    tester( bind( f, !bind( f, true ) ), 0, f( !f( true ) ) );
+    tester( bind( f, !bind( f, _1 ) ), true, f( !f( true ) ) );
 
     return boost::report_errors();
 }
