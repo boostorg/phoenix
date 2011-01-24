@@ -40,7 +40,7 @@ immediately evaluated. Some examples:
     x[ref(i)]       // illegal (x is not a phoenix primitive or composite)
     ref(x[ref(i)])  // illegal (x is not a phoenix primitive or composite)
 
-[blurb __tip__ Learn more about operators [link phoenix.reference.modules.operator here.]]
+[blurb __tip__ Learn more about operators [link phoenix.modules.operator here.]]
 
 [heading First Practical Example]
 

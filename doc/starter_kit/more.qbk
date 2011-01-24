@@ -11,9 +11,9 @@
 
 As mentioned earlier, this chapter is not a thorough discourse of the library.
 It is meant only to cover enough ground to get you into high gear as quickly as
-possible. Some advanced stuff is not discussed here (e.g. [link phoenix.reference.modules.scope
+possible. Some advanced stuff is not discussed here (e.g. [link phoenix.modules.scope
 Scopes]); nor are features that provide alternative (short-hand) ways to do the
-same things (e.g. [link phoenix.reference.modules.bind Bind] vs. [link phoenix.reference.modules.function Lazy Functions]).
+same things (e.g. [link phoenix.modules.bind Bind] vs. [link phoenix.modules.function Lazy Functions]).
 
 [blurb __tip__ ...*If you still wish to learn more, the read on...*]
 

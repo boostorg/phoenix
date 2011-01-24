@@ -25,7 +25,7 @@ returning an `int&`, and the second one returning a `char const*&`.
 
 (See [@../../example/references.cpp references.cpp])
 
-[blurb __tip__ Learn more about references [link phoenix.reference.modules.core.references here.]]
+[blurb __tip__ Learn more about references [link phoenix.modules.core.references here.]]
 
 [endsect]
 

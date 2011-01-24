@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;Phoenix 3.0</title>
 <link rel="stylesheet" href="boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
-<link rel="start" href="index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="next" href="phoenix/introduction.html" title="Introduction">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav"><a accesskey="n" href="phoenix/introduction.html"><img src="images/next.png" alt="Next"></a></div>
-<div class="chapter" lang="en">
+<div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
 <a name="phoenix"></a>Chapter&#160;1.&#160;Phoenix 3.0</h2></div>
@@ -27,7 +27,7 @@
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller</p></div>
 <div><div class="legalnotice">
-<a name="id2813775"></a><p>
+<a name="id2904951"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -60,47 +60,26 @@
 </dl></dd>
 <dt><span class="section"><a href="phoenix/basics.html">Basics</a></span></dt>
 <dt><span class="section"><a href="phoenix/organization.html">Organization</a></span></dt>
-<dt><span class="section"><a href="phoenix/reference.html">Reference</a></span></dt>
+<dt><span class="section"><a href="phoenix/actor.html">Actor</a></span></dt>
+<dt><span class="section"><a href="phoenix/modules.html">Modules</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms.html">Core Mechanisms</a></span></dt>
+<dt><span class="section"><a href="phoenix/modules/core.html">Core</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/_actor_.html"><code class="computeroutput"><span class="identifier">actor</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/_meta_grammar_.html"><code class="computeroutput"><span class="identifier">meta_grammar</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/environment.html"><code class="computeroutput"><span class="identifier">environment</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/evaluator.html"><code class="computeroutput"><span class="identifier">evaluator</span></code></a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/evaluator/default_actions.html"><code class="computeroutput"><span class="identifier">default_actions</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/evaluator/is_nullary.html"><code class="computeroutput"><span class="identifier">is_nullary</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/evaluator/arity.html"><code class="computeroutput"><span class="identifier">arity</span></code></a></span></dt>
+<dt><span class="section"><a href="phoenix/modules/core/values.html">Values</a></span></dt>
+<dt><span class="section"><a href="phoenix/modules/core/references.html">References</a></span></dt>
+<dt><span class="section"><a href="phoenix/modules/core/constant_references.html">Constant
+        References</a></span></dt>
+<dt><span class="section"><a href="phoenix/modules/core/arguments.html">Arguments</a></span></dt>
+<dt><span class="section"><a href="phoenix/modules/core/nothing.html">Nothing</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/expression.html"><code class="computeroutput"><span class="identifier">expression</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/phoenix_define_expression.html"><code class="computeroutput"><span class="identifier">PHOENIX_DEFINE_EXPRESSION</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/phoenix_define_expression_vararg.html"><code class="computeroutput"><span class="identifier">PHOENIX_DEFINE_EXPRESSION_VARARG</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/phoenix_define_expression_ext.html"><code class="computeroutput"><span class="identifier">PHOENIX_DEFINE_EXPRESSION_EXT</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/phoenix_define_expression_vararg_ext.html"><code class="computeroutput"><span class="identifier">PHOENIX_DEFINE_EXPRESSION_VARARG_EXT</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/terminals.html">Terminals</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/terminals/placeholders.html">Placeholders</a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/terminals/_is_custom_terminal_.html"><code class="computeroutput"><span class="identifier">is_custom_terminal</span></code></a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/core_mechanisms/terminals/_custom_terminal_.html"><code class="computeroutput"><span class="identifier">custom_terminal</span></code></a></span></dt>
+<dt><span class="section"><a href="phoenix/modules/operator.html">Operator</a></span></dt>
+<dd><dl><dt><span class="section"><a href="phoenix/modules/operator/supported_operators.html">Supported
+        operators</a></span></dt></dl></dd>
 </dl></dd>
-</dl></dd>
-<dt><span class="section"><a href="phoenix/reference/the_language.html">The Language</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/reference/the_language/core.html">Core</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="phoenix/reference/the_language/core/value.html">Value</a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/the_language/core/reference.html">Reference</a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/the_language/core/arguments.html">Arguments</a></span></dt>
-<dt><span class="section"><a href="phoenix/reference/the_language/core/nothing.html">Nothing</a></span></dt>
-</dl></dd>
-</dl></dd>
-</dl></dd>
-<dt><span class="section"><a href="phoenix/ebnf.html">EBNF</a></span></dt>
 </dl>
 </div>
 <a name="phoenix.preface"></a><h2>
-<a name="id2813799"></a>
+<a name="id2904974"></a>
     <a class="link" href="index.html#phoenix.preface">Preface</a>
   </h2>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -119,7 +98,7 @@
     <span class="inlinemediaobject"><img src="images/lambda_cpp.png" alt="lambda_cpp"></span>
   </p>
 <a name="phoenix.description"></a><h3>
-<a name="id2774085"></a>
+<a name="id2903825"></a>
     <a class="link" href="index.html#phoenix.description">Description</a>
   </h3>
 <p>
@@ -137,7 +116,7 @@
     library is organized in highly independent modules and layers.
   </p>
 <a name="phoenix.how_to_use_this_manual"></a><h3>
-<a name="id2774138"></a>
+<a name="id2943694"></a>
     <a class="link" href="index.html#phoenix.how_to_use_this_manual">How to use this manual</a>
   </h3>
 <p>
@@ -159,7 +138,7 @@
     icons precede some text to indicate:
   </p>
 <div class="table">
-<a name="id2774182"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
+<a name="id2943739"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
 <div class="table-contents"><table class="table" summary="Icons">
 <colgroup>
 <col>
@@ -240,7 +219,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="sidebar">
-<p class="title"><b></b></p>
+<div class="titlepage"></div>
 <p>
     <span class="inlinemediaobject"><img src="images/note.png" alt="note"></span> Unless otherwise noted <code class="computeroutput"><span class="keyword">using</span>
     <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span></code>
@@ -248,12 +227,12 @@
   </p>
 </div>
 <a name="phoenix._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"></a><h3>
-<a name="id2773158"></a>
+<a name="id2902705"></a>
     <a class="link" href="index.html#phoenix._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"><span class="bold"><strong><span class="emphasis"><em>...To my dear daughter, Phoenix</em></span></strong></span></a>
   </h3>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: January 20, 2011 at 12:17:34 GMT</small></p></td>
+<td align="left"><p><small>Last revised: January 24, 2011 at 14:19:02 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

@@ -48,8 +48,10 @@
 [include starter_kit.qbk]
 [include basics.qbk]
 [include organisation.qbk]
+[include actors.qbk]
+[include modules.qbk]
 [/include advanced.qbk]
-[include reference.qbk]
+[/include reference.qbk]
 
 [/include actors.qbk]
 [/include advanced.qbk]

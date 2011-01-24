@@ -20,7 +20,7 @@ constructor calls, `new`, `delete` and the suite of C++ casts. Examples:
 [note Take note that, by convention, names that conflict with C++
 reserved words are appended with a single trailing underscore `'_'`]
 
-[blurb __tip__ Learn more about this [link phoenix.reference.modules.object here.]]
+[blurb __tip__ Learn more about this [link phoenix.modules.object here.]]
 
 [endsect]
 

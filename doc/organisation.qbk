@@ -29,7 +29,7 @@ header files. There are no object files to link against.
 
 The lowest two layers comprise the core.
 
-The [link phoenix.reference.concepts.actor `Actor`] is the main concept behind the library. Lazy functions are
+The [link phoenix.actor `Actor`] is the main concept behind the library. Lazy functions are
 abstracted as actors.
 
 Primitives provide the basic building blocks of functionality within Phoenix.

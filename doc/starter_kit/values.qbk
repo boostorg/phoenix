@@ -29,7 +29,7 @@ function, you can invoke it. Example:
 
 (See [@../../example/values.cpp values.cpp])
 
-[blurb __tip__ Learn more about values [link phoenix.reference.modules.core.values here.]]
+[blurb __tip__ Learn more about values [link phoenix.modules.core.values here.]]
 
 The second function call (the one with no arguments) calls the nullary function
 which then returns `3`. The need for a second function call is the reason why

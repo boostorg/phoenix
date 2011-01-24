@@ -1,18 +1,26 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2005 Dan Marsden
+    Copyright (C) 2001-2010 Thomas Heller
 
-[section Actors]
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
 
-[/The `Actor` is the main concept behind the library. Actors are TR1 function objects.
+[section Actor]
+
+The `Actor` is the main concept behind the library. Actors are function objects.
 An actor can accept 0 to `PHOENIX_LIMIT` arguments.
 
 [note You can set `PHOENIX_LIMIT`, the predefined maximum arity an
 actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
 
 Phoenix supplies an `actor` class template whose specializations
-model the `Actor` concept.  `actor` has one template parameter, `Eval`,
-that supplies the smarts to evaluate the resulting function.
+model the `Actor` concept.  `actor` has one template parameter, `Expr`,
+that supplies the underlying expression to evaluate.
 
-    template <typename Eval>
-    struct actor : Eval
+    template <typename Expr>
+    struct actor
     {
         return_type
         operator()() const;
@@ -31,64 +39,10 @@ that supplies the smarts to evaluate the resulting function.
 The actor class accepts the arguments through a set of function call operators
 for 0 to `PHOENIX_LIMIT` arities (Don't worry about the details, for now. Note, for example,
 that we skimp over the details regarding `return_type`). The arguments
-are then forwarded to the actor's `Eval` for evaluation.
-]
+are then forwarded to the actor's `Expr` for evaluation.
 
-[section Concepts]
+[h2 TODO]
+add some notes about the extension possibilities
 
-The `Actor` is the main concept behind the library.
+[endsect]
 
-[section Actor]
-
-[heading Description]
-
-An Actor is way to define a phoenix expression or statement. Actors are TR1 function objects.
-An actor can accept 0 to `PHOENIX_LIMIT` arguments.
-
-[note You can set `PHOENIX_LIMIT`, the predefined maximum arity an
-actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
-
-[variablelist Notation
-    [[`a`]                        [An actor]]
-    [[`A`]                        [An actor type]]
-	 [[`expr0, expr1..., exprN`]   [Arbitrary proto expressions]]
-	 [[`Expr0, Expr1..., ExprN`]   [Arbitrary proto expressions types]]
-    [[`eval`]                     [phoenix expression evaluator]]
-    [[`env`]                      [Boost.Fusion sequence]]
-]
-
-[heading Valid Expressions]
-For any Actor the following expressions must be valid:
-
-[table
-    [[Expression] [Return type] [Type Requirements] [Run time Complexity]]
-	 [[`eval(a)`] [Any type] [] []] 
-	 [[`eval(a, env)`] [Any type] [][]] 
-	 [[`a(expr0, expr1..., exprN)`] [Boost.Proto expression] [][]]
-]
-
-[heading Result Type Expressions]
-
-[table
-    [[Expression] [Compile Time Complexity]]
-	 [[`boost::result_of<A(Expr0, Expr1..., ExprN)>::type`] []]
-]
-
-[heading Expression Semantics]
-
-[table
-    [[Expression] [Semantics]]
-	 [[`eval(a)`] [Evaluates the given phoenix expression tree, no environment given]]
-	 [[`eval(a, env)`] [Evaluates the given phoenix expression tree with a given environment]]
-	 [[`a(expr0, expr1..., exprN)`] [The phoenix expression tree]]
-]
-
-[heading Models]
-
-TODO
-
-[endsect] [/Actor]
-
-[endsect] [/Concepts]
-
-[endsect] [/Actors]

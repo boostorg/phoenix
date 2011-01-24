@@ -29,6 +29,6 @@ Say, for example, we wish to print all the elements that are greater than 5
 
 (See [@../../example/if.cpp if.cpp])
 
-[blurb __tip__ Learn more about statements [link phoenix.reference.modules.statement here.]]
+[blurb __tip__ Learn more about statements [link phoenix.modules.statement here.]]
 
 [endsect]
