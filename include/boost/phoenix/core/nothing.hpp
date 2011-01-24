@@ -22,41 +22,6 @@ namespace boost { namespace phoenix
     /////////////////////////////////////////////////////////////////////////////
     
     PHOENIX_DEFINE_EXPRESSION(null, (proto::terminal<mpl::void_>::type))
-	 namespace tag
-	 {
-	     struct nothing {};
-	 }
-
-	 namespace expression
-	 {
-	     struct nothing
-			  : expr<tag::nothing, proto::terminal<mpl::void_> >
-		  {
-		      typedef actor<
-				    typename proto::result_of::make_expr<
-						 tag::nothing
-					  , default_domain_with_basic_expr
-					  , mpl::void_
-					>::type
-					>
-					type;
-        
-				typedef
-                typename proto::unnary_expr<tag::nothing, proto::_>::proto_grammar
-                proto_grammar;
-
-				static type const make()
-				{
-					type const e = {{}};
-					return e;
-				}
-		  };
-	 }
-
-	 namespace rule
-	 {
-	     struct null : expression::null {};
-	 }
     
     struct null_eval
     {
@@ -73,7 +38,12 @@ namespace boost { namespace phoenix
         : proto::call<null_eval()>
     {};
 
-    expression::null::type const nothing = {};
+    template <typename Dummy>
+    struct is_nullary::when<rule::null, Dummy>
+        : proto::make<mpl::true_()>
+    {};
+
+    expression::null<mpl::void_>::type const nothing = {};
 }}
 
 #endif
