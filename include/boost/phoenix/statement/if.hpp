@@ -78,7 +78,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::if_, Dummy>
         : proto::call<
             if_else_eval(
-                _env
+                _context
               , proto::_child_c<0> // Cond
               , proto::_child_c<1> // Then
             )
@@ -89,7 +89,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::if_else, Dummy>
         : proto::call<
             if_else_eval(
-                _env
+                _context
               , proto::_child_c<0> // Cond
               , proto::_child_c<1> // Then
               , proto::_child_c<2> // Else

@@ -60,43 +60,10 @@ namespace boost { namespace phoenix
         BOOST_PHOENIX_GET_ENVIRONMENT(actions, 1)
     #undef BOOST_PHOENIX_GET_ENVIRONMENT
 
-
-        struct args_at
-        {
-            BOOST_PROTO_CALLABLE()
-
-            template <typename Sig>
-            struct result;
-
-            template <typename This, typename N, typename Env>
-            struct result<This(N, Env)>
-                : result<This(N, Env const&)>
-            {};
-
-            template <typename This, typename N, typename Env>
-            struct result<This(N, Env &)>
-                : fusion::result_of::at<
-                    typename boost::remove_reference<
-                        typename fusion::result_of::at<
-                            Env
-                          , mpl::int_<0>
-                        >::type
-                    >::type
-                  , typename proto::detail::uncvref<N>::type
-                >
-            {};
-
-            template <typename N, typename Env>
-            typename result<args_at(N, Env &)>::type
-            operator()(N const & n, Env& env) const
-            {
-                return proto::functional::at()(args()(env), n);
-            }
-        };
     }
 
-    struct _env
-        : proto::transform<_env>
+    struct _context
+        : proto::transform<_context>
     {
         template <typename Expr, typename State, typename Data>
         struct impl
@@ -114,6 +81,90 @@ namespace boost { namespace phoenix
             }
         };
     };
+
+    struct _env
+        : proto::transform<_env>
+    {
+        template <typename Expr, typename State, typename Data>
+        struct impl
+            : proto::transform_impl<Expr, State, Data>
+        {
+            typedef State result_type;
+
+            result_type operator()(
+                typename impl::expr_param
+              , typename impl::state_param s
+              , typename impl::data_param
+            ) const
+            {
+                return s;
+            }
+        };
+    };
+
+    template <typename Expr, typename State>
+    struct _env::impl<Expr, State, int>
+        : proto::transform_impl<Expr, State, int>
+    {
+            typedef
+                typename fusion::result_of::at_c<
+                    typename boost::remove_reference<State>::type
+                  , 0
+                >::type
+                result_type;
+
+            result_type operator()(
+                typename impl::expr_param
+              , typename impl::state_param s
+              , typename impl::data_param
+            ) const
+            {
+                return fusion::at_c<0>(s);
+            }
+    };
+
+    /*
+    struct _actions
+        : proto::transform<_actions>
+    {
+        template <typename Expr, typename State, typename Data>
+        struct impl
+            : proto::transform_impl<Expr, State, Data>
+        {
+            typedef Data result_type;
+
+            result_type operator()(
+                typename impl::expr_param
+              , typename impl::state_param
+              , typename impl::data_param d
+            ) const
+            {
+                return d;
+            }
+        };
+    };
+
+    template <typename Expr, typename State>
+    struct _actions::impl<Expr, State, int>
+        : proto::transform_impl<Expr, State, int>
+    {
+            typedef
+                typename fusion::result_of::at_c<
+                    typename boost::remove_reference<State>::type
+                  , 1
+                >::type
+                result_type;
+
+            result_type operator()(
+                typename impl::expr_param
+              , typename impl::state_param s
+              , typename impl::data_param
+            ) const
+            {
+                return fusion::at_c<1>(s);
+            }
+    };
+*/
 
     template <typename T, typename Enable = void>
     struct is_environment : fusion::traits::is_sequence<T> {};

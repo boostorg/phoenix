@@ -66,12 +66,12 @@ namespace boost { namespace phoenix
     
     template <typename Dummy>
     struct default_actions::when<rule::rethrow_, Dummy>
-        : proto::call<throw_eval(_env)>
+        : proto::call<throw_eval(_context)>
     {};
 
     template <typename Dummy>
     struct default_actions::when<rule::throw_, Dummy>
-        : proto::call<throw_eval(_env, proto::_child_c<0>)>
+        : proto::call<throw_eval(_context, proto::_child_c<0>)>
     {};
 
     expression::throw_<>::type const

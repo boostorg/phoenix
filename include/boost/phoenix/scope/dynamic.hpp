@@ -148,7 +148,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::dynamic_member, Dummy>
         : proto::call<
             dynamic_member_eval(
-                _env
+                _context
               , proto::_value(proto::_child_c<0>)
               , proto::_value(proto::_child_c<1>)
             )

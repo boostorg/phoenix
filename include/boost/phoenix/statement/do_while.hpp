@@ -37,7 +37,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::do_while, Dummy>
         : proto::call<
             do_while_eval(
-                _env
+                _context
               , proto::_child_c<0> // Cond
               , proto::_child_c<1> // Do
             )

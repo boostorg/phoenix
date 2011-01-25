@@ -37,8 +37,8 @@ namespace boost { namespace phoenix
     template <typename Dummy>
     struct default_actions::when<rule::reinterpret_cast_, Dummy>
         : proto::lazy<
-            reinterpret_cast_eval<evaluator(proto::_child_c<0>, _env)
-        >(_env, proto::_child_c<1>)>
+            reinterpret_cast_eval<evaluator(proto::_child_c<0>, _context)
+        >(_context, proto::_child_c<1>)>
     {};
 
     template <typename T, typename U>

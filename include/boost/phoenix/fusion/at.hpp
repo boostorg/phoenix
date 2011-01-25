@@ -26,7 +26,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::at_c, Dummy>
         : proto::call<
             proto::functional::at(
-                evaluator(proto::_child_c<1>, _env)
+                evaluator(proto::_child_c<1>, _context)
               , proto::_value(proto::_child_c<0>)
             )
         >

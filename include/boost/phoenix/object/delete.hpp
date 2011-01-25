@@ -45,13 +45,13 @@ namespace boost { namespace phoenix
         result_type
         operator()(Env& env, P const& p) const
         {
-            /*return*/ delete eval(p, env);
+            delete eval(p, env);
         }
     };
 
     template <typename Dummy>
     struct default_actions::when<rule::delete_, Dummy>
-        : proto::call<delete_eval(_env, proto::_child_c<0>)>
+        : proto::call<delete_eval(_context, proto::_child_c<0>)>
     {};
 
     template <typename P>

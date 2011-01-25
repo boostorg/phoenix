@@ -58,16 +58,14 @@ namespace boost { namespace phoenix
         {                                                                       \
             typedef                                                             \
                 typename boost::remove_reference<                               \
-                    typename boost::result_of<                                  \
-                        functional::args(typename Seq::env_type)                \
-                    >::type                                                     \
+                    typename fusion::result_of::at_c<typename Seq::env_type, 0>::type    \
                 >::type                                                         \
                 env_type;                                                       \
             typedef typename fusion::result_of::INTRINSIC<env_type>::type type; \
                                                                                 \
             static type call(Seq & seq)                                         \
             {                                                                   \
-                return fusion::INTRINSIC(seq);                                  \
+                return fusion::INTRINSIC(seq.env);                              \
             }                                                                   \
         }                                                                       \
         /**/
@@ -81,9 +79,7 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename boost::remove_reference<
-                    typename boost::result_of<
-                        functional::args(typename Seq::env_type)
-                    >::type
+                    typename fusion::result_of::at_c<typename Seq::env_type, 0>::type
                 >::type
                 env_type;
             typedef
@@ -96,16 +92,14 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename boost::remove_reference<
-                    typename boost::result_of<
-                        functional::args(typename Seq::env_type)
-                    >::type
+                    typename fusion::result_of::at_c<typename Seq::env_type, 0>::type
                 >::type
                 env_type;
             typedef typename fusion::result_of::at<env_type, N>::type type;
 
             static type call(Seq & seq)
             {
-                return fusion::at<N>(functional::args()(seq.env));
+                return fusion::at<N>(fusion::at_c<0>(seq.env));
             }
         };
     };

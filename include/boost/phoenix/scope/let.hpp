@@ -110,7 +110,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::let, Dummy>
-        : proto::call<let_eval(_env, proto::_child_c<0>, proto::_child_c<1>)>
+        : proto::call<let_eval(_context, proto::_child_c<0>, proto::_child_c<1>)>
     {};
 
     template <typename Locals = void, typename Dummy = void>
@@ -172,7 +172,7 @@ namespace boost { namespace phoenix
     struct is_nullary::when<rule::let, Dummy>
         : proto::make<
             mpl::and_<
-                detail::local_var_def_is_nullary(proto::_child_c<0>, _env)
+                detail::local_var_def_is_nullary(proto::_child_c<0>, _context)
               , evaluator(
                     proto::_child_c<1>
                   , fusion::vector2<

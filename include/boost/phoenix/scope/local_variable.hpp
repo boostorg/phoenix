@@ -208,7 +208,7 @@ namespace boost { namespace phoenix
               , proto::when<
                     rule::local_var_def
                   , evaluator(
-                        proto::_child_c<1>
+                        proto::_right
                       , fusion::vector2<
                             mpl::true_
                           , boost::phoenix::is_nullary
@@ -453,7 +453,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::local_variable, Dummy>
-        : proto::call<local_var_eval(proto::_value(proto::_child_c<0>), _env)>
+        : proto::call<local_var_eval(proto::_value(proto::_child_c<0>), _context)>
     {};
     
     namespace local_names

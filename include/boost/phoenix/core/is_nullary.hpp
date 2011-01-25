@@ -32,7 +32,7 @@ namespace boost { namespace phoenix
               , mpl::true_()
               , mpl::and_<
                     proto::_state
-                  , evaluator(proto::_, _env)
+                  , evaluator(proto::_, _context)
                 >()
             >
         {};
@@ -48,7 +48,7 @@ namespace boost { namespace phoenix
         : proto::lazy<
             result_of::is_nullary<custom_terminal<proto::_value> >(
                 proto::_
-              , _env
+              , _context
             )
         >
     {};

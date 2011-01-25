@@ -57,7 +57,7 @@ namespace boost { namespace phoenix
               , mpl::int_<0>
               , mpl::max<
                     proto::_state
-                  , evaluator(proto::_, _env)
+                  , evaluator(proto::_, _context)
                 >()
             >
         {};

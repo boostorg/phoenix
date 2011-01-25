@@ -169,7 +169,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::lambda, Dummy>
         : proto::call<
             lambda_eval(
-                _env
+                _context
               , proto::_value(proto::_child_c<0>)
               , proto::_child_c<1>
               , proto::_child_c<2>
@@ -238,7 +238,7 @@ namespace boost { namespace phoenix
                     rule::local_var_def_list
                   , meta_grammar
                 >
-              , detail::local_var_def_is_nullary(proto::_child_c<0>, _env)// mpl::true_()//evaluator(proto::_child_c<1>, _env)
+              , detail::local_var_def_is_nullary(proto::_child_c<0>, _context)// mpl::true_()//evaluator(proto::_child_c<1>, _context)
             >
         >
     {};
@@ -435,14 +435,14 @@ namespace boost { namespace phoenix
         : proto::or_<
             proto::when<
                 expression::lambda_actor<meta_grammar>
-              , lambda_actor_eval(_env, proto::_child_c<0>)
+              , lambda_actor_eval(_context, proto::_child_c<0>)
             >
           , proto::when<
                 expression::lambda_actor<
                     rule::local_var_def_list
                   , meta_grammar
                 >
-              , lambda_actor_eval(_env, proto::_child_c<0>, proto::_child_c<1>)
+              , lambda_actor_eval(_context, proto::_child_c<0>, proto::_child_c<1>)
             >
         >
     {};

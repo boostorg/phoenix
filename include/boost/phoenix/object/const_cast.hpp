@@ -38,8 +38,8 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::const_cast_, Dummy>
         : proto::lazy<
             const_cast_eval<
-                evaluator(proto::_child_c<0>, _env)
-            >(_env, proto::_child_c<1>)
+                evaluator(proto::_child_c<0>, _context)
+            >(_context, proto::_child_c<1>)
         >
     {};
 

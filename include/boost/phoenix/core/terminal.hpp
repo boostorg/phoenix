@@ -45,7 +45,7 @@ namespace boost { namespace phoenix
 
     template <typename Grammar>
     struct default_actions::when<rule::custom_terminal, Grammar>
-        : proto::lazy<custom_terminal<proto::_value>(proto::_value, _env)>
+        : proto::lazy<custom_terminal<proto::_value>(proto::_value, _context)>
     {};
 
     namespace detail
@@ -59,10 +59,9 @@ namespace boost { namespace phoenix
     template <typename Grammar>
     struct default_actions::when<rule::argument, Grammar>
         : proto::call<
-            functional::args_at(
-                //mpl::prior<boost::is_placeholder<proto::_value>()>()
-                detail::placeholder_idx<boost::is_placeholder<proto::_value>()>()
-              , _env
+            proto::functional::at(
+                _env
+              , detail::placeholder_idx<boost::is_placeholder<proto::_value>()>()
             )
         >
     {};

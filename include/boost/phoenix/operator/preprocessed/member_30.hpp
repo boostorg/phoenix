@@ -1332,6 +1332,6 @@ namespace boost { namespace phoenix
     };
     template <typename Dummy>
     struct default_actions::when<rule::mem_fun_ptr, Dummy>
-        : proto::call<mem_fun_ptr_eval(_env, proto::_)>
+        : proto::call<mem_fun_ptr_eval(_context, proto::_)>
     {};
 }}

@@ -49,7 +49,7 @@ namespace boost { namespace phoenix
                 >                                                               \
               , proto::lazy<                                                    \
                     new_eval<proto::_value(proto::_child_c<0>)>(                \
-                        _env                                                    \
+                        _context                                                  \
                       , BOOST_PP_ENUM_SHIFTED(                                  \
                             BOOST_PP_INC(N)                                     \
                           , PHOENIX_NEW_CHILD                                   \
@@ -68,7 +68,7 @@ namespace boost { namespace phoenix
               , proto::lazy<
                     new_eval<
                         proto::_value(proto::_child_c<0>)
-                    >(_env)
+                    >(_context)
                 >
             >
           , BOOST_PP_ENUM_SHIFTED(PHOENIX_COMPOSITE_LIMIT, PHOENIX_NEW_CALL, _)

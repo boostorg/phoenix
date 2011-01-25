@@ -25,21 +25,21 @@ namespace boost { namespace phoenix
         typedef void result_type;
 
         template <
-            typename Env
+            typename Context
           , typename Init
           , typename Cond
           , typename Step
           , typename Do>
         result_type
         operator()(
-            Env& env
+            Context& ctx
           , Init const& init
           , Cond const& cond
           , Step const& step
           , Do const& do_) const
         {
-            for(eval(init, env); eval(cond, env); eval(step, env))
-                eval(do_, env);
+            for(eval(init, ctx); eval(cond, ctx); eval(step, ctx))
+                eval(do_, ctx);
         }
     };
     
@@ -47,7 +47,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::for_, Dummy>
         : proto::call<
             for_eval(
-                _env
+                _context
               , proto::_child_c<0> // Cond
               , proto::_child_c<1> // Init
               , proto::_child_c<2> // Step

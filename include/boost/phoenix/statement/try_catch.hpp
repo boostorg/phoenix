@@ -109,7 +109,7 @@ namespace boost { namespace phoenix
                   BOOST_PP_ENUM_PARAMS(N, proto::_ BOOST_PP_INTERCEPT)          \
                 >                                                               \
                , try_catch_eval(                                                \
-                    _env                                                        \
+                    _context                                                        \
                   , BOOST_PP_ENUM(                                              \
                         N                                                       \
                       , PHOENIX_TRY_CATCH_CHILD                                 \
@@ -250,7 +250,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct is_nullary::when<rule::try_catch, Dummy>
-        : proto::call<detail::try_catch_is_nullary(proto::_, int(), _env)>
+        : proto::call<detail::try_catch_is_nullary(proto::_, int(), _context)>
     {};
 
     template <typename TryCatch, typename Exception>
