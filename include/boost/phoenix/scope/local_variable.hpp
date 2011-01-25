@@ -59,16 +59,16 @@ namespace boost { namespace phoenix
             template <typename Sig>
             struct result;
 
-            template <typename This, typename Expr, typename Env>
-            struct result<This(Expr&, Env)>
-                : result<This(Expr&, Env const&)>
+            template <typename This, typename Expr, typename Context>
+            struct result<This(Expr&, Context)>
+                : result<This(Expr&, Context const&)>
             {};
 
-            template <typename This, typename Expr, typename Env>
-            struct result<This(Expr&, Env &)>
+            template <typename This, typename Expr, typename Context>
+            struct result<This(Expr&, Context &)>
             {
                 typedef 
-                    typename evaluator::impl<Expr const &, Env &, int>::result_type
+                    typename evaluator::impl<Expr const &, Context &, int>::result_type
                     result_type;
                 typedef
                     typename mpl::eval_if<
@@ -81,31 +81,31 @@ namespace boost { namespace phoenix
                     type;
             };
 
-            template <typename Expr, typename Env>
-            typename result<local_eval(Expr const&, Env&)>::type
-            operator()(Expr const& expr, Env & env) const
+            template <typename Expr, typename Context>
+            typename result<local_eval(Expr const&, Context&)>::type
+            operator()(Expr const& expr, Context & ctx) const
             {
                 typedef
-                    typename result<local_eval(Expr const&, Env&)>::result_type
+                    typename result<local_eval(Expr const&, Context&)>::result_type
                     result_type;
 
                 return
                     this->make(
                         expr
-                      , env
+                      , ctx
                       , typename is_reference<result_type>::type()
                     );
             }
 
             private:
-                template <typename Expr, typename Env>
-                typename result<local_eval(Expr const&, Env&)>::type
-                make(Expr const& expr, Env & env, mpl::true_) const
+                template <typename Expr, typename Context>
+                typename result<local_eval(Expr const&, Context&)>::type
+                make(Expr const& expr, Context & ctx, mpl::true_) const
                 {
                     typedef
                         typename remove_reference<
                             typename result<
-                                local_eval(Expr const&, Env&)
+                                local_eval(Expr const&, Context&)
                             >::result_type
                         >::type
                         result_type;
@@ -113,30 +113,30 @@ namespace boost { namespace phoenix
                     return
                         this->make_ref(
                             expr
-                          , env
+                          , ctx
                           , typename is_const<result_type>::type()
                         );
                 }
                 
-                template <typename Expr, typename Env>
-                typename result<local_eval(Expr const&, Env&)>::type
-                make_ref(Expr const& expr, Env & env, mpl::true_) const
+                template <typename Expr, typename Context>
+                typename result<local_eval(Expr const&, Context&)>::type
+                make_ref(Expr const& expr, Context & ctx, mpl::true_) const
                 {
-                    return phoenix::cref(eval(expr, env));
+                    return phoenix::cref(eval(expr, ctx));
                 }
                 
-                template <typename Expr, typename Env>
-                typename result<local_eval(Expr const&, Env&)>::type
-                make_ref(Expr const& expr, Env & env, mpl::false_) const
+                template <typename Expr, typename Context>
+                typename result<local_eval(Expr const&, Context&)>::type
+                make_ref(Expr const& expr, Context & ctx, mpl::false_) const
                 {
-                    return phoenix::ref(eval(expr, env));
+                    return phoenix::ref(eval(expr, ctx));
                 }
                 
-                template <typename Expr, typename Env>
-                typename result<local_eval(Expr const&, Env&)>::type
-                make(Expr const& expr, Env & env, mpl::false_) const
+                template <typename Expr, typename Context>
+                typename result<local_eval(Expr const&, Context&)>::type
+                make(Expr const& expr, Context & ctx, mpl::false_) const
                 {
-                    return phoenix::val(eval(expr, env));
+                    return phoenix::val(eval(expr, ctx));
                 }
 
         };
@@ -178,11 +178,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct is_nullary::when<rule::local_variable, Dummy>
-        : proto::make<mpl::false_()>/*proto::if_<
-            is_scoped_environment<functional::args(_env)>()
-          , mpl::true_()
-          , mpl::false_()
-        >*/
+        : proto::make<mpl::false_()>
     {};
 
     namespace detail
@@ -202,6 +198,7 @@ namespace boost { namespace phoenix
                                 mpl::true_
                               , boost::phoenix::is_nullary
                             >()
+                          , int()
                         )
                     >()
                 >
@@ -213,6 +210,7 @@ namespace boost { namespace phoenix
                             mpl::true_
                           , boost::phoenix::is_nullary
                         >()
+                      , int()
                     )
                 >
             >
@@ -256,6 +254,7 @@ namespace boost { namespace phoenix
                       , evaluator(
                             proto::_right(proto::_right)
                           , proto::_state
+                          , int()
                         )
                       , find_local(
                             proto::_left
@@ -268,14 +267,14 @@ namespace boost { namespace phoenix
                     rule::local_var_def
                   , proto::if_<
                         proto::matches<proto::_left, proto::_data>()
-                      , evaluator(proto::_right, proto::_state)
+                      , evaluator(proto::_right, proto::_state, int())
                       , detail::local_var_not_found()
                     >
                 >
             >
         {};
 
-        template<typename This, typename Args, typename Env, typename Key>
+        template<typename This, typename Args, typename Context, typename Key>
         struct get_local_result_impl
             : mpl::eval_if<
                 is_same<
@@ -288,7 +287,7 @@ namespace boost { namespace phoenix
                         typename proto::detail::uncvref<
                             typename detail::find_local::impl<
                                 typename Args::locals_type &
-                              , Env
+                              , Context
                               , Key
                             >::result_type
                         >::type
@@ -298,7 +297,7 @@ namespace boost { namespace phoenix
                   , mpl::identity<
                         typename detail::find_local::impl<
                             typename Args::locals_type &
-                          , Env
+                          , Context
                           , Key
                         >::result_type
                     >
@@ -314,71 +313,65 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
         
-        template <typename This, typename Env>
-        struct result<This(Env)>
-            : result<This(Env const &)>
+        template <typename This, typename Context>
+        struct result<This(Context)>
+            : result<This(Context const &)>
         {};
 
-        template <typename This, typename Env>
-        struct result<This(Env &)>
+        template <typename This, typename Context>
+        struct result<This(Context &)>
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 env_type;
 
             typedef
                 typename mpl::eval_if<
                     is_scoped_environment<env_type>
-                  , detail::get_local_result_impl<This, env_type, Env, Key>
+                  , detail::get_local_result_impl<This, env_type, Context, Key>
                   , mpl::identity<detail::local_var_not_found>
                 >::type
                 type;
         };
 
-        template <typename Env>
-        typename result<get_local<Key>(Env&)>::type
-        operator()(Env &env) const
+        template <typename Context>
+        typename result<get_local<Key>(Context&)>::type
+        operator()(Context &ctx) const
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 env_type;
 
             return this->evaluate(
-                env
+                ctx
               , typename is_scoped_environment<env_type>::type()
             );
         }
 
         private:
             // is a scoped environment
-            template <typename Env>
-            typename result<get_local<Key>(Env&)>::type
-            evaluate(Env & env, mpl::true_) const
+            template <typename Context>
+            typename result<get_local<Key>(Context&)>::type
+            evaluate(Context & ctx, mpl::true_) const
             {
                 typedef
                     typename proto::detail::uncvref<
-                        typename functional::args::result<
-                            functional::args(Env)
-                        >::type
+                        typename result_of::env<Context>::type
                     >::type
                     env_type;
 
                 return
                     this->evaluate_scoped(
-                        env
+                        ctx
                       , typename is_same<
                             typename proto::detail::uncvref<
                                 typename detail::find_local::impl<
                                     typename env_type::locals_type
-                                  , Env &
+                                  , Context &
                                   , Key
                                 >::result_type
                             >::type
@@ -390,31 +383,31 @@ namespace boost { namespace phoenix
 
             // is a scoped environment
             // --> we need to look in the outer environment
-            template <typename Env>
-            typename result<get_local<Key>(Env&)>::type
-            evaluate_scoped(Env & env, mpl::false_) const
+            template <typename Context>
+            typename result<get_local<Key>(Context&)>::type
+            evaluate_scoped(Context & ctx, mpl::false_) const
             {
                 Key k;
                 return
                     detail::find_local()(
-                        functional::args()(env).locals
-                      , env
+                        env(ctx).locals
+                      , ctx
                       , k
                     );
             }
             
             // is a scoped environment
             // --> we have the local in our environment
-            template <typename Env>
-            typename result<get_local<Key>(Env&)>::type
-            evaluate_scoped(Env & env, mpl::true_) const
+            template <typename Context>
+            typename result<get_local<Key>(Context&)>::type
+            evaluate_scoped(Context & ctx, mpl::true_) const
             {
-                return get_local<Key>()(functional::args()(env).outer_env);
+                return get_local<Key>()(env(ctx).outer_env);
             }
             
-            template <typename Env>
-            typename result<get_local<Key>(Env&)>::type
-            evaluate(Env & env, mpl::false_) const
+            template <typename Context>
+            typename result<get_local<Key>(Context&)>::type
+            evaluate(Context & ctx, mpl::false_) const
             {
                 return detail::local_var_not_found();
             }
@@ -427,8 +420,8 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Local, typename Env>
-        struct result<This(Local &, Env)>
+        template <typename This, typename Local, typename Context>
+        struct result<This(Local &, Context)>
         {
             typedef
                 typename expression::local_variable<Local>::type
@@ -436,18 +429,18 @@ namespace boost { namespace phoenix
 
             typedef get_local<lookup_grammar> get_local_type;
             typedef
-                typename get_local_type::template result<get_local_type(Env)>::type
+                typename get_local_type::template result<get_local_type(Context)>::type
                 type;
         };
 
-        template <typename Local, typename Env>
-        typename result<local_var_eval(Local const &, Env&)>::type
-        operator()(Local & local, Env & env)
+        template <typename Local, typename Context>
+        typename result<local_var_eval(Local const &, Context&)>::type
+        operator()(Local & local, Context & ctx)
         {
             typedef
                 typename expression::local_variable<Local>::type
                 lookup_grammar;
-            return get_local<lookup_grammar>()(env);
+            return get_local<lookup_grammar>()(ctx);
         }
     };
 

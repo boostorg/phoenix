@@ -28,14 +28,12 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Env, typename Locals, typename Let>
-        struct result<This(Env, Locals &, Let &)>
+        template <typename This, typename Context, typename Locals, typename Let>
+        struct result<This(Context, Locals &, Let &)>
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        functional::actions(Env)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
@@ -44,34 +42,35 @@ namespace boost { namespace phoenix
                     typename boost::result_of<
                         rule::local_var_def_list(
                             Locals const &
-                          , Env
+                          , Context
                         )
                     >::type
                 >::type
                 locals_type;
 
             typedef
-                typename boost::result_of<
-                    evaluator(
-                        Let const &
-                      , fusion::vector2<
-                            scoped_environment<Env, Env, locals_type> &
-                          , actions_type
-                        > &
-                    )
-                >::type
+                typename evaluator::impl<
+                    Let const &
+                  , fusion::vector2<
+                        scoped_environment<
+                            Context
+                          , Context
+                          , locals_type
+                        >
+                      , actions_type
+                    >
+                  , int
+                >::result_type
                 type;
         };
 
-        template <typename Env, typename Locals, typename Let>
-        typename result<let_eval(Env&, Locals const &, Let const &)>::type
-        operator()(Env & env, Locals const & locals, Let const & let) const
+        template <typename Context, typename Locals, typename Let>
+        typename result<let_eval(Context&, Locals const &, Let const &)>::type
+        operator()(Context & ctx, Locals const & locals, Let const & let) const
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        functional::actions(Env &)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
@@ -80,7 +79,7 @@ namespace boost { namespace phoenix
                     typename boost::result_of<
                         rule::local_var_def_list(
                             Locals &
-                          , Env &
+                          , Context &
                         )
                     >::type
                 >::type
@@ -89,22 +88,22 @@ namespace boost { namespace phoenix
             locals_type l = 
                    rule::local_var_def_list()(
                       locals
-                    , env
+                    , ctx
                     );
 
-            scoped_environment<Env, Env, locals_type&>
+            scoped_environment<Context, Context, locals_type&>
                 scoped_env(
-                    env
-                  , env
+                    ctx
+                  , ctx
                   , l
                 );
 
             fusion::vector2<
-                scoped_environment<Env, Env, locals_type &> &
+                scoped_environment<Context, Context, locals_type &> &
               , actions_type
-            > new_env(scoped_env, functional::actions()(env));
+            > new_ctx(scoped_env, actions(ctx));
 
-            return eval(let, new_env);
+            return eval(let, new_ctx);
         }
     };
 
@@ -172,13 +171,14 @@ namespace boost { namespace phoenix
     struct is_nullary::when<rule::let, Dummy>
         : proto::make<
             mpl::and_<
-                detail::local_var_def_is_nullary(proto::_child_c<0>, _context)
+                detail::local_var_def_is_nullary(proto::_child_c<0>, _context, int())
               , evaluator(
                     proto::_child_c<1>
                   , fusion::vector2<
                         mpl::true_
                       , detail::scope_is_nullary_actions
                     >()
+                  , int()
                 )
             >()
         >

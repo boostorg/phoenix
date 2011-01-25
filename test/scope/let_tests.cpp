@@ -50,7 +50,7 @@ main()
             (x) == x
         );
     }
-
+/*
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -182,6 +182,7 @@ main()
         let(_a = _1)[_a = _2](i, 2);
         BOOST_TEST(i == 2);
     }
+    */
 
     return boost::report_errors();
 }

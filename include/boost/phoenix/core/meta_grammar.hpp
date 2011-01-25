@@ -41,8 +41,8 @@ namespace boost { namespace phoenix
             : proto::call<
                 meta_grammar(
                     proto::_
-                  , functional::args(proto::_state)
-                  , functional::actions(proto::_state)
+                  , _env
+                  , _actions
                 )
             >::impl<Expr, State, Data>
         {};

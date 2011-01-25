@@ -32,7 +32,7 @@ namespace boost { namespace phoenix
               , mpl::true_()
               , mpl::and_<
                     proto::_state
-                  , evaluator(proto::_, _context)
+                  , evaluator(proto::_, _context, int())
                 >()
             >
         {};
@@ -97,7 +97,7 @@ namespace boost { namespace phoenix
         
         template <typename T>
         struct is_nullary<custom_terminal<T>, typename enable_if<is_actor<T> >::type>
-            : proto::call<evaluator(proto::_value)>
+            : proto::call<evaluator(proto::_value, _context, int())>
         {};
     }
 

@@ -32,54 +32,50 @@ namespace boost { namespace phoenix
 
         template <
             typename This
-          , typename Env
+          , typename Context
           , typename OuterEnv
           , typename Locals
           , typename Lambda
         >
-        struct result<This(Env, OuterEnv, Locals, Lambda)>
-            : result<This(Env const &, OuterEnv &, Locals &, Lambda &)>
+        struct result<This(Context, OuterEnv, Locals, Lambda)>
+            : result<This(Context const &, OuterEnv &, Locals &, Lambda &)>
         {};
 
         template <
             typename This
-          , typename Env
+          , typename Context
           , typename OuterEnv
           , typename Locals
           , typename Lambda
         >
-        struct result<This(Env, OuterEnv &, Locals &, Lambda &)>
-            : result<This(Env const &, OuterEnv &, Locals &, Lambda &)>
+        struct result<This(Context, OuterEnv &, Locals &, Lambda &)>
+            : result<This(Context const &, OuterEnv &, Locals &, Lambda &)>
         {};
 
         template <
             typename This
-          , typename Env
+          , typename Context
           , typename OuterEnv
           , typename Locals
           , typename Lambda
         >
-        struct result<This(Env &, OuterEnv &, Locals &, Lambda &)>
+        struct result<This(Context &, OuterEnv &, Locals &, Lambda &)>
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::actions::result<
-                        functional::actions(Env)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
             typedef
-                fusion::vector2<args_type, actions_type>
-                env_type;
+                typename result_of::context<args_type, actions_type>::type
+                ctx_type;
 
             typedef
                 typename proto::detail::uncvref<Locals>::type
@@ -90,29 +86,29 @@ namespace boost { namespace phoenix
                 outer_env_type;
 
             typedef
-                scoped_environment<env_type, outer_env_type const, locals_type const>
+                scoped_environment<ctx_type, outer_env_type const, locals_type const>
                 scoped_env;
 
             typedef
-                fusion::vector2<scoped_env, actions_type&>
-                new_env_type;
+                typename result_of::context<scoped_env, actions_type&>::type
+                new_ctx_type;
 
             typedef
-                typename evaluator::impl<Lambda const &, new_env_type&, int>::result_type
+                typename evaluator::impl<Lambda const &, new_ctx_type&, int>::result_type
                 type;
         };
         
         template <
-            typename Env
+            typename Context
           , typename OuterEnv
           , typename Locals
           , typename Lambda
         >
         typename result<
-            lambda_eval(Env &, OuterEnv const&, Locals &, Lambda &)
+            lambda_eval(Context &, OuterEnv const&, Locals &, Lambda &)
         >::type
         operator()(
-            Env& env
+            Context& ctx
           , OuterEnv const & outer_env
           , Locals const& locals
           , Lambda const& lambda
@@ -120,23 +116,19 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::actions::result<
-                        functional::actions(Env)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
             typedef
                 fusion::vector2<args_type, actions_type>
-                env_type;
+                ctx_type;
             
             typedef
                 typename proto::detail::uncvref<Locals>::type
@@ -147,10 +139,10 @@ namespace boost { namespace phoenix
                 outer_env_type;
 
             typedef
-                scoped_environment<env_type, OuterEnv const, locals_type const>
+                scoped_environment<ctx_type, OuterEnv const, locals_type const>
                 scoped_env_type;
 
-            env_type e(functional::args()(env), functional::actions()(env));
+            ctx_type e(env(ctx), actions(ctx));
 
             scoped_env_type
                 scoped_env(
@@ -160,8 +152,8 @@ namespace boost { namespace phoenix
                 );
 
             fusion::vector2<scoped_env_type, actions_type>
-                new_env(scoped_env, functional::actions()(env));
-            return eval(lambda, new_env);
+                new_ctx(scoped_env, actions(ctx));
+            return eval(lambda, new_ctx);
         }
     };
 
@@ -238,7 +230,7 @@ namespace boost { namespace phoenix
                     rule::local_var_def_list
                   , meta_grammar
                 >
-              , detail::local_var_def_is_nullary(proto::_child_c<0>, _context)// mpl::true_()//evaluator(proto::_child_c<1>, _context)
+              , detail::local_var_def_is_nullary(proto::_child_c<0>, _context, int())// mpl::true_()//evaluator(proto::_child_c<1>, _context)
             >
         >
     {};
@@ -254,141 +246,117 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Env, typename Lambda>
-        struct result<This(Env, Lambda &)>
+        template <typename This, typename Context, typename Lambda>
+        struct result<This(Context, Lambda &)>
         {
             typedef
-                typename proto::detail::uncvref<Env>::type
-                env_type;
-
-            typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::actions::result<
-                        functional::actions(Env)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
             typedef
                 fusion::vector2<args_type, actions_type>
-                outer_env_type;
+                outer_ctx_type;
 
             typedef
                 typename expression::lambda<
-                    outer_env_type
+                    outer_ctx_type
                   , mpl::void_
                   , typename proto::detail::uncvref<Lambda>::type
                 >::type
                 type;
         };
 
-        template <typename This, typename Env, typename Locals, typename Lambda>
-        struct result<This(Env, Locals, Lambda)>
+        template <typename This, typename Context, typename Locals, typename Lambda>
+        struct result<This(Context, Locals, Lambda)>
         {
             typedef
                 typename proto::detail::uncvref<
                     typename rule::local_var_def_list::impl<
                         typename proto::detail::uncvref<Locals>::type &
-                      , Env
+                      , Context
                       , int
                     >::result_type
                 >::type
                 locals_type;
 
             typedef
-                typename proto::detail::uncvref<Env>::type
-                env_type;
-
-            typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::actions::result<
-                        functional::actions(Env)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
             typedef
                 fusion::vector2<args_type, actions_type>
-                outer_env_type;
+                outer_ctx_type;
             
             typedef
                 typename expression::lambda<
-                    outer_env_type
+                    outer_ctx_type
                   , locals_type
                   , typename proto::detail::uncvref<Lambda>::type
                 >::type const
                 type;
         };
 
-        template <typename Env, typename Lambda>
-        typename result<lambda_actor_eval(Env&, Lambda const&)>::type
-        operator()(Env & env, Lambda const& lambda) const
+        template <typename Context, typename Lambda>
+        typename result<lambda_actor_eval(Context&, Lambda const&)>::type
+        operator()(Context & ctx, Lambda const& lambda) const
         {
             typedef
-                typename proto::detail::uncvref<Env>::type
-                env_type;
-
-            typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::actions::result<
-                        functional::actions(Env)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
             typedef
                 fusion::vector2<args_type, actions_type>
-                outer_env_type;
+                outer_ctx_type;
 
-            outer_env_type
-                outer_env(fusion::at_c<0>(env), fusion::at_c<1>(env));
+            outer_ctx_type
+                outer_ctx(fusion::at_c<0>(ctx), fusion::at_c<1>(ctx));
 
             mpl::void_ t;
             return
                 expression::
-                    lambda<outer_env_type, mpl::void_, Lambda>::
-                        make(outer_env, t, lambda);
+                    lambda<outer_ctx_type, mpl::void_, Lambda>::
+                        make(outer_ctx, t, lambda);
         }
 
         template <
-            typename Env
+            typename Context
           , typename Locals
           , typename Lambda
         >
         typename result<
-            lambda_actor_eval(Env&, Locals const&, Lambda const&)
+            lambda_actor_eval(Context&, Locals const&, Lambda const&)
         >::type
-        operator()(Env & env, Locals const& locals, Lambda const& lambda) const
+        operator()(Context & ctx, Locals const& locals, Lambda const& lambda) const
         {
             typedef
                 typename proto::detail::uncvref<
                     typename rule::local_var_def_list::impl<
                         Locals &
-                      , Env
+                      , Context
                       , int
                     >::result_type
                 >::type
@@ -397,36 +365,32 @@ namespace boost { namespace phoenix
             locals_type l = 
                    rule::local_var_def_list()(
                       locals
-                    , env
+                    , ctx
                     );
 
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::args::result<
-                        functional::args(Env)
-                    >::type
+                    typename result_of::env<Context>::type
                 >::type
                 args_type;
 
             typedef
                 typename proto::detail::uncvref<
-                    typename functional::actions::result<
-                        functional::actions(Env)
-                    >::type
+                    typename result_of::actions<Context>::type
                 >::type
                 actions_type;
 
             typedef
                 fusion::vector2<args_type, actions_type>
-                outer_env_type;
+                outer_ctx_type;
 
-            outer_env_type
-                outer_env(fusion::at_c<0>(env), fusion::at_c<1>(env));
+            outer_ctx_type
+                outer_ctx(fusion::at_c<0>(ctx), fusion::at_c<1>(ctx));
 
             return
                 expression::
-                    lambda<outer_env_type, locals_type, Lambda>::
-                        make(outer_env, l, lambda);
+                    lambda<outer_ctx_type, locals_type, Lambda>::
+                        make(outer_ctx, l, lambda);
         }
     };
 

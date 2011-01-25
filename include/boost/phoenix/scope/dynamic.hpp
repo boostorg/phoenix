@@ -73,19 +73,19 @@ namespace boost { namespace phoenix
     {
         typedef typename DynamicScope::tuple_type tuple_type;
 
-        dynamic_frame(DynamicScope const& scope)
+        dynamic_frame(DynamicScope const& s)
             : tuple()
-            , save(scope.frame)
-            , scope(scope)
+            , save(s.frame)
+            , scope(s)
         {
             scope.frame = this;
         }
 
         template <typename Tuple>
-        dynamic_frame(DynamicScope const& scope, Tuple const& init)
+        dynamic_frame(DynamicScope const& s, Tuple const& init)
             : tuple(init)
-            , save(scope.frame)
-            , scope(scope)
+            , save(s.frame)
+            , scope(s)
         {
             scope.frame = this;
         }
@@ -115,8 +115,8 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Env, typename N, typename Scope>
-        struct result<This(Env, N, Scope)>
+        template <typename This, typename N, typename Scope>
+        struct result<This(N, Scope)>
         {
             typedef
                 typename boost::remove_pointer<
@@ -136,9 +136,9 @@ namespace boost { namespace phoenix
 
         };
 
-        template <typename Env, typename N, typename Scope>
-        typename result<dynamic_member_eval(Env, N, Scope)>::type
-        operator()(Env & env, N, Scope s) const
+        template <typename N, typename Scope>
+        typename result<dynamic_member_eval(N, Scope)>::type
+        operator()(N, Scope s) const
         {
             return fusion::at_c<N::value>(s->frame->data());
         }
@@ -148,8 +148,7 @@ namespace boost { namespace phoenix
     struct default_actions::when<rule::dynamic_member, Dummy>
         : proto::call<
             dynamic_member_eval(
-                _context
-              , proto::_value(proto::_child_c<0>)
+                proto::_value(proto::_child_c<0>)
               , proto::_value(proto::_child_c<1>)
             )
         >

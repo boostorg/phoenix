@@ -139,16 +139,16 @@ namespace boost { namespace phoenix
             : proto::or_<
                 proto::when<
                     rule::catch_all
-                  , evaluator(proto::_child_c<0>, proto::_data)
+                  , evaluator(proto::_child_c<0>, proto::_data, int())
                 >
               , proto::when<
                     rule::catch_
-                  , evaluator(proto::_child_c<1>, proto::_data)
+                  , evaluator(proto::_child_c<1>, proto::_data, int())
                 >
               , proto::when<
                     rule::try_catch
                   , mpl::and_<
-                        evaluator(proto::_child_c<0>, proto::_data)
+                        evaluator(proto::_child_c<0>, proto::_data, int())
                       , proto::fold<
                             proto::functional::pop_front(proto::_)
                           , mpl::true_()
