@@ -1,3 +1,11 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2005 Dan Marsden
+    Copyright (C) 2001-2010 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
 
 [section Core]
 
@@ -23,11 +31,11 @@ us. For instance:
     add(arg1, 6)
 
 Passing a second argument, `6`, an `expression::value<T>::type` is implicitly created
-behind the scenes. This is also equivalent to:
+behind the scenes. This is also equivalent to `add(arg1, val(6))`.
 
-    add(arg1, val(6))
-
-`val(x)` generates an `expression::value<T>::type` where `T` is the type of `x`. In most
+    val(v)
+    
+generates an `expression::value<T>::type` where `T` is the type of `x`. In most
 cases, there's no need to explicitly use `val`, but, as we'll see later on,
 there are situations where this is unavoidable.
 
@@ -68,7 +76,11 @@ This is similar to `expression::value<T>::type` befor but instead holds a refere
 variable.
 
 We normally don't instantiate `expression::reference<T>::type` objects directly. Instead we
-use `ref`. For example (where `i` is an `int` variable):
+use:
+
+    ref(v)
+
+For example (where `i` is an `int` variable):
 
     add_assign(ref(i), 2)
 
@@ -83,14 +95,14 @@ the references's identity. Example:
 
 prints out "3 Hello World"
 
-[endsect]
 
-[section Constant References]
+[heading Constant References]
 
-
-    #include <boost/phoenix/core/reference.hpp>
-
-Another free function `cref(cv)` may also be used. `cref(cv)` creates an
+Another free function
+    
+    cref(cv)
+    
+may also be used. `cref(cv)` creates an
 `expression::reference<T const>::type` object. This is similar to `expression::value<T>::type` but
 when the data to be passed as argument to a function is heavy and expensive to
 copy by value, the `cref(cv)` offers a lighter alternative.
@@ -116,15 +128,22 @@ maximum).
 
 Here are some sample preset definitions of `arg1`..`argN`
 
-    expression::argument<0>::type const arg1 = {};
-    expression::argument<1>::type const arg2 = {};
-    expression::argument<2>::type const arg3 = {};
+    namespace placeholders
+    {
+        expression::argument<0>::type const arg1 = {};
+        expression::argument<1>::type const arg2 = {};
+        expression::argument<2>::type const arg3 = {};
+    }
 
 and its __bll__ `_1`..`_N` style counterparts:
 
-    expression::argument<0>::type const _1 = {};
-    expression::argument<1>::type const _2 = {};
-    expression::argument<2>::type const _3 = {};
+
+    namespace placeholders
+    {
+        expression::argument<0>::type const _1 = {};
+        expression::argument<1>::type const _2 = {};
+        expression::argument<2>::type const _3 = {};
+    }
 
 [note You can set `PHOENIX_ARG_LIMIT`, the predefined maximum
 placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
@@ -210,8 +229,8 @@ used as callbacks.]
 
     #include <boost/phoenix/core/nothing.hpp>
 
-Finally, the `expression::null::type` does nothing; (a "bum", if you will :-).
-There's a sole `expression::null::type` instance named "nothing". This actor is
+Finally, the `expression::null<mpl::void_>::type` does nothing; (a "bum", if you will :-).
+There's a sole `expression::null<mpl::void_>::type` instance named "nothing". This actor is
 actually useful in situations where we don't want to do anything. (See
 [link phoenix.modules.statement.for_statement for_ Statement] for example).
 

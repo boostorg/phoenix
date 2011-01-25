@@ -14,7 +14,12 @@ implementation of Phoenix.
 
 The library is organized in four layers:
 
-[$images/organization.png]
+# Actor
+# Value, Reference, Arguments
+# Function, Operator, Object, Statement, Bind, Scope
+# STL, Fusion
+
+[/$images/organization.png]
 
 The modules are orthogonal, with no cyclic dependencies.
 Lower layers do not depend on higher layers. Modules in a layer do not depend on other modules in the same layer.

@@ -22,11 +22,35 @@ namespace boost { namespace phoenix
     // Functions
     /////////////////////////////////////////////////////////////////////////////
 
+    namespace tag
+    {
+        typedef proto::tag::function function;
+    }
+
     namespace expression
     {
-        using proto::function;
+
+        template <
+            typename F
+          , PHOENIX_typename_A_void(PHOENIX_LIMIT)
+          , typename Dummy = void
+        >
+        struct function;
+
+    #define PHOENIX_DEFINE_FUNCTION_EXPRESSION(_, N, __)                            \
+        template <typename F, PHOENIX_typename_A(N)>                                \
+        struct function<F, PHOENIX_A(N)>                                            \
+            : expr<tag::function, F, PHOENIX_A(N)>                                     \
+        {};                                                                         \
+
+        BOOST_PP_REPEAT_FROM_TO(
+            1
+          , PHOENIX_LIMIT
+          , PHOENIX_DEFINE_FUNCTION_EXPRESSION
+          , _
+        )
     }
-    
+
     namespace rule
     {
         struct function
@@ -42,27 +66,6 @@ namespace boost { namespace phoenix
         : proto::when<rule::function, proto::external_transform>
     {};
 
-    namespace result_of
-    {
-        template <
-            typename F
-          , PHOENIX_typename_A_void(PHOENIX_ACTOR_LIMIT)
-          , typename Dummy = void
-        >
-        struct function;
-
-        template <typename F>
-        struct function<F>
-          : proto::result_of::make_expr<
-                proto::tag::function
-              , phoenix_domain
-              , F>
-        {};
-
-        // Bring in the rest
-        #include <boost/phoenix/function/detail/function_result_of.hpp>
-    }
-
     // functor which returns our lazy function call extension
     template<typename F>
     struct function
@@ -76,12 +79,13 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        typename result_of::function<F>::type const
+        typename expression::function<F>::type const
         operator()() const
         {
-            return proto::make_expr<proto::tag::function, phoenix_domain>(f);
+            return expression::function<F>::make(f);
+            //return proto::make_expr<proto::tag::function, phoenix_domain>(f);
         }
-        
+
         // Bring in the rest
         #include <boost/phoenix/function/detail/function_operator.hpp>
 
@@ -92,7 +96,7 @@ namespace boost { namespace phoenix
 
     template<typename F>
     struct result_of<phoenix::function<F>()>
-      : phoenix::result_of::function<F>
+      : phoenix::expression::function<F>
     {};
 
 }

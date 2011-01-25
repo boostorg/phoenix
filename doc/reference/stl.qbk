@@ -78,7 +78,7 @@ absent. This will be provided in Phoenix's algorithm module.
 
 No support is provided here for lazy versions of `operator+=`, `operator[]` etc.
 Such operators are not specific to STL containers and lazy versions can
-therefore be found in [link phoenix.reference.modules.operator operators].
+therefore be found in [link phoenix.modules.operator operators].
 
 The following table describes the container functions and their semantics.
 

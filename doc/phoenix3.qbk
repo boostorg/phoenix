@@ -50,6 +50,7 @@
 [include organisation.qbk]
 [include actors.qbk]
 [include modules.qbk]
+[include inside.qbk]
 [/include advanced.qbk]
 [/include reference.qbk]
 

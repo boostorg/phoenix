@@ -43,7 +43,7 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////
     
     template <typename F>
-    typename result_of::function<F>::type
+    typename expression::function<F>::type
     bind(F f)
     {
         return function<F>(f)();
@@ -65,7 +65,7 @@ namespace boost { namespace phoenix
 #else
     
     template <typename F, PHOENIX_typename_A>
-    typename result_of::function<F, PHOENIX_A>::type const
+    typename expression::function<F, PHOENIX_A>::type const
     bind(F f, PHOENIX_A_const_ref_a)
     {
         return function<F>(f)(PHOENIX_a);
