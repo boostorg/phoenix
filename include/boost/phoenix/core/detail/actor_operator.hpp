@@ -57,11 +57,11 @@
         operator()(PHOENIX_A_ref_a)
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
-                    PHOENIX_A_ref
+                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                    const actor<Expr> *, PHOENIX_A_ref
                 >
                 args_type;
-            args_type args(PHOENIX_a);
+            args_type args(this, PHOENIX_a);
             fusion::vector2<args_type&, default_actions>
                 env(args, default_actions());
 
@@ -73,11 +73,11 @@
         operator()(PHOENIX_A_ref_a) const
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
-                    PHOENIX_A_ref
+                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                    const actor<Expr> *, PHOENIX_A_ref
                 >
                 args_type;
-            args_type args(PHOENIX_a);
+            args_type args(this, PHOENIX_a);
             fusion::vector2<args_type&, default_actions>
                 env(args, default_actions());
             
@@ -89,11 +89,11 @@
         operator()(PHOENIX_A_const_ref_a)
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
-                    PHOENIX_A_const_ref
+                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                    const actor<Expr> *, PHOENIX_A_const_ref
                 >
                 args_type;
-            args_type args(PHOENIX_a);
+            args_type args(this, PHOENIX_a);
             fusion::vector2<args_type&, default_actions>
                 env(args, default_actions());
             
@@ -105,11 +105,11 @@
         operator()(PHOENIX_A_const_ref_a) const
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<
-                    PHOENIX_A_const_ref
+                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                    const actor<Expr> *, PHOENIX_A_const_ref
                 >
                 args_type;
-            args_type args(PHOENIX_a);
+            args_type args(this, PHOENIX_a);
             fusion::vector2<args_type&, default_actions>
                 env(args, default_actions());
 
@@ -131,9 +131,9 @@
         operator()(PHOENIX_PERM_A_a(I)) const                                   \
         {                                                                       \
             typedef                                                             \
-                typename fusion::result_of::make_vector<PHOENIX_PERM_A(I)>::type\
+                typename fusion::result_of::make_vector<const actor<Expr> *, PHOENIX_PERM_A(I)>::type\
                 args_type;                                                      \
-            args_type args(PHOENIX_a);                                          \
+            args_type args(this, PHOENIX_a);                                          \
             fusion::vector2<                                                    \
                 args_type&, default_actions                                     \
             > env(args, default_actions());                                     \
@@ -146,9 +146,9 @@
         operator()(PHOENIX_PERM_A_a(I))                                         \
         {                                                                       \
             typedef                                                             \
-                typename fusion::result_of::make_vector<PHOENIX_PERM_A(I)>::type\
+                typename fusion::result_of::make_vector<const actor<Expr> *,PHOENIX_PERM_A(I)>::type\
                 args_type;                                                      \
-            args_type args(PHOENIX_a);                                          \
+            args_type args(this, PHOENIX_a);                                          \
             fusion::vector2<                                                    \
                 args_type&, default_actions                                     \
             > env(args, default_actions());                                     \

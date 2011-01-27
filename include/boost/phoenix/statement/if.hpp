@@ -36,7 +36,7 @@ namespace boost { namespace phoenix
     )
     
     PHOENIX_DEFINE_EXPRESSION(
-        if_else
+        if_else_statement
       , (meta_grammar) // Cond
         (meta_grammar) // Then
         (meta_grammar) // Else
@@ -86,7 +86,7 @@ namespace boost { namespace phoenix
     {};
     
     template <typename Dummy>
-    struct default_actions::when<rule::if_else, Dummy>
+    struct default_actions::when<rule::if_else_statement, Dummy>
         : proto::call<
             if_else_eval(
                 _context
@@ -107,10 +107,10 @@ namespace boost { namespace phoenix
             , then( then ) {}
 
         template<typename Else>
-        typename expression::if_else<Cond, Then, Else>::type const
+        typename expression::if_else_statement<Cond, Then, Else>::type const
         operator[](Else const & else_) const
         {
-            return expression::if_else<Cond, Then, Else>::make(cond, then, else_);
+            return expression::if_else_statement<Cond, Then, Else>::make(cond, then, else_);
         }
 
         Cond const & cond;

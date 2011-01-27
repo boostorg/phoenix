@@ -52,7 +52,7 @@ namespace boost { namespace phoenix
     {
         template <typename N>
         struct placeholder_idx
-            : mpl::int_<N::value - 1>
+            : mpl::int_<N::value>
         {};
     }
     

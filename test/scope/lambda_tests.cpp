@@ -77,8 +77,8 @@ main()
 
     {
         int x = 1;
-        int y = lambda[_1]()(x);
-        BOOST_TEST(x == y);
+        //int y = lambda[_1]()(x);
+        //BOOST_TEST(x == y);
     }
     
     {
@@ -190,8 +190,8 @@ main()
     {
         int i = 0;
         int j = 2;
-        BOOST_TEST(lambda[let(_a = _1)[_a = _2]]()(i, j) == j);
-        BOOST_TEST(i == j);
+        //BOOST_TEST(lambda[let(_a = _1)[_a = _2]]()(i, j) == j);
+        //BOOST_TEST(i == j);
     }
 
     return boost::report_errors();

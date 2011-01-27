@@ -17,7 +17,7 @@
             typedef
                 typename evaluator::impl<
                     Expr const&
-                  , fusion::vector2<fusion::vector0<>&, default_actions>&
+                  , fusion::vector2<fusion::vector1<const actor<Expr> *>&, default_actions>&
                   , int
                 >::result_type
                 type;
@@ -49,7 +49,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector1<A0>
+                            fusion::vector2<const ::boost::phoenix::actor<Expr> *, A0>
                           , default_actions
                         >
                       , int
@@ -71,7 +71,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector2<A0 , A1>
+                            fusion::vector3<const ::boost::phoenix::actor<Expr> *, A0 , A1>
                           , default_actions
                         >
                       , int
@@ -93,7 +93,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector3<A0 , A1 , A2>
+                            fusion::vector4<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2>
                           , default_actions
                         >
                       , int
@@ -115,7 +115,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector4<A0 , A1 , A2 , A3>
+                            fusion::vector5<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3>
                           , default_actions
                         >
                       , int
@@ -137,7 +137,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector5<A0 , A1 , A2 , A3 , A4>
+                            fusion::vector6<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4>
                           , default_actions
                         >
                       , int
@@ -159,7 +159,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector6<A0 , A1 , A2 , A3 , A4 , A5>
+                            fusion::vector7<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5>
                           , default_actions
                         >
                       , int
@@ -181,7 +181,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector7<A0 , A1 , A2 , A3 , A4 , A5 , A6>
+                            fusion::vector8<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6>
                           , default_actions
                         >
                       , int
@@ -203,7 +203,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector8<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>
+                            fusion::vector9<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>
                           , default_actions
                         >
                       , int
@@ -225,7 +225,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector9<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>
+                            fusion::vector10<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>
                           , default_actions
                         >
                       , int
@@ -247,7 +247,7 @@
                     impl<
                         Expr const&
                       , fusion::vector2<
-                            fusion::vector10<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9>
+                            fusion::vector11<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9>
                           , default_actions
                         >
                       , int

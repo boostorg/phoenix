@@ -46,7 +46,7 @@
             typedef
                 typename evaluator::impl<
                     Expr const&
-                  , fusion::vector2<fusion::vector0<>&, default_actions>&
+                  , fusion::vector2<fusion::vector1<const actor<Expr> *>&, default_actions>&
                   , int
                 >::result_type
                 type;
@@ -90,8 +90,8 @@
                       , fusion::vector2<
                             BOOST_PP_CAT(
                                 fusion::vector
-                              , PHOENIX_ITERATION
-                            )<PHOENIX_A>
+                              , BOOST_PP_INC(PHOENIX_ITERATION)
+                            )<const ::boost::phoenix::actor<Expr> *, PHOENIX_A>
                           , default_actions
                         >
                       , int

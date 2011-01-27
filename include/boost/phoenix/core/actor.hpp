@@ -128,8 +128,8 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr>::type
         operator()()
         {
-            typedef fusion::vector0<> args_type;
-            args_type args;
+            typedef fusion::vector1<const actor<Expr> *> args_type;
+            args_type args(this);
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
             
             return eval(*this, env);
@@ -138,8 +138,8 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr>::type
         operator()() const
         {
-            typedef fusion::vector0<> args_type;
-            args_type args;
+            typedef fusion::vector1<const actor<Expr> *> args_type;
+            args_type args(this);
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
             typedef typename proto::domain_of<actor<Expr> >::type domain_type;
