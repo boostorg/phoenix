@@ -46,7 +46,10 @@
             typedef
                 typename evaluator::impl<
                     Expr const&
-                  , fusion::vector2<fusion::vector1<const actor<Expr> *>&, default_actions>&
+                  , fusion::vector2<
+						      fusion::vector1<const ::boost::phoenix::actor<Expr> *>
+                      , default_actions
+						  >
                   , int
                 >::result_type
                 type;

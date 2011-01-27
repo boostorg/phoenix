@@ -142,9 +142,6 @@ namespace boost { namespace phoenix
             args_type args(this);
             fusion::vector2<args_type&, default_actions> env(args, default_actions());
 
-            typedef typename proto::domain_of<actor<Expr> >::type domain_type;
-            typedef typename domain_type::proto_grammar grammar_type;
-
             return eval(*this, env);
         }
         

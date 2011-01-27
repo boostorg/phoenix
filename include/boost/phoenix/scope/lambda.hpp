@@ -183,6 +183,7 @@ namespace boost { namespace phoenix
                     mpl::true_
                   , detail::scope_is_nullary_actions
                 >()
+				  , int()
             )
         >
     {};
@@ -247,7 +248,7 @@ namespace boost { namespace phoenix
         struct result;
 
         template <typename This, typename Context, typename Lambda>
-        struct result<This(Context, Lambda &)>
+        struct result<This(Context, Lambda)>
         {
             typedef
                 typename proto::detail::uncvref<

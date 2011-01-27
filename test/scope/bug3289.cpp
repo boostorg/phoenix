@@ -20,15 +20,15 @@ using namespace boost::phoenix::local_names;
 
 int main()
 {
-    std::vector<double> u(11,1.0);
-    std::vector<double> w(11,2.0);
-    std::vector<double>::const_iterator it=w.begin();
+    std::vector<int> u(11,1);
+    std::vector<int> w(11,2);
+    std::vector<int>::const_iterator it=w.begin();
 
-    boost::phoenix::generate(ref(u), lambda(_a=*ref(it)++)[_a*2.0])();
+    boost::phoenix::generate(ref(u), lambda(_a=*ref(it)++)[_a*2])();
 
-    BOOST_TEST(std::accumulate(u.begin(), u.end(), 0.0) == 44.0);
+    BOOST_TEST(std::accumulate(u.begin(), u.end(), 0) == 44);
 
-    BOOST_TEST(lambda(_a=*ref(it)++)[_a*2.0]()() == 4.0);
+    BOOST_TEST(lambda(_a=*ref(it)++)[_a*2]()() == 4);
     
     return boost::report_errors();
 }

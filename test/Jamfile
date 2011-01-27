@@ -76,6 +76,7 @@ test-suite phoenix_scope :
     [ run scope/lambda_tests.cpp ] 
     [ run scope/let_tests.cpp ] 
     [ run scope/dynamic_tests.cpp ] 
+	 [ run scope/bug3289.cpp ]
     [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
     ;
 
@@ -116,6 +117,10 @@ test-suite phoenix_boost_bind_compatibility :
 	#[ run boost_bind_compatibility/bind_stdcall_test.cpp ]
     [ run boost_bind_compatibility/bind_test.cpp ]
 	 ;
+
+test-suite phoenix_regression :
+	[ run regression/bug4853.cpp ]
+	;
 
 test-suite phoenix_include :
 #    [ run include/bind_bind.cpp ]
