@@ -63,6 +63,14 @@
 
 #else
 
+// **FIXME**: why?
+#ifdef catch
+#undef catch
+#endif
+#ifdef try
+#undef try
+#endif
+
         template <typename Env, typename Try, PHOENIX_typename_A>
         typename boost::enable_if<
             proto::matches<
