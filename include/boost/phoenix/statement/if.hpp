@@ -51,26 +51,26 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
         
-        template<typename Env, typename Cond, typename Then>
+        template<typename Context, typename Cond, typename Then>
         result_type
-        operator()(Env & env, Cond const & cond, Then const & then) const
+        operator()(Context & ctx, Cond const & cond, Then const & then) const
         {
-            if( eval( cond, env ) )
-                eval( then, env );
+            if( eval( cond, ctx ) )
+                eval( then, ctx );
         }
         
-        template<typename Env, typename Cond, typename Then, typename Else>
+        template<typename Context, typename Cond, typename Then, typename Else>
         result_type
         operator()(
-              Env & env
+              Context & ctx
             , Cond const & cond
             , Then const & then
             , Else const & else_) const
         {
-            if( eval( cond, env ) )
-                eval( then, env );
+            if( eval( cond, ctx ) )
+                eval( then, ctx );
             else
-                eval( else_, env );
+                eval( else_, ctx );
         }
     };
     

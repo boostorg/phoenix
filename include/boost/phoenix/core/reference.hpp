@@ -78,8 +78,8 @@ namespace boost { namespace phoenix
     {
         typedef T &result_type;
 
-        template <typename Env>
-        T &operator()(boost::reference_wrapper<T> r, Env &) const
+        template <typename Context>
+        T &operator()(boost::reference_wrapper<T> r, Context &) const
         {
             return r;
         }

@@ -23,13 +23,13 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
 
-        template <typename Env, typename Cond, typename Do>
+        template <typename Context, typename Cond, typename Do>
         result_type
-        operator()(Env& env, Cond const& cond, Do const& do_) const
+        operator()(Context& ctx, Cond const& cond, Do const& do_) const
         {
             do
-                eval(do_, env);
-            while (eval(cond, env));
+                eval(do_, ctx);
+            while (eval(cond, ctx));
         }
     };
     

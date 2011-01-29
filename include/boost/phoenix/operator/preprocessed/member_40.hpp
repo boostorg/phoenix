@@ -21,7 +21,7 @@ namespace boost { namespace phoenix
     namespace result_of
     {
         template <
-            typename Env
+            typename Context
           , typename Expr
           , long Arity = proto::arity_of<Expr>::value
         >
@@ -33,10 +33,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 2>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 2>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1;
             typedef
                 typename boost::result_of<
                     child1(
@@ -52,10 +52,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 3>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 3>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2;
             typedef
                 typename boost::result_of<
                     child1(
@@ -71,10 +71,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 4>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 4>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3;
             typedef
                 typename boost::result_of<
                     child1(
@@ -90,10 +90,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 5>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 5>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4;
             typedef
                 typename boost::result_of<
                     child1(
@@ -109,10 +109,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 6>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 6>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5;
             typedef
                 typename boost::result_of<
                     child1(
@@ -128,10 +128,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 7>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 7>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6;
             typedef
                 typename boost::result_of<
                     child1(
@@ -147,10 +147,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 8>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 8>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7;
             typedef
                 typename boost::result_of<
                     child1(
@@ -166,10 +166,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 9>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 9>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8;
             typedef
                 typename boost::result_of<
                     child1(
@@ -185,10 +185,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 10>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 10>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9;
             typedef
                 typename boost::result_of<
                     child1(
@@ -204,10 +204,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 11>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 11>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10;
             typedef
                 typename boost::result_of<
                     child1(
@@ -223,10 +223,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 12>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 12>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11;
             typedef
                 typename boost::result_of<
                     child1(
@@ -242,10 +242,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 13>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 13>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12;
             typedef
                 typename boost::result_of<
                     child1(
@@ -261,10 +261,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 14>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 14>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13;
             typedef
                 typename boost::result_of<
                     child1(
@@ -280,10 +280,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 15>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 15>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14;
             typedef
                 typename boost::result_of<
                     child1(
@@ -299,10 +299,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 16>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 16>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15;
             typedef
                 typename boost::result_of<
                     child1(
@@ -318,10 +318,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 17>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 17>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16;
             typedef
                 typename boost::result_of<
                     child1(
@@ -337,10 +337,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 18>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 18>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17;
             typedef
                 typename boost::result_of<
                     child1(
@@ -356,10 +356,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 19>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 19>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18;
             typedef
                 typename boost::result_of<
                     child1(
@@ -375,10 +375,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 20>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 20>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19;
             typedef
                 typename boost::result_of<
                     child1(
@@ -394,10 +394,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 21>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 21>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20;
             typedef
                 typename boost::result_of<
                     child1(
@@ -413,10 +413,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 22>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 22>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21;
             typedef
                 typename boost::result_of<
                     child1(
@@ -432,10 +432,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 23>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 23>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22;
             typedef
                 typename boost::result_of<
                     child1(
@@ -451,10 +451,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 24>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 24>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23;
             typedef
                 typename boost::result_of<
                     child1(
@@ -470,10 +470,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 25>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 25>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24;
             typedef
                 typename boost::result_of<
                     child1(
@@ -489,10 +489,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 26>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 26>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25;
             typedef
                 typename boost::result_of<
                     child1(
@@ -508,10 +508,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 27>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 27>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26;
             typedef
                 typename boost::result_of<
                     child1(
@@ -527,10 +527,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 28>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 28>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27;
             typedef
                 typename boost::result_of<
                     child1(
@@ -546,10 +546,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 29>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 29>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28;
             typedef
                 typename boost::result_of<
                     child1(
@@ -565,10 +565,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 30>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 30>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29;
             typedef
                 typename boost::result_of<
                     child1(
@@ -584,10 +584,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 31>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 31>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30;
             typedef
                 typename boost::result_of<
                     child1(
@@ -603,10 +603,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 32>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 32>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31;
             typedef
                 typename boost::result_of<
                     child1(
@@ -622,10 +622,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 33>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 33>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32;
             typedef
                 typename boost::result_of<
                     child1(
@@ -641,10 +641,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 34>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 34>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Env , int >::result_type child33;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Context , int >::result_type child33;
             typedef
                 typename boost::result_of<
                     child1(
@@ -660,10 +660,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 35>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 35>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Env , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Env , int >::result_type child34;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Context , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Context , int >::result_type child34;
             typedef
                 typename boost::result_of<
                     child1(
@@ -679,10 +679,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 36>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 36>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Env , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Env , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Env , int >::result_type child35;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Context , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Context , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Context , int >::result_type child35;
             typedef
                 typename boost::result_of<
                     child1(
@@ -698,10 +698,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 37>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 37>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Env , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Env , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Env , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Env , int >::result_type child36;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Context , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Context , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Context , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Context , int >::result_type child36;
             typedef
                 typename boost::result_of<
                     child1(
@@ -717,10 +717,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 38>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 38>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Env , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Env , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Env , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Env , int >::result_type child36; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 37>::type , Env , int >::result_type child37;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Context , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Context , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Context , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Context , int >::result_type child36; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 37>::type , Context , int >::result_type child37;
             typedef
                 typename boost::result_of<
                     child1(
@@ -736,10 +736,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 39>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 39>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Env , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Env , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Env , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Env , int >::result_type child36; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 37>::type , Env , int >::result_type child37; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 38>::type , Env , int >::result_type child38;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Context , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Context , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Context , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Context , int >::result_type child36; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 37>::type , Context , int >::result_type child37; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 38>::type , Context , int >::result_type child38;
             typedef
                 typename boost::result_of<
                     child1(
@@ -755,10 +755,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 40>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 40>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Env , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Env , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Env , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Env , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Env , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Env , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Env , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Env , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Env , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Env , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Env , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Env , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Env , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Env , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Env , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Env , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Env , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Env , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Env , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Env , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Env , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Env , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Env , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Env , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Env , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Env , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Env , int >::result_type child36; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 37>::type , Env , int >::result_type child37; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 38>::type , Env , int >::result_type child38; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 39>::type , Env , int >::result_type child39;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 10>::type , Context , int >::result_type child10; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 11>::type , Context , int >::result_type child11; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 12>::type , Context , int >::result_type child12; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 13>::type , Context , int >::result_type child13; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 14>::type , Context , int >::result_type child14; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 15>::type , Context , int >::result_type child15; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 16>::type , Context , int >::result_type child16; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 17>::type , Context , int >::result_type child17; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 18>::type , Context , int >::result_type child18; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 19>::type , Context , int >::result_type child19; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 20>::type , Context , int >::result_type child20; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 21>::type , Context , int >::result_type child21; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 22>::type , Context , int >::result_type child22; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 23>::type , Context , int >::result_type child23; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 24>::type , Context , int >::result_type child24; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 25>::type , Context , int >::result_type child25; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 26>::type , Context , int >::result_type child26; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 27>::type , Context , int >::result_type child27; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 28>::type , Context , int >::result_type child28; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 29>::type , Context , int >::result_type child29; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 30>::type , Context , int >::result_type child30; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 31>::type , Context , int >::result_type child31; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 32>::type , Context , int >::result_type child32; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 33>::type , Context , int >::result_type child33; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 34>::type , Context , int >::result_type child34; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 35>::type , Context , int >::result_type child35; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 36>::type , Context , int >::result_type child36; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 37>::type , Context , int >::result_type child37; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 38>::type , Context , int >::result_type child38; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 39>::type , Context , int >::result_type child39;
             typedef
                 typename boost::result_of<
                     child1(
@@ -774,21 +774,21 @@ namespace boost { namespace phoenix
         template<typename Sig>
         struct result;
         
-        template <typename This, typename Env, typename Expr>
-        struct result<This(Env, Expr const &)>
-            : result<This(Env const &, Expr const &)>
+        template <typename This, typename Context, typename Expr>
+        struct result<This(Context, Expr const &)>
+            : result<This(Context const &, Expr const &)>
         {};
-        template <typename This, typename Env, typename Expr>
-        struct result<This(Env &, Expr const &)>
-            : result_of::mem_fun_ptr_eval<Env, Expr>
+        template <typename This, typename Context, typename Expr>
+        struct result<This(Context &, Expr const &)>
+            : result_of::mem_fun_ptr_eval<Context, Expr>
         {};
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
-        operator()(Env & env, Expr const & expr) const
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
+        operator()(Context & ctx, Expr const & expr) const
         {
             return
                 this->evaluate(
-                    env
+                    ctx
                   , expr
                   , typename proto::arity_of<Expr>::type()
                 );
@@ -802,18 +802,18 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<2>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
                     
                 );
@@ -827,20 +827,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<3>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx)
                 );
         }
         
@@ -852,20 +852,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<4>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx)
                 );
         }
         
@@ -877,20 +877,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<5>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx)
                 );
         }
         
@@ -902,20 +902,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<6>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx)
                 );
         }
         
@@ -927,20 +927,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<7>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx)
                 );
         }
         
@@ -952,20 +952,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<8>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx)
                 );
         }
         
@@ -977,20 +977,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<9>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx)
                 );
         }
         
@@ -1002,20 +1002,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<10>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx)
                 );
         }
         
@@ -1027,20 +1027,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<11>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx)
                 );
         }
         
@@ -1052,20 +1052,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<12>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx)
                 );
         }
         
@@ -1077,20 +1077,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<13>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx)
                 );
         }
         
@@ -1102,20 +1102,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<14>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx)
                 );
         }
         
@@ -1127,20 +1127,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<15>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx)
                 );
         }
         
@@ -1152,20 +1152,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<16>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx)
                 );
         }
         
@@ -1177,20 +1177,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<17>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx)
                 );
         }
         
@@ -1202,20 +1202,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<18>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx)
                 );
         }
         
@@ -1227,20 +1227,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<19>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx)
                 );
         }
         
@@ -1252,20 +1252,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<20>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx)
                 );
         }
         
@@ -1277,20 +1277,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<21>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx)
                 );
         }
         
@@ -1302,20 +1302,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<22>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx)
                 );
         }
         
@@ -1327,20 +1327,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<23>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx)
                 );
         }
         
@@ -1352,20 +1352,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<24>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx)
                 );
         }
         
@@ -1377,20 +1377,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<25>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx)
                 );
         }
         
@@ -1402,20 +1402,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<26>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx)
                 );
         }
         
@@ -1427,20 +1427,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<27>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx)
                 );
         }
         
@@ -1452,20 +1452,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<28>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx)
                 );
         }
         
@@ -1477,20 +1477,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<29>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx)
                 );
         }
         
@@ -1502,20 +1502,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<30>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx)
                 );
         }
         
@@ -1527,20 +1527,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<31>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx)
                 );
         }
         
@@ -1552,20 +1552,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<32>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx)
                 );
         }
         
@@ -1577,20 +1577,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<33>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx)
                 );
         }
         
@@ -1602,20 +1602,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<34>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env) , eval(proto::child_c< 33 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx) , eval(proto::child_c< 33 >(expr), ctx)
                 );
         }
         
@@ -1627,20 +1627,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<35>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env) , eval(proto::child_c< 33 >(expr), env) , eval(proto::child_c< 34 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx) , eval(proto::child_c< 33 >(expr), ctx) , eval(proto::child_c< 34 >(expr), ctx)
                 );
         }
         
@@ -1652,20 +1652,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<36>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env) , eval(proto::child_c< 33 >(expr), env) , eval(proto::child_c< 34 >(expr), env) , eval(proto::child_c< 35 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx) , eval(proto::child_c< 33 >(expr), ctx) , eval(proto::child_c< 34 >(expr), ctx) , eval(proto::child_c< 35 >(expr), ctx)
                 );
         }
         
@@ -1677,20 +1677,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<37>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env) , eval(proto::child_c< 33 >(expr), env) , eval(proto::child_c< 34 >(expr), env) , eval(proto::child_c< 35 >(expr), env) , eval(proto::child_c< 36 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx) , eval(proto::child_c< 33 >(expr), ctx) , eval(proto::child_c< 34 >(expr), ctx) , eval(proto::child_c< 35 >(expr), ctx) , eval(proto::child_c< 36 >(expr), ctx)
                 );
         }
         
@@ -1702,20 +1702,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<38>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env) , eval(proto::child_c< 33 >(expr), env) , eval(proto::child_c< 34 >(expr), env) , eval(proto::child_c< 35 >(expr), env) , eval(proto::child_c< 36 >(expr), env) , eval(proto::child_c< 37 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx) , eval(proto::child_c< 33 >(expr), ctx) , eval(proto::child_c< 34 >(expr), ctx) , eval(proto::child_c< 35 >(expr), ctx) , eval(proto::child_c< 36 >(expr), ctx) , eval(proto::child_c< 37 >(expr), ctx)
                 );
         }
         
@@ -1727,20 +1727,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<39>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env) , eval(proto::child_c< 33 >(expr), env) , eval(proto::child_c< 34 >(expr), env) , eval(proto::child_c< 35 >(expr), env) , eval(proto::child_c< 36 >(expr), env) , eval(proto::child_c< 37 >(expr), env) , eval(proto::child_c< 38 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx) , eval(proto::child_c< 33 >(expr), ctx) , eval(proto::child_c< 34 >(expr), ctx) , eval(proto::child_c< 35 >(expr), ctx) , eval(proto::child_c< 36 >(expr), ctx) , eval(proto::child_c< 37 >(expr), ctx) , eval(proto::child_c< 38 >(expr), ctx)
                 );
         }
         
@@ -1752,20 +1752,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<40>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env) , eval(proto::child_c< 10 >(expr), env) , eval(proto::child_c< 11 >(expr), env) , eval(proto::child_c< 12 >(expr), env) , eval(proto::child_c< 13 >(expr), env) , eval(proto::child_c< 14 >(expr), env) , eval(proto::child_c< 15 >(expr), env) , eval(proto::child_c< 16 >(expr), env) , eval(proto::child_c< 17 >(expr), env) , eval(proto::child_c< 18 >(expr), env) , eval(proto::child_c< 19 >(expr), env) , eval(proto::child_c< 20 >(expr), env) , eval(proto::child_c< 21 >(expr), env) , eval(proto::child_c< 22 >(expr), env) , eval(proto::child_c< 23 >(expr), env) , eval(proto::child_c< 24 >(expr), env) , eval(proto::child_c< 25 >(expr), env) , eval(proto::child_c< 26 >(expr), env) , eval(proto::child_c< 27 >(expr), env) , eval(proto::child_c< 28 >(expr), env) , eval(proto::child_c< 29 >(expr), env) , eval(proto::child_c< 30 >(expr), env) , eval(proto::child_c< 31 >(expr), env) , eval(proto::child_c< 32 >(expr), env) , eval(proto::child_c< 33 >(expr), env) , eval(proto::child_c< 34 >(expr), env) , eval(proto::child_c< 35 >(expr), env) , eval(proto::child_c< 36 >(expr), env) , eval(proto::child_c< 37 >(expr), env) , eval(proto::child_c< 38 >(expr), env) , eval(proto::child_c< 39 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx) , eval(proto::child_c< 10 >(expr), ctx) , eval(proto::child_c< 11 >(expr), ctx) , eval(proto::child_c< 12 >(expr), ctx) , eval(proto::child_c< 13 >(expr), ctx) , eval(proto::child_c< 14 >(expr), ctx) , eval(proto::child_c< 15 >(expr), ctx) , eval(proto::child_c< 16 >(expr), ctx) , eval(proto::child_c< 17 >(expr), ctx) , eval(proto::child_c< 18 >(expr), ctx) , eval(proto::child_c< 19 >(expr), ctx) , eval(proto::child_c< 20 >(expr), ctx) , eval(proto::child_c< 21 >(expr), ctx) , eval(proto::child_c< 22 >(expr), ctx) , eval(proto::child_c< 23 >(expr), ctx) , eval(proto::child_c< 24 >(expr), ctx) , eval(proto::child_c< 25 >(expr), ctx) , eval(proto::child_c< 26 >(expr), ctx) , eval(proto::child_c< 27 >(expr), ctx) , eval(proto::child_c< 28 >(expr), ctx) , eval(proto::child_c< 29 >(expr), ctx) , eval(proto::child_c< 30 >(expr), ctx) , eval(proto::child_c< 31 >(expr), ctx) , eval(proto::child_c< 32 >(expr), ctx) , eval(proto::child_c< 33 >(expr), ctx) , eval(proto::child_c< 34 >(expr), ctx) , eval(proto::child_c< 35 >(expr), ctx) , eval(proto::child_c< 36 >(expr), ctx) , eval(proto::child_c< 37 >(expr), ctx) , eval(proto::child_c< 38 >(expr), ctx) , eval(proto::child_c< 39 >(expr), ctx)
                 );
         }
         

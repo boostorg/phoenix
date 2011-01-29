@@ -56,12 +56,7 @@ namespace boost { namespace phoenix
         template <typename Seq>                                                 \
         struct INTRINSIC                                                        \
         {                                                                       \
-            typedef                                                             \
-                typename boost::remove_reference<                               \
-                    typename fusion::result_of::at_c<typename Seq::env_type, 0>::type    \
-                >::type                                                         \
-                env_type;                                                       \
-            typedef typename fusion::result_of::INTRINSIC<env_type>::type type; \
+            typedef typename fusion::result_of::INTRINSIC<typename Seq::env_type>::type type; \
                                                                                 \
             static type call(Seq & seq)                                         \
             {                                                                   \
@@ -78,28 +73,18 @@ namespace boost { namespace phoenix
         struct value_at
         {
             typedef
-                typename boost::remove_reference<
-                    typename fusion::result_of::at_c<typename Seq::env_type, 0>::type
-                >::type
-                env_type;
-            typedef
-                typename fusion::result_of::value_at<env_type, N>::type
+                typename fusion::result_of::value_at<typename Seq::env_type, N>::type
                 type;
         };
         
         template <typename Seq, typename N>
         struct at
         {
-            typedef
-                typename boost::remove_reference<
-                    typename fusion::result_of::at_c<typename Seq::env_type, 0>::type
-                >::type
-                env_type;
-            typedef typename fusion::result_of::at<env_type, N>::type type;
+            typedef typename fusion::result_of::at<typename Seq::env_type, N>::type type;
 
             static type call(Seq & seq)
             {
-                return fusion::at<N>(fusion::at_c<0>(seq.env));
+                return fusion::at<N>(seq.env);
             }
         };
     };

@@ -27,9 +27,9 @@ namespace boost { namespace phoenix
     {
         typedef typename T::type result_type;
 
-        template <typename Env>
+        template <typename Context>
         result_type
-        operator()(Env& env) const
+        operator()(Context&) const
         {
             return result_type();
         }

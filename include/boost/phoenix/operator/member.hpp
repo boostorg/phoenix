@@ -62,7 +62,7 @@ namespace boost { namespace phoenix
     namespace result_of
     {
         template <
-            typename Env
+            typename Context
           , typename Expr
           , long Arity = proto::arity_of<Expr>::value
         >
@@ -77,23 +77,23 @@ namespace boost { namespace phoenix
         template<typename Sig>
         struct result;
         
-        template <typename This, typename Env, typename Expr>
-        struct result<This(Env, Expr const &)>
-            : result<This(Env const &, Expr const &)>
+        template <typename This, typename Context, typename Expr>
+        struct result<This(Context, Expr const &)>
+            : result<This(Context const &, Expr const &)>
         {};
 
-        template <typename This, typename Env, typename Expr>
-        struct result<This(Env &, Expr const &)>
-            : result_of::mem_fun_ptr_eval<Env, Expr>
+        template <typename This, typename Context, typename Expr>
+        struct result<This(Context &, Expr const &)>
+            : result_of::mem_fun_ptr_eval<Context, Expr>
         {};
 
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
-        operator()(Env & env, Expr const & expr) const
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
+        operator()(Context & ctx, Expr const & expr) const
         {
             return
                 this->evaluate(
-                    env
+                    ctx
                   , expr
                   , typename proto::arity_of<Expr>::type()
                 );
@@ -101,7 +101,7 @@ namespace boost { namespace phoenix
 
     #define PHOENIX_MEMBER_EVAL(Z, N, D)                                        \
         BOOST_PP_COMMA_IF(BOOST_PP_NOT(BOOST_PP_EQUAL(N, 2)))                   \
-        eval(proto::child_c< N >(expr), env)                                    \
+        eval(proto::child_c< N >(expr), ctx)                                    \
     /**/
         private:
     #define PHOENIX_ITERATION_PARAMS                                            \
@@ -127,18 +127,18 @@ namespace boost { namespace phoenix
 
 #else // PHOENIX_IS_ITERATING
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<PHOENIX_ITERATION>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
                     BOOST_PP_REPEAT_FROM_TO(
                         2

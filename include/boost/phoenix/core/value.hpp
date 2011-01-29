@@ -71,18 +71,18 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Actor, typename Env>
-        struct result<This(Actor, Env)>
+        template <typename This, typename Actor, typename Context>
+        struct result<This(Actor, Context)>
             : boost::remove_reference<
-                typename evaluator::impl<Actor, Env, int>::result_type
+                typename evaluator::impl<Actor, Context, int>::result_type
             >
         {};     
 
-        template <typename Env>
-        typename result<custom_terminal(actor<Expr> const &, Env &)>::type
-        operator()(actor<Expr> const & expr, Env & env) const
+        template <typename Context>
+        typename result<custom_terminal(actor<Expr> const &, Context &)>::type
+        operator()(actor<Expr> const & expr, Context & ctx) const
         {
-            return eval(expr, env);
+            return eval(expr, ctx);
         }
     };
 }}

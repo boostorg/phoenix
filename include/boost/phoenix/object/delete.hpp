@@ -41,11 +41,11 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
 
-        template <typename Env, typename P>
+        template <typename Context, typename P>
         result_type
-        operator()(Env& env, P const& p) const
+        operator()(Context& ctx, P const& p) const
         {
-            delete eval(p, env);
+            delete eval(p, ctx);
         }
     };
 

@@ -65,17 +65,13 @@ namespace boost { namespace phoenix
                 typename proto::detail::uncvref<
                     typename result_of::env<Context>::type
                 >::type
-                args_type;
+                env_type;
 
             typedef
                 typename proto::detail::uncvref<
                     typename result_of::actions<Context>::type
                 >::type
                 actions_type;
-
-            typedef
-                typename result_of::context<args_type, actions_type>::type
-                ctx_type;
 
             typedef
                 typename proto::detail::uncvref<Locals>::type
@@ -86,15 +82,15 @@ namespace boost { namespace phoenix
                 outer_env_type;
 
             typedef
-                scoped_environment<ctx_type, outer_env_type const, locals_type const>
+                scoped_environment<env_type, outer_env_type const, locals_type const>
                 scoped_env;
 
             typedef
                 typename result_of::context<scoped_env, actions_type&>::type
-                new_ctx_type;
+                ctx_type;
 
             typedef
-                typename evaluator::impl<Lambda const &, new_ctx_type&, int>::result_type
+                typename evaluator::impl<Lambda const &, ctx_type&, int>::result_type
                 type;
         };
         
@@ -118,7 +114,7 @@ namespace boost { namespace phoenix
                 typename proto::detail::uncvref<
                     typename result_of::env<Context>::type
                 >::type
-                args_type;
+                env_type;
 
             typedef
                 typename proto::detail::uncvref<
@@ -126,10 +122,6 @@ namespace boost { namespace phoenix
                 >::type
                 actions_type;
 
-            typedef
-                fusion::vector2<args_type, actions_type>
-                ctx_type;
-            
             typedef
                 typename proto::detail::uncvref<Locals>::type
                 locals_type;
@@ -139,10 +131,11 @@ namespace boost { namespace phoenix
                 outer_env_type;
 
             typedef
-                scoped_environment<ctx_type, OuterEnv const, locals_type const>
+                scoped_environment<env_type, OuterEnv const, locals_type const>
                 scoped_env_type;
 
-            ctx_type e(env(ctx), actions(ctx));
+            
+            env_type e(env(ctx));
 
             scoped_env_type
                 scoped_env(
@@ -151,7 +144,7 @@ namespace boost { namespace phoenix
                   , locals
                 );
 
-            fusion::vector2<scoped_env_type, actions_type>
+            typename result_of::context<scoped_env_type, actions_type&>::type
                 new_ctx(scoped_env, actions(ctx));
             return eval(lambda, new_ctx);
         }
@@ -179,11 +172,12 @@ namespace boost { namespace phoenix
             >
           , evaluator(
                 proto::_child_c<2>
-              , fusion::vector2<
-                    mpl::true_
-                  , detail::scope_is_nullary_actions
-                >()
-				  , int()
+              , _context(
+                    proto::_
+                  , mpl::true_()
+                  , detail::scope_is_nullary_actions()
+                )
+			  , int()
             )
         >
     {};
@@ -231,7 +225,11 @@ namespace boost { namespace phoenix
                     rule::local_var_def_list
                   , meta_grammar
                 >
-              , detail::local_var_def_is_nullary(proto::_child_c<0>, _context, int())// mpl::true_()//evaluator(proto::_child_c<1>, _context)
+              , detail::local_var_def_is_nullary(
+                    proto::_child_c<0>
+                  , _context
+                  , int()
+                )
             >
         >
     {};
@@ -254,21 +252,11 @@ namespace boost { namespace phoenix
                 typename proto::detail::uncvref<
                     typename result_of::env<Context>::type
                 >::type
-                args_type;
-
-            typedef
-                typename proto::detail::uncvref<
-                    typename result_of::actions<Context>::type
-                >::type
-                actions_type;
-
-            typedef
-                fusion::vector2<args_type, actions_type>
-                outer_ctx_type;
+                env_type;
 
             typedef
                 typename expression::lambda<
-                    outer_ctx_type
+                    env_type
                   , mpl::void_
                   , typename proto::detail::uncvref<Lambda>::type
                 >::type
@@ -292,21 +280,11 @@ namespace boost { namespace phoenix
                 typename proto::detail::uncvref<
                     typename result_of::env<Context>::type
                 >::type
-                args_type;
+                env_type;
 
-            typedef
-                typename proto::detail::uncvref<
-                    typename result_of::actions<Context>::type
-                >::type
-                actions_type;
-
-            typedef
-                fusion::vector2<args_type, actions_type>
-                outer_ctx_type;
-            
             typedef
                 typename expression::lambda<
-                    outer_ctx_type
+                    env_type
                   , locals_type
                   , typename proto::detail::uncvref<Lambda>::type
                 >::type const
@@ -321,26 +299,13 @@ namespace boost { namespace phoenix
                 typename proto::detail::uncvref<
                     typename result_of::env<Context>::type
                 >::type
-                args_type;
-
-            typedef
-                typename proto::detail::uncvref<
-                    typename result_of::actions<Context>::type
-                >::type
-                actions_type;
-
-            typedef
-                fusion::vector2<args_type, actions_type>
-                outer_ctx_type;
-
-            outer_ctx_type
-                outer_ctx(fusion::at_c<0>(ctx), fusion::at_c<1>(ctx));
+                env_type;
 
             mpl::void_ t;
             return
                 expression::
-                    lambda<outer_ctx_type, mpl::void_, Lambda>::
-                        make(outer_ctx, t, lambda);
+                    lambda<env_type, mpl::void_, Lambda>::
+                        make(env(ctx), t, lambda);
         }
 
         template <
@@ -373,25 +338,12 @@ namespace boost { namespace phoenix
                 typename proto::detail::uncvref<
                     typename result_of::env<Context>::type
                 >::type
-                args_type;
-
-            typedef
-                typename proto::detail::uncvref<
-                    typename result_of::actions<Context>::type
-                >::type
-                actions_type;
-
-            typedef
-                fusion::vector2<args_type, actions_type>
-                outer_ctx_type;
-
-            outer_ctx_type
-                outer_ctx(fusion::at_c<0>(ctx), fusion::at_c<1>(ctx));
+                env_type;
 
             return
                 expression::
-                    lambda<outer_ctx_type, locals_type, Lambda>::
-                        make(outer_ctx, l, lambda);
+                    lambda<env_type, locals_type, Lambda>::
+                        make(env(ctx), l, lambda);
         }
     };
 

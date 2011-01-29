@@ -21,7 +21,7 @@ namespace boost { namespace phoenix
     namespace result_of
     {
         template <
-            typename Env
+            typename Context
           , typename Expr
           , long Arity = proto::arity_of<Expr>::value
         >
@@ -33,10 +33,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 2>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 2>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1;
             typedef
                 typename boost::result_of<
                     child1(
@@ -52,10 +52,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 3>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 3>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2;
             typedef
                 typename boost::result_of<
                     child1(
@@ -71,10 +71,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 4>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 4>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3;
             typedef
                 typename boost::result_of<
                     child1(
@@ -90,10 +90,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 5>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 5>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4;
             typedef
                 typename boost::result_of<
                     child1(
@@ -109,10 +109,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 6>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 6>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5;
             typedef
                 typename boost::result_of<
                     child1(
@@ -128,10 +128,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 7>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 7>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6;
             typedef
                 typename boost::result_of<
                     child1(
@@ -147,10 +147,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 8>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 8>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7;
             typedef
                 typename boost::result_of<
                     child1(
@@ -166,10 +166,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 9>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 9>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8;
             typedef
                 typename boost::result_of<
                     child1(
@@ -185,10 +185,10 @@ namespace boost { namespace phoenix
     
     
     
-        template <typename Env, typename Expr>
-        struct mem_fun_ptr_eval<Env, Expr, 10>
+        template <typename Context, typename Expr>
+        struct mem_fun_ptr_eval<Context, Expr, 10>
         {
-            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Env , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Env , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Env , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Env , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Env , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Env , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Env , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Env , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Env , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Env , int >::result_type child9;
+            typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 0>::type , Context , int >::result_type child0; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 1>::type , Context , int >::result_type child1; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 2>::type , Context , int >::result_type child2; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 3>::type , Context , int >::result_type child3; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 4>::type , Context , int >::result_type child4; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 5>::type , Context , int >::result_type child5; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 6>::type , Context , int >::result_type child6; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 7>::type , Context , int >::result_type child7; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 8>::type , Context , int >::result_type child8; typedef typename evaluator::impl< typename proto::result_of::child_c<Expr, 9>::type , Context , int >::result_type child9;
             typedef
                 typename boost::result_of<
                     child1(
@@ -204,21 +204,21 @@ namespace boost { namespace phoenix
         template<typename Sig>
         struct result;
         
-        template <typename This, typename Env, typename Expr>
-        struct result<This(Env, Expr const &)>
-            : result<This(Env const &, Expr const &)>
+        template <typename This, typename Context, typename Expr>
+        struct result<This(Context, Expr const &)>
+            : result<This(Context const &, Expr const &)>
         {};
-        template <typename This, typename Env, typename Expr>
-        struct result<This(Env &, Expr const &)>
-            : result_of::mem_fun_ptr_eval<Env, Expr>
+        template <typename This, typename Context, typename Expr>
+        struct result<This(Context &, Expr const &)>
+            : result_of::mem_fun_ptr_eval<Context, Expr>
         {};
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
-        operator()(Env & env, Expr const & expr) const
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
+        operator()(Context & ctx, Expr const & expr) const
         {
             return
                 this->evaluate(
-                    env
+                    ctx
                   , expr
                   , typename proto::arity_of<Expr>::type()
                 );
@@ -232,18 +232,18 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<2>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
                     
                 );
@@ -257,20 +257,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<3>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx)
                 );
         }
         
@@ -282,20 +282,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<4>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx)
                 );
         }
         
@@ -307,20 +307,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<5>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx)
                 );
         }
         
@@ -332,20 +332,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<6>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx)
                 );
         }
         
@@ -357,20 +357,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<7>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx)
                 );
         }
         
@@ -382,20 +382,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<8>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx)
                 );
         }
         
@@ -407,20 +407,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<9>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx)
                 );
         }
         
@@ -432,20 +432,20 @@ namespace boost { namespace phoenix
     
     
             
-        template <typename Env, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Env, Expr>::type
+        template <typename Context, typename Expr>
+        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
         evaluate(
-            Env & env
+            Context & ctx
           , Expr const & expr
           , mpl::long_<10>
         ) const
         {
             return
                 (
-                    get_pointer(eval(proto::child_c<0>(expr), env))
-                    ->*eval(proto::child_c<1>(expr), env)
+                    get_pointer(eval(proto::child_c<0>(expr), ctx))
+                    ->*eval(proto::child_c<1>(expr), ctx)
                 )(
-                    eval(proto::child_c< 2 >(expr), env) , eval(proto::child_c< 3 >(expr), env) , eval(proto::child_c< 4 >(expr), env) , eval(proto::child_c< 5 >(expr), env) , eval(proto::child_c< 6 >(expr), env) , eval(proto::child_c< 7 >(expr), env) , eval(proto::child_c< 8 >(expr), env) , eval(proto::child_c< 9 >(expr), env)
+                    eval(proto::child_c< 2 >(expr), ctx) , eval(proto::child_c< 3 >(expr), ctx) , eval(proto::child_c< 4 >(expr), ctx) , eval(proto::child_c< 5 >(expr), ctx) , eval(proto::child_c< 6 >(expr), ctx) , eval(proto::child_c< 7 >(expr), ctx) , eval(proto::child_c< 8 >(expr), ctx) , eval(proto::child_c< 9 >(expr), ctx)
                 );
         }
         

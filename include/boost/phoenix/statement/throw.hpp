@@ -49,18 +49,18 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
 
-        template <typename Env>
+        template <typename Context>
         result_type
-        operator()(Env& env) const
+        operator()(Context& ctx) const
         {
             throw;
         }
 
-        template <typename Env, typename ThrowExpr>
+        template <typename Context, typename ThrowExpr>
         result_type
-        operator()(Env& env, ThrowExpr const& throw_expr) const
+        operator()(Context& ctx, ThrowExpr const& throw_expr) const
         {
-            throw eval(throw_expr, env);
+            throw eval(throw_expr, ctx);
         }
     };
     

@@ -26,11 +26,11 @@ namespace boost { namespace phoenix
     {
         typedef typename T::type result_type;
 
-        template <typename Env, typename U>
+        template <typename Context, typename U>
         result_type
-        operator()(Env& env, U const& u) const
+        operator()(Context& ctx, U const& u) const
         {
-            return reinterpret_cast<result_type>(eval(u, env));
+            return reinterpret_cast<result_type>(eval(u, ctx));
         }
     };
 

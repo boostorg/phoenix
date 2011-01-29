@@ -62,7 +62,7 @@
                         cases, BOOST_PP_CAT(idx, N), size                       \
                     )                                                           \
                 )                                                               \
-              , env                                                             \
+              , ctx                                                             \
             );                                                                  \
             break;
     /**/
@@ -82,10 +82,10 @@
 #endif
 
 #else
-            template <typename Env, typename Cond, typename Cases>
+            template <typename Context, typename Cond, typename Cases>
             result_type
             evaluate(
-                Env & env
+                Context & ctx
               , Cond const & cond
               , Cases const & cases
               , mpl::int_<PHOENIX_ITERATION> size
@@ -97,16 +97,16 @@
                   , PHOENIX_SWITCH_EVAL_TYPEDEF_R
                   , PHOENIX_ITERATION
                 )
-                switch(eval(cond, env))
+                switch(eval(cond, ctx))
                 {
                     BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_SWITCH_EVAL_R, _)
                 }
             }
 
-            template <typename Env, typename Cond, typename Cases>
+            template <typename Context, typename Cond, typename Cases>
             result_type
             evaluate(
-                Env & env
+                Context & ctx
               , Cond const & cond
               , Cases const & cases
               , mpl::int_<PHOENIX_ITERATION> size
@@ -120,7 +120,7 @@
                 )
                 mpl::int_<BOOST_PP_DEC(PHOENIX_ITERATION)>
                     BOOST_PP_CAT(idx, BOOST_PP_DEC(PHOENIX_ITERATION));
-                switch(eval(cond, env))
+                switch(eval(cond, ctx))
                 {
                     BOOST_PP_REPEAT(
                         BOOST_PP_DEC(PHOENIX_ITERATION)
@@ -138,7 +138,7 @@
                                   , size
                                 )
                             )
-                            , env
+                            , ctx
                         );
                 }
             }

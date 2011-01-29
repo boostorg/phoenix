@@ -158,18 +158,18 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
         
-        template <typename Env>
+        template <typename Context>
         result_type
-        operator()(Env & env) const
+        operator()(Context & ctx) const
         {
         }
 
-        template <typename Env, typename Cond, typename Cases>
+        template <typename Context, typename Cond, typename Cases>
         result_type
-        operator()(Env & env, Cond const & cond, Cases const & cases) const
+        operator()(Context & ctx, Cond const & cond, Cases const & cases) const
         {
             this->evaluate(
-                    env
+                    ctx
                   , cond
                   , cases
                   , typename boost::result_of<detail::switch_size(Cases)>::type()

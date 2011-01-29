@@ -51,14 +51,14 @@ namespace boost { namespace phoenix
             typedef
                 typename evaluator::impl<
                     Let const &
-                  , fusion::vector2<
+                  , typename result_of::context<
                         scoped_environment<
-                            Context
-                          , Context
+                            typename result_of::env<Context>::type
+                          , typename result_of::env<Context>::type
                           , locals_type
                         >
                       , actions_type
-                    >
+                    >::type
                   , int
                 >::result_type
                 type;
@@ -68,6 +68,12 @@ namespace boost { namespace phoenix
         typename result<let_eval(Context&, Locals const &, Let const &)>::type
         operator()(Context & ctx, Locals const & locals, Let const & let) const
         {
+            typedef
+                typename proto::detail::uncvref<
+                    typename result_of::env<Context>::type
+                >::type
+                env_type;
+
             typedef
                 typename proto::detail::uncvref<
                     typename result_of::actions<Context>::type
@@ -84,6 +90,8 @@ namespace boost { namespace phoenix
                     >::type
                 >::type
                 locals_type;
+            
+            typedef scoped_environment<env_type, env_type, locals_type> scoped_env_type;
 
             locals_type l = 
                    rule::local_var_def_list()(
@@ -91,17 +99,18 @@ namespace boost { namespace phoenix
                     , ctx
                     );
 
-            scoped_environment<Context, Context, locals_type&>
+
+            scoped_env_type
                 scoped_env(
-                    ctx
-                  , ctx
+                    env(ctx)
+                  , env(ctx)
                   , l
                 );
 
-            fusion::vector2<
-                scoped_environment<Context, Context, locals_type &> &
+            typename result_of::context<
+                scoped_env_type &
               , actions_type
-            > new_ctx(scoped_env, actions(ctx));
+            >::type new_ctx(scoped_env, actions(ctx));
 
             return eval(let, new_ctx);
         }

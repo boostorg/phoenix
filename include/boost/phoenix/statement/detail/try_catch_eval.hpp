@@ -43,7 +43,7 @@
                 >::type::type &                                                 \
             )                                                                   \
             {                                                                   \
-                eval(proto::child_c<1>(BOOST_PP_CAT(a, N)), env);               \
+                eval(proto::child_c<1>(BOOST_PP_CAT(a, N)), ctx);               \
             }                                                                   \
     /**/
 
@@ -63,15 +63,7 @@
 
 #else
 
-// **FIXME**: why?
-#ifdef catch
-#undef catch
-#endif
-#ifdef try
-#undef try
-#endif
-
-        template <typename Env, typename Try, PHOENIX_typename_A>
+        template <typename Context, typename Try, PHOENIX_typename_A>
         typename boost::enable_if<
             proto::matches<
                 BOOST_PP_CAT(A, BOOST_PP_DEC(PHOENIX_ITERATION))
@@ -79,16 +71,16 @@
             >
           , result_type
         >::type
-        operator()(Env & env, Try const & try_, PHOENIX_A_const_ref_a) const
+        operator()(Context & ctx, Try const & try_, PHOENIX_A_const_ref_a) const
         {
             try
             {
-                eval(proto::child_c<0>(try_), env);
+                eval(proto::child_c<0>(try_), ctx);
             }
             BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_TRY_CATCH_EVAL_R, _)
         }
 
-        template <typename Env, typename Try, PHOENIX_typename_A>
+        template <typename Context, typename Try, PHOENIX_typename_A>
         typename boost::disable_if<
             proto::matches<
                 BOOST_PP_CAT(A, BOOST_PP_DEC(PHOENIX_ITERATION))
@@ -96,11 +88,11 @@
             >
           , result_type
         >::type
-        operator()(Env & env, Try const & try_, PHOENIX_A_const_ref_a) const
+        operator()(Context & ctx, Try const & try_, PHOENIX_A_const_ref_a) const
         {
             try
             {
-                eval(proto::child_c<0>(try_), env);
+                eval(proto::child_c<0>(try_), ctx);
             }
             BOOST_PP_REPEAT(
                 BOOST_PP_DEC(PHOENIX_ITERATION)
@@ -112,7 +104,7 @@
                     proto::child_c<0>(
                         BOOST_PP_CAT(a, BOOST_PP_DEC(PHOENIX_ITERATION))
                     )
-                  , env);
+                  , ctx);
             }
         }
 

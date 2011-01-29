@@ -42,12 +42,12 @@
 
 #else
         
-        template <typename Env, PHOENIX_typename_A>
+        template <typename Context, PHOENIX_typename_A>
         result_type
-        operator()(Env& env, PHOENIX_A_const_ref_a) const
+        operator()(Context& ctx, PHOENIX_A_const_ref_a) const
         {
 #define EVAL_a(_,n,__) \
-            BOOST_PP_COMMA_IF(n) eval(a ## n, env)
+            BOOST_PP_COMMA_IF(n) eval(a ## n, ctx)
 
             return result_type(BOOST_PP_REPEAT(PHOENIX_ITERATION, EVAL_a, _));
 #undef EVAL_a

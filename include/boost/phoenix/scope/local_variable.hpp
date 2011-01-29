@@ -129,6 +129,7 @@ namespace boost { namespace phoenix
                 typename result<local_eval(Expr const&, Context&)>::type
                 make_ref(Expr const& expr, Context & ctx, mpl::false_) const
                 {
+                    //std::cout << typeid(ctx).name() << "\n";
                     return phoenix::ref(eval(expr, ctx));
                 }
                 
@@ -145,20 +146,14 @@ namespace boost { namespace phoenix
             : proto::or_<
                 proto::when<
                     proto::comma<local_var_def_list, local_var_def>
-                  , proto::comma<
-                        local_var_def_list(proto::_left , proto::_state)
-                      , local_var_def_list(proto::_right, proto::_state)
-                    >(
+                  , proto::_make_comma(
                         local_var_def_list(proto::_left , proto::_state)
                       , local_var_def_list(proto::_right, proto::_state)
                     )
                 >
               , proto::when<
                     local_var_def
-                  , proto::assign<
-                        proto::_left
-                      , local_eval(proto::_right, proto::_state)
-                    >(
+                  , proto::_make_assign(
                         proto::_left
                       , local_eval(proto::_right, proto::_state)
                     )
@@ -194,10 +189,11 @@ namespace boost { namespace phoenix
                         detail::local_var_def_is_nullary(proto::_left, proto::_state)
                       , evaluator(
                             proto::_right(proto::_right)
-                          , fusion::vector2<
-                                mpl::true_
-                              , boost::phoenix::is_nullary
-                            >()
+                          , _context(
+                                proto::_
+                              , mpl::true_()
+                              , boost::phoenix::is_nullary()
+                            )
                           , int()
                         )
                     >()
@@ -206,10 +202,11 @@ namespace boost { namespace phoenix
                     rule::local_var_def
                   , evaluator(
                         proto::_right
-                      , fusion::vector2<
-                            mpl::true_
-                          , boost::phoenix::is_nullary
-                        >()
+                      , _context(
+                            proto::_
+                          , mpl::true_()
+                          , boost::phoenix::is_nullary()
+                        )
                       , int()
                     )
                 >
@@ -219,7 +216,8 @@ namespace boost { namespace phoenix
         struct scope_is_nullary_actions
         {
             template <typename Rule, typename Dummy = void>
-            struct when : boost::phoenix::is_nullary::when<Rule, Dummy>
+            struct when
+                : boost::phoenix::is_nullary::when<Rule, Dummy>
             {};
         };
 
@@ -249,56 +247,54 @@ namespace boost { namespace phoenix
                   , proto::if_<
                         proto::matches<
                             proto::_left(proto::_right)
-                          , proto::_data
+                          , proto::_state
                         >()
                       , evaluator(
                             proto::_right(proto::_right)
-                          , proto::_state
-                          , int()
+                          , _context
                         )
                       , find_local(
                             proto::_left
                           , proto::_state
-                          , proto::_data
                         )
                     >
                 >
               , proto::when<
                     rule::local_var_def
                   , proto::if_<
-                        proto::matches<proto::_left, proto::_data>()
-                      , evaluator(proto::_right, proto::_state, int())
+                        proto::matches<proto::_left, proto::_state>()
+                      , evaluator(proto::_right, _context)
                       , detail::local_var_not_found()
                     >
                 >
             >
         {};
 
-        template<typename This, typename Args, typename Context, typename Key>
+        template<typename This, typename Env, typename Key, typename Actions>
         struct get_local_result_impl
             : mpl::eval_if<
                 is_same<
-                    typename Args::locals_type
+                    typename Env::type::locals_type
                   , mpl::void_
                 >
-              , typename This:: template result<This(typename Args::outer_env_type&)>
+              , typename This:: template result<This(typename Env::type::outer_env_type&, Actions)>
               , mpl::eval_if<
                     is_same<
                         typename proto::detail::uncvref<
                             typename detail::find_local::impl<
-                                typename Args::locals_type &
-                              , Context
+                                typename Env::type::locals_type &
                               , Key
+                              , Actions
                             >::result_type
                         >::type
                       , detail::local_var_not_found
                     >
-                  , typename This:: template result<This(typename Args::outer_env_type&)>
+                  , typename This:: template result<This(typename Env::type::outer_env_type&, Actions)>
                   , mpl::identity<
                         typename detail::find_local::impl<
-                            typename Args::locals_type &
-                          , Context
+                            typename Env::type::locals_type &
                           , Key
+                          , Actions
                         >::result_type
                     >
                 >
@@ -313,66 +309,50 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
         
-        template <typename This, typename Context>
-        struct result<This(Context)>
-            : result<This(Context const &)>
+        template <typename This, typename Env, typename Actions>
+        struct result<This(Env, Actions &)>
+            : result<This(Env const &, Actions &)>
         {};
 
-        template <typename This, typename Context>
-        struct result<This(Context &)>
+        template <typename This, typename Env, typename Actions>
+        struct result<This(Env &, Actions&)>
         {
             typedef
-                typename proto::detail::uncvref<
-                    typename result_of::env<Context>::type
-                >::type
-                env_type;
-
-            typedef
                 typename mpl::eval_if<
-                    is_scoped_environment<env_type>
-                  , detail::get_local_result_impl<This, env_type, Context, Key>
+                    is_scoped_environment<Env>
+                  , detail::get_local_result_impl<This, proto::detail::uncvref<Env>, Key, Actions&>
                   , mpl::identity<detail::local_var_not_found>
                 >::type
                 type;
         };
 
-        template <typename Context>
-        typename result<get_local<Key>(Context&)>::type
-        operator()(Context &ctx) const
+        template <typename Env, typename Actions>
+        typename result<get_local<Key>(Env&, Actions&)>::type
+        operator()(Env &env, Actions &actions) const
         {
-            typedef
-                typename proto::detail::uncvref<
-                    typename result_of::env<Context>::type
-                >::type
-                env_type;
-
             return this->evaluate(
-                ctx
-              , typename is_scoped_environment<env_type>::type()
+                env
+              , actions
+              , typename is_scoped_environment<Env>::type()
             );
         }
 
         private:
             // is a scoped environment
-            template <typename Context>
-            typename result<get_local<Key>(Context&)>::type
-            evaluate(Context & ctx, mpl::true_) const
+            template <typename Env, typename Actions>
+            typename result<get_local<Key>(Env&, Actions&)>::type
+            evaluate(Env & env, Actions & actions, mpl::true_) const
             {
-                typedef
-                    typename proto::detail::uncvref<
-                        typename result_of::env<Context>::type
-                    >::type
-                    env_type;
-
                 return
                     this->evaluate_scoped(
-                        ctx
+                        env
+                      , actions
                       , typename is_same<
                             typename proto::detail::uncvref<
                                 typename detail::find_local::impl<
-                                    typename env_type::locals_type
-                                  , Context &
+                                    typename Env::locals_type
                                   , Key
+                                  , Actions
                                 >::result_type
                             >::type
                           , detail::local_var_not_found
@@ -383,31 +363,31 @@ namespace boost { namespace phoenix
 
             // is a scoped environment
             // --> we need to look in the outer environment
-            template <typename Context>
-            typename result<get_local<Key>(Context&)>::type
-            evaluate_scoped(Context & ctx, mpl::false_) const
+            template <typename Env, typename Actions>
+            typename result<get_local<Key>(Env&, Actions&)>::type
+            evaluate_scoped(Env & env, Actions& actions, mpl::false_) const
             {
                 Key k;
                 return
                     detail::find_local()(
-                        env(ctx).locals
-                      , ctx
+                        env.locals
                       , k
+                      , actions
                     );
             }
             
             // is a scoped environment
             // --> we have the local in our environment
-            template <typename Context>
-            typename result<get_local<Key>(Context&)>::type
-            evaluate_scoped(Context & ctx, mpl::true_) const
+            template <typename Env, typename Actions>
+            typename result<get_local<Key>(Env&, Actions&)>::type
+            evaluate_scoped(Env & env, Actions &actions, mpl::true_) const
             {
-                return get_local<Key>()(env(ctx).outer_env);
+                return get_local<Key>()(env.outer_env, actions);
             }
             
-            template <typename Context>
-            typename result<get_local<Key>(Context&)>::type
-            evaluate(Context & ctx, mpl::false_) const
+            template <typename Env, typename Actions>
+            typename result<get_local<Key>(Env&, Actions &)>::type
+            evaluate(Env &, Actions &, mpl::false_) const
             {
                 return detail::local_var_not_found();
             }
@@ -429,7 +409,13 @@ namespace boost { namespace phoenix
 
             typedef get_local<lookup_grammar> get_local_type;
             typedef
-                typename get_local_type::template result<get_local_type(Context)>::type
+                typename get_local_type::
+                    template result<
+                        get_local_type(
+                            typename result_of::env<Context>::type
+                          , typename result_of::actions<Context>::type
+                        )
+                    >::type
                 type;
         };
 
@@ -440,7 +426,7 @@ namespace boost { namespace phoenix
             typedef
                 typename expression::local_variable<Local>::type
                 lookup_grammar;
-            return get_local<lookup_grammar>()(ctx);
+            return get_local<lookup_grammar>()(env(ctx), actions(ctx));
         }
     };
 

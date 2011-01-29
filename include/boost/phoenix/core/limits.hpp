@@ -123,6 +123,7 @@
 // this include will bring in mpl::vectorN and 
 // fusion::vectorN where N is BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT)
 #include <boost/fusion/container/vector/vector10.hpp>
+#include <boost/fusion/container/map.hpp>
 #if BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT) > 10
 #include <boost/fusion/container/vector/vector20.hpp>
 #endif
