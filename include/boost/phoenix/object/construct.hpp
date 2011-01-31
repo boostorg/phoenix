@@ -10,8 +10,9 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/object/detail/target.hpp>
 #include <boost/phoenix/support/iterate.hpp>
-#include <boost/proto/fusion.hpp>
 
 namespace boost { namespace phoenix
 {

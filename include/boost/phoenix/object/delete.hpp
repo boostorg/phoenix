@@ -8,7 +8,9 @@
 #ifndef PHOENIX_OBJECT_DELETE_HPP
 #define PHOENIX_OBJECT_DELETE_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
 
 namespace boost { namespace phoenix
 {

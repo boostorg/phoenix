@@ -8,7 +8,7 @@
 #ifndef PHOENIX_OPERATOR_COMPARISION_HPP
 #define PHOENIX_OPERATOR_COMPARISION_HPP
 
-#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/operator/detail/define_operator.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -22,5 +22,7 @@ namespace boost { namespace phoenix
 		(greater)
 	)
 }}
+
+#include <boost/phoenix/operator/detail/undef_operator.hpp>
 
 #endif

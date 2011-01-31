@@ -9,9 +9,10 @@
 #ifndef PHOENIX_FUSION_AT_HPP
 #define PHOENIX_FUSION_AT_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at_c.hpp>
-#include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 
 namespace boost { namespace phoenix

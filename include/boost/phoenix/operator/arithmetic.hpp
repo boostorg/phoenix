@@ -8,7 +8,7 @@
 #ifndef PHOENIX_OPERATOR_ARITHMETIC_HPP
 #define PHOENIX_OPERATOR_ARITHMETIC_HPP
 
-#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/operator/detail/define_operator.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -34,5 +34,7 @@ namespace boost { namespace phoenix
 		(modulus)
 	)
 }}
+
+#include <boost/phoenix/operator/detail/undef_operator.hpp>
 
 #endif
