@@ -9,15 +9,12 @@
 #ifndef PHOENIX_CORE_META_GRAMMAR_HPP
 #define PHOENIX_CORE_META_GRAMMAR_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/deref.hpp>
 #include <boost/phoenix/core/environment.hpp>
-#include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/matches.hpp>
-#include <boost/proto/traits.hpp>
-#include <boost/proto/tags.hpp>
-#include <boost/proto/transform/arg.hpp>
+#include <boost/proto/transform/call.hpp>
 #include <boost/proto/transform/default.hpp>
-#include <boost/proto/transform/when.hpp>
 
 namespace boost { namespace phoenix
 {

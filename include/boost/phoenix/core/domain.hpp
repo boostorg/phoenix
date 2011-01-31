@@ -9,10 +9,7 @@
 #define PHOENIX_CORE_DOMAIN_HPP
 
 #include <boost/phoenix/core/limits.hpp>
-#include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/domain.hpp>
-#include <boost/proto/generate.hpp>
-#include <boost/proto/matches.hpp>
 
 namespace boost { namespace phoenix
 {

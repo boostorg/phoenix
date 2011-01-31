@@ -8,7 +8,12 @@
 #ifndef PHOENIX_SCOPE_THIS_HPP
 #define PHOENIX_SCOPE_THIS_HPP
 
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/environment.hpp>
+#include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/terminal.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 
 namespace boost { namespace phoenix {

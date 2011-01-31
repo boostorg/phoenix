@@ -9,13 +9,14 @@
 #ifndef PHOENIX_CORE_ACTOR_HPP
 #define PHOENIX_CORE_ACTOR_HPP
 
+#include <boost/phoenix/core/limits.hpp>
+
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/fusion/container/generation/make_vector.hpp>
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/environment.hpp>
 #include <boost/phoenix/core/is_nullary.hpp>
-#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/extends.hpp>

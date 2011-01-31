@@ -3,9 +3,14 @@
 #ifndef PHOENIX_CORE_EXPRESSION_HPP
 #define PHOENIX_CORE_EXPRESSION_HPP
 
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/phoenix/core/detail/expression.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/preprocessor/comparison/equal.hpp>
+#include <boost/proto/domain.hpp>
+#include <boost/proto/make_expr.hpp>
+#include <boost/proto/transform/pass_through.hpp>
 
 #include <boost/phoenix/core/preprocessed/expression.hpp>
 
@@ -17,9 +22,14 @@
 #ifndef PHOENIX_CORE_EXPRESSION_HPP
 #define PHOENIX_CORE_EXPRESSION_HPP
 
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/phoenix/core/detail/expression.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/preprocessor/comparison/equal.hpp>
+#include <boost/proto/domain.hpp>
+#include <boost/proto/make_expr.hpp>
+#include <boost/proto/transform/pass_through.hpp>
 
 #if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 2, line: 0, output: "preprocessed/expression_" PHOENIX_LIMIT_STR ".hpp")

@@ -8,6 +8,7 @@
 #ifndef PHOENIX_CORE_REFERENCE_HPP
 #define PHOENIX_CORE_REFERENCE_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/ref.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/terminal.hpp>

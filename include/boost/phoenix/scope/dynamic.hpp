@@ -9,6 +9,7 @@
 #ifndef PHOENIX_SCOPE_DYNAMIC_HPP
 #define PHOENIX_SCOPE_DYNAMIC_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>

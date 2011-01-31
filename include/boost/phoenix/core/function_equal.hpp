@@ -8,7 +8,11 @@
 #ifndef PHOENIX_CORE_FUNCTION_EQUAL_HPP
 #define PHOENIX_CORE_FUNCTION_EQUAL_HPP
 
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/is_placeholder.hpp>
+#include <boost/mpl/bool.hpp>
 #include <boost/phoenix/core/terminal.hpp>
+#include <boost/proto/matches.hpp>
 
 namespace boost
 {
@@ -17,6 +21,9 @@ namespace boost
 
 namespace boost { namespace phoenix
 {
+    template <typename>
+    struct actor;
+
     namespace detail
     {
         struct compare

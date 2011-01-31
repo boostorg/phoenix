@@ -7,6 +7,7 @@
 #ifndef PHOENIX_CORE_NOTHING_HPP
 #define PHOENIX_CORE_NOTHING_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/void.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/expression.hpp>

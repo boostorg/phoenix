@@ -1,5 +1,6 @@
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
+    Copyright (c) 2010-2011 Thomas Heller
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,10 +10,8 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
-#include <boost/fusion/container/vector.hpp>
 #include <boost/fusion/support/is_sequence.hpp>
-#include <boost/phoenix/support/iterate.hpp>
-#include <boost/proto/proto.hpp>
+#include <boost/proto/transform/impl.hpp>
 #include <boost/proto/functional/fusion/at.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>

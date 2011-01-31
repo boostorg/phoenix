@@ -8,16 +8,12 @@
 #ifndef PHOENIX_CORE_ARITY_HPP
 #define PHOENIX_CORE_ARITY_HPP
 
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/is_placeholder.hpp>
 #include <boost/mpl/max.hpp>
 #include <boost/mpl/int.hpp>
-#include <boost/phoenix/core/limits.hpp>
-#include <boost/proto/proto_fwd.hpp>
-#include <boost/proto/matches.hpp>
-#include <boost/proto/traits.hpp>
-#include <boost/proto/tags.hpp>
-#include <boost/proto/transform/arg.hpp>
-#include <boost/proto/transform/default.hpp>
-#include <boost/proto/transform/when.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/terminal_fwd.hpp>
 #include <boost/proto/transform/fold.hpp>
 
 namespace boost { namespace phoenix
@@ -28,8 +24,6 @@ namespace boost { namespace phoenix
     //
     /////////////////////////////////////////////////////////////////////////////
     
-    struct argument;
-
     struct arity;
 
     namespace result_of
@@ -43,6 +37,7 @@ namespace boost { namespace phoenix
                         mpl::int_<0>
                       , boost::phoenix::arity
                     >&
+                  , int
                 >::result_type::value
             >
         {};

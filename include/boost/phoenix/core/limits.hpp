@@ -94,9 +94,9 @@
 #endif
 
 #if !defined(FUSION_MAX_VECTOR_SIZE)
-# define FUSION_MAX_VECTOR_SIZE BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT)
-#elif (FUSION_MAX_VECTOR_SIZE < BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT))
-# error "FUSION_MAX_VECTOR_SIZE < BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT)"
+# define FUSION_MAX_VECTOR_SIZE BOOST_PP_INC(BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT))
+#elif (FUSION_MAX_VECTOR_SIZE < BOOST_PP_INC(BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT)))
+# error "FUSION_MAX_VECTOR_SIZE < BOOST_PP_INC(BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT))"
 #endif
 
 #if !defined(BOOST_PROTO_MAX_ARITY)
@@ -123,21 +123,20 @@
 // this include will bring in mpl::vectorN and 
 // fusion::vectorN where N is BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT)
 #include <boost/fusion/container/vector/vector10.hpp>
-#include <boost/fusion/container/map.hpp>
-#if BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT) > 10
+#if FUSION_MAX_VECTOR_SIZE > 10
 #include <boost/fusion/container/vector/vector20.hpp>
 #endif
-#if BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT) > 20
+#if FUSION_MAX_VECTOR_SIZE > 20
 #include <boost/fusion/container/vector/vector30.hpp>
 #endif
-#if BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT) > 30
+#if FUSION_MAX_VECTOR_SIZE > 30
 #include <boost/fusion/container/vector/vector40.hpp>
 #endif
-#if BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT) > 40
+#if FUSION_MAX_VECTOR_SIZE > 40
 #include <boost/fusion/container/vector/vector50.hpp>
 #endif
-#if BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT) > 50
-#error "BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT) too high!"
+#if FUSION_MAX_VECTOR_SIZE > 50
+#error "FUSION_MAX_VECTOR_SIZE too high!"
 #endif
 
 #endif

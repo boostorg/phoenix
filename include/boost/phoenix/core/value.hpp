@@ -8,6 +8,7 @@
 #ifndef PHOENIX_CORE_VALUE_HPP
 #define PHOENIX_CORE_VALUE_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/terminal.hpp>
 #include <boost/utility/result_of.hpp>

@@ -11,13 +11,9 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/terminal.hpp>
-
-#include <boost/fusion/sequence/intrinsic/at.hpp>
-
 #include <boost/mpl/int.hpp>
-
-#include <boost/utility/result_of.hpp>
 
 namespace boost { namespace phoenix
 {

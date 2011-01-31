@@ -9,11 +9,13 @@
 #ifndef PHOENIX_CORE_IS_NULLARY_HPP
 #define PHOENIX_CORE_IS_NULLARY_HPP
 
-#include <boost/proto/proto.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/environment.hpp>
 #include <boost/phoenix/core/is_actor.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
-#include <boost/phoenix/core/terminal.hpp>
+#include <boost/phoenix/core/terminal_fwd.hpp>
+#include <boost/proto/transform/fold.hpp>
+#include <boost/proto/transform/lazy.hpp>
 
 namespace boost { namespace phoenix
 {

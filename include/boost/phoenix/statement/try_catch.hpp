@@ -10,7 +10,9 @@
 #ifndef PHOENIX_STATEMENT_TRY_CATCH_HPP
 #define PHOENIX_STATEMENT_TRY_CATCH_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/proto/functional/fusion/pop_front.hpp>
 
 namespace boost { namespace phoenix
 {

@@ -8,7 +8,10 @@
 #ifndef PHOENIX_CORE_TERMINAL_HPP
 #define PHOENIX_CORE_TERMINAL_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/is_placeholder.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/proto/transform/lazy.hpp>
 
 namespace boost { namespace phoenix
 {
