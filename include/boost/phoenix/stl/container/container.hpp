@@ -8,12 +8,13 @@
 #ifndef PHOENIX_STL_CONTAINER_CONTAINER_HPP
 #define PHOENIX_STL_CONTAINER_CONTAINER_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/or.hpp>
+#include <boost/mpl/void.hpp>
 #include <boost/phoenix/stl/container/detail/container.hpp>
 #include <boost/phoenix/function/function.hpp>
-#include <boost/phoenix/core/actor.hpp>
 #include <boost/type_traits/is_const.hpp>
 
 namespace boost { namespace phoenix
@@ -265,7 +266,7 @@ namespace boost { namespace phoenix
 
         namespace result_of
         {
-            template <typename C, typename Arg1, typename Arg2 = fusion::void_>
+            template <typename C, typename Arg1, typename Arg2 = mpl::void_>
             struct erase
             {
                 //  BOOST_MSVC #if branch here in map_erase_result non-
@@ -408,8 +409,8 @@ namespace boost { namespace phoenix
             template <
                 typename C
               , typename Arg1
-              , typename Arg2 = fusion::void_
-              , typename Arg3 = fusion::void_
+              , typename Arg2 = mpl::void_
+              , typename Arg3 = mpl::void_
             >
             class insert
             {
@@ -429,7 +430,7 @@ namespace boost { namespace phoenix
                 typedef
                     boost::mpl::eval_if<
                         boost::mpl::and_<
-                            boost::is_same<Arg3, fusion::void_>
+                            boost::is_same<Arg3, mpl::void_>
                           , boost::mpl::not_<boost::is_same<Arg1, Arg2> > >
                       , iterator_of<C>
                       , boost::mpl::identity<void>
@@ -440,7 +441,7 @@ namespace boost { namespace phoenix
 
                 typedef typename
                     boost::mpl::eval_if<
-                        boost::is_same<Arg2, fusion::void_>
+                        boost::is_same<Arg2, mpl::void_>
                       , choice_1
                       , choice_2
                     >::type

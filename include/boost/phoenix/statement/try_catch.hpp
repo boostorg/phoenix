@@ -12,6 +12,8 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/proto/functional/fusion/pop_front.hpp>
 
 namespace boost { namespace phoenix

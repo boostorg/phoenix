@@ -10,9 +10,9 @@
 #ifndef PHOENIX_STATEMENT_SEQUENCE_HPP
 #define PHOENIX_STATEMENT_SEQUENCE_HPP
 
-#include <boost/config.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
-#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
 
 namespace boost { namespace phoenix
 {

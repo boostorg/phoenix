@@ -3,8 +3,11 @@
 #ifndef PHOENIX_OPERATOR_MEMBER_HPP
 #define PHOENIX_OPERATOR_MEMBER_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/get_pointer.hpp>
+#include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
@@ -19,8 +22,11 @@
 #ifndef PHOENIX_OPERATOR_MEMBER_HPP
 #define PHOENIX_OPERATOR_MEMBER_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/get_pointer.hpp>
+#include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>

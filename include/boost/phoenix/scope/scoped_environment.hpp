@@ -8,6 +8,7 @@
 #ifndef PHOENIX_SCOPE_SCOPED_ENVIRONMENT_HPP
 #define PHOENIX_SCOPE_SCOPED_ENVIRONMENT_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/fusion/sequence/sequence_facade.hpp>
 #include <boost/fusion/sequence/intrinsic/begin.hpp>
@@ -15,8 +16,6 @@
 #include <boost/fusion/sequence/intrinsic/size.hpp>
 #include <boost/fusion/sequence/intrinsic/value_at.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
-#include <boost/phoenix/core/limits.hpp>
-#include <boost/phoenix/core/environment.hpp>
 #include <boost/utility/result_of.hpp>
 
 namespace boost { namespace phoenix

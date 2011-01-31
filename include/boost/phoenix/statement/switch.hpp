@@ -13,7 +13,6 @@
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/phoenix/support/iterate.hpp>
-#include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/make_expr.hpp>
 
 namespace boost { namespace phoenix

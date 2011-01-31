@@ -51,10 +51,10 @@ namespace boost { namespace phoenix {
                       , proto::_
                       , proto::_
                     >
-                  , proto::_child_c<1>
+                  , proto::_child_c<2>
                 >
             >
-        {};             
+        {};
     }
     
     struct this_function_eval
@@ -73,9 +73,7 @@ namespace boost { namespace phoenix {
         struct result<This(Context &, T &, T0 &)>
         {
             typedef
-                //typename boost::remove_reference<
-                    typename evaluator::impl<T &, Context &, int>::result_type
-                //>::type
+                typename evaluator::impl<T &, Context &, int>::result_type
                 this_type;
 
             typedef
@@ -84,7 +82,10 @@ namespace boost { namespace phoenix {
 
             typedef typename detail::last_non_this_actor::impl<this_type, int, int>::result_type checker;
 
-            typedef typename boost::result_of<typename proto::detail::uncvref<checker>::type(arg0_type)>::type
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<typename proto::detail::uncvref<checker>::type(arg0_type)>::type
+                >::type
                 type;
         };
 
@@ -97,9 +98,7 @@ namespace boost { namespace phoenix {
         struct result<This(Context &, T &, T0 &, T1 &)>
         {
             typedef
-                //typename boost::remove_reference<
-                    typename evaluator::impl<T &, Context &, int>::result_type
-                //>::type
+                typename evaluator::impl<T &, Context &, int>::result_type
                 this_type;
 
             typedef
@@ -112,7 +111,10 @@ namespace boost { namespace phoenix {
 
             typedef typename detail::last_non_this_actor::impl<this_type, int, int>::result_type checker;
 
-            typedef typename boost::result_of<typename proto::detail::uncvref<checker>::type(arg0_type, arg1_type)>::type
+            typedef
+                typename proto::detail::uncvref<
+                    typename boost::result_of<typename proto::detail::uncvref<checker>::type(arg0_type, arg1_type)>::type
+                >::type
                 type;
         };
 
@@ -124,6 +126,7 @@ namespace boost { namespace phoenix {
             typedef typename evaluator::impl<This const&, Context &, int>::result_type this_type;
             typedef typename detail::last_non_this_actor::impl<this_type, int, int>::result_type checker;
 
+            //std::cout << typeid(checker).name() << "\n";
             //std::cout << typeid(checker).name() << "\n";
 
             return eval(_this, ctx)(eval(t0, ctx));

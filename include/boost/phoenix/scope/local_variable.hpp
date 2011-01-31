@@ -8,7 +8,7 @@
 #ifndef PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
 #define PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
 
-#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/reference.hpp>
 #include <boost/phoenix/core/value.hpp>

@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <numeric>
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/stl/algorithm/detail/has_sort.hpp>
 #include <boost/phoenix/stl/algorithm/detail/has_remove.hpp>
 #include <boost/phoenix/stl/algorithm/detail/has_remove_if.hpp>

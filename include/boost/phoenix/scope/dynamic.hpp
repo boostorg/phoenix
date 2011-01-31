@@ -14,6 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/fold_left.hpp>

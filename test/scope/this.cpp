@@ -3,6 +3,7 @@
 #include <boost/phoenix/scope/this.hpp>
 #include <boost/phoenix/statement.hpp>
 #include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/scope.hpp>
 
 template <typename T0>
 void f(T0 t)
@@ -35,10 +36,12 @@ int main()
     using boost::phoenix::if_;
     using boost::phoenix::if_else;
     using boost::phoenix::val;
+    using boost::phoenix::let;
+    using boost::phoenix::nothing;
     using boost::phoenix::arg_names::_1;
     using boost::phoenix::arg_names::_2;
+    using boost::phoenix::local_names::_a;
 
-    int res;
     f((
         if_(_1 == 0)
         [
@@ -51,12 +54,28 @@ int main()
         ]
         , val("")
     ));
-    
+ 
+    f((
+        if_else(
+            _1 == 0
+          , _1
+          ,_this(_1 - 1)
+        )
+    ));
+
     f(( // fac(n) = n * fac(n-1); fac(1) = 1
         if_else(
             _1 <= 1
           , 1
           , _1 * _this(_1 - 1)
+        )
+    ));
+    
+    f(( // fac(n) = n * fac(n-1); fac(1) = 1
+        if_else(
+            _1 > 1
+          , let(_a = _this(_1-1))[_1 * _a]
+          , 1
         )
     ));
     
