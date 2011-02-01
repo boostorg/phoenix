@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../modules.html" title="Modules">
 <link rel="prev" href="core/nothing.html" title="Nothing">
 <link rel="next" href="operator.html" title="Operator">
@@ -15,7 +15,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="core/nothing.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../modules.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="operator.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
-<div class="section">
+<div class="section" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="phoenix.modules.function"></a><a class="link" href="function.html" title="Function">Function</a>
 </h3></div></div></div>
@@ -34,20 +34,21 @@
         the argument types of these functions are automatically lazily bound.
       </p>
 <p>
-        In order to create a lazy function, we need to implement a model of the FunctionEval
-        concept. For a function that takes <code class="computeroutput"><span class="identifier">N</span></code>
-        arguments, a model of FunctionEval must provide:
+        In order to create a lazy function, we need to implement a model of the
+        <a href="http://www.boost.org/doc/libs/release/libs/fusion/doc/html/fusion/functional/concepts/poly.html" target="_top">Polymorphic
+        Function Object</a> concept. For a function that takes <code class="computeroutput"><span class="identifier">N</span></code> arguments, a model of <a href="http://www.boost.org/doc/libs/release/libs/fusion/doc/html/fusion/functional/concepts/poly.html" target="_top">Polymorphic
+        Function Object</a> must provide:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             An <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code>
             that takes <code class="computeroutput"><span class="identifier">N</span></code> arguments,
             and implements the function logic. This is also true for ordinary function
             pointers.
           </li>
-<li class="listitem">
+<li>
             A nested metafunction <code class="computeroutput"><span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">Signature</span><span class="special">&gt;</span></code> or nested typedef <code class="computeroutput"><span class="identifier">result_type</span></code>,
-            following the <a href="http://www.boost.org/doc/libs/1_43_0/libs/utility/utility.htm#result_of" target="_top">Boost.Result
+            following the <a href="http://www.boost.org/doc/libs/release/libs/utility/utility.htm#result_of" target="_top">Boost.Result
             Of</a> Protocol
           </li>
 </ul></div>
@@ -58,33 +59,24 @@
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">factorial_impl</span>
 <span class="special">{</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Sig</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">result</span><span class="special">;</span>
-
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">This</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Arg</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Arg</span><span class="special">)&gt;</span>
-	<span class="special">:</span> <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="identifier">Arg</span><span class="special">&gt;</span>
-<span class="special">{};</span>
+    <span class="keyword">struct</span> <span class="identifier">result</span><span class="special">;</span>
+    
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">This</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Arg</span><span class="special">&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Arg</span> <span class="keyword">const</span> <span class="special">&amp;)&gt;</span>
+    <span class="special">{</span>
+        <span class="keyword">typedef</span> <span class="identifier">Arg</span> <span class="identifier">type</span><span class="special">;</span>
+    <span class="special">};</span>
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Arg</span><span class="special">&gt;</span>
-    <span class="identifier">Arg</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span> <span class="identifier">n</span><span class="special">)</span> <span class="keyword">const</span>
+    <span class="identifier">Arg</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Arg</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">n</span><span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
-        <span class="keyword">return</span> <span class="special">(</span><span class="identifier">n</span> <span class="special">&lt;=</span> <span class="number">0</span><span class="special">)</span> <span class="special">?</span> <span class="number">1</span> <span class="special">:</span> <span class="identifier">n</span> <span class="special">*</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="keyword">operator</span><span class="special">()(</span><span class="identifier">n</span><span class="special">-</span><span class="number">1</span><span class="special">);</span>
+        <span class="keyword">return</span> <span class="special">(</span><span class="identifier">n</span> <span class="special">&lt;=</span> <span class="number">0</span><span class="special">)</span> <span class="special">?</span> <span class="number">1</span> <span class="special">:</span> <span class="identifier">n</span> <span class="special">*</span> <span class="special">(*</span><span class="keyword">this</span><span class="special">)(</span><span class="identifier">n</span><span class="special">-</span><span class="number">1</span><span class="special">);</span>
     <span class="special">}</span>
 <span class="special">};</span>
 </pre>
 <p>
         (See <a href="../../../../example/users_manual/factorial.cpp" target="_top">factorial.cpp</a>)
       </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          The type of Arg is either a const-reference or non-const-reference (depending
-          on whether your argument to the actor evaluation is a const-ref or non-const-ref).
-        </p></td></tr>
-</table></div>
 <p>
         Having implemented the <code class="computeroutput"><span class="identifier">factorial_impl</span></code>
         type, we can declare and instantiate a lazy <code class="computeroutput"><span class="identifier">factorial</span></code>
@@ -111,8 +103,8 @@
       </p>
 <p>
         Take note that in certain cases (e.g. for function objects with state), an
-        instance of the model of FunctionEval may be passed on to the constructor.
-        Example:
+        instance of the model of <a href="http://www.boost.org/doc/libs/release/libs/fusion/doc/html/fusion/functional/concepts/poly.html" target="_top">Polymorphic
+        Function Object</a> may be passed on to the constructor. Example:
       </p>
 <pre class="programlisting"><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">factorial_impl</span><span class="special">&gt;</span> <span class="identifier">factorial</span><span class="special">(</span><span class="identifier">ftor</span><span class="special">);</span>
 </pre>

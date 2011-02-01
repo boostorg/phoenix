@@ -1,0 +1,313 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Actors in Detail</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<link rel="up" href="../inside.html" title="Inside Phoenix">
+<link rel="prev" href="expression.html" title="Phoenix Expressions in Detail">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="expression.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="phoenix.inside.actor"></a><a class="link" href="actor.html" title="Actors in Detail">Actors in Detail</a>
+</h3></div></div></div>
+<a name="phoenix.inside.actor.actor_concept"></a><h5>
+<a name="id2857982"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor.actor_concept">Actor Concept</a>
+      </h5>
+<p>
+        The main concept is the <code class="computeroutput"><span class="identifier">Actor</span></code>.
+        An <code class="computeroutput"><span class="identifier">Actor</span></code> is a model of the
+        <a href="http://www.boost.org/doc/libs/release/libs/fusion/doc/html/fusion/functional/concepts/poly.html" target="_top">Polymorphic
+        Function Object</a> concept (that can accept 0 to N arguments (where
+        N is a predefined maximum).
+      </p>
+<p>
+        An <code class="computeroutput"><span class="identifier">Actor</span></code> contains a valid
+        Phoenix Expression, a call to one of the function call operator overloads,
+        starts the evaluation process.
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          You can set <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code>,
+          the predefined maximum arity an actor can take. By default, <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code> is set to 10.
+        </p></td></tr>
+</table></div>
+<a name="phoenix.inside.actor._code__phrase_role__identifier__actor__phrase___code_"></a><h5>
+<a name="id2858086"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor._code__phrase_role__identifier__actor__phrase___code_"><code class="computeroutput"><span class="identifier">actor</span></code></a>
+      </h5>
+<p>
+        The <code class="computeroutput"><span class="identifier">actor</span></code> template class
+        models the <code class="computeroutput"><span class="identifier">Actor</span></code> concept:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">actor</span>
+<span class="special">{</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Sig</span><span class="special">&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">result</span><span class="special">;</span>
+
+    <span class="keyword">typename</span> <span class="identifier">result_of</span><span class="special">::</span><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;::</span><span class="identifier">type</span>
+    <span class="keyword">operator</span><span class="special">()()</span> <span class="keyword">const</span><span class="special">;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">&gt;</span>
+    <span class="keyword">typename</span> <span class="identifier">result_of</span><span class="special">::</span><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">,</span> <span class="identifier">T0</span> <span class="special">&amp;&gt;::</span><span class="identifier">type</span>
+    <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">T0</span><span class="special">&amp;</span> <span class="identifier">_0</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">&gt;</span>
+    <span class="keyword">typename</span> <span class="identifier">result_of</span><span class="special">::</span><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">,</span> <span class="identifier">T0</span> <span class="keyword">const</span> <span class="special">&amp;&gt;::</span><span class="identifier">type</span>
+    <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">T0</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">_0</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+
+    <span class="comment">//...
+</span><span class="special">};</span>
+</pre>
+<div class="table">
+<a name="id2858540"></a><p class="title"><b>Table&#160;1.9.&#160;Actor Concept Requirements</b></p>
+<div class="table-contents"><table class="table" summary="Actor Concept Requirements">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Semantics
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">actor</span><span class="special">(</span><span class="identifier">arg0</span><span class="special">,</span>
+                  <span class="identifier">arg1</span><span class="special">,</span>
+                  <span class="special">...,</span> <span class="identifier">argN</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Function call operators to start the evaluation
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">Actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">&gt;(</span><span class="identifier">Arg0</span><span class="special">,</span>
+                  <span class="identifier">Arg1</span><span class="special">,</span>
+                  <span class="special">...,</span> <span class="identifier">ArgN</span><span class="special">)&gt;::</span><span class="identifier">type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Result of the evaluation
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">Expr</span><span class="special">,</span>
+                  <span class="identifier">Arg0</span><span class="special">,</span>
+                  <span class="identifier">Arg1</span><span class="special">,</span>
+                  <span class="special">...,</span> <span class="identifier">ArgN</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Result of the evaluation
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><a name="phoenix.inside.actor.function_call_operators"></a><h5>
+<a name="id2858846"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor.function_call_operators">Function Call
+        Operators</a>
+      </h5>
+<p>
+        There are 2*N function call operators for 0 to N arguments (N == <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code>). The actor class accepts
+        the arguments and forwards the arguments to the default evalution action.
+      </p>
+<p>
+        Additionally, there exist function call operators accepting permutations
+        of const and non-const references. These operators are created for all N
+        &lt;= <code class="computeroutput"><span class="identifier">PHOENIX_PERFECT_FORWARD_LIMIT</span></code>
+        (which defaults to 3).
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+          <span class="bold"><strong>Forwarding Function Problem</strong></span>
+        </p>
+<p>
+          There is a known issue with current C++ called the "<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm" target="_top">Forwarding
+          Function Problem</a>". The problem is that given an arbitrary
+          function <code class="computeroutput"><span class="identifier">F</span></code>, using current
+          C++ language rules, one cannot create a forwarding function <code class="computeroutput"><span class="identifier">FF</span></code> that transparently assumes the arguments
+          of <code class="computeroutput"><span class="identifier">F</span></code>.
+        </p>
+</td></tr>
+</table></div>
+<a name="phoenix.inside.actor.context"></a><h5>
+<a name="id2858964"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor.context">Context</a>
+      </h5>
+<p>
+        On an actor function call, before calling the evaluation function, the actor
+        created a <span class="bold"><strong>context</strong></span>. This context consists
+        of an <code class="computeroutput"><span class="identifier">Environment</span></code> and an
+        <code class="computeroutput"><span class="identifier">Action</span></code> part. These contain
+        all information necessary to evaluate the given expression.
+      </p>
+<div class="table">
+<a name="id2859012"></a><p class="title"><b>Table&#160;1.10.&#160;Context Concept Requirements</b></p>
+<div class="table-contents"><table class="table" summary="Context Concept Requirements">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Semantics
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">context</span><span class="special">&lt;</span><span class="identifier">Env</span><span class="special">,</span>
+                  <span class="identifier">Actions</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Type of a Context
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">context</span><span class="special">(</span><span class="identifier">e</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  A Context containg environment <code class="computeroutput"><span class="identifier">e</span></code>
+                  and actions <code class="computeroutput"><span class="identifier">a</span></code>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">env</span><span class="special">&lt;</span><span class="identifier">Context</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Type of the contained Environment
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">env</span><span class="special">(</span><span class="identifier">ctx</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The environment
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">actions</span><span class="special">&lt;</span><span class="identifier">Context</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Type of the contained Actions
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">actions</span><span class="special">(</span><span class="identifier">ctx</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The actions
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><a name="phoenix.inside.actor.environment"></a><h5>
+<a name="id2859388"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor.environment">Environment</a>
+      </h5>
+<a name="phoenix.inside.actor.actions"></a><h5>
+<a name="id2859408"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor.actions">Actions</a>
+      </h5>
+<a name="phoenix.inside.actor._code__phrase_role__identifier__evaluator__phrase___code_"></a><h5>
+<a name="id2859430"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor._code__phrase_role__identifier__evaluator__phrase___code_"><code class="computeroutput"><span class="identifier">evaluator</span></code></a>
+      </h5>
+<a name="phoenix.inside.actor._code__phrase_role__identifier__result_of__phrase__phrase_role__special______phrase__phrase_role__identifier__actor__phrase___code_"></a><h5>
+<a name="id2859460"></a>
+        <a class="link" href="actor.html#phoenix.inside.actor._code__phrase_role__identifier__result_of__phrase__phrase_role__special______phrase__phrase_role__identifier__actor__phrase___code_"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">actor</span></code></a>
+      </h5>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="expression.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a>
+</div>
+</body>
+</html>

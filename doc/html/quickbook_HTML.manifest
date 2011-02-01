@@ -50,4 +50,6 @@ phoenix/modules/stl.html
 phoenix/modules/stl/container.html
 phoenix/modules/stl/algorithm.html
 phoenix/modules/fusion.html
-phoenix/inside_phoenix.html
+phoenix/inside.html
+phoenix/inside/expression.html
+phoenix/inside/actor.html

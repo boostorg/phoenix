@@ -22,7 +22,7 @@ bound through the bind function (see [link phoenix.modules.bind Bind]),
 the argument types of these functions are automatically lazily bound.
 
 In order to create a lazy function, we need to implement a model of the
-FunctionEval concept. For a function that takes `N` arguments, a model of FunctionEval must
+__PFO__ concept. For a function that takes `N` arguments, a model of __PFO__ must
 provide:
 
 * An `operator()` that takes `N` arguments, and implements
@@ -42,23 +42,24 @@ lazy factorial function:
     struct factorial_impl
     {
         template <typename Sig>
-		  struct result;
-
-		  template <typename This, typename Arg>
-		  struct result<This(Arg)>
-		  	: typedef boost::remove_reference<Arg>
-		  {};
+        struct result;
+        
+        template <typename This, typename Arg>
+        struct result<This(Arg const &)>
+        {
+            typedef Arg type;
+        };
 
         template <typename Arg>
-        Arg operator()(Arg n) const
+        Arg operator()(Arg const & n) const
         {
-            return (n <= 0) ? 1 : n * this->operator()(n-1);
+            return (n <= 0) ? 1 : n * (*this)(n-1);
         }
     };
 
 (See [@../../example/users_manual/factorial.cpp factorial.cpp])
 
-[note The type of Arg is either a const-reference or non-const-reference
+[/note The type of Arg is either a const-reference or non-const-reference
 (depending on whether your argument to the actor evaluation is a const-ref or
 non-const-ref).]
 
@@ -81,7 +82,7 @@ the actual factorial function. Example:
 will print out "24".
 
 Take note that in certain cases (e.g. for function objects with state), an
-instance of the model of FunctionEval may be passed on to the constructor. Example:
+instance of the model of __PFO__ may be passed on to the constructor. Example:
 
     function<factorial_impl> factorial(ftor);
 

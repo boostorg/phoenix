@@ -38,11 +38,8 @@ that supplies the underlying expression to evaluate.
 
 The actor class accepts the arguments through a set of function call operators
 for 0 to `PHOENIX_LIMIT` arities (Don't worry about the details, for now. Note, for example,
-that we skimp over the details regarding `return_type`). The arguments
-are then forwarded to the actor's `Expr` for evaluation.
-
-[h2 TODO]
-add some notes about the extension possibilities
+that we skimp over the details regarding `return_type`). The arguments are passed through to
+the evaluation mechanism. For more information see [link phoenix.inside.actor Inside Actors].
 
 [endsect]
 

@@ -7,8 +7,15 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Inside Phoenix]
+[section:inside Inside Phoenix]
 
-TODO
+This chapter explains in more detail how the library operates. The information
+henceforth should not be necessary to those who are interested in just using the
+library. However, a microscopic view might prove to be beneficial to moderate
+to advanced programmers who wish to extend the library.
+
+[include inside/expression.qbk]
+[include inside/actor.qbk]
+[section Custom Terminals]
 
 [endsect]
