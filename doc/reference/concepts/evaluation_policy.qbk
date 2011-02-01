@@ -12,7 +12,7 @@
 [heading Description]
 
 Evaluation Policies are the classes which decide how the composite is to be evaluated with respect to the default evaluator.
-They are completly independent of the [link phoenix.reference.concepts.actor Actor].
+They are completely independent of the [link phoenix.reference.concepts.actor Actor].
 
 [variablelist Notation
    [[`F`] [Type fulfilling this concept]]

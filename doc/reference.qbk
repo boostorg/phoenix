@@ -126,7 +126,7 @@ the Phoenix Expression Templates and provides various operator() overloads.
 
 [variablelist Notation
     [[`expr`] [An instance of a Phoenix actor]]
-    [[`a0`...`a1`] [Heterogenous values]]
+    [[`a0`...`a1`] [Heterogeneous values]]
 ]
 
 [heading Expression Semantics]
@@ -181,7 +181,7 @@ It is used to define what valid Phoenix Expressions are.
 
 [table
     [[Expression] [Semantic]]
-    [[`proto::matches<Expr, meta_grammar>::type`] [Calculates wether `Expr` matches meta_grammar]]
+    [[`proto::matches<Expr, meta_grammar>::type`] [Calculates whether `Expr` matches meta_grammar]]
 ]
 
 By default, `meta_grammar` matches nothing. By including the headers described in the __phoenix_language__ section,
@@ -242,7 +242,7 @@ environment is a Fusion Random Access Sequences.
 
     template <typename Parameter, typename Actions>
     typename environment<Parameter, Actions>::type
-    environment(Paramater & parameter, Actions const & actions);
+    environment(Parameter & parameter, Actions const & actions);
 
     struct _env;
 
@@ -496,7 +496,7 @@ there are situations where this is unavoidable.
 
 [table
     [[Parameter] [Requirement] [Description]]
-    [[`T`] [Model of Copy Constructible] [Operation's Argument]]
+    [[`T`] [Model of Copy Constructable] [Operation's Argument]]
     [[`t`] [Object of type T] [Operation's Argument]]
 ]
 
@@ -733,7 +733,7 @@ actually useful in situations where we don't want to do anything. (See
 [def __phoenix_peg_operator__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator operator]]
 [def __phoenix_peg_operator_arithmetic__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator.arithmetic arithmetic]]
 [def __phoenix_peg_operator_bitwise__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator bitwise]]
-[def __phoenix_peg_operator_comparision__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator comparision]]
+[def __phoenix_peg_operator_comparison__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator comparison]]
 [def __phoenix_peg_operator_if_else__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator if_else]]
 [def __phoenix_peg_operator_io__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator io]]
 [def __phoenix_peg_operator_logical__ [link phoenix.reference.phoenix_expressions.phoenix_ast.operator logical]]

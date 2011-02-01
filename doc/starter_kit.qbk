@@ -23,7 +23,7 @@ This section is by no means a thorough discourse of the library. For more
 information on Phoenix, please take some time to read the rest of the
 Documentation. Yet, if you just want to use the library quickly, now, this
 chapter will probably suffice. Rather than taking you to the details of the
-library, we shall try to provide you with annotated exemples instead.
+library, we shall try to provide you with annotated examples instead.
 Hopefully, this will get you into high gear quickly.
 
 [heading Functors everywhere]

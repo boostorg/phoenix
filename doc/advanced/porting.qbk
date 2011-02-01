@@ -58,8 +58,8 @@ result type deduction protocol:
 		boost::phoenix::function<is_odd_impl> is_odd = is_odd_impl();
 	``]
 	[ __note__
-	 The result_of protocol is particulary easy when you implement a monomorphic
-	 function (return type not dependant on the arguments). You then just need a
+	 The result_of protocol is particularly easy when you implement a monomorphic
+	 function (return type not dependent on the arguments). You then just need a
 	 single nested return_type typedef.
 	]
 	]

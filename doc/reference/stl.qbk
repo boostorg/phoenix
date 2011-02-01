@@ -124,7 +124,7 @@ The algorithm module provides wrappers for the standard algorithms in the
 `<algorithm>` and `<numeric>` headers.
 
 The algorithms are divided into the categories iteration, transformation and querying,
-modelling the __boost_mpl__ library. The different algorithm classes can be
+modeling the __boost_mpl__ library. The different algorithm classes can be
 included using the headers:
 
     #include <boost/phoenix/stl/algorithm/iteration.hpp>

@@ -72,7 +72,7 @@ Values]). To achieve our intent, we use:
 
     expression::reference<T>::type
 
-This is similar to `expression::value<T>::type` befor but instead holds a reference to a
+This is similar to `expression::value<T>::type` before but instead holds a reference to a
 variable.
 
 We normally don't instantiate `expression::reference<T>::type` objects directly. Instead we
@@ -87,7 +87,7 @@ For example (where `i` is an `int` variable):
 [heading Evaluating a Reference]
 
 References are actors. Hence, references can be evaluated. Such invocation gives
-the references's identity. Example:
+the reference's identity. Example:
 
     int i = 3;
     char const* s = "Hello World";
