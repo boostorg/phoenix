@@ -47,6 +47,8 @@
 #pragma wave option(preserve: 1)
 #endif
 
+#include <boost/phoenix/operator/detail/define_operator.hpp>
+
 namespace boost { namespace phoenix
 {
     PHOENIX_BINARY_OPERATORS(
@@ -124,6 +126,8 @@ namespace boost { namespace phoenix
         : proto::call<mem_fun_ptr_eval(_context, proto::_)>
     {};
 }}
+
+#include <boost/phoenix/operator/detail/undef_operator.hpp>
 
 #if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)

@@ -10,6 +10,7 @@
 #define PHOENIX_SCOPE_LET_HPP
 
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/fusion/algorithm/transformation/transform.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
@@ -20,7 +21,7 @@ namespace boost { namespace phoenix
 {
     PHOENIX_DEFINE_EXPRESSION(
         let
-      , (rule::local_var_def_list)
+      , (proto::terminal<proto::_>)
         (meta_grammar)
     )
 
@@ -39,14 +40,15 @@ namespace boost { namespace phoenix
                 actions_type;
 
             typedef
-                typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        rule::local_var_def_list(
-                            Locals const &
-                          , Context
+                typename 
+                    boost::result_of<
+                        detail::local_var_def_eval(
+                            typename proto::result_of::value<
+                                Locals const &
+                            >::type
+                          , Context const &
                         )
                     >::type
-                >::type
                 locals_type;
 
             typedef
@@ -82,23 +84,21 @@ namespace boost { namespace phoenix
                 actions_type;
 
             typedef
-                typename proto::detail::uncvref<
-                    typename boost::result_of<
-                        rule::local_var_def_list(
-                            Locals &
+                typename 
+                    boost::result_of<
+                        detail::local_var_def_eval(
+                            typename proto::result_of::value<
+                                Locals const &
+                            >::type
                           , Context &
                         )
                     >::type
-                >::type
                 locals_type;
             
             typedef scoped_environment<env_type, env_type, locals_type> scoped_env_type;
 
-            locals_type l = 
-                   rule::local_var_def_list()(
-                      locals
-                    , ctx
-                    );
+            locals_type l
+                = detail::local_var_def_eval()(proto::value(locals), ctx);
 
 
             scoped_env_type
@@ -165,13 +165,6 @@ namespace boost { namespace phoenix
             return let_actor_gen<>();
         }
 
-        template <typename Expr0>
-        let_actor_gen<Expr0> const
-        operator()(Expr0 const& expr0) const
-        {
-            return expr0;
-        }
-
         #include <boost/phoenix/scope/detail/let_local_gen.hpp>
     };
 
@@ -181,7 +174,7 @@ namespace boost { namespace phoenix
     struct is_nullary::when<rule::let, Dummy>
         : proto::make<
             mpl::and_<
-                detail::local_var_def_is_nullary(proto::_child_c<0>, _context, int())
+                detail::local_var_def_is_nullary<proto::_value(proto::_child_c<0>), _context>()
               , evaluator(
                     proto::_child_c<1>
                   , fusion::vector2<

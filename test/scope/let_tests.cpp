@@ -50,8 +50,10 @@ main()
                 _a
             ]
             (x) == x
-        );
+        )
+        ;
     }
+
     {
         int x = 1, y = 10;
         BOOST_TEST(

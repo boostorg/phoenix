@@ -1,4 +1,5 @@
 
+/*
 #if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
 #ifndef PHOENIX_SCOPE_DETAIL_MAKE_LOCALS_HPP
 #define PHOENIX_SCOPE_DETAIL_MAKE_LOCALS_HPP
@@ -9,6 +10,7 @@
 
 #endif
 #else
+*/
 
 #if !PHOENIX_IS_ITERATING
 
@@ -33,8 +35,35 @@
 #pragma wave option(preserve: 1)
 #endif
 
+#define PHOENIX_TYPEDEF_LOCAL_TYPES(Z, N, D) \
+            typedef \
+                typename proto::result_of::value< \
+                    typename proto::result_of::child_c< \
+                        typename proto::result_of::child_c< \
+                            BOOST_PP_CAT(A, N) \
+                          , 0 \
+                        >::type \
+                      , 0 \
+                    >::type \
+                >::type \
+                BOOST_PP_CAT(tag_type, N); \
+\
+            typedef \
+                typename proto::result_of::child_c< \
+                    BOOST_PP_CAT(A, N) \
+                  , 1 \
+                >::type \
+                BOOST_PP_CAT(var_type, N);\
+
+#define PHOENIX_TYPEDEF_LOCAL_PAIR_TYPES(Z, N, D) \
+    BOOST_PP_COMMA_IF(N) fusion::pair<BOOST_PP_CAT(tag_type, N), BOOST_PP_CAT(var_type, N)>
+
+#define PHOENIX_CHILD_OF(Z, N, D) \
+    BOOST_PP_COMMA_IF(N) proto::child_c<1>(BOOST_PP_CAT(a, N))
+
+
 #define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (3, PHOENIX_LOCAL_LIMIT,                                                \
+    (3, (1, PHOENIX_LOCAL_LIMIT,                                                \
     <boost/phoenix/scope/detail/make_locals.hpp>))
 #include PHOENIX_ITERATE()
 
@@ -49,42 +78,15 @@
         template <PHOENIX_typename_A>
         struct make_locals<PHOENIX_A>
         {
-            typedef
-                typename make_locals<
-                    BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(PHOENIX_ITERATION), A)
-                >::type const
-                type0;
-
-            typedef
-                typename expression::sequence<
-                    type0
-                  , BOOST_PP_CAT(A, BOOST_PP_DEC(PHOENIX_ITERATION))
-                >::type
-                type;
+            BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_TYPEDEF_LOCAL_TYPES, _)
+            typedef fusion::map<BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_TYPEDEF_LOCAL_PAIR_TYPES, _)> type;
 
             static type const make(PHOENIX_A_a)
             {
-                return
-                    expression::sequence<
-                        type0
-                      , BOOST_PP_CAT(A, BOOST_PP_DEC(PHOENIX_ITERATION))
-                    >::make(
-                        make_locals<
-                            BOOST_PP_ENUM_PARAMS(
-                                BOOST_PP_DEC(PHOENIX_ITERATION)
-                              , A
-                            )
-                        >::make(
-                            BOOST_PP_ENUM_PARAMS(
-                                BOOST_PP_DEC(PHOENIX_ITERATION)
-                              , a
-                            )
-                        )
-                      , BOOST_PP_CAT(a, BOOST_PP_DEC(PHOENIX_ITERATION))
-                    );
+                return type(BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_CHILD_OF, _));
             }
         };
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES

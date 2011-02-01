@@ -21,7 +21,7 @@ namespace boost { namespace phoenix
     PHOENIX_DEFINE_EXPRESSION(
         lambda
       , (proto::terminal<proto::_>) // OuterEnv 
-        (rule::local_var_def_list)  // Locals
+        (proto::terminal<proto::_>)  // Locals
         (meta_grammar)              // Lambda
     )
 
@@ -76,7 +76,9 @@ namespace boost { namespace phoenix
                 actions_type;
 
             typedef
-                typename proto::detail::uncvref<Locals>::type
+                typename proto::detail::uncvref<
+                    typename proto::result_of::value<Locals>::type
+                >::type
                 locals_type;
 
             typedef
@@ -125,7 +127,9 @@ namespace boost { namespace phoenix
                 actions_type;
 
             typedef
-                typename proto::detail::uncvref<Locals>::type
+                typename proto::detail::uncvref<
+                    typename proto::result_of::value<Locals>::type
+                >::type
                 locals_type;
 
             typedef
@@ -136,14 +140,13 @@ namespace boost { namespace phoenix
                 scoped_environment<env_type, OuterEnv const, locals_type const>
                 scoped_env_type;
 
-            
             env_type e(env(ctx));
 
             scoped_env_type
                 scoped_env(
                     e
                   , outer_env
-                  , locals
+                  , proto::value(locals)
                 );
 
             typename result_of::context<scoped_env_type, actions_type&>::type
@@ -169,7 +172,7 @@ namespace boost { namespace phoenix
         : proto::when<
             expression::lambda<
                 proto::terminal<proto::_>
-              , rule::local_var_def_list
+              , proto::terminal<proto::_>
               , meta_grammar
             >
           , evaluator(
@@ -210,7 +213,7 @@ namespace boost { namespace phoenix
         struct lambda_actor
             : proto::or_<
                 expression::lambda_actor<meta_grammar>
-              , expression::lambda_actor<rule::local_var_def_list, meta_grammar>
+              , expression::lambda_actor<proto::terminal<proto::_>, meta_grammar>
             >
         {};
     }
@@ -224,14 +227,10 @@ namespace boost { namespace phoenix
             >
           , proto::when<
                 expression::lambda_actor<
-                    rule::local_var_def_list
+                    proto::terminal<proto::_>
                   , meta_grammar
                 >
-              , detail::local_var_def_is_nullary(
-                    proto::_child_c<0>
-                  , _context
-                  , int()
-                )
+              , detail::local_var_def_is_nullary<proto::_value(proto::_child_c<0>), _context>()
             >
         >
     {};
@@ -269,13 +268,15 @@ namespace boost { namespace phoenix
         struct result<This(Context, Locals, Lambda)>
         {
             typedef
-                typename proto::detail::uncvref<
-                    typename rule::local_var_def_list::impl<
-                        typename proto::detail::uncvref<Locals>::type &
-                      , Context
-                      , int
-                    >::result_type
-                >::type
+                typename 
+                    boost::result_of<
+                        detail::local_var_def_eval(
+                            typename proto::result_of::value<
+                                Locals const &
+                            >::type
+                          , Context const &
+                        )
+                    >::type
                 locals_type;
 
             typedef
@@ -321,20 +322,19 @@ namespace boost { namespace phoenix
         operator()(Context & ctx, Locals const& locals, Lambda const& lambda) const
         {
             typedef
-                typename proto::detail::uncvref<
-                    typename rule::local_var_def_list::impl<
-                        Locals &
-                      , Context
-                      , int
-                    >::result_type
-                >::type
+                typename 
+                    boost::result_of<
+                        detail::local_var_def_eval(
+                            typename proto::result_of::value<
+                                Locals const &
+                            >::type
+                          , Context &
+                        )
+                    >::type
                 locals_type;
 
-            locals_type l = 
-                   rule::local_var_def_list()(
-                      locals
-                    , ctx
-                    );
+            locals_type l
+                = detail::local_var_def_eval()(proto::value(locals), ctx);
 
             typedef
                 typename proto::detail::uncvref<
@@ -358,7 +358,7 @@ namespace boost { namespace phoenix
             >
           , proto::when<
                 expression::lambda_actor<
-                    rule::local_var_def_list
+                    proto::terminal<proto::_>
                   , meta_grammar
                 >
               , lambda_actor_eval(_context, proto::_child_c<0>, proto::_child_c<1>)
@@ -409,13 +409,6 @@ namespace boost { namespace phoenix
             return lambda_actor_gen<>();
         }
 
-        template <typename Expr0>
-        lambda_actor_gen<Expr0> const
-        operator()(Expr0 const& expr0) const
-        {
-            return expr0;
-        }
-
     #define PHOENIX_LAMBDA_LOCAL_GEN(Z, N, DATA)                                \
         template <PHOENIX_typename_A(N)>                                        \
         lambda_actor_gen<                                                       \
@@ -426,7 +419,7 @@ namespace boost { namespace phoenix
             return detail::make_locals<PHOENIX_A(N)>::make(PHOENIX_a(N));       \
         }                                                                       \
     /**/
-        BOOST_PP_REPEAT_FROM_TO(2, PHOENIX_LOCAL_LIMIT, PHOENIX_LAMBDA_LOCAL_GEN, _)
+        BOOST_PP_REPEAT_FROM_TO(1, PHOENIX_LOCAL_LIMIT, PHOENIX_LAMBDA_LOCAL_GEN, _)
 
     };
 

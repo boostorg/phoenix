@@ -80,7 +80,7 @@ main()
         int y = lambda[_1]()(x);
         BOOST_TEST(x == y);
     }
-    
+
     {
         int x = 1, y = 10;
         BOOST_TEST(
@@ -183,7 +183,7 @@ main()
     }
 
     {
-        int x = (let(_a = lambda[val(1)])[_a])();
+        int x = (let(_a = lambda[val(1)])[+_a])()();
         BOOST_TEST(x == 1);
     }
 
