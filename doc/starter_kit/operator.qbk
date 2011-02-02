@@ -9,7 +9,7 @@
 
 [section Lazy Operators]
 
-You can use the usual set of operators to form composites. Examples:
+You can use the usual set of operators to form expressions. Examples:
 
     arg1 * arg1
     ref(x) = arg1 + ref(z)
@@ -22,9 +22,9 @@ it. But in some cases, you will have to explicitly wrap your values in `val`.
 Rules of thumb:
 
 * In a binary expression (e.g. `3 * arg3`), at least one of the operands must be
-  a phoenix primitive or composite.
+  a phoenix primitive or expression.
 * In a unary expression (e.g. `arg1++`), the single operand must be a phoenix
-  primitive or composite.
+  primitive or expression.
 
 If these basic rules are not followed, the result is either an error, or is
 immediately evaluated. Some examples:
@@ -37,8 +37,8 @@ immediately evaluated. Some examples:
 
     ref(x)[ref(i)]  // lazy
     ref(x)[i]       // lazy (equivalent to ref(x)[val(i)])
-    x[ref(i)]       // illegal (x is not a phoenix primitive or composite)
-    ref(x[ref(i)])  // illegal (x is not a phoenix primitive or composite)
+    x[ref(i)]       // illegal (x is not a phoenix primitive or expression)
+    ref(x[ref(i)])  // illegal (x is not a phoenix primitive or expression)
 
 [blurb __tip__ Learn more about operators [link phoenix.modules.operator here.]]
 

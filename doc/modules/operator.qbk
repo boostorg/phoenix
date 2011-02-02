@@ -20,14 +20,14 @@ unlike ordinary operators, the actual operator execution is deferred. Samples:
     1 / -arg1
     arg1 < 150
 
-We have seen the lazy operators in action (see [link phoenix.starter_kit.composites.lazy_operators
+We have seen the lazy operators in action (see [link phoenix.starter_kit.lazy_operators
 Quick Start - Lazy Operators]). Let's go back and examine them a little bit further:
 
     std::find_if(c.begin(), c.end(), arg1 % 2 == 1)
 
 Through operator overloading, the expression `arg1 % 2 == 1` actually generates
 an actor. This actor object is passed on to STL's `find_if` function. From
-the viewpoint of STL, the composite is simply a function object expecting a
+the viewpoint of STL, the expression is simply a function object expecting a
 single argument of the containers value_type. For each element in `c`,
 the element is passed on as an argument `arg1` to the actor (function
 object). The actor checks if this is an odd value based on the expression

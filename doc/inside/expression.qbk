@@ -7,10 +7,69 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:expression Phoenix Expressions in Detail]
+[section:expression Phoenix Expressions]
 
-[heading `meta_grammar`]
+A Phoenix Expression is a model of the __proto_expr__ Concept. These expressions
+are wrapped inside an [link phoenix.inside.actor] template. The `actor` provides
+the function call operator which evaluates the expressions.
+The `actor` is the domain specific wrapper around phoenix expressions.
 
-[heading Adding an expression]
+By design, Phoenix Expressions do not carry any information on how they will be
+evaluated later on. They are the data structure on which the `Actions` will work
+on.
+
+The library provides a convenience template to define expressions:
+    
+    template <template <typename> Actor, typename Tag, typename A0, ..., typename A1>
+    struct expr_ext
+        : proto::transform<expr_ext<Actor, Tag, A0, ..., A1> >
+    {
+        typedef __unspecified__ base_expr;
+        typedef Actor<base_expr> type;
+
+        typedef __unspecified__ proto_grammar;
+
+        static type make(A0 a0, ..., A1 a1);
+    };
+
+    template <typename Tag, typename A0, ..., typename A1>
+    struct expr : expr_ext<actor, Tag, A0, ..., A1> {};
+
+[*Notation]
+[variablelist
+    [[`A0...AN`] [Child node types]]
+    [[`a0...aN`] [Child node objects]]
+    [[`G0...GN`] [__proto__ grammar types]]
+]
+
+[*Expression Semantics]
+[table
+    [[Expression] [Semantics]]
+    [[`expr<Tag, A0...AN>::type`] [The type of Expression having tag `Tag` and `A0...AN` children]]
+    [[`expr<Tag, G0...GN>`] [A __proto__ grammar and __proto_pass_through_transform__]]
+    [[`expr<Tag, A0...AN>::make(a0...aN)`] [Returns a Phoenix Expression]]
+]
+
+[heading meta_grammar]
+
+Defining Expressions is only part of the game to make it a valid Phoenix Expression.
+In order to use the expressions in the Phoenix domain, we need to "register" our newly created
+to our grammar.
+
+The `meta_grammar` is a struct for exactly that purpose. It is an openly extendable __proto__ Grammar:
+    
+    struct meta_grammar
+        : proto::switch_<meta_grammar>
+    {
+        template <typename Tag, typename Dummy>
+        struct case_
+            : proto::not_<proto::_>
+        {};
+    };
+
+As you can see, by default the `meta_grammar` matches nothing. With every [link phoenix.modules Module]
+you include this grammar gets extended by various expressions.
+
+See [link phoenix.inside.adding_expressions Adding Expressions] for more details.
 
 [endsect]

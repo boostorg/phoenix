@@ -35,22 +35,22 @@ more complex functors... and so on. Almost everything is a functor.
 [note Functors are so ubiquitous in Phoenix that, in the manual, the
 words /"functor"/ and /"function"/ are used interchangeably.]
 
-[section Primitives]
+[/section Primitives]
 
 We start with some core functions that are called *primitives*. You can think of
 primitives (such as values, references and arguments) as atoms.
+
+Things start to get interesting when we start /composing/ primitives to form
+*expressions*. The expressions can, in turn, be composed to form even more complex
+expressions.
 
 [include starter_kit/values.qbk]
 [include starter_kit/references.qbk]
 [include starter_kit/arguments.qbk]
 
-[endsect]
+[/endsect]
 
-[section Composites]
-
-Things start to get interesting when we start /composing/ primitives to form
-*composites*. The composites can, in turn, be composed to form even more complex
-composites.
+[/section Composites]
 
 [include starter_kit/operator.qbk]
 [include starter_kit/statement.qbk]
@@ -58,6 +58,6 @@ composites.
 [include starter_kit/function.qbk]
 [include starter_kit/more.qbk]
 
-[endsect]
+[/endsect]
 
 [endsect]

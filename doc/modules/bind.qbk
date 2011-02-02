@@ -39,7 +39,7 @@ Here's how the function `foo` may be bound:
 
     bind(&foo, arg1)
 
-This is now a full-fledged composite that can finally
+This is now a full-fledged expression that can finally
 be evaluated by another function call invocation. A second function call will
 invoke the actual `foo` function. Example:
 

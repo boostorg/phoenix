@@ -65,7 +65,7 @@ anymore.
 [heading STL and higher order functions]
 
 So, what's all the fuss? What makes partial function application so useful?
-Recall our original example in the [link phoenix.starter_kit.composites.lazy_operators
+Recall our original example in the [link phoenix.starter_kit.lazy_operators
 previous section]:
 
     std::find_if(c.begin(), c.end(), arg1 % 2 == 1)

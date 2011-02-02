@@ -14,9 +14,12 @@ henceforth should not be necessary to those who are interested in just using the
 library. However, a microscopic view might prove to be beneficial to moderate
 to advanced programmers who wish to extend the library.
 
-[include inside/expression.qbk]
 [include inside/actor.qbk]
+[include inside/expression.qbk]
 [section Custom Terminals]
+[endsect]
+
+[section Adding Expressions]
 [endsect]
 
 [endsect]

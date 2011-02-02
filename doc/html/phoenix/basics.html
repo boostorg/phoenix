@@ -3,19 +3,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Basics</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
-<link rel="start" href="../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
-<link rel="prev" href="starter_kit/composites/more.html" title="More">
+<link rel="prev" href="starter_kit/more.html" title="More">
 <link rel="next" href="organization.html" title="Organization">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="starter_kit/composites/more.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="organization.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="starter_kit/more.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="organization.html"><img src="../images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="phoenix.basics"></a><a class="link" href="basics.html" title="Basics">Basics</a>
 </h2></div></div></div>
@@ -42,7 +42,7 @@
       </p></td></tr>
 </table></div>
 <a name="phoenix.basics.partial_function_application"></a><h4>
-<a name="id2826669"></a>
+<a name="id722113"></a>
       <a class="link" href="basics.html#phoenix.basics.partial_function_application">Partial Function
       Application</a>
     </h4>
@@ -94,13 +94,13 @@
       black boxes anymore.
     </p>
 <a name="phoenix.basics.stl_and_higher_order_functions"></a><h4>
-<a name="id2826911"></a>
+<a name="id722329"></a>
       <a class="link" href="basics.html#phoenix.basics.stl_and_higher_order_functions">STL and higher
       order functions</a>
     </h4>
 <p>
       So, what's all the fuss? What makes partial function application so useful?
-      Recall our original example in the <a class="link" href="starter_kit/composites/lazy_operators.html" title="Lazy Operators">previous
+      Recall our original example in the <a class="link" href="starter_kit/lazy_operators.html" title="Lazy Operators">previous
       section</a>:
     </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">find_if</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)</span>
@@ -126,17 +126,17 @@
       </p></td></tr>
 </table></div>
 <a name="phoenix.basics.lazy_evaluation"></a><h4>
-<a name="id2827139"></a>
+<a name="id722540"></a>
       <a class="link" href="basics.html#phoenix.basics.lazy_evaluation">Lazy Evaluation</a>
     </h4>
 <p>
       In Phoenix, to put it more accurately, function evaluation has two stages:
     </p>
-<div class="orderedlist"><ol type="1">
-<li>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
           Partial application
         </li>
-<li>
+<li class="listitem">
           Final evaluation
         </li>
 </ol></div>
@@ -181,7 +181,7 @@
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">arg1</span> <span class="special">%</span> <span class="number">2</span> <span class="special">==</span> <span class="number">1</span><span class="special">)(</span><span class="identifier">y</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 0 or false
 </span></pre>
 <a name="phoenix.basics.forwarding_function_problem"></a><h4>
-<a name="id2827698"></a>
+<a name="id723082"></a>
       <a class="link" href="basics.html#phoenix.basics.forwarding_function_problem">Forwarding Function
       Problem</a>
     </h4>
@@ -222,7 +222,7 @@
       </p></td></tr>
 </table></div>
 <a name="phoenix.basics.polymorphic_functions"></a><h4>
-<a name="id2827855"></a>
+<a name="id723220"></a>
       <a class="link" href="basics.html#phoenix.basics.polymorphic_functions">Polymorphic Functions</a>
     </h4>
 <p>
@@ -258,7 +258,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="starter_kit/composites/more.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="organization.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="starter_kit/more.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="organization.html"><img src="../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

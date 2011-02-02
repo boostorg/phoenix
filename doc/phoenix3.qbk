@@ -24,7 +24,11 @@
 [def __tip__            [$images/tip.png]]
 
 [def __spirit__         [@http://spirit.sourceforge.net Spirit]]
-[def __proto__          [@http://www.boost.org/doc/libs/1_43_0/doc/html/proto Boost.Proto]]
+[def __proto__          [@http://www.boost.org/doc/libs/release/libs/proto/index.html Boost.Proto]]
+[def __proto_expr__     [@http://www.boost.org/doc/libs/release/doc/html/Expr.html Proto Expression]]
+[def __proto_transform__ [@http://www.boost.org/doc/libs/release/doc/html/Transform.html Proto Transform]]
+[def __proto_pass_through_transform__ [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/pass_through.html Proto Pass Through Transform]]
+[def __proto_primitive_transform__ [@http://www.boost.org/doc/libs/release/doc/html/PrimitiveTransform.html Proto Primitive Transform]]
 [def __haskell__        [@http://www.haskell.org Haskell]]
 [def __mpl__            [@http://www.boost.org/libs/mpl/index.html MPL]]
 [def __bll__            [@http://www.boost.org/libs/lambda/doc/index.html BLL]]
@@ -35,6 +39,7 @@
 [def __gmane__          [@http://www.gmane.org Gmane]]
 [def __mlist_archive__  [@http://news.gmane.org/gmane.comp.parsers.spirit.general]]
 [def __PFO__            [@http://www.boost.org/doc/libs/release/libs/fusion/doc/html/fusion/functional/concepts/poly.html Polymorphic Function Object]]
+[def __random_access__  [@http://www.boost.org/doc/libs/release/libs/fusion/doc/html/fusion/sequence/concepts/random_access_sequence.html Random Access Sequence]]
 [def __forwarding__     [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm Forwarding Function Problem]]
 [def __boost_mpl__      [@http://boost.org/libs/mpl/doc/index.html Boost.MPL]]
 [def __boost_range__    [@http://boost.org/libs/range/index.html Boost.Range]]
@@ -43,6 +48,7 @@
 [def __phoenix_evaluator__ [link phoenix.reference.core_mechanisms.evaluator Evaluator]]
 [def __phoenix_evaluator_default__ [link phoenix.reference.core_mechanisms.evaluator.default_actions Default Actions]]
 [def __phoenix_language__ [link phoenix.reference.the_language Phoenix Language Reference]]
+[def __unspecified__            /unspecified/]
 
 [include preface.qbk]
 [include introduction.qbk]

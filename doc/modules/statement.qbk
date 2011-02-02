@@ -2,7 +2,7 @@
 
 [*/Lazy statements.../]
 
-The primitives and composite building blocks presented so far are sufficiently
+The expressions presented so far are sufficiently
 powerful to construct quite elaborate structures. We have presented lazy-functions
 and lazy-operators. How about lazy-statements? First, an appetizer:
 
@@ -261,7 +261,7 @@ newline terminates the printout of each value.
     );
 
 As before, all these are lazily evaluated. The result of such statements are in
-fact composites that are passed on to STL's for_each function. In the viewpoint
+fact expressions that are passed on to STL's for_each function. In the viewpoint
 of `for_each`, what was passed is just a functor, no more, no less.
 
 [endsect]

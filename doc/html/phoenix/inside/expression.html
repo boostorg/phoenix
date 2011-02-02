@@ -1,33 +1,171 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Phoenix Expressions in Detail</title>
+<title>Phoenix Expressions</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
-<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../inside.html" title="Inside Phoenix">
-<link rel="prev" href="../inside.html" title="Inside Phoenix">
-<link rel="next" href="actor.html" title="Actors in Detail">
+<link rel="prev" href="actor.html" title="Actors in Detail">
+<link rel="next" href="custom_terminals.html" title="Custom Terminals">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../inside.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="actor.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="actor.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="custom_terminals.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="phoenix.inside.expression"></a><a class="link" href="expression.html" title="Phoenix Expressions in Detail">Phoenix Expressions in Detail</a>
+<a name="phoenix.inside.expression"></a><a class="link" href="expression.html" title="Phoenix Expressions">Phoenix Expressions</a>
 </h3></div></div></div>
-<a name="phoenix.inside.expression._code__phrase_role__identifier__meta_grammar__phrase___code_"></a><h5>
-<a name="id2857914"></a>
-        <a class="link" href="expression.html#phoenix.inside.expression._code__phrase_role__identifier__meta_grammar__phrase___code_"><code class="computeroutput"><span class="identifier">meta_grammar</span></code></a>
+<p>
+        A Phoenix Expression is a model of the <a href="http://www.boost.org/doc/libs/release/doc/html/Expr.html" target="_top">Proto
+        Expression</a> Concept. These expressions are wrapped inside an <a class="link" href="actor.html" title="Actors in Detail">phoenix.inside.actor</a> template. The
+        <code class="computeroutput"><span class="identifier">actor</span></code> provides the function
+        call operator which evaluates the expressions. The <code class="computeroutput"><span class="identifier">actor</span></code>
+        is the domain specific wrapper around phoenix expressions.
+      </p>
+<p>
+        By design, Phoenix Expressions do not carry any information on how they will
+        be evaluated later on. They are the data structure on which the <code class="computeroutput"><span class="identifier">Actions</span></code> will work on.
+      </p>
+<p>
+        The library provides a convenience template to define expressions:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span><span class="special">&gt;</span> <span class="identifier">Actor</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Tag</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A0</span><span class="special">,</span> <span class="special">...,</span> <span class="keyword">typename</span> <span class="identifier">A1</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">expr_ext</span>
+    <span class="special">:</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">transform</span><span class="special">&lt;</span><span class="identifier">expr_ext</span><span class="special">&lt;</span><span class="identifier">Actor</span><span class="special">,</span> <span class="identifier">Tag</span><span class="special">,</span> <span class="identifier">A0</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">A1</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="emphasis"><em>unspecified</em></span> <span class="identifier">base_expr</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">Actor</span><span class="special">&lt;</span><span class="identifier">base_expr</span><span class="special">&gt;</span> <span class="identifier">type</span><span class="special">;</span>
+
+    <span class="keyword">typedef</span> <span class="emphasis"><em>unspecified</em></span> <span class="identifier">proto_grammar</span><span class="special">;</span>
+
+    <span class="keyword">static</span> <span class="identifier">type</span> <span class="identifier">make</span><span class="special">(</span><span class="identifier">A0</span> <span class="identifier">a0</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">A1</span> <span class="identifier">a1</span><span class="special">);</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Tag</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A0</span><span class="special">,</span> <span class="special">...,</span> <span class="keyword">typename</span> <span class="identifier">A1</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">expr</span> <span class="special">:</span> <span class="identifier">expr_ext</span><span class="special">&lt;</span><span class="identifier">actor</span><span class="special">,</span> <span class="identifier">Tag</span><span class="special">,</span> <span class="identifier">A0</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">A1</span><span class="special">&gt;</span> <span class="special">{};</span>
+</pre>
+<p>
+        <span class="bold"><strong>Notation</strong></span>
+      </p>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A0</span><span class="special">...</span><span class="identifier">AN</span></code></span></dt>
+<dd><p>
+              Child node types
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a0</span><span class="special">...</span><span class="identifier">aN</span></code></span></dt>
+<dd><p>
+              Child node objects
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">G0</span><span class="special">...</span><span class="identifier">GN</span></code></span></dt>
+<dd><p>
+              <a href="http://www.boost.org/doc/libs/release/libs/proto/index.html" target="_top">Boost.Proto</a>
+              grammar types
+            </p></dd>
+</dl>
+</div>
+<p>
+        <span class="bold"><strong>Expression Semantics</strong></span>
+      </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Semantics
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">expr</span><span class="special">&lt;</span><span class="identifier">Tag</span><span class="special">,</span>
+                  <span class="identifier">A0</span><span class="special">...</span><span class="identifier">AN</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The type of Expression having tag <code class="computeroutput"><span class="identifier">Tag</span></code>
+                  and <code class="computeroutput"><span class="identifier">A0</span><span class="special">...</span><span class="identifier">AN</span></code> children
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">expr</span><span class="special">&lt;</span><span class="identifier">Tag</span><span class="special">,</span>
+                  <span class="identifier">G0</span><span class="special">...</span><span class="identifier">GN</span><span class="special">&gt;</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  A <a href="http://www.boost.org/doc/libs/release/libs/proto/index.html" target="_top">Boost.Proto</a>
+                  grammar and <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/pass_through.html" target="_top">Proto
+                  Pass Through Transform</a>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">expr</span><span class="special">&lt;</span><span class="identifier">Tag</span><span class="special">,</span>
+                  <span class="identifier">A0</span><span class="special">...</span><span class="identifier">AN</span><span class="special">&gt;::</span><span class="identifier">make</span><span class="special">(</span><span class="identifier">a0</span><span class="special">...</span><span class="identifier">aN</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Returns a Phoenix Expression
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<a name="phoenix.inside.expression.meta_grammar"></a><h5>
+<a name="id756398"></a>
+        <a class="link" href="expression.html#phoenix.inside.expression.meta_grammar">meta_grammar</a>
       </h5>
-<a name="phoenix.inside.expression.adding_an_expression"></a><h5>
-<a name="id2857946"></a>
-        <a class="link" href="expression.html#phoenix.inside.expression.adding_an_expression">Adding an
-        expression</a>
-      </h5>
+<p>
+        Defining Expressions is only part of the game to make it a valid Phoenix
+        Expression. In order to use the expressions in the Phoenix domain, we need
+        to "register" our newly created to our grammar.
+      </p>
+<p>
+        The <code class="computeroutput"><span class="identifier">meta_grammar</span></code> is a struct
+        for exactly that purpose. It is an openly extendable <a href="http://www.boost.org/doc/libs/release/libs/proto/index.html" target="_top">Boost.Proto</a>
+        Grammar:
+      </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">meta_grammar</span>
+    <span class="special">:</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">switch_</span><span class="special">&lt;</span><span class="identifier">meta_grammar</span><span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Tag</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Dummy</span><span class="special">&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">case_</span>
+        <span class="special">:</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">not_</span><span class="special">&lt;</span><span class="identifier">proto</span><span class="special">::</span><span class="identifier">_</span><span class="special">&gt;</span>
+    <span class="special">{};</span>
+<span class="special">};</span>
+</pre>
+<p>
+        As you can see, by default the <code class="computeroutput"><span class="identifier">meta_grammar</span></code>
+        matches nothing. With every <a class="link" href="../modules.html" title="Modules">Module</a>
+        you include this grammar gets extended by various expressions.
+      </p>
+<p>
+        See <a class="link" href="adding_expressions.html" title="Adding Expressions">Adding Expressions</a>
+        for more details.
+      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -39,7 +177,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../inside.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="actor.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="actor.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="custom_terminals.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

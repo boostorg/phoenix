@@ -37,12 +37,12 @@ The lowest two layers comprise the core.
 The [link phoenix.actor `Actor`] is the main concept behind the library. Lazy functions are
 abstracted as actors.
 
-Primitives provide the basic building blocks of functionality within Phoenix.
-Composites are used to combine these primitives together to provide more
+Terminals provide the basic building blocks of functionality within Phoenix.
+Expressions are used to combine these terminals together to provide more
 powerful functionality.
 
-Composites are composed of zero or more actors. Each actor in a composite can
-again be another composite.
+Expressions are composed of zero or more actors. Each actor in a composite can
+again be another expression.
 
 [table Modules
     [[Module]           [Description]]
