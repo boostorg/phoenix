@@ -16,6 +16,7 @@ to advanced programmers who wish to extend the library.
 
 [include inside/actor.qbk]
 [include inside/expression.qbk]
+[include inside/extending_actors.qbk]
 [section Custom Terminals]
 [endsect]
 

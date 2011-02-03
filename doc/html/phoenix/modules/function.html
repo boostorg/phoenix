@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../modules.html" title="Modules">
 <link rel="prev" href="core/nothing.html" title="Nothing">
 <link rel="next" href="operator.html" title="Operator">
@@ -15,7 +15,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="core/nothing.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../modules.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="operator.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
-<div class="section">
+<div class="section" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="phoenix.modules.function"></a><a class="link" href="function.html" title="Function">Function</a>
 </h3></div></div></div>
@@ -39,14 +39,14 @@
         Function Object</a> concept. For a function that takes <code class="computeroutput"><span class="identifier">N</span></code> arguments, a model of <a href="http://www.boost.org/doc/libs/release/libs/fusion/doc/html/fusion/functional/concepts/poly.html" target="_top">Polymorphic
         Function Object</a> must provide:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             An <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code>
             that takes <code class="computeroutput"><span class="identifier">N</span></code> arguments,
             and implements the function logic. This is also true for ordinary function
             pointers.
           </li>
-<li class="listitem">
+<li>
             A nested metafunction <code class="computeroutput"><span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">Signature</span><span class="special">&gt;</span></code> or nested typedef <code class="computeroutput"><span class="identifier">result_type</span></code>,
             following the <a href="http://www.boost.org/doc/libs/release/libs/utility/utility.htm#result_of" target="_top">Boost.Result
             Of</a> Protocol

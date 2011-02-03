@@ -9,13 +9,13 @@
 
 [section Extending Actors]
 
-[link phoenix.reference.concepts.actor Actors] are one of the main parts of the
+[link phoenix.inside.actor Actors] are one of the main parts of the
 library, and one of the many customization points. The default actor implementation
 provides several operator() overloads which deal with the evaluation of expressions.
 
 For some uses cases this might not be enough. For convenience it is thinkable to
 provide custom member functions which generate new expressions. An example is the
-[link phoenix.reference.modules.statement.___if_else_____statement '''if_else_'''
+[link phoenix.modules.statement.___if_else_____statement '''if_else_'''
 Statement] which provides an additional else member for generating a lazy if-else
 expression. With this the actual Phoenix expression becomes more expressive.
 
@@ -44,7 +44,7 @@ Additionally, we want all the operator() overloads of the regular actor.
 
 The first version of our `container_actor` interface will show the general
 principle. This will be continually extended. For the sake of simplicity,
-every member function generator will return [link phoenix.reference.modules.core.nothing `nothing`]
+every member function generator will return [link phoenix.modules.core.nothing `nothing`]
 at first.
 
 	template <typename Expr>
@@ -57,15 +57,15 @@ at first.
 		container_actor( base_type const& base )
 			: base_type( base ) {}
 
-		compose<null_actor>::type const begin() const { return nothing; }
-		compose<null_actor>::type const end() const { return nothing; }
-		compose<null_actor>::type const size() const { return nothing; }
-		compose<null_actor>::type const max_size() const { return nothing; }
-		compose<null_actor>::type const empty() const { return nothing; }
+		expression::null<mpl::void_>::type const begin() const { return nothing; }
+		expression::null<mpl::void_>::type const end() const { return nothing; }
+		expression::null<mpl::void_>::type const size() const { return nothing; }
+		expression::null<mpl::void_>::type const max_size() const { return nothing; }
+		expression::null<mpl::void_>::type const empty() const { return nothing; }
 
 		// Note that swap is the only function needing another container.
 		template <typename Container>
-		compose<null_actor>::result_type const swap( actor<Container> const& ) const { return nothing; }
+		expression::null<mpl::void_>::type const swap( actor<Container> const& ) const { return nothing; }
 	};
 
 [heading Using the actor]
@@ -75,13 +75,13 @@ our new actor.
 
 First, lets create a generator which wraps the `container_actor` around any other
 expression:
-	
-   template <typename Expr>
-	container_actor<Expr> const
-	container( actor<Expr> const& expr )
-	{
-		return expr;
-	}
+
+    template <typename Expr>
+    container_actor<Expr> const
+    container( actor<Expr> const& expr )
+    {
+        return expr;
+    }
 
 Now let's test this:
 
@@ -94,17 +94,34 @@ Now let's test this:
 	(container(arg1).size())(v);
 
 Granted, this is not really elegant and not very practical (we could have just
-used phoenix::begin(v) from the [link phoenix.reference.modules.stl.algorithm Phoenix algorithm module], 
+used phoenix::begin(v) from the [link phoenix.modules.stl.algorithm Phoenix algorithm module], 
 but we can do better.
 
-Let's have an [link phoenix.reference.modules.core.arguments argument placeholder]
+Let's have an [link phoenix.modules.core.arguments argument placeholder]
 which is usable as if it was a STL container:
 
-	template <typename N>
-	struct make_container_argument : compose_ex<argument, container_actor, N> {};
+    namespace expression
+    {
+        template <int I>
+        struct container
+        {
+            typedef
+                typename boost::proto::terminal<
+                    phoenix::detail::argument<I>
+                >::type
+                base_expr;
 
-	typedef make_container_argument<boost::mpl::int_<0> > make_con1;
-	make_con1::type const con1 = make_con1()(boost::mpl::int_<0>());
+            typedef container_actor<base_expr> type;
+
+            static const type make()
+            {
+                actor<base_expr> const e = {};
+                return e;
+            }
+        };
+    }
+
+    expression::container<1>::type const con1 = expression::container<1>::make();
 	// and so on ...
 
 The above example can be rewritten as:
@@ -123,7 +140,7 @@ Wow, that was easy!
 
 This one will be even easier!
 
-First, we define a [link phoenix.reference.modules.function lazy function] which
+First, we define a [link phoenix.modules.function lazy function] which
 evaluates the expression we want to implement.
 Following is the implementation of the size function:
 
@@ -164,7 +181,7 @@ function of `container_actor`:
 		container_actor( base_type const& base )
 			: base_type( base ) {}
 
-		typename result_of::function<size_impl, that_type>::type const
+		typename expression::function<size_impl, that_type>::type const
 		size() const
 		{
 			function<size_impl> const f = size_impl();
@@ -175,7 +192,7 @@ function of `container_actor`:
 	};
 
 It is left as an exercise to the user to implement the missing parts by reusing
-functions from the [link phoenix.reference.modules.stl.algorithm Phoenix Algorithm Module]
+functions from the [link phoenix.modules.stl.algorithm Phoenix Algorithm Module]
 (the impatient take a look here: [@../../example/container_actor.cpp container_actor.cpp]).
 
 [endsect]

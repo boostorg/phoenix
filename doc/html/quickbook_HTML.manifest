@@ -51,5 +51,6 @@ phoenix/modules/fusion.html
 phoenix/inside.html
 phoenix/inside/actor.html
 phoenix/inside/expression.html
+phoenix/inside/extending_actors.html
 phoenix/inside/custom_terminals.html
 phoenix/inside/adding_expressions.html
