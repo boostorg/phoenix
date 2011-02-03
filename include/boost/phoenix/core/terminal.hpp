@@ -12,6 +12,7 @@
 #include <boost/is_placeholder.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/proto/transform/lazy.hpp>
+#include <boost/proto/functional/fusion/at.hpp>
 
 namespace boost { namespace phoenix
 {
