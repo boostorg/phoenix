@@ -135,7 +135,7 @@
 </tbody>
 </table></div>
 <a name="phoenix.inside.expression.meta_grammar"></a><h5>
-<a name="id756398"></a>
+<a name="id714755"></a>
         <a class="link" href="expression.html#phoenix.inside.expression.meta_grammar">meta_grammar</a>
       </h5>
 <p>
@@ -162,9 +162,65 @@
         matches nothing. With every <a class="link" href="../modules.html" title="Modules">Module</a>
         you include this grammar gets extended by various expressions.
       </p>
+<a name="phoenix.inside.expression.example"></a><h5>
+<a name="id714986"></a>
+        <a class="link" href="expression.html#phoenix.inside.expression.example">Example</a>
+      </h5>
 <p>
-        See <a class="link" href="adding_expressions.html" title="Adding Expressions">Adding Expressions</a>
-        for more details.
+        Define an expression:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lhs</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Rhs</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">add</span>
+    <span class="special">:</span> <span class="identifier">expr</span><span class="special">&lt;</span><span class="identifier">proto</span><span class="special">::</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">plus</span><span class="special">,</span> <span class="identifier">Lhs</span><span class="special">,</span> <span class="identifier">Rhs</span><span class="special">&gt;</span>
+<span class="special">{};</span>
+</pre>
+<p>
+        And add it to the grammar:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">meta_grammar</span><span class="special">::</span><span class="identifier">case_</span><span class="special">&lt;</span><span class="identifier">proto</span><span class="special">::</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">plus</span><span class="special">&gt;</span>
+    <span class="special">:</span> <span class="identifier">enable_rule</span><span class="special">&lt;</span>
+        <span class="identifier">add</span><span class="special">&lt;</span>
+            <span class="identifier">meta_grammar</span>
+          <span class="special">,</span> <span class="identifier">meta_grammar</span>
+        <span class="special">&gt;</span>
+    <span class="special">&gt;</span>
+<span class="special">{};</span>
+</pre>
+<p>
+        Define a generator function to make the life of our potential users easier:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lhs</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Rhs</span><span class="special">&gt;</span>
+<span class="keyword">typename</span> <span class="identifier">add</span><span class="special">&lt;</span><span class="identifier">Lhs</span><span class="special">,</span> <span class="identifier">Rhs</span><span class="special">&gt;::</span><span class="identifier">type</span>
+<span class="identifier">add</span><span class="special">(</span><span class="identifier">Lhs</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">Rhs</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">return</span> <span class="identifier">add</span><span class="special">&lt;</span><span class="identifier">Lhs</span><span class="special">,</span> <span class="identifier">Rhs</span><span class="special">&gt;::</span><span class="identifier">make</span><span class="special">(</span><span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">rhs</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Look of it really works:
+      </p>
+<pre class="programlisting"><span class="identifier">add</span><span class="special">(</span><span class="number">6</span><span class="special">,</span> <span class="number">5</span><span class="special">)();</span>
+</pre>
+<p>
+        returns 11!
+      </p>
+<pre class="programlisting"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">display_expr</span><span class="special">(</span><span class="identifier">add</span><span class="special">(</span><span class="number">5</span><span class="special">,</span> <span class="number">6</span><span class="special">));</span>
+</pre>
+<p>
+        prints:
+      </p>
+<pre class="programlisting"><span class="identifier">plus</span><span class="special">(</span>
+    <span class="identifier">terminal</span><span class="special">(</span><span class="number">6</span><span class="special">)</span>
+  <span class="special">,</span> <span class="identifier">terminal</span><span class="special">(</span><span class="number">5</span><span class="special">)</span>
+<span class="special">)</span>
+</pre>
+<p>
+        See <a href="../../../../example/define_expression.cpp" target="_top">define_expression.cpp</a>
+        for the full example.
+      </p>
+<p>
+        <span class="emphasis"><em>Pretty simple ...</em></span>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

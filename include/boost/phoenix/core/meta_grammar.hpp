@@ -50,13 +50,16 @@ namespace boost { namespace phoenix
     // construct
     struct default_actions
     {
-        typedef void is_phoenix_action;
-
         template <typename Rule, typename Dummy = void>
         struct when
             : proto::_default<meta_grammar>
         {};
     };
+
+    template <typename Rule>
+    struct enable_rule
+        : proto::when<Rule, proto::external_transform>
+    {};
 
     /////////////////////////////////////////////////////////////////////////////
     // A function object we can call to evaluate our expression

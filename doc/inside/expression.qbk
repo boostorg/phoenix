@@ -70,6 +70,53 @@ The `meta_grammar` is a struct for exactly that purpose. It is an openly extenda
 As you can see, by default the `meta_grammar` matches nothing. With every [link phoenix.modules Module]
 you include this grammar gets extended by various expressions.
 
-See [link phoenix.inside.adding_expressions Adding Expressions] for more details.
+[heading Example]
+
+Define an expression:
+
+    template <typename Lhs, typename Rhs>
+    struct add
+        : expr<proto::tag::plus, Lhs, Rhs>
+    {};
+
+And add it to the grammar:
+
+    template <>
+    struct meta_grammar::case_<proto::tag::plus>
+        : enable_rule<
+            add<
+                meta_grammar
+              , meta_grammar
+            >
+        >
+    {};
+
+Define a generator function to make the life of our potential users easier:
+
+    template <typename Lhs, typename Rhs>
+    typename add<Lhs, Rhs>::type
+    add(Lhs const & lhs, Rhs const & rhs)
+    {
+        return add<Lhs, Rhs>::make(lhs, rhs);
+    }
+
+Look of it really works:
+
+    add(6, 5)();
+
+returns 11!
+
+    proto::display_expr(add(5, 6));
+
+prints:
+
+    plus(
+        terminal(6)
+      , terminal(5)
+    )
+
+See [@../../example/define_expression.cpp define_expression.cpp] for the full example.
+
+/Pretty simple .../ 
 
 [endsect]

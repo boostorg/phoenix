@@ -57,7 +57,7 @@ lazy factorial function:
         }
     };
 
-(See [@../../example/users_manual/factorial.cpp factorial.cpp])
+(See [@../../example/factorial.cpp factorial.cpp])
 
 [/note The type of Arg is either a const-reference or non-const-reference
 (depending on whether your argument to the actor evaluation is a const-ref or
