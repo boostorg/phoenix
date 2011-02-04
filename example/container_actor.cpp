@@ -52,7 +52,7 @@ struct container_actor
     typedef actor<Expr> base_type;
     typedef container_actor<Expr> that_type;
 
-    container_actor( base_type const& base )
+    container_actor( base_type const& base = base_type() )
         : base_type( base ) {}
 
     typename phoenix::expression::function<phoenix::stl::begin, that_type>::type const
@@ -94,30 +94,6 @@ struct container_actor
     }
 };
 
-
-namespace expression
-{
-    template <int I>
-    struct container_arg
-    {
-        typedef
-            typename boost::proto::terminal<
-                phoenix::detail::argument<I>
-            >::type
-            base_expr;
-
-        typedef container_actor<base_expr> type;
-
-        static const type make()
-        {
-            actor<base_expr> const e = {};
-            return e;
-        }
-    };
-}
-
-expression::container_arg<1>::type const con1 = expression::container_arg<1>::make();
-
 template <typename Expr>
 container_actor<Expr> const
 container( actor<Expr> const& expr )
@@ -127,6 +103,7 @@ container( actor<Expr> const& expr )
 
 int main()
 {
+	container_actor<phoenix::expression::argument<1>::type> const con1;
     std::vector<int> v;
     v.push_back(0);
     v.push_back(1);

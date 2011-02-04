@@ -1,10 +1,11 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Operator</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
-<link rel="start" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../modules.html" title="Modules">
 <link rel="prev" href="function.html" title="Function">
 <link rel="next" href="statement.html" title="Statement">
@@ -15,7 +16,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="function.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../modules.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="statement.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="phoenix.modules.operator"></a><a class="link" href="operator.html" title="Operator">Operator</a>
 </h3></div></div></div>
@@ -71,20 +72,20 @@
 <p>
         Operator expressions are lazily evaluated following four simple rules:
       </p>
-<div class="orderedlist"><ol type="1">
-<li>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
             A binary operator, except <code class="computeroutput"><span class="special">-&gt;*</span></code>
             will be lazily evaluated when <span class="emphasis"><em>at least</em></span> one of its
             operands is an actor object (see <a class="link" href="../actor.html" title="Actor">Actor</a>).
           </li>
-<li>
+<li class="listitem">
             Unary operators are lazily evaluated if their argument is an actor object.
           </li>
-<li>
+<li class="listitem">
             Operator <code class="computeroutput"><span class="special">-&gt;*</span></code> is lazily
             evaluated if the left hand argument is an actor object.
           </li>
-<li>
+<li class="listitem">
             The result of a lazy operator is an actor object that can in turn allow
             the applications of rules 1, 2 and 3.
           </li>
@@ -94,26 +95,26 @@
       </p>
 <pre class="programlisting"><span class="special">-(</span><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span> <span class="special">+</span> <span class="number">6</span><span class="special">)</span>
 </pre>
-<div class="orderedlist"><ol type="1">
-<li>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
             Following rule 1, <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span></code> is
             lazily evaluated since <code class="computeroutput"><span class="identifier">arg1</span></code>
             is an actor (see <a class="link" href="core/arguments.html" title="Arguments">Arguments</a>).
           </li>
-<li>
+<li class="listitem">
             The result of this <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span></code> expression
             is an actor object, following rule 4.
           </li>
-<li>
+<li class="listitem">
             Continuing, <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span>
             <span class="number">3</span> <span class="special">+</span> <span class="number">6</span></code> is again lazily evaluated. Rule 2.
           </li>
-<li>
+<li class="listitem">
             By rule 4 again, the result of <code class="computeroutput"><span class="identifier">arg1</span>
             <span class="special">+</span> <span class="number">3</span> <span class="special">+</span> <span class="number">6</span></code> is
             an actor object.
           </li>
-<li>
+<li class="listitem">
             As <code class="computeroutput"><span class="identifier">arg1</span> <span class="special">+</span>
             <span class="number">3</span> <span class="special">+</span> <span class="number">6</span></code> is an actor, <code class="computeroutput"><span class="special">-(</span><span class="identifier">arg1</span> <span class="special">+</span> <span class="number">3</span> <span class="special">+</span> <span class="number">6</span><span class="special">)</span></code> is lazily evaluated. Rule 2.
           </li>
@@ -134,18 +135,18 @@
 </span><span class="identifier">val</span><span class="special">(</span><span class="number">1</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="number">3</span><span class="special">;</span> <span class="comment">// Lazily evaluated
 </span></pre>
 <a name="phoenix.modules.operator.supported_operators"></a><h5>
-<a name="id2834339"></a>
+<a name="id2905362"></a>
         <a class="link" href="operator.html#phoenix.modules.operator.supported_operators">Supported operators</a>
       </h5>
 <a name="phoenix.modules.operator.unary_operators"></a><h5>
-<a name="id2834359"></a>
+<a name="id2905381"></a>
         <a class="link" href="operator.html#phoenix.modules.operator.unary_operators">Unary operators</a>
       </h5>
 <pre class="programlisting"><span class="identifier">prefix</span><span class="special">:</span>   <span class="special">~,</span> <span class="special">!,</span> <span class="special">-,</span> <span class="special">+,</span> <span class="special">++,</span> <span class="special">--,</span> <span class="special">&amp;</span> <span class="special">(</span><span class="identifier">reference</span><span class="special">),</span> <span class="special">*</span> <span class="special">(</span><span class="identifier">dereference</span><span class="special">)</span>
 <span class="identifier">postfix</span><span class="special">:</span>  <span class="special">++,</span> <span class="special">--</span>
 </pre>
 <a name="phoenix.modules.operator.binary_operators"></a><h5>
-<a name="id2834490"></a>
+<a name="id2905513"></a>
         <a class="link" href="operator.html#phoenix.modules.operator.binary_operators">Binary operators</a>
       </h5>
 <pre class="programlisting"><span class="special">=,</span> <span class="special">[],</span> <span class="special">+=,</span> <span class="special">-=,</span> <span class="special">*=,</span> <span class="special">/=,</span> <span class="special">%=,</span> <span class="special">&amp;=,</span> <span class="special">|=,</span> <span class="special">^=,</span> <span class="special">&lt;&lt;=,</span> <span class="special">&gt;&gt;=</span>
@@ -154,7 +155,7 @@
 <span class="special">&amp;&amp;,</span> <span class="special">||,</span> <span class="special">-&gt;*</span>
 </pre>
 <a name="phoenix.modules.operator.ternary_operator"></a><h5>
-<a name="id2834691"></a>
+<a name="id2905715"></a>
         <a class="link" href="operator.html#phoenix.modules.operator.ternary_operator">Ternary operator</a>
       </h5>
 <pre class="programlisting"><span class="identifier">if_else</span><span class="special">(</span><span class="identifier">c</span><span class="special">,</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span>
@@ -167,7 +168,7 @@
         albeit in a lazy manner.
       </p>
 <a name="phoenix.modules.operator.member_pointer_operator"></a><h5>
-<a name="id2834798"></a>
+<a name="id2905822"></a>
         <a class="link" href="operator.html#phoenix.modules.operator.member_pointer_operator">Member pointer
         operator</a>
       </h5>
@@ -208,7 +209,7 @@
 <span class="special">(</span><span class="identifier">arg1</span><span class="special">-&gt;*&amp;</span><span class="identifier">A</span><span class="special">::</span><span class="identifier">func</span><span class="special">)(</span><span class="identifier">arg2</span><span class="special">)(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">i</span><span class="special">);</span> <span class="comment">// returns a-&gt;func(i)
 </span></pre>
 <a name="phoenix.modules.operator.include_files"></a><h5>
-<a name="id2835186"></a>
+<a name="id2906210"></a>
         <a class="link" href="operator.html#phoenix.modules.operator.include_files">Include Files</a>
       </h5>
 <div class="informaltable"><table class="table">

@@ -100,28 +100,7 @@ but we can do better.
 Let's have an [link phoenix.modules.core.arguments argument placeholder]
 which is usable as if it was a STL container:
 
-    namespace expression
-    {
-        template <int I>
-        struct container
-        {
-            typedef
-                typename boost::proto::terminal<
-                    phoenix::detail::argument<I>
-                >::type
-                base_expr;
-
-            typedef container_actor<base_expr> type;
-
-            static const type make()
-            {
-                actor<base_expr> const e = {};
-                return e;
-            }
-        };
-    }
-
-    expression::container<1>::type const con1 = expression::container<1>::make();
+	container_actor<expression::argument<1>::type> const con1;
 	// and so on ...
 
 The above example can be rewritten as:
