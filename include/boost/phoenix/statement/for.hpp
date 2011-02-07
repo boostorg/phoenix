@@ -11,17 +11,17 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
+    
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(for_)
+  , (meta_grammar) // Cond
+    (meta_grammar) // Init
+    (meta_grammar) // Step
+    (meta_grammar) // Do
+)
 
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        for_
-      , (meta_grammar) // Cond
-        (meta_grammar) // Init
-        (meta_grammar) // Step
-        (meta_grammar) // Do
-    )
-
     struct for_eval
     {
         typedef void result_type;

@@ -15,15 +15,16 @@
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/scope/local_variable.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
+    
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(lambda)
+  , (proto::terminal<proto::_>) // OuterEnv 
+    (proto::terminal<proto::_>) // Locals
+    (meta_grammar)              // Lambda
+)
 
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        lambda
-      , (proto::terminal<proto::_>) // OuterEnv 
-        (proto::terminal<proto::_>)  // Locals
-        (meta_grammar)              // Lambda
-    )
 
     struct lambda_eval
     {
@@ -237,7 +238,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct meta_grammar::case_<tag::lambda_actor, Dummy>
-        : proto::when<rule::lambda_actor, proto::external_transform>
+        : enable_rule<rule::lambda_actor>
     {};
 
     struct lambda_actor_eval

@@ -16,16 +16,16 @@
 #include <boost/phoenix/core/terminal.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 
+PHOENIX_DEFINE_EXPRESSION_VARARG(
+    (boost)(phoenix)(this_function)
+  , (meta_grammar)
+  , PHOENIX_LIMIT
+)
+
 namespace boost { namespace phoenix {
 
     template <typename Expr>
     struct this_actor;
-
-    PHOENIX_DEFINE_EXPRESSION_VARARG(
-        this_function
-      , (meta_grammar)
-      , PHOENIX_LIMIT
-    )
 
     namespace detail
     {

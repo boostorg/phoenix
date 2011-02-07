@@ -15,6 +15,7 @@
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/fold_left.hpp>
@@ -68,6 +69,12 @@ struct NAME                                                                     
     )                                                                           \
 /**/
 
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(dynamic_member)
+  , (proto::terminal<proto::_>)
+    (proto::terminal<proto::_>)
+)
+
 namespace boost { namespace phoenix
 {
     template <typename DynamicScope>
@@ -106,19 +113,13 @@ namespace boost { namespace phoenix
             DynamicScope const& scope;
     };
 
-    PHOENIX_DEFINE_EXPRESSION(
-        dynamic_member
-      , (proto::terminal<proto::_>)
-        (proto::terminal<proto::_>)
-    )
-
     struct dynamic_member_eval
     {
         template <typename Sig>
         struct result;
 
-        template <typename This, typename N, typename Scope>
-        struct result<This(N, Scope)>
+        template <typename This, typename Context, typename N, typename Scope>
+        struct result<This(Context, N, Scope)>
         {
             typedef
                 typename boost::remove_pointer<
@@ -138,9 +139,9 @@ namespace boost { namespace phoenix
 
         };
 
-        template <typename N, typename Scope>
-        typename result<dynamic_member_eval(N, Scope)>::type
-        operator()(N, Scope s) const
+        template <typename Context, typename N, typename Scope>
+        typename result<dynamic_member_eval(Context, N, Scope)>::type
+        operator()(Context const&, N, Scope s) const
         {
             return fusion::at_c<N::value>(s->frame->data());
         }
@@ -148,12 +149,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::dynamic_member, Dummy>
-        : proto::call<
-            dynamic_member_eval(
-                proto::_value(proto::_child_c<0>)
-              , proto::_value(proto::_child_c<1>)
-            )
-        >
+        : call<dynamic_member_eval>
     {};
     
     template <

@@ -15,35 +15,114 @@
 #include <boost/preprocessor/comparison/equal.hpp>
 #include <boost/preprocessor/seq/size.hpp>
 #include <boost/preprocessor/seq/enum.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/pop_back.hpp>
+#include <boost/preprocessor/seq/reverse.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/enum_params.hpp>
 #include <boost/preprocessor/repeat_from_to.hpp>
 
-#define PHOENIX_DEFINE_EXPRESSION(NAME, SEQ)                                    \
-    namespace tag {                                                             \
-        struct NAME {};                                                         \
+#define PHOENIX_DEFINE_EXPRESSION(NAME_SEQ, SEQ)                                \
+    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+        NAME_SEQ                                                                \
+      , SEQ                                                                     \
+      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_DEFAULT                            \
+      , PHOENIX_DEFINE_EXPRESSION_RULE_DEFAULT                                  \
+      , _                                                                       \
+    )                                                                           \
+/**/
+
+#define PHOENIX_DEFINE_EXPRESSION_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT)          \
+    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+        NAME_SEQ                                                                \
+      , GRAMMAR_SEQ                                                             \
+      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG                             \
+      , PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                                   \
+      , LIMIT                                                                   \
+    )                                                                           \
+/**/
+
+#define PHOENIX_DEFINE_EXPRESSION_EXT(ACTOR, NAME_SEQ, GRAMMAR_SEQ)             \
+    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+        NAME_SEQ                                                                \
+      , GRAMMAR_SEQ                                                             \
+      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_EXT                                \
+      , PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                                   \
+      , ACTOR                                                                   \
+    )                                                                           \
+/**/
+
+#define PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(ACTOR, NAME, GRAMMAR, LIMIT)       \
+    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+        NAME_SEQ                                                                \
+      , GRAMMAR_SEQ                                                             \
+      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG_EXT                         \
+      , PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                                   \
+      , ACTOR                                                                   \
+    )                                                                           \
+/**/
+
+#define PHOENIX_DEFINE_EXPRESSION_NAMESPACE(R, D, E) \
+namespace E {
+
+#define PHOENIX_DEFINE_EXPRESSION_NAMESPACE_END(R, D, E) \
+}
+
+#define PHOENIX_DEFINE_EXPRESSION_NS(R, D, E) \
+E ::
+
+#define PHOENIX_DEFINE_EXPRESSION_BASE(NAME_SEQ, GRAMMAR_SEQ, EXPRESSION, RULE, DATA) \
+BOOST_PP_SEQ_FOR_EACH(                                                          \
+    PHOENIX_DEFINE_EXPRESSION_NAMESPACE                                         \
+  , _                                                                           \
+  , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                             \
+)                                                                               \
+    namespace tag                                                               \
+    {                                                                           \
+        struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ)) {};            \
     }                                                                           \
-                                                                                \
     namespace expression                                                        \
     {                                                                           \
-        template <BOOST_PP_ENUM_PARAMS(BOOST_PP_SEQ_SIZE(SEQ), typename A)>     \
-        struct NAME                                                             \
-            : expr<tag:: NAME, BOOST_PP_ENUM_PARAMS(BOOST_PP_SEQ_SIZE(SEQ), A)> \
-        {};                                                                     \
+        EXPRESSION(NAME_SEQ, GRAMMAR_SEQ, DATA)                                 \
     }                                                                           \
-                                                                                \
-    namespace rule {                                                            \
-        struct NAME                                                             \
-            : expression:: NAME <BOOST_PP_SEQ_ENUM(SEQ)>                        \
-        {};                                                                     \
+    namespace rule                                                              \
+    {                                                                           \
+        RULE(NAME_SEQ, GRAMMAR_SEQ, DATA)                                       \
     }                                                                           \
-                                                                                \
+BOOST_PP_SEQ_FOR_EACH(                                                          \
+    PHOENIX_DEFINE_EXPRESSION_NAMESPACE_END                                     \
+  , _                                                                           \
+  , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                             \
+)                                                                               \
+namespace boost { namespace phoenix                                             \
+{                                                                               \
     template <typename Dummy>                                                   \
-    struct meta_grammar::case_<tag:: NAME, Dummy>                               \
-        : proto::when<rule:: NAME, proto::external_transform>                   \
+    struct meta_grammar::case_<                                                 \
+        BOOST_PP_SEQ_FOR_EACH(PHOENIX_DEFINE_EXPRESSION_NS, _, BOOST_PP_SEQ_POP_BACK(NAME_SEQ)) tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                 \
+      , Dummy                                                                   \
+    >                                                                           \
+        : enable_rule<                                                          \
+           BOOST_PP_SEQ_FOR_EACH(PHOENIX_DEFINE_EXPRESSION_NS, _, BOOST_PP_SEQ_POP_BACK(NAME_SEQ)) rule:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))            \
+        >                                                                       \
     {};                                                                         \
-    /**/
+} }                                                                             \
+/**/
+
+#define PHOENIX_DEFINE_EXPRESSION_EXPRESSION_DEFAULT(NAME_SEQ, GRAMMAR_SEQ, D)  \
+        template <PHOENIX_typename_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>           \
+        struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                \
+            : expr<                                                             \
+                tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))         \
+              , BOOST_PP_ENUM_PARAMS(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ), A)>        \
+        {};                                                                     \
+/**/
+        
+#define PHOENIX_DEFINE_EXPRESSION_RULE_DEFAULT(NAME_SEQ, GRAMMAR_SEQ, D)        \
+struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        \
+            : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))    \
+                <BOOST_PP_SEQ_ENUM(GRAMMAR_SEQ)>                                \
+        {};                                                                     \
+/**/
 
 #define PHOENIX_DEFINE_EXPRESSION_VARARG_R(_, N, NAME)                          \
     template <                                                                  \
@@ -71,79 +150,54 @@
     {};                                                                         \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_VARARG(NAME, GRAMMAR, LIMIT)                  \
-    namespace tag {                                                             \
-        struct NAME {};                                                         \
-    }                                                                           \
-                                                                                \
-    namespace expression                                                        \
-    {                                                                           \
+#define PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT)\
         template <                                                              \
             PHOENIX_typename_A_void(                                            \
-                BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR)))   \
+                BOOST_PP_ADD(                                                   \
+                    LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ)))        \
             )                                                                   \
           , typename Dummy = void                                               \
         >                                                                       \
-        struct NAME;                                                            \
+        struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ));               \
                                                                                 \
         BOOST_PP_REPEAT_FROM_TO(                                                \
             1                                                                   \
-          , BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR)))       \
+          , BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ)))   \
           , PHOENIX_DEFINE_EXPRESSION_VARARG_R                                  \
-          , (NAME, BOOST_PP_SEQ_POP_BACK(GRAMMAR))                              \
+          , (                                                                   \
+                BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))               \
+              , BOOST_PP_SEQ_POP_BACK(GRAMMAR_SEQ)                              \
+            )                                                                   \
         )                                                                       \
-    }                                                                           \
-                                                                                \
-    namespace rule {                                                            \
-        struct NAME                                                             \
-            : expression:: NAME <                                               \
+/**/
+
+#define PHOENIX_DEFINE_EXPRESSION_RULE_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT)     \
+        struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                \
+            : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ)) <  \
                 BOOST_PP_IF(                                                    \
-                    BOOST_PP_EQUAL(1, BOOST_PP_SEQ_SIZE(GRAMMAR))               \
+                    BOOST_PP_EQUAL(1, BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))           \
                   , BOOST_PP_EMPTY()                                            \
-                  , BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_POP_BACK(GRAMMAR))           \
+                  , BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_POP_BACK(GRAMMAR_SEQ))       \
                 )                                                               \
-                BOOST_PP_COMMA_IF(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR)))     \
+                BOOST_PP_COMMA_IF(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))) \
                 proto::vararg<                                                  \
                     BOOST_PP_SEQ_ELEM(                                          \
-                        BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR))                \
-                      , GRAMMAR                                                 \
+                        BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))            \
+                      , GRAMMAR_SEQ                                             \
                     )                                                           \
                 >                                                               \
             >                                                                   \
         {};                                                                     \
-    }                                                                           \
-                                                                                \
-    template <typename Dummy>                                                   \
-    struct meta_grammar::case_<tag:: NAME, Dummy>                               \
-        : proto::when<rule:: NAME, proto::external_transform>                   \
-    {};                                                                         \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXT(ACTOR, NAME, SEQ)                         \
-    namespace tag {                                                             \
-        struct NAME {};                                                         \
-    }                                                                           \
-                                                                                \
-    namespace expression                                                        \
-    {                                                                           \
-        template <BOOST_PP_ENUM_PARAMS(BOOST_PP_SEQ_SIZE(SEQ), typename A)>     \
-        struct NAME                                                             \
+#define PHOENIX_DEFINE_EXPRESSION_EXPRESSION_EXT(NAME_SEQ, GRAMMAR_SEQ, ACTOR)  \
+        template <PHOENIX_typename_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>           \
+        struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                \
             : expr_ext<                                                         \
                 ACTOR                                                           \
-              , tag:: NAME, BOOST_PP_ENUM_PARAMS(BOOST_PP_SEQ_SIZE(SEQ), A)>    \
+              , tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))         \
+              , PHOENIX_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>                      \
         {};                                                                     \
-    }                                                                           \
-                                                                                \
-    namespace rule {                                                            \
-        struct NAME                                                             \
-            : expression:: NAME <BOOST_PP_SEQ_ENUM(SEQ)>                        \
-        {};                                                                     \
-    }                                                                           \
-                                                                                \
-    template <typename Dummy>                                                   \
-    struct meta_grammar::case_<tag:: NAME, Dummy>                               \
-        : proto::when<rule:: NAME, proto::external_transform>                   \
-    {};                                                                         \
 /**/
 
 #define PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R(_, N, NAME)                      \
@@ -171,33 +225,32 @@
             )                                                                   \
         >                                                                       \
     {};                                                                         \
+/**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(ACTOR, NAME, GRAMMAR, LIMIT)       \
-    namespace tag {                                                             \
-        struct NAME {};                                                         \
-    }                                                                           \
-                                                                                \
-    namespace expression                                                        \
-    {                                                                           \
+#define PHOENIX_DEFINE_EXPRESSION_EXRPESSION_VARARG_EXT(N, G, D)                \
         template <                                                              \
             PHOENIX_typename_A_void(                                            \
-                BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR)))   \
+                BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(G)))         \
             )                                                                   \
           , typename Dummy = void                                               \
         >                                                                       \
-        struct NAME;                                                            \
+        struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N));                      \
                                                                                 \
         BOOST_PP_REPEAT_FROM_TO(                                                \
             1                                                                   \
-          , BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR)))       \
+          , BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(G)))             \
           , PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R                              \
-          , (NAME, BOOST_PP_SEQ_POP_BACK(GRAMMAR), ACTOR)                       \
+          , (                                                                   \
+              BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N))                        \
+            , BOOST_PP_SEQ_POP_BACK(G)                                          \
+            , ACTOR                                                             \
+          )                                                                     \
         )                                                                       \
-    }                                                                           \
-                                                                                \
-    namespace rule {                                                            \
-        struct NAME                                                             \
-            : expression:: NAME <                                               \
+/**/
+
+#define PHOENIX_DEFINE_EXPRESSION_RULE_VARARG_EXT(N, GRAMMAR, D)                \
+        struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N))                       \
+            : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N)) <         \
                 BOOST_PP_IF(                                                    \
                     BOOST_PP_EQUAL(1, BOOST_PP_SEQ_SIZE(GRAMMAR))               \
                   , BOOST_PP_EMPTY()                                            \
@@ -212,12 +265,6 @@
                 >                                                               \
             >                                                                   \
         {};                                                                     \
-    }                                                                           \
-                                                                                \
-    template <typename Dummy>                                                   \
-    struct meta_grammar::case_<tag:: NAME, Dummy>                               \
-        : proto::when<rule:: NAME, proto::external_transform>                   \
-    {};                                                                         \
-/**/
+
 
 #endif

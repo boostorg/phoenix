@@ -13,15 +13,15 @@
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/object/detail/target.hpp>
 #include <boost/proto/transform/lazy.hpp>
+    
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(static_cast_)
+  , (proto::terminal<detail::target<proto::_> >)
+    (meta_grammar)
+)
 
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        static_cast_
-      , (proto::terminal<detail::target<proto::_> >)
-        (meta_grammar)
-    )
-    
     template <typename T>
     struct static_cast_eval
         : proto::callable

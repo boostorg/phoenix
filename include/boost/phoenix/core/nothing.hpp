@@ -12,6 +12,12 @@
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/expression.hpp>
 
+    
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(null)
+  , (proto::terminal<mpl::void_>::type)
+)
+
 namespace boost { namespace phoenix
 {
     /////////////////////////////////////////////////////////////////////////////
@@ -21,8 +27,6 @@ namespace boost { namespace phoenix
     //      An actor that does nothing (a "bum", if you will :-).
     //
     /////////////////////////////////////////////////////////////////////////////
-    
-    PHOENIX_DEFINE_EXPRESSION(null, (proto::terminal<mpl::void_>::type))
     
     struct null_eval
     {

@@ -21,25 +21,28 @@
 
 namespace boost { namespace phoenix
 {
+    template <typename> struct if_actor;
+}}
+    
+PHOENIX_DEFINE_EXPRESSION_EXT(
+    if_actor
+  , (boost)(phoenix)(if_)
+  , (meta_grammar) // Cond
+    (meta_grammar) // Then
+)
+    
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(if_else_statement)
+  , (meta_grammar) // Cond
+    (meta_grammar) // Then
+    (meta_grammar) // Else
+)
+
+namespace boost { namespace phoenix
+{
     ////////////////////////////////////////////////////////////////////////////
     // If-Else statements
     ////////////////////////////////////////////////////////////////////////////
-    
-    template <typename> struct if_actor;
-    
-    PHOENIX_DEFINE_EXPRESSION_EXT(
-        if_actor
-      , if_
-      , (meta_grammar) // Cond
-        (meta_grammar) // Then
-    )
-    
-    PHOENIX_DEFINE_EXPRESSION(
-        if_else_statement
-      , (meta_grammar) // Cond
-        (meta_grammar) // Then
-        (meta_grammar) // Else
-    )
     
     // Function for evaluating lambdas like:
     // if_( foo )[ bar ]

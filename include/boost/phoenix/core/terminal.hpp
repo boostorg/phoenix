@@ -41,9 +41,9 @@ namespace boost { namespace phoenix
     template <typename Grammar>
     struct meta_grammar::case_<proto::tag::terminal, Grammar>
         : proto::or_<
-            proto::when<rule::argument       , proto::external_transform>
-          , proto::when<rule::custom_terminal, proto::external_transform>
-          , proto::when<rule::terminal       , proto::external_transform>
+            enable_rule<rule::argument       >
+          , enable_rule<rule::custom_terminal>
+          , enable_rule<rule::terminal       >
         >
     {};
 

@@ -14,7 +14,7 @@
             typedef                                                             \
                 typename                                                        \
                 evaluator::impl<                                                \
-                    typename proto::result_of::child_c<Expr, N>::type           \
+                    BOOST_PP_CAT(A, N)                                          \
                   , Context                                                     \
                   , int                                                         \
                 >::result_type                                                  \
@@ -32,8 +32,8 @@
 
 #else
 
-        template <typename Context, typename Expr>
-        struct mem_fun_ptr_eval<Context, Expr, PHOENIX_ITERATION>
+        template <typename Context, PHOENIX_typename_A>
+        struct mem_fun_ptr_eval<Context, PHOENIX_A>
         {
             BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_MEM_FUN_PTR_EVAL_RESULT_OF_CHILD, _)
 

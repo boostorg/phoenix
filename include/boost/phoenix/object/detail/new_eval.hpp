@@ -30,7 +30,7 @@
 #endif
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+    (3, (2, PHOENIX_COMPOSITE_LIMIT,                                            \
     <boost/phoenix/object/detail/new_eval.hpp>))
 #include PHOENIX_ITERATE()
 
@@ -42,16 +42,22 @@
 
 #else
 
+        template <typename This, typename Context, PHOENIX_typename_A>
+        struct result<This(Context, PHOENIX_A)>
+        {
+            typedef typename proto::detail::uncvref<typename proto::result_of::value<A0>::type>::type target_type;
+            typedef typename target_type::type  construct_type;
+            typedef typename target_type::type * type;
+        };
+
         template <typename Context, PHOENIX_typename_A>
-        result_type
-        operator()(Context& ctx, PHOENIX_A_const_ref_a) const
+        typename result<new_eval(Context const &, PHOENIX_A_const_ref)>::type
+        operator()(Context const & ctx, PHOENIX_A_const_ref_a) const
         {
 #define EVAL_a(_,n,__) \
-            BOOST_PP_COMMA_IF(n) eval(a ## n, ctx)
-
-            return
-                new construct_type(
-                    BOOST_PP_REPEAT(PHOENIX_ITERATION, EVAL_a, _)
+            BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) eval(a ## n, ctx)
+            return new typename result<new_eval(Context const &, PHOENIX_A_const_ref)>::construct_type(
+                    BOOST_PP_REPEAT_FROM_TO(1, PHOENIX_ITERATION, EVAL_a, _)
                 );
 #undef EVAL_a
         }

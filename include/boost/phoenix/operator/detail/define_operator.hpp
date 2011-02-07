@@ -27,7 +27,7 @@
 #define PHOENIX_GRAMMAR(_, __, name)                                            \
     template <typename Dummy>                                                   \
     struct meta_grammar::case_<proto::tag::name, Dummy>                         \
-        : proto::when<rule::name, proto::external_transform>                    \
+        : enable_rule<rule::name>                                               \
     {};                                                                         \
 /**/
 

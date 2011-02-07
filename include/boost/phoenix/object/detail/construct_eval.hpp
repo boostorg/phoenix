@@ -1,4 +1,5 @@
 
+/*
 #if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
 #ifndef PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
 #define PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
@@ -7,15 +8,12 @@
 
 #endif
 #else
+*/
 
 #if !PHOENIX_IS_ITERATING
 
 #ifndef PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
 #define PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
-
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/construct_eval_" PHOENIX_LIMIT_STR ".hpp")
-#endif
 
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
@@ -24,10 +22,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 1)
-#endif
 
 #define PHOENIX_ITERATION_PARAMS                                                \
     (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
@@ -55,4 +49,4 @@
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES

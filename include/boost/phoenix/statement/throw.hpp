@@ -44,8 +44,8 @@ namespace boost { namespace phoenix
     template <typename Dummy>
     struct meta_grammar::case_<tag::throw_, Dummy>
         : proto::or_<
-            proto::when<rule::rethrow_, proto::external_transform>
-          , proto::when<rule::throw_, proto::external_transform>
+            enable_rule<rule::rethrow_>
+          , enable_rule<rule::throw_>
         >
     {};
 

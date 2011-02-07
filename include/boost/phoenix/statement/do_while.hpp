@@ -12,13 +12,15 @@
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(do_while)
+  , (meta_grammar) // Cond
+    (meta_grammar) // Do
+)
+
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        do_while
-      , (meta_grammar) // Cond
-        (meta_grammar) // Do
-    )
+
 
     struct do_while_eval
         : proto::callable

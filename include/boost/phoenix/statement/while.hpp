@@ -12,14 +12,14 @@
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(while_)
+  , (meta_grammar) // Cond
+    (meta_grammar) // Do
+)
+
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        while_
-      , (meta_grammar) // Cond
-        (meta_grammar) // Do
-    )
-
     struct while_eval
     {
         typedef void result_type;

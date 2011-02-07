@@ -14,15 +14,15 @@
 #include <boost/phoenix/object/detail/target.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 
+PHOENIX_DEFINE_EXPRESSION_VARARG(
+    (boost)(phoenix)(construct)
+  , (proto::terminal<detail::target<proto::_> >)
+    (meta_grammar)
+  , PHOENIX_COMPOSITE_LIMIT
+)
+
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION_VARARG(
-        construct
-      , (proto::terminal<detail::target<proto::_> >)
-        (meta_grammar)
-      , PHOENIX_COMPOSITE_LIMIT
-    )
-
     template <typename T>
     struct construct_eval
     {

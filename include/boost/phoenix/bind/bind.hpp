@@ -18,7 +18,7 @@
 #ifndef PHOENIX_BIND_BIND_HPP
 #define PHOENIX_BIND_BIND_HPP
 
-#include <boost/phoenix/limits.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/function.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/utility/result_of.hpp>

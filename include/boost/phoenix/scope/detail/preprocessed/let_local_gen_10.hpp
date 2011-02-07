@@ -12,6 +12,21 @@
     
     
     
+        template <typename A0>
+        let_actor_gen<
+            typename detail::make_locals<A0>::type
+        > const
+        operator()(A0 const& a0) const
+        {
+            return detail::make_locals<A0>::make(a0);
+        }
+    
+    
+    
+    
+    
+    
+    
         template <typename A0 , typename A1>
         let_actor_gen<
             typename detail::make_locals<A0 , A1>::type

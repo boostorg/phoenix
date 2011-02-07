@@ -63,12 +63,6 @@ namespace boost { namespace phoenix
         {};
     }
 
-    PHOENIX_DEFINE_EXPRESSION(
-        switch_
-      , (meta_grammar)           // Cond
-        (detail::switch_grammar) // Cases
-    )
-
     namespace detail
     {
         struct switch_case_is_nullary
@@ -142,6 +136,15 @@ namespace boost { namespace phoenix
             >
 	    {};
     }
+}}
+
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(switch_)
+  , (meta_grammar)           // Cond
+    (detail::switch_grammar) // Cases
+)
+
+namespace boost { namespace phoenix {
 
     template <typename Dummy>
     struct is_nullary::when<rule::switch_, Dummy>

@@ -36,7 +36,7 @@ namespace boost { namespace phoenix
 
 	template <typename Dummy>
 	struct meta_grammar::case_<proto::tag::comma, Dummy>
-		: proto::when<rule::sequence, proto::external_transform>
+		: enable_rule<rule::sequence>
 	{};
 
 }}

@@ -14,14 +14,14 @@
 #include <boost/phoenix/object/detail/target.hpp>
 #include <boost/proto/transform/lazy.hpp>
 
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(const_cast_)
+  , (proto::terminal<detail::target<proto::_> >)
+    (meta_grammar)
+)
+
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        const_cast_
-      , (proto::terminal<detail::target<proto::_> >)
-        (meta_grammar)
-    )
-
     template <typename T>
     struct const_cast_eval
         : proto::callable

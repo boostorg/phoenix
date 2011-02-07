@@ -11,33 +11,15 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/call.hpp>
+
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(delete_)
+  , (meta_grammar)
+)
 
 namespace boost { namespace phoenix
 {
-    namespace tag {
-        struct delete_ {};
-    }
-
-    namespace expression
-    {
-        template <typename T>
-        struct delete_
-            : expr<tag::delete_, T>
-        {};
-    }
-
-    namespace rule
-    {
-        struct delete_
-            : expression::delete_<meta_grammar>
-        {};
-    }
-
-    template <typename Dummy>
-    struct meta_grammar::case_<tag::delete_, Dummy>
-        : proto::when<rule::delete_, proto::external_transform>
-    {};
-
     struct delete_eval
         : proto::callable
     {
@@ -45,7 +27,7 @@ namespace boost { namespace phoenix
 
         template <typename Context, typename P>
         result_type
-        operator()(Context& ctx, P const& p) const
+        operator()(Context const& ctx, P const& p) const
         {
             delete eval(p, ctx);
         }
@@ -53,7 +35,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::delete_, Dummy>
-        : proto::call<delete_eval(_context, proto::_child_c<0>)>
+        : call<delete_eval>
     {};
 
     template <typename P>

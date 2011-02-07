@@ -93,7 +93,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct meta_grammar::case_<tag::try_catch, Dummy>
-        : proto::when<rule::try_catch, proto::external_transform>
+        : enable_rule<rule::try_catch>
     {};
 
     struct try_catch_eval

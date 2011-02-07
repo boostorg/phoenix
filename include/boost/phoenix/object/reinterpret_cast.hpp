@@ -14,13 +14,14 @@
 #include <boost/phoenix/object/detail/target.hpp>
 #include <boost/proto/transform/lazy.hpp>
 
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(reinterpret_cast_)
+  , (proto::terminal<detail::target<proto::_> >)
+    (meta_grammar)
+)
+
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        reinterpret_cast_
-      , (proto::terminal<detail::target<proto::_> >)
-        (meta_grammar)
-    )
     
     template <typename T>
     struct reinterpret_cast_eval

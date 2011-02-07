@@ -14,15 +14,15 @@
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+    
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(at_c)
+  , (proto::terminal<proto::_>)
+    (meta_grammar)
+)
 
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        at_c
-      , (proto::terminal<proto::_>)
-        (meta_grammar)
-    )
-    
     template <typename Dummy>
     struct default_actions::when<rule::at_c, Dummy>
         : proto::call<

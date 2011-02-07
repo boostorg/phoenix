@@ -58,10 +58,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct meta_grammar::case_<tag::local_variable, Dummy>
-        : proto::when<
-            rule::local_variable
-          , proto::external_transform
-        >
+        : enable_rule<rule::local_variable>
     {};
 
     template <typename Dummy>

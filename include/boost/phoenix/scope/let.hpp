@@ -17,14 +17,14 @@
 #include <boost/phoenix/scope/local_variable.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(let)
+  , (proto::terminal<proto::_>)
+    (meta_grammar)
+)
+
 namespace boost { namespace phoenix
 {
-    PHOENIX_DEFINE_EXPRESSION(
-        let
-      , (proto::terminal<proto::_>)
-        (meta_grammar)
-    )
-
     struct let_eval
     {
         template <typename Sig>
