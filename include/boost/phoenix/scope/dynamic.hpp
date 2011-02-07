@@ -123,7 +123,7 @@ namespace boost { namespace phoenix
         {
             typedef
                 typename boost::remove_pointer<
-                    typename proto::detail::uncvref<Scope>::type
+                    typename proto::detail::uncvref<typename proto::result_of::value<Scope>::type>::type
                 >::type
                 scope_type;
             typedef 
@@ -133,7 +133,7 @@ namespace boost { namespace phoenix
             typedef
                 typename fusion::result_of::at_c<
                     tuple_type
-                  , proto::detail::uncvref<N>::type::value
+                  , proto::detail::uncvref<typename proto::result_of::value<N>::type>::type::value
                 >::type
                 type;
 
@@ -143,7 +143,7 @@ namespace boost { namespace phoenix
         typename result<dynamic_member_eval(Context, N, Scope)>::type
         operator()(Context const&, N, Scope s) const
         {
-            return fusion::at_c<N::value>(s->frame->data());
+            return fusion::at_c<proto::detail::uncvref<typename proto::result_of::value<N>::type>::type::value>(proto::value(s)->frame->data());
         }
     };
 
