@@ -9,56 +9,42 @@
 #define PHOENIX_STATEMENT_SWITCH_HPP
 
 #include <boost/phoenix/core/limits.hpp>
-#include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/make_expr.hpp>
 
+#include <boost/fusion/include/as_vector.hpp>
+
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(switch_case)
+  , (proto::terminal<proto::_>)
+    (meta_grammar)
+)
+
+PHOENIX_DEFINE_EXPRESSION(
+    (boost)(phoenix)(switch_default_case)
+  , (meta_grammar)
+)
+
 namespace boost { namespace phoenix
 {
-    namespace tag
-    {
-        struct switch_case {};
-        struct switch_default_case {};
-    }
-
-    namespace expression
-    {
-        template <typename N, typename A>
-        struct switch_case
-            : proto::binary_expr<tag::switch_case, N, A>
-        {};
-        
-        template <typename A>
-        struct switch_default_case
-            : proto::unary_expr<tag::switch_default_case, A>
-        {};
-    }
-
-    namespace rule
-    {
-        struct switch_case
-            : expression::switch_case<
-                proto::terminal<proto::_>
-              , meta_grammar
-            >
-        {};
-        
-        struct switch_default_case
-            : expression::switch_default_case<
-                meta_grammar
-            >
-        {};
-    }
     namespace detail
     {
         struct switch_case_grammar;
         struct switch_case_with_default_grammar;
         struct switch_grammar
             : proto::or_<
-                detail::switch_case_grammar
-              , detail::switch_case_with_default_grammar
+                proto::when<
+                    detail::switch_case_grammar
+                  , mpl::false_()
+                >
+              , proto::when<
+                    detail::switch_case_with_default_grammar
+                  , mpl::true_()
+                >
             >
         {};
     }
@@ -77,8 +63,8 @@ namespace boost { namespace phoenix
                             proto::_child_c<0>
                           , proto::_state
                         )
-                      , evaluator(
-                            proto::_child_c<0>(proto::_child_c<1>)
+                      , switch_case_is_nullary(
+                            proto::_child_c<1>
                           , proto::_state
                         )
                     >()
@@ -92,36 +78,14 @@ namespace boost { namespace phoenix
 
         struct switch_case_grammar
             : proto::or_<
-                proto::when<
-                    proto::comma<switch_case_grammar, rule::switch_case>
-                  , proto::if_<
-                        is_same<mpl::prior<proto::_data>(), proto::_state>()
-                      , proto::_child_c<1>
-                      , switch_case_grammar(
-                            proto::_child_c<0>
-                          , proto::_state
-                          , mpl::prior<proto::_data>()
-                        )
-                    >
-                >
+                proto::comma<switch_case_grammar, rule::switch_case>
               , proto::when<rule::switch_case, proto::_>
             >
         {};
 
         struct switch_case_with_default_grammar
             : proto::or_<
-                proto::when<
-                    proto::comma<switch_case_grammar, rule::switch_default_case>
-                  , proto::if_<
-                        is_same<mpl::prior<proto::_data>(), proto::_state>()
-                      , proto::_child_c<1>
-                      , switch_case_grammar(
-                            proto::_child_c<0>
-                          , proto::_state
-                          , mpl::prior<proto::_data>()
-                        )
-                    >
-                >
+                proto::comma<switch_case_grammar, rule::switch_default_case>
               , proto::when<rule::switch_default_case, proto::_>
             >
         {};
@@ -174,28 +138,62 @@ namespace boost { namespace phoenix {
                     ctx
                   , cond
                   , cases
-                  , typename boost::result_of<detail::switch_size(Cases)>::type()
-                  , typename proto::matches<
-                        Cases
-                      , detail::switch_case_with_default_grammar
-                    >::type()
+                  , typename detail::switch_size::impl<Cases, int, int>::result_type()
+                  , typename detail::switch_grammar::impl<Cases, int, int>::result_type()
                 );
         }
 
         private:
+            template <typename Context, typename Cond, typename Cases>
+            result_type
+            evaluate(
+                Context & ctx
+              , Cond const & cond
+              , Cases const & cases
+              , mpl::int_<1> size
+              , mpl::false_
+            ) const
+            {
+                typedef
+                    typename proto::result_of::value<
+                        typename proto::result_of::child_c<
+                            Cases
+                          , 0
+                        >::type
+                    >::type
+                    case_label;
+
+                switch(eval(cond, ctx))
+                {
+                    case case_label::value:
+                        eval(proto::child_c<1>(cases), ctx);
+                }
+            }
+            
+            template <typename Context, typename Cond, typename Cases>
+            result_type
+            evaluate(
+                Context & ctx
+              , Cond const & cond
+              , Cases const & cases
+              , mpl::int_<1> size
+              , mpl::true_
+            ) const
+            {
+                switch(eval(cond, ctx))
+                {
+                    default:
+                        eval(proto::child_c<0>(cases), ctx);
+                }
+            }
+
             // Bring in the evaluation functions
             #include <boost/phoenix/statement/detail/switch.hpp>
     };
     
     template <typename Dummy>
     struct default_actions::when<rule::switch_, Dummy>
-        : proto::call<
-            switch_eval(
-                _context
-              , proto::_child_c<0> // Cond
-              , proto::_child_c<1> // Cases
-            )
-          >
+        : call<switch_eval>
     {};
 
     template <int N, typename A>

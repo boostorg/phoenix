@@ -1,4 +1,5 @@
 
+/*
 #if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
 #ifndef PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
 #define PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
@@ -9,6 +10,7 @@
 
 #endif
 #else
+*/
 
 #if !PHOENIX_IS_ITERATING
 
@@ -47,9 +49,9 @@
                 typename evaluator::impl<
                     Expr const&
                   , fusion::vector2<
-						      fusion::vector1<const ::boost::phoenix::actor<Expr> *>
+                        fusion::vector1<const ::boost::phoenix::actor<Expr> *> &
                       , default_actions
-						  >
+                    > const &
                   , int
                 >::result_type
                 type;
@@ -94,9 +96,9 @@
                             BOOST_PP_CAT(
                                 fusion::vector
                               , BOOST_PP_INC(PHOENIX_ITERATION)
-                            )<const ::boost::phoenix::actor<Expr> *, PHOENIX_A>
+                            )<const ::boost::phoenix::actor<Expr> *, PHOENIX_A> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -104,4 +106,4 @@
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES

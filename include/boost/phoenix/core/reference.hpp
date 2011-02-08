@@ -12,6 +12,7 @@
 #include <boost/ref.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/terminal.hpp>
+#include <boost/phoenix/core/value.hpp>
 #include <boost/utility/result_of.hpp>
 
 namespace boost { namespace phoenix
@@ -28,9 +29,9 @@ namespace boost { namespace phoenix
     {
         template <typename T>
         struct reference
-            : proto::terminal<reference_wrapper<T> >
+            : expression::value<reference_wrapper<T> >
         {
-            typedef actor<typename proto::terminal<reference_wrapper<T> >::type> type;
+            typedef typename expression::value<reference_wrapper<T> >::type type;
 
             static const type make(T & t)
             {
@@ -41,9 +42,9 @@ namespace boost { namespace phoenix
         
         template <typename T>
         struct reference<T const>
-            : proto::terminal<reference_wrapper<T const> >
+            : expression::value<reference_wrapper<T const> >
         {
-            typedef actor<typename proto::terminal<reference_wrapper<T const> >::type> type;
+            typedef typename expression::value<reference_wrapper<T const> >::type type;
 
             static const type make(T const & t)
             {

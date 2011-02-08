@@ -63,7 +63,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct meta_grammar::case_<proto::tag::function, Dummy>
-        : enable_rule<rule::function>
+        : enable_rule<rule::function, Dummy>
     {};
 
     // functor which returns our lazy function call extension

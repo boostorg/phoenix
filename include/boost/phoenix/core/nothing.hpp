@@ -10,13 +10,9 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/void.hpp>
 #include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
-
-    
-PHOENIX_DEFINE_EXPRESSION(
-    (boost)(phoenix)(null)
-  , (proto::terminal<mpl::void_>::type)
-)
+#include <boost/phoenix/core/value.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -28,27 +24,35 @@ namespace boost { namespace phoenix
     //
     /////////////////////////////////////////////////////////////////////////////
     
-    struct null_eval
+    namespace detail
     {
-        BOOST_PROTO_CALLABLE()
+        struct nothing {};
+    }
+    
+    namespace expression
+    {
+        struct null
+            : expression::value<detail::nothing>
+        {};
+    }
+    
+    template<typename Dummy>
+    struct is_custom_terminal<detail::nothing, Dummy>
+      : mpl::true_
+    {};
 
+    template<typename Dummy>
+    struct custom_terminal<detail::nothing, Dummy>
+    {
         typedef void result_type;
 
-        void operator()() const
-        {}
+        template <typename Context>
+        void operator()(detail::nothing, Context &) const
+        {
+        }
     };
 
-    template <typename Dummy>
-    struct default_actions::when<rule::null, Dummy>
-        : proto::call<null_eval()>
-    {};
-
-    template <typename Dummy>
-    struct is_nullary::when<rule::null, Dummy>
-        : proto::make<mpl::true_()>
-    {};
-
-    expression::null<mpl::void_>::type const nothing = {};
+    expression::null::type const nothing = {};
 }}
 
 #endif

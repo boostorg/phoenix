@@ -9,6 +9,7 @@
 #define PHOENIX_STATEMENT_FOR_HPP
 
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
     
@@ -34,7 +35,7 @@ namespace boost { namespace phoenix
           , typename Do>
         result_type
         operator()(
-            Context& ctx
+            Context const& ctx
           , Init const& init
           , Cond const& cond
           , Step const& step
@@ -47,15 +48,7 @@ namespace boost { namespace phoenix
     
     template <typename Dummy>
     struct default_actions::when<rule::for_, Dummy>
-        : proto::call<
-            for_eval(
-                _context
-              , proto::_child_c<0> // Cond
-              , proto::_child_c<1> // Init
-              , proto::_child_c<2> // Step
-              , proto::_child_c<3> // Do
-            )
-          >
+        : call<for_eval, Dummy>
     {};
     
     template <typename Init, typename Cond, typename Step>

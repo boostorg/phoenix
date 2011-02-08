@@ -27,14 +27,24 @@ namespace boost { namespace phoenix
           , fusion::random_access_traversal_tag
         >
     {
+        /*
         typedef typename boost::remove_reference<Env>::type env_type;
         typedef typename boost::remove_reference<OuterEnv>::type outer_env_type;
         typedef typename boost::remove_reference<Locals>::type locals_type;
+        */
+        typedef Env env_type;
+        typedef OuterEnv outer_env_type;
+        typedef Locals locals_type;
 
         scoped_environment(
+                /*
             env_type& env
           , outer_env_type& outer_env
           , locals_type & locals
+          */
+            Env env
+          , OuterEnv outer_env
+          , Locals locals
         )
             : env(env)
             , outer_env(outer_env)
@@ -47,9 +57,14 @@ namespace boost { namespace phoenix
             , locals(o.locals)
         {}
 
-        env_type &env;
-        outer_env_type &outer_env;
-        locals_type &locals;
+        /*
+        env_type env;
+        outer_env_type outer_env;
+        locals_type locals;
+        */
+        Env      env;
+        OuterEnv outer_env;
+        Locals   locals;
     
         #define PHOENIX_ADAPT_SCOPED_ENVIRONMENT(INTRINSIC)                     \
         template <typename Seq>                                                 \

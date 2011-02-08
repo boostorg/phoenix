@@ -8,6 +8,12 @@
 #ifndef PHOENIX_CORE_CALL_HPP
 #define PHOENIX_CORE_CALL_HPP
 
+#include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/environment.hpp>
+#include <boost/proto/proto_fwd.hpp>
+#include <boost/proto/traits.hpp>
+#include <boost/proto/transform/impl.hpp>
+
 namespace boost { namespace phoenix
 {
     namespace detail
@@ -16,7 +22,7 @@ namespace boost { namespace phoenix
         struct call_impl;
     }
 
-    template <typename Fun>
+    template <typename Fun, typename Dummy = void>
     struct call
         : proto::transform<call<Fun> >
     {
@@ -29,15 +35,11 @@ namespace boost { namespace phoenix
     #include <boost/phoenix/core/detail/call.hpp>
 
 }
-
     namespace proto
     {
-        template <typename Fun>
-        struct is_callable<phoenix::call<Fun> > : mpl::true_ {};
+        template <typename Fun, typename Dummy>
+        struct is_callable<phoenix::call<Fun, Dummy> > : mpl::true_ {};
     }
-
 }
-
-
 
 #endif

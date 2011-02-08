@@ -11,6 +11,7 @@
 #define PHOENIX_STATEMENT_TRY_CATCH_HPP
 
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/is_nullary.hpp>
@@ -93,49 +94,21 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct meta_grammar::case_<tag::try_catch, Dummy>
-        : enable_rule<rule::try_catch>
+        : enable_rule<rule::try_catch, Dummy>
     {};
 
     struct try_catch_eval
     {
-        BOOST_PROTO_CALLABLE()
-
         typedef void result_type;
 
         // bring in the operator overloads
         #include <boost/phoenix/statement/detail/try_catch_eval.hpp>
     };
-
-#define PHOENIX_TRY_CATCH_CHILD(Z, N, D) proto::_child_c<N>
-#define PHOENIX_TRY_CATCH_CALL(Z, N, D)                                         \
-            proto::when<                                                        \
-                expression::try_catch<                                          \
-                  BOOST_PP_ENUM_PARAMS(N, proto::_ BOOST_PP_INTERCEPT)          \
-                >                                                               \
-               , try_catch_eval(                                                \
-                    _context                                                        \
-                  , BOOST_PP_ENUM(                                              \
-                        N                                                       \
-                      , PHOENIX_TRY_CATCH_CHILD                                 \
-                      , _                                                       \
-                    )                                                           \
-                )                                                               \
-            >                                                                   \
-        /**/
-
+    
     template <typename Dummy>
     struct default_actions::when<rule::try_catch, Dummy>
-        : proto::or_<
-            BOOST_PP_ENUM_SHIFTED(
-                BOOST_PP_INC(PHOENIX_CATCH_LIMIT)
-              , PHOENIX_TRY_CATCH_CALL
-              , _
-            )
-        >   
+        : call<try_catch_eval, Dummy>
     {};
-
-#undef PHOENIX_TRY_CATCH_CHILD
-#undef PHOENIX_TRY_CATCH_CALL
 
     namespace detail
     {

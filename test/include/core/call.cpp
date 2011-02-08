@@ -5,23 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_TERMINAL_FWD_HPP
-#define PHOENIX_CORE_TERMINAL_FWD_HPP
 
-namespace boost { namespace phoenix
-{
-    namespace rule
-    {
-        struct argument;
-        struct custom_terminal;
-        struct terminal;
-    }
+#include <boost/phoenix/core/call.hpp>
 
-    template <typename T, typename Dummy = void>
-    struct is_custom_terminal;
+int main() {}
 
-    template <typename T, typename Dummy = void>
-    struct custom_terminal;
-}}
-
-#endif

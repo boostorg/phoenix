@@ -36,7 +36,7 @@ namespace boost { namespace phoenix
 
 	template <typename Dummy>
 	struct meta_grammar::case_<proto::tag::comma, Dummy>
-		: enable_rule<rule::sequence>
+		: enable_rule<rule::sequence, Dummy>
 	{};
 
 }}

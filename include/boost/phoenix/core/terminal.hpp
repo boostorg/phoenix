@@ -11,16 +11,18 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/is_placeholder.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/terminal_fwd.hpp>
+#include <boost/proto/matches.hpp>
 #include <boost/proto/transform/lazy.hpp>
 #include <boost/proto/functional/fusion/at.hpp>
 
 namespace boost { namespace phoenix
 {
-    template <typename T>
+    template <typename T, typename Dummy>
     struct is_custom_terminal
         : mpl::false_ {};
 
-    template <typename T>
+    template <typename T, typename Dummy>
     struct custom_terminal;
 
     namespace rule
@@ -30,7 +32,7 @@ namespace boost { namespace phoenix
         {};
 
         struct custom_terminal
-            : proto::if_<is_custom_terminal<proto::_value>()>
+            : proto::if_<boost::phoenix::is_custom_terminal<proto::_value>()>
         {};
         
         struct terminal
@@ -38,17 +40,17 @@ namespace boost { namespace phoenix
         {};
     }
 
-    template <typename Grammar>
-    struct meta_grammar::case_<proto::tag::terminal, Grammar>
+    template <typename Dummy>
+    struct meta_grammar::case_<proto::tag::terminal, Dummy>
         : proto::or_<
-            enable_rule<rule::argument       >
-          , enable_rule<rule::custom_terminal>
-          , enable_rule<rule::terminal       >
+            enable_rule<rule::argument       , Dummy>
+          , enable_rule<rule::custom_terminal, Dummy>
+          , enable_rule<rule::terminal       , Dummy>
         >
     {};
 
-    template <typename Grammar>
-    struct default_actions::when<rule::custom_terminal, Grammar>
+    template <typename Dummy>
+    struct default_actions::when<rule::custom_terminal, Dummy>
         : proto::lazy<custom_terminal<proto::_value>(proto::_value, _context)>
     {};
 

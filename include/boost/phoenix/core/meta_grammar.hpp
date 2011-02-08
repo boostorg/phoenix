@@ -56,7 +56,7 @@ namespace boost { namespace phoenix
         {};
     };
 
-    template <typename Rule>
+    template <typename Rule, typename Dummy = void>
     struct enable_rule
         : proto::when<Rule, proto::external_transform>
     {};

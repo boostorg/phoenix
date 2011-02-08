@@ -11,6 +11,7 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/container/map.hpp>
 #include <boost/fusion/container/generation/make_map.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/reference.hpp>
 #include <boost/phoenix/core/value.hpp>
@@ -58,7 +59,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct meta_grammar::case_<tag::local_variable, Dummy>
-        : enable_rule<rule::local_variable>
+        : enable_rule<rule::local_variable, Dummy>
     {};
 
     template <typename Dummy>
@@ -92,11 +93,6 @@ namespace boost { namespace phoenix
 
         struct local_var_not_found
         {
-            template <typename T>
-            T const & operator=(T const & t)
-            {
-                return t;
-            }
         };
     }
 
@@ -119,17 +115,17 @@ namespace boost { namespace phoenix
             : mpl::eval_if_c<
                 fusion::result_of::has_key<Locals, Key>::type::value
               , fusion::result_of::at_key<Locals, Key>
-              , result<This(OuterEnv&, Key)>
+              , result<This(typename proto::detail::uncvref<OuterEnv>::type&, Key)>
             >
         {};
 
         template <typename This, typename Env, typename OuterEnv, typename Key>
-        struct result<This(scoped_environment<Env, OuterEnv, const mpl::void_> const&, Key)>
+        struct result<This(scoped_environment<Env, OuterEnv, mpl::void_> const&, Key)>
             : result<This(OuterEnv&, Key)>
         {};
 
         template <typename This, typename Env, typename OuterEnv, typename Key>
-        struct result<This(scoped_environment<Env, OuterEnv, const mpl::void_>&, Key)>
+        struct result<This(scoped_environment<Env, OuterEnv, mpl::void_>&, Key)>
             : result<This(OuterEnv&, Key)>
         {};
         
@@ -154,15 +150,15 @@ namespace boost { namespace phoenix
         }
         
         template <typename Env, typename OuterEnv, typename Key>
-        typename result<get_local(scoped_environment<Env, OuterEnv, const mpl::void_>&, Key)>::type
-        operator()(scoped_environment<Env, OuterEnv, const mpl::void_>& env, Key k) const
+        typename result<get_local(scoped_environment<Env, OuterEnv, mpl::void_>&, Key)>::type
+        operator()(scoped_environment<Env, OuterEnv, mpl::void_>& env, Key k) const
         {
             return (*this)(env.outer_env, k);
         }
         
         template <typename Env, typename OuterEnv, typename Key>
-        typename result<get_local(scoped_environment<Env, OuterEnv, const mpl::void_>&, Key)>::type
-        operator()(scoped_environment<Env, OuterEnv, const mpl::void_> const& env, Key k) const
+        typename result<get_local(scoped_environment<Env, OuterEnv, mpl::void_>&, Key)>::type
+        operator()(scoped_environment<Env, OuterEnv, mpl::void_> const& env, Key k) const
         {
             return (*this)(env.outer_env, k);
         }
@@ -194,36 +190,35 @@ namespace boost { namespace phoenix
     };
 
     struct local_var_eval
-        : proto::callable
     {
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Local, typename Context>
-        struct result<This(Local const &, Context)>
+        template <typename This, typename Context, typename Local>
+        struct result<This(Context, Local const &)>
         {
             typedef
                 typename get_local::
                     template result<
                         get_local(
                             typename result_of::env<Context>::type
-                          , Local
+                          , typename proto::result_of::value<Local>::type
                         )
                     >::type
                 type;
         };
 
         template <typename Local, typename Context>
-        typename result<local_var_eval(Local const &, Context&)>::type
-        operator()(Local const & local, Context & ctx)
+        typename result<local_var_eval(Context const&, Local const &)>::type
+        operator()(Context const & ctx, Local const & local)
         {
-            return get_local()(env(ctx), local);
+            return get_local()(env(ctx), proto::value(local));
         }
     };
 
     template <typename Dummy>
     struct default_actions::when<rule::local_variable, Dummy>
-        : proto::call<local_var_eval(proto::_value(proto::_child_c<0>), _context)>
+        : call<local_var_eval, Dummy>
     {};
     
     namespace local_names

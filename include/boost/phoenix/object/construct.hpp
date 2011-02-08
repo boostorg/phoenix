@@ -9,10 +9,12 @@
 #define PHOENIX_OBJECT_CONSTRUCT_HPP
 
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/object/detail/target.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/preprocessor/repetition/repeat_from_to.hpp>
 
 PHOENIX_DEFINE_EXPRESSION_VARARG(
     (boost)(phoenix)(construct)
@@ -23,16 +25,22 @@ PHOENIX_DEFINE_EXPRESSION_VARARG(
 
 namespace boost { namespace phoenix
 {
-    template <typename T>
     struct construct_eval
     {
-        typedef typename T::type result_type;
+        template <typename Sig>
+        struct result;
 
-        template <typename Context>
-        result_type
-        operator()(Context&) const
+        template <typename This, typename Context, typename A0>
+        struct result<This(Context, A0)>
+            : detail::result_of::target<A0>
         {
-            return result_type();
+        };
+
+        template <typename Context, typename Target>
+        typename detail::result_of::target<Target>::type
+        operator()(Context const&, Target) const
+        {
+            return typename detail::result_of::target<Target>::type();
         }
 
         // Bring in the rest
@@ -40,43 +48,10 @@ namespace boost { namespace phoenix
 
     };
 
-#define PHOENIX_CONSTRUCT_CHILD(Z, N, D) proto::_child_c<N>
-#define PHOENIX_CONSTRUCT_CALL(Z, N, D)                                         \
-            proto::when<                                                        \
-                expression::construct<                                          \
-                    proto::terminal<proto::_>                                   \
-                  , BOOST_PP_ENUM_PARAMS(N, meta_grammar BOOST_PP_INTERCEPT)    \
-                >                                                               \
-              , proto::lazy<                                                    \
-                    construct_eval<proto::_value(proto::_child_c<0>)>(          \
-                        _context                                                  \
-                      , BOOST_PP_ENUM_SHIFTED(                                  \
-                            BOOST_PP_INC(N)                                     \
-                          , PHOENIX_CONSTRUCT_CHILD                             \
-                          , _                                                   \
-                        )                                                       \
-                    )                                                           \
-                >                                                               \
-            >                                                                   \
-        /**/
-
     template <typename Dummy>
     struct default_actions::when<rule::construct, Dummy>
-        : proto::or_<
-            proto::when<
-                expression::construct<proto::terminal<proto::_> >
-              , proto::lazy<
-                    construct_eval<
-                        proto::_value(proto::_child_c<0>)
-                    >(_context)
-                >
-            >
-          , BOOST_PP_ENUM_SHIFTED(PHOENIX_COMPOSITE_LIMIT, PHOENIX_CONSTRUCT_CALL, _)
-        >
-
+        : call<construct_eval, Dummy>
     {};
-#undef PHOENIX_CONSTRUCT_CHILD
-#undef PHOENIX_CONSTRUCT_CALL
 
     template <typename T>
     typename expression::construct<detail::target<T> >::type const

@@ -9,6 +9,7 @@
 #define PHOENIX_OBJECT_DYNAMIC_CAST_HPP
 
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/object/detail/target.hpp>
@@ -22,27 +23,31 @@ PHOENIX_DEFINE_EXPRESSION(
     
 namespace boost { namespace phoenix
 {
-    template <typename T>
     struct dynamic_cast_eval
-        : proto::callable
     {
-        typedef typename T::type result_type;
+        template <typename Sig>
+        struct result;
 
-        template <typename Context, typename U>
-        result_type
-        operator()(Context& ctx, U const& u) const
+        template <typename This, typename Context, typename Target, typename Source>
+        struct result<This(Context, Target const &, Source const&)>
+            : detail::result_of::target<Target>
         {
-            return dynamic_cast<result_type>(eval(u, ctx));
+        };
+
+        template <typename Context, typename Target, typename Source>
+        typename detail::result_of::target<Target>::type
+        operator()(Context const& ctx, Target, Source const& u) const
+        {
+            return
+                dynamic_cast<
+                    typename detail::result_of::target<Target>::type
+                >(eval(u, ctx));
         }
     };
 
     template <typename Dummy>
     struct default_actions::when<rule::dynamic_cast_, Dummy>
-        : proto::lazy<
-            dynamic_cast_eval<
-                evaluator(proto::_child_c<0>, _context)
-            >(_context, proto::_child_c<1>)
-        >
+        : call<dynamic_cast_eval, Dummy>
     {};
 
     template <typename T, typename U>

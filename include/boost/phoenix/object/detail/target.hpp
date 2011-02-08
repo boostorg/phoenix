@@ -17,6 +17,30 @@ namespace boost { namespace phoenix
         {
             typedef T type;
         };
+
+        namespace result_of
+        {
+            template <typename T>
+            struct target
+            {
+                typedef
+                    typename proto::detail::uncvref<
+                        typename proto::result_of::value<T>::type
+                    >::type
+                    target_type;
+                typedef typename target_type::type type;
+            };
+
+            template <typename T>
+            struct target<T const&>
+                : target<T>
+            {};
+
+            template <typename T>
+            struct target<T&>
+                : target<T>
+            {};
+        };
     }
 }}
 

@@ -24,7 +24,7 @@
 ==============================================================================*/
 
 #define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+    (3, (2, PHOENIX_COMPOSITE_LIMIT,                                            \
     <boost/phoenix/object/detail/construct_eval.hpp>))
 #include PHOENIX_ITERATE()
 
@@ -35,15 +35,24 @@
 #endif
 
 #else
+
+        template <typename This, typename Context, PHOENIX_typename_A>
+        struct result<This(Context, PHOENIX_A)>
+            : detail::result_of::target<A0>
+        {
+        };
         
         template <typename Context, PHOENIX_typename_A>
-        result_type
-        operator()(Context& ctx, PHOENIX_A_const_ref_a) const
+        typename detail::result_of::target<A0>::type
+        operator()(Context const& ctx, PHOENIX_A_const_ref_a) const
         {
 #define EVAL_a(_,n,__) \
-            BOOST_PP_COMMA_IF(n) eval(a ## n, ctx)
+            BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) eval(a ## n, ctx)
 
-            return result_type(BOOST_PP_REPEAT(PHOENIX_ITERATION, EVAL_a, _));
+            return
+                typename detail::result_of::target<A0>::type(
+                    BOOST_PP_REPEAT_FROM_TO(1, PHOENIX_ITERATION, EVAL_a, _)
+                );
 #undef EVAL_a
         }
 

@@ -11,6 +11,7 @@
 #include <boost/config.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 
@@ -49,13 +50,12 @@ namespace boost { namespace phoenix
     // and
     // if_( foo )[ bar ].else_[ baz ]
     struct if_else_eval
-        : proto::callable
     {
         typedef void result_type;
         
         template<typename Context, typename Cond, typename Then>
         result_type
-        operator()(Context & ctx, Cond const & cond, Then const & then) const
+        operator()(Context const & ctx, Cond const & cond, Then const & then) const
         {
             if( eval( cond, ctx ) )
                 eval( then, ctx );
@@ -64,7 +64,7 @@ namespace boost { namespace phoenix
         template<typename Context, typename Cond, typename Then, typename Else>
         result_type
         operator()(
-              Context & ctx
+              Context const & ctx
             , Cond const & cond
             , Then const & then
             , Else const & else_) const
@@ -78,25 +78,12 @@ namespace boost { namespace phoenix
     
     template <typename Dummy>
     struct default_actions::when<rule::if_, Dummy>
-        : proto::call<
-            if_else_eval(
-                _context
-              , proto::_child_c<0> // Cond
-              , proto::_child_c<1> // Then
-            )
-          >
+        : call<if_else_eval, Dummy>
     {};
     
     template <typename Dummy>
     struct default_actions::when<rule::if_else_statement, Dummy>
-        : proto::call<
-            if_else_eval(
-                _context
-              , proto::_child_c<0> // Cond
-              , proto::_child_c<1> // Then
-              , proto::_child_c<2> // Else
-            )
-          >
+        : call<if_else_eval, Dummy>
     {};
 
 

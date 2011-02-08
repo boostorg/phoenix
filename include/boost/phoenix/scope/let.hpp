@@ -11,6 +11,7 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/algorithm/transformation/transform.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
@@ -31,12 +32,10 @@ namespace boost { namespace phoenix
         struct result;
 
         template <typename This, typename Context, typename Locals, typename Let>
-        struct result<This(Context, Locals &, Let &)>
+        struct result<This(Context, Locals const &, Let const &)>
         {
             typedef
-                typename proto::detail::uncvref<
-                    typename result_of::actions<Context>::type
-                >::type
+                typename result_of::actions<Context>::type
                 actions_type;
 
             typedef
@@ -44,9 +43,9 @@ namespace boost { namespace phoenix
                     boost::result_of<
                         detail::local_var_def_eval(
                             typename proto::result_of::value<
-                                Locals const &
+                                Locals &
                             >::type
-                          , Context const &
+                          , Context
                         )
                     >::type
                 locals_type;
@@ -68,19 +67,15 @@ namespace boost { namespace phoenix
         };
 
         template <typename Context, typename Locals, typename Let>
-        typename result<let_eval(Context&, Locals const &, Let const &)>::type
-        operator()(Context & ctx, Locals const & locals, Let const & let) const
+        typename result<let_eval(Context const&, Locals const &, Let const &)>::type
+        operator()(Context const& ctx, Locals const & locals, Let const & let) const
         {
             typedef
-                typename proto::detail::uncvref<
-                    typename result_of::env<Context>::type
-                >::type
+                typename result_of::env<Context>::type
                 env_type;
 
             typedef
-                typename proto::detail::uncvref<
-                    typename result_of::actions<Context>::type
-                >::type
+                typename result_of::actions<Context>::type
                 actions_type;
 
             typedef
@@ -100,7 +95,6 @@ namespace boost { namespace phoenix
             locals_type l
                 = detail::local_var_def_eval()(proto::value(locals), ctx);
 
-
             scoped_env_type
                 scoped_env(
                     env(ctx)
@@ -119,7 +113,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::let, Dummy>
-        : proto::call<let_eval(_context, proto::_child_c<0>, proto::_child_c<1>)>
+        : call<let_eval, Dummy>
     {};
 
     template <typename Locals = void, typename Dummy = void>

@@ -21,7 +21,6 @@ PHOENIX_DEFINE_EXPRESSION(
 namespace boost { namespace phoenix
 {
     struct delete_eval
-        : proto::callable
     {
         typedef void result_type;
 

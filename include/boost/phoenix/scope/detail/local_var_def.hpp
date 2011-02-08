@@ -17,13 +17,13 @@
     fusion::pair<BOOST_PP_CAT(Tag, N), BOOST_PP_CAT(A, N)>
 
 #define M1(Z, N, D) \
-    fusion::pair<BOOST_PP_CAT(Tag, N), typename evaluator::impl<BOOST_PP_CAT(A, N) const &, Context const &, int>::result_type >
+    fusion::pair<BOOST_PP_CAT(Tag, N), typename evaluator::impl<BOOST_PP_CAT(A, N) const &, Context, int>::result_type >
 
 #define M2(Z, N, D) \
                 typedef  \
                         fusion::pair< \
                             BOOST_PP_CAT(Tag, N) \
-                          , typename evaluator::impl<BOOST_PP_CAT(A, N) const &, Context const &, int>::result_type \
+                          , typename evaluator::impl<BOOST_PP_CAT(A, N) const &, Context, int>::result_type \
                         > \
                         BOOST_PP_CAT(pair, N);
 #define M3(Z, N, D) \
@@ -88,7 +88,24 @@
                     fusion::map<
                         BOOST_PP_ENUM(PHOENIX_ITERATION, M0, _)
                     > const &
-                  , Context const &
+                  , Context
+                )
+            > : result<
+                This(
+                    fusion::map<
+                        BOOST_PP_ENUM(PHOENIX_ITERATION, M0, _)
+                    > &
+                  , Context
+                )
+            > {};
+
+            template <typename This, BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, typename Tag), PHOENIX_typename_A, typename Context>
+            struct result<
+                This(
+                    fusion::map<
+                        BOOST_PP_ENUM(PHOENIX_ITERATION, M0, _)
+                    > &
+                  , Context
                 )
             >
             {
@@ -100,7 +117,7 @@
             };
             
             template <BOOST_PP_ENUM_PARAMS(PHOENIX_ITERATION, typename Tag), PHOENIX_typename_A, typename Context>
-            typename result<local_var_def_eval(fusion::map<BOOST_PP_ENUM(PHOENIX_ITERATION, M0, _) > const &, Context const &)>::type
+            typename result<local_var_def_eval(fusion::map<BOOST_PP_ENUM(PHOENIX_ITERATION, M0, _) > &, Context const &)>::type
             operator()(fusion::map<BOOST_PP_ENUM(PHOENIX_ITERATION, M0, _) > const & locals, Context const & ctx) const
             {
                 BOOST_PP_REPEAT(PHOENIX_ITERATION, M2, _)

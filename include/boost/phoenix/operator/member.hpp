@@ -86,34 +86,9 @@ namespace boost { namespace phoenix
     }
 
     struct mem_fun_ptr_eval
-        : proto::callable
     {
         template<typename Sig>
         struct result;
-        
-        /*
-        template <typename This, typename Context, typename Expr>
-        struct result<This(Context, Expr const &)>
-            : result<This(Context const &, Expr const &)>
-        {};
-
-        template <typename This, typename Context, typename Expr>
-        struct result<This(Context &, Expr const &)>
-            : result_of::mem_fun_ptr_eval<Context, Expr>
-        {};
-
-        template <typename Context, typename Expr>
-        typename result_of::mem_fun_ptr_eval<Context, Expr>::type
-        operator()(Context & ctx, Expr const & expr) const
-        {
-            return
-                this->evaluate(
-                    ctx
-                  , expr
-                  , typename proto::arity_of<Expr>::type()
-                );
-        }
-        */
 
     #define PHOENIX_MEMBER_EVAL(Z, N, D)                                        \
         BOOST_PP_COMMA_IF(BOOST_PP_NOT(BOOST_PP_EQUAL(N, 2)))                   \
@@ -131,7 +106,6 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::mem_fun_ptr, Dummy>
-    //    : proto::call<mem_fun_ptr_eval(_context, proto::_)>
         : call<mem_fun_ptr_eval>
     {};
 }}

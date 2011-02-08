@@ -27,7 +27,7 @@
 #define PHOENIX_GRAMMAR(_, __, name)                                            \
     template <typename Dummy>                                                   \
     struct meta_grammar::case_<proto::tag::name, Dummy>                         \
-        : enable_rule<rule::name>                                               \
+        : enable_rule<rule::name, Dummy>                                        \
     {};                                                                         \
 /**/
 

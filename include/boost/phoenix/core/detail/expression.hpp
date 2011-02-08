@@ -98,11 +98,20 @@ namespace boost { namespace phoenix                                             
 {                                                                               \
     template <typename Dummy>                                                   \
     struct meta_grammar::case_<                                                 \
-        BOOST_PP_SEQ_FOR_EACH(PHOENIX_DEFINE_EXPRESSION_NS, _, BOOST_PP_SEQ_POP_BACK(NAME_SEQ)) tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                 \
+        BOOST_PP_SEQ_FOR_EACH(                                                  \
+            PHOENIX_DEFINE_EXPRESSION_NS                                        \
+          , _                                                                   \
+          , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                     \
+        ) tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))               \
       , Dummy                                                                   \
     >                                                                           \
         : enable_rule<                                                          \
-           BOOST_PP_SEQ_FOR_EACH(PHOENIX_DEFINE_EXPRESSION_NS, _, BOOST_PP_SEQ_POP_BACK(NAME_SEQ)) rule:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))            \
+            BOOST_PP_SEQ_FOR_EACH(                                              \
+                PHOENIX_DEFINE_EXPRESSION_NS                                    \
+              , _                                                               \
+              , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                 \
+            ) rule:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))          \
+         , Dummy                                                                \
         >                                                                       \
     {};                                                                         \
 } }                                                                             \

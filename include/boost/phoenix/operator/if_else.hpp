@@ -41,7 +41,7 @@ namespace boost { namespace phoenix
 
 	template <typename Dummy>
 	struct meta_grammar::case_<tag::if_else_operator, Dummy>
-		: enable_rule<rule::if_else_operator>
+		: enable_rule<rule::if_else_operator, Dummy>
 	{};
 
 	using proto::if_else;

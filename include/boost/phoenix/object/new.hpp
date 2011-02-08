@@ -28,7 +28,6 @@ namespace boost { namespace phoenix
 
     //template <typename T>
     struct new_eval
-        : proto::callable
     {
         template <typename Sig>
         struct result;
@@ -36,16 +35,16 @@ namespace boost { namespace phoenix
         template <typename This, typename Context, typename A0>
         struct result<This(Context, A0)>
         {
-            typedef typename proto::detail::uncvref<typename proto::result_of::value<A0>::type>::type target_type;
+            typedef typename detail::result_of::target<A0> target_type;
             typedef typename target_type::type  construct_type;
             typedef typename target_type::type * type;
         };
 
         template <typename Context, typename Target>
-        typename result<new_eval(Context const &, Target)>::type
+        typename detail::result_of::target<Target>::type *
         operator()(Context const&, Target) const
         {
-            return new typename result<new_eval(Context const &, Target)>::construct_type;
+            return new typename detail::result_of::target<Target>::type;
         }
 
         // Bring in the rest
@@ -54,7 +53,7 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::new_, Dummy>
-        : call<new_eval>
+        : call<new_eval, Dummy>
     {};
 
     template <typename T>
