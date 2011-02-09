@@ -7,7 +7,9 @@
 #include <iostream>
 #include <string>
 
-#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/core/argument.hpp>
+#include <boost/phoenix/core/reference.hpp>
+#include <boost/phoenix/core/value.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 using boost::phoenix::cref;
@@ -23,6 +25,8 @@ main()
     char c1 = '1';
     int i1 = 1, i2 = 2, i = 4;
     const char* s2 = "2";
+
+
 
     ///////////////////////////////////////////////////////////////////////////
     //

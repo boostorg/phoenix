@@ -70,14 +70,14 @@
 
         template <PHOENIX_typename_A>
         PHOENIX_LOCAL_GEN_NAME<
-            BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<PHOENIX_LOCAL_GEN_ACTOR_TYPES>
+            BOOST_PP_CAT(vector, PHOENIX_ITERATION)<PHOENIX_LOCAL_GEN_ACTOR_TYPES>
           , detail::map_local_index_to_tuple<BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_KEY_TYPES, _)>
         > const
         operator()(PHOENIX_A_const_ref_a) const
         {
             return
                 BOOST_PP_CAT(
-                     fusion::vector, PHOENIX_ITERATION)<BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_ACTOR_TYPES_I, _)>(BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_ACTOR, _));
+                     vector, PHOENIX_ITERATION)<BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_ACTOR_TYPES_I, _)>(BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_ACTOR, _));
         }
 
 #endif

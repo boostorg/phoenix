@@ -16,8 +16,6 @@
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/make_expr.hpp>
 
-#include <boost/fusion/include/as_vector.hpp>
-
 PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(switch_case)
   , (proto::terminal<proto::_>)
@@ -112,11 +110,9 @@ namespace boost { namespace phoenix {
 
     template <typename Dummy>
     struct is_nullary::when<rule::switch_, Dummy>
-        : proto::make<
-            mpl::and_<
-                evaluator(proto::_child_c<0>, _context)
-              , detail::switch_case_is_nullary(proto::_child_c<1>, _context)
-            >()
+        : proto::and_<
+            evaluator(proto::_child_c<0>, _context)
+          , detail::switch_case_is_nullary(proto::_child_c<1>, _context)
         >
     {};
 

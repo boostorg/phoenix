@@ -1,4 +1,5 @@
 
+/*
 #if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
 #ifndef PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
 #define PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
@@ -8,7 +9,7 @@
 #include <boost/phoenix/scope/detail/preprocessed/dynamic.hpp>
 
 #endif
-#else
+#else*/
 
 #if !PHOENIX_IS_ITERATING
 
@@ -61,7 +62,7 @@
     struct dynamic<PHOENIX_A> : noncopyable
     {
         typedef
-            BOOST_PP_CAT(fusion::vector, PHOENIX_ITERATION)<PHOENIX_A>
+            BOOST_PP_CAT(vector, PHOENIX_ITERATION)<PHOENIX_A>
             tuple_type;
         typedef
             dynamic<PHOENIX_A>
@@ -91,4 +92,4 @@
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES

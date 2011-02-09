@@ -17,6 +17,7 @@
 #include <boost/phoenix/scope/scoped_environment.hpp>
 #include <boost/phoenix/scope/local_variable.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/phoenix/support/vector.hpp>
 
 PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(let)
@@ -102,12 +103,7 @@ namespace boost { namespace phoenix
                   , l
                 );
 
-            typename result_of::context<
-                scoped_env_type &
-              , actions_type
-            >::type new_ctx(scoped_env, actions(ctx));
-
-            return eval(let, new_ctx);
+            return eval(let, context(scoped_env, actions(ctx)));
         }
     };
 
@@ -171,7 +167,7 @@ namespace boost { namespace phoenix
                 detail::local_var_def_is_nullary<proto::_value(proto::_child_c<0>), _context>()
               , evaluator(
                     proto::_child_c<1>
-                  , fusion::vector2<
+                  , vector2<
                         mpl::true_
                       , detail::scope_is_nullary_actions
                     >()

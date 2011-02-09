@@ -1,4 +1,5 @@
 
+/*
 #if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
 #ifndef PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
 #define PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
@@ -8,7 +9,7 @@
 #include <boost/phoenix/core/detail/preprocessed/actor_operator.hpp>
 
 #endif
-#else
+#else*/
 
 #if !PHOENIX_IS_ITERATING
 
@@ -57,15 +58,13 @@
         operator()(PHOENIX_A_ref_a)
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
                     const actor<Expr> *, PHOENIX_A_ref
                 >
-                args_type;
-            args_type args(this, PHOENIX_a);
-            fusion::vector2<args_type&, default_actions>
-                env(args, default_actions());
-
-            return eval(*this, env);
+                env_type;
+            env_type env = {this, PHOENIX_a};
+            
+            return eval(*this, context(env, default_actions()));
         }
 
         template <PHOENIX_typename_A>
@@ -73,15 +72,13 @@
         operator()(PHOENIX_A_ref_a) const
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
                     const actor<Expr> *, PHOENIX_A_ref
                 >
-                args_type;
-            args_type args(this, PHOENIX_a);
-            fusion::vector2<args_type&, default_actions>
-                env(args, default_actions());
+                env_type;
+            env_type env = {this, PHOENIX_a};
             
-            return eval(*this, env);
+            return eval(*this, context(env, default_actions()));
         }
 
         template <PHOENIX_typename_A>
@@ -89,15 +86,13 @@
         operator()(PHOENIX_A_const_ref_a)
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
                     const actor<Expr> *, PHOENIX_A_const_ref
                 >
-                args_type;
-            args_type args(this, PHOENIX_a);
-            fusion::vector2<args_type&, default_actions>
-                env(args, default_actions());
+                env_type;
+            env_type env = {this, PHOENIX_a};
             
-            return eval(*this, env);
+            return eval(*this, context(env, default_actions()));
         }
 
         template <PHOENIX_typename_A>
@@ -105,15 +100,13 @@
         operator()(PHOENIX_A_const_ref_a) const
         {
             typedef
-                BOOST_PP_CAT(fusion::vector, BOOST_PP_INC(PHOENIX_ITERATION))<
+                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
                     const actor<Expr> *, PHOENIX_A_const_ref
                 >
-                args_type;
-            args_type args(this, PHOENIX_a);
-            fusion::vector2<args_type&, default_actions>
-                env(args, default_actions());
-
-            return eval(*this, env);
+                env_type;
+            env_type env = {this, PHOENIX_a};
+            
+            return eval(*this, context(env, default_actions()));
         }
 
 #else
@@ -131,14 +124,13 @@
         operator()(PHOENIX_PERM_A_a(I)) const                                   \
         {                                                                       \
             typedef                                                             \
-                typename fusion::result_of::make_vector<const actor<Expr> *, PHOENIX_PERM_A(I)>::type\
-                args_type;                                                      \
-            args_type args(this, PHOENIX_a);                                          \
-            fusion::vector2<                                                    \
-                args_type&, default_actions                                     \
-            > env(args, default_actions());                                     \
+                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<          \
+                    const actor<Expr> *, PHOENIX_PERM_A(I)                      \
+                >                                                               \
+                env_type;                                                       \
+            env_type env = {this, PHOENIX_a};                                      \
                                                                                 \
-            return eval(*this, env);                                            \
+            return eval(*this, context(env, default_actions()));                \
         }                                                                       \
                                                                                 \
         template <PHOENIX_typename_A>                                           \
@@ -146,14 +138,13 @@
         operator()(PHOENIX_PERM_A_a(I))                                         \
         {                                                                       \
             typedef                                                             \
-                typename fusion::result_of::make_vector<const actor<Expr> *,PHOENIX_PERM_A(I)>::type\
-                args_type;                                                      \
-            args_type args(this, PHOENIX_a);                                          \
-            fusion::vector2<                                                    \
-                args_type&, default_actions                                     \
-            > env(args, default_actions());                                     \
+                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<          \
+                    const actor<Expr> *, PHOENIX_PERM_A(I)                      \
+                >                                                               \
+                env_type;                                                       \
+            env_type env = {this, PHOENIX_a};                                   \
                                                                                 \
-            return eval(*this, env);                                            \
+            return eval(*this, context(env, default_actions()));                \
         }                                                                       \
         /**/
 
@@ -165,4 +156,4 @@
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES

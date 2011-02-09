@@ -14,6 +14,7 @@
 #include <boost/mpl/int.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/terminal_fwd.hpp>
+#include <boost/phoenix/support/vector.hpp>
 #include <boost/proto/transform/fold.hpp>
 
 namespace boost { namespace phoenix
@@ -33,7 +34,7 @@ namespace boost { namespace phoenix
             : mpl::int_<
                 evaluator::impl<
                     Expr const&
-                  , fusion::vector2<
+                  , vector2<
                         mpl::int_<0>
                       , boost::phoenix::arity
                     >&
@@ -52,7 +53,7 @@ namespace boost { namespace phoenix
               , mpl::int_<0>
               , mpl::max<
                     proto::_state
-                  , evaluator(proto::_, _context)
+                  , evaluator(proto::_, functional::context(_env, _actions))
                 >()
             >
         {};

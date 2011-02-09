@@ -13,12 +13,12 @@
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
-#include <boost/fusion/container/generation/make_vector.hpp>
 #include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/core/environment.hpp>
 #include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/support/iterate.hpp>
+#include <boost/phoenix/support/vector.hpp>
 #include <boost/proto/extends.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/mpl/void.hpp>
@@ -129,21 +129,19 @@ namespace boost { namespace phoenix
         typename result_of::actor<Expr>::type
         operator()()
         {
-            typedef fusion::vector1<const actor<Expr> *> args_type;
-            args_type args(this);
-            fusion::vector2<args_type&, default_actions> env(args, default_actions());
+            typedef vector1<const actor<Expr> *> env_type;
+            env_type env = {this};
             
-            return eval(*this, env);
+            return eval(*this, context(env, default_actions()));
         }
 
         typename result_of::actor<Expr>::type
         operator()() const
         {
-            typedef fusion::vector1<const actor<Expr> *> args_type;
-            args_type args(this);
-            fusion::vector2<args_type&, default_actions> env(args, default_actions());
-
-            return eval(*this, env);
+            typedef vector1<const actor<Expr> *> env_type;
+            env_type env = {this};
+            
+            return eval(*this, context(env, default_actions()));
         }
         
         // Bring in the rest

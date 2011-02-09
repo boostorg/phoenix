@@ -48,8 +48,8 @@
             typedef
                 typename evaluator::impl<
                     Expr const&
-                  , fusion::vector2<
-                        fusion::vector1<const ::boost::phoenix::actor<Expr> *> &
+                  , vector2<
+                        vector1<const ::boost::phoenix::actor<Expr> *> &
                       , default_actions
                     > const &
                   , int
@@ -63,7 +63,7 @@
             typedef
                 // avoid calling result_of::actor when this is false
                 typename mpl::eval_if<
-                    typename result_of::is_nullary<Expr>::type
+                    result_of::is_nullary<Expr>
                   , nullary_actor_result<Expr>
                   , mpl::identity<detail::error_expecting_arguments>
                 >::type
@@ -92,9 +92,9 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
+                      , vector2<
                             BOOST_PP_CAT(
-                                fusion::vector
+                                vector
                               , BOOST_PP_INC(PHOENIX_ITERATION)
                             )<const ::boost::phoenix::actor<Expr> *, PHOENIX_A> &
                           , default_actions

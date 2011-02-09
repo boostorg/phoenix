@@ -11,6 +11,7 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/fusion/support/is_sequence.hpp>
+#include <boost/phoenix/support/vector.hpp>
 #include <boost/proto/transform/impl.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>
@@ -24,7 +25,7 @@ namespace boost { namespace phoenix
         template <typename Env, typename Actions>
         struct context
         {
-            typedef fusion::vector2<Env, Actions> type;
+            typedef vector2<Env, Actions> type;
         };
 
         template <typename Context>
@@ -83,28 +84,32 @@ namespace boost { namespace phoenix
             typename result_of::context<Env &, Actions &>::type
             operator()(Env & env, Actions & actions) const
             {
-                return fusion::vector2<Env &, Actions &>(env, actions);
+                vector2<Env &, Actions &> e = {env, actions};
+                return e;
             }
 
             template <typename Env, typename Actions>
             typename result_of::context<Env const &, Actions &>::type
             operator()(Env const & env, Actions & actions) const
             {
-                return fusion::vector2<Env const &, Actions &>(env, actions);
+                vector2<Env const &, Actions &> e = {env, actions};
+                return e;
             }
 
             template <typename Env, typename Actions>
             typename result_of::context<Env &, Actions const &>::type
             operator()(Env & env, Actions const & actions) const
             {
-                return fusion::vector2<Env &, Actions const &>(env, actions);
+                vector2<Env &, Actions const &> e = {env, actions};
+                return e;
             }
 
             template <typename Env, typename Actions>
             typename result_of::context<Env const &, Actions const &>::type
             operator()(Env const & env, Actions const & actions) const
             {
-                return fusion::vector2<Env const &, Actions const &>(env, actions);
+                vector2<Env const&, Actions const &> e = {env, actions};
+                return e;
             }
         };
 
@@ -181,7 +186,7 @@ namespace boost { namespace phoenix
         struct impl
             : proto::transform_impl<Expr, State, Data>
         {
-            typedef fusion::vector2<State, Data> result_type;
+            typedef vector2<State, Data> result_type;
 
             result_type operator()(
                 typename impl::expr_param
@@ -189,7 +194,8 @@ namespace boost { namespace phoenix
               , typename impl::data_param d
             ) const
             {
-                return fusion::vector2<State, Data>(s, d);
+                vector2<State, Data> e = {s, d};
+                return e;
             }
         };
     };
@@ -198,28 +204,32 @@ namespace boost { namespace phoenix
     typename result_of::context<Env const &, Actions const&>::type const
     context(Env const& env, Actions const& actions)
     {
-        return fusion::vector2<Env const &, Actions const &>(env, actions);
+        vector2<Env const&, Actions const &> e = {env, actions};
+        return e;
     }
 
     template <typename Env, typename Actions>
     typename result_of::context<Env &, Actions const&>::type const
     context(Env & env, Actions const& actions)
     {
-        return fusion::vector2<Env &, Actions const &>(env, actions);
+        vector2<Env &, Actions const &> e = {env, actions};
+        return e;
     }
 
     template <typename Env, typename Actions>
     typename result_of::context<Env const &, Actions &>::type const
     context(Env const& env, Actions & actions)
     {
-        return fusion::vector2<Env const &, Actions &>(env, actions);
+        vector2<Env const&, Actions &> e = {env, actions};
+        return e;
     }
     
     template <typename Env, typename Actions>
     typename result_of::context<Env &, Actions &>::type const
     context(Env & env, Actions & actions)
     {
-        return fusion::vector2<Env &, Actions &>(env, actions);
+        vector2<Env &, Actions &> e = {env, actions};
+        return e;
     }
 
     struct _env

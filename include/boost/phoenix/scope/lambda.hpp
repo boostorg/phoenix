@@ -117,9 +117,7 @@ namespace boost { namespace phoenix
                   , proto::value(locals)
                 );
 
-            typename result_of::context<scoped_env_type &, actions_type>::type
-                new_ctx(scoped_env, actions(ctx));
-            return eval(lambda, new_ctx);
+            return eval(lambda, context(scoped_env, actions(ctx)));
         }
     };
 

@@ -14,6 +14,7 @@
 #include <boost/phoenix/core/is_actor.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/terminal_fwd.hpp>
+#include <boost/phoenix/support/vector.hpp>
 #include <boost/proto/transform/fold.hpp>
 #include <boost/proto/transform/lazy.hpp>
 
@@ -34,7 +35,7 @@ namespace boost { namespace phoenix
               , mpl::true_()
               , mpl::and_<
                     proto::_state
-                  , evaluator(proto::_, _context, int())
+                  , evaluator(proto::_, _context)
                 >()
             >
         {};
@@ -42,40 +43,83 @@ namespace boost { namespace phoenix
     
     template <typename Dummy>
     struct is_nullary::when<rule::argument, Dummy>
-        : proto::make<mpl::false_()>
-    {};
+    {
+        BOOST_PROTO_TRANSFORM(is_nullary::when<rule::argument>)
+        template <typename Expr, typename State, typename Data>
+        struct impl
+        {
+            typedef mpl::false_ result_type;
+        };
+    };
     
     template <typename Dummy>
     struct is_nullary::when<rule::custom_terminal, Dummy>
-        : proto::lazy<
-            result_of::is_nullary<custom_terminal<proto::_value> >(
-                proto::_
-              , _context
-            )
+    {
+        BOOST_PROTO_TRANSFORM(is_nullary::when<rule::custom_terminal>)
+        
+        template <typename Expr, typename State, typename Data>
+        struct defer_result
+            : mpl::identity<
+                typename result_of::is_nullary<
+                    custom_terminal<
+                        typename proto::detail::uncvref<
+                            typename proto::result_of::value<Expr>::type
+                        >::type
+                    >
+            >::template impl<
+                typename proto::result_of::value<Expr>::type
+              , State
+              , Data
+            >::result_type
         >
-    {};
+        {};
+
+        template <typename Expr, typename State, typename Data>
+        struct impl
+        {
+            typedef 
+                typename proto::detail::uncvref<
+                    typename proto::result_of::value<Expr>::type
+                >::type value_type;
+
+            typedef typename result_of::is_nullary<custom_terminal<value_type> > is_nullary_trait;
+
+
+
+            typedef
+                typename mpl::eval_if<
+                    proto::is_transform<is_nullary_trait>
+                  , defer_result<Expr, State, Data>
+                  , is_nullary_trait
+                >::type
+                result_type;
+        };
+    };
     
     template <typename Dummy>
     struct is_nullary::when<rule::terminal, Dummy>
-        : proto::make<mpl::true_()>
-    {};
+    {
+        BOOST_PROTO_TRANSFORM(is_nullary::when<rule::terminal>)
+        template <typename Expr, typename State, typename Data>
+        struct impl
+        {
+            typedef mpl::true_ result_type;
+        };
+    };
 
     namespace result_of
     {
         template <typename Expr, typename Enable>
         struct is_nullary
-        {
-            typedef
-                typename boost::phoenix::evaluator::impl<
-                    Expr const &
-                  , fusion::vector2<
-                        mpl::true_
-                      , boost::phoenix::is_nullary
-                    >
-                  , int
-                >::result_type
-                type;
-        };
+            : boost::phoenix::evaluator::impl<
+                Expr const &
+              , vector2<
+                    mpl::true_
+                  , boost::phoenix::is_nullary
+                >
+              , int
+            >::result_type
+        {};
         
         template <typename T>
         struct is_nullary<T & >
@@ -93,13 +137,23 @@ namespace boost { namespace phoenix
         {};
         
         template <typename T>
-        struct is_nullary<custom_terminal<T>, typename disable_if<is_actor<T> >::type>
-            : proto::make<mpl::true_()>
+        struct is_nullary<custom_terminal<T> >
+            : mpl::true_
         {};
         
         template <typename T>
-        struct is_nullary<custom_terminal<T>, typename enable_if<is_actor<T> >::type>
-            : proto::call<evaluator(proto::_value, _context, int())>
+        struct is_nullary<custom_terminal<actor<T> const &> >
+            : evaluator
+        {};
+        
+        template <typename T>
+        struct is_nullary<custom_terminal<actor<T> &> >
+            : evaluator
+        {};
+        
+        template <typename T>
+        struct is_nullary<custom_terminal<actor<T> > >
+            : evaluator
         {};
     }
 

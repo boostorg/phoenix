@@ -16,6 +16,7 @@
 #include <boost/fusion/sequence/intrinsic/size.hpp>
 #include <boost/fusion/sequence/intrinsic/value_at.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
+#include <boost/fusion/support/category_of.hpp>
 #include <boost/utility/result_of.hpp>
 
 namespace boost { namespace phoenix
@@ -87,14 +88,14 @@ namespace boost { namespace phoenix
         struct value_at
         {
             typedef
-                typename fusion::result_of::value_at<typename Seq::env_type, N>::type
+                typename fusion::result_of::value_at<typename proto::detail::uncvref<typename Seq::env_type>::type, N>::type
                 type;
         };
         
         template <typename Seq, typename N>
         struct at
         {
-            typedef typename fusion::result_of::at<typename Seq::env_type, N>::type type;
+            typedef typename fusion::result_of::at<typename proto::detail::uncvref<typename Seq::env_type>::type, N>::type type;
 
             static type call(Seq & seq)
             {

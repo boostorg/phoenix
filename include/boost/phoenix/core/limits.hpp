@@ -13,8 +13,6 @@
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/phoenix/support/preprocessor/round.hpp>
 
-
-
 #if !defined(PHOENIX_LIMIT)
 # define PHOENIX_LIMIT 10
 #elif (PHOENIX_LIMIT < 5)
@@ -93,12 +91,6 @@
 # define PHOENIX_DONT_USE_PREPROCESSED_FILES
 #endif
 
-#if !defined(FUSION_MAX_VECTOR_SIZE)
-# define FUSION_MAX_VECTOR_SIZE BOOST_PP_INC(BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT))
-#elif (FUSION_MAX_VECTOR_SIZE < BOOST_PP_INC(BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT)))
-# error "FUSION_MAX_VECTOR_SIZE < BOOST_PP_INC(BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT))"
-#endif
-
 #if !defined(BOOST_PROTO_MAX_ARITY)
 #   define BOOST_PROTO_MAX_ARITY BOOST_PP_INC(PHOENIX_COMPOSITE_LIMIT)
 #   if defined(BOOST_MPL_LIMIT_METAFUNCTION_ARITY)
@@ -119,24 +111,5 @@
 
 // this include will set the limit for the proto expression arity
 #include <boost/proto/proto_fwd.hpp>
-
-// this include will bring in mpl::vectorN and 
-// fusion::vectorN where N is BOOST_PHOENIX_PP_ROUND_UP(PHOENIX_LIMIT)
-#include <boost/fusion/container/vector/vector10.hpp>
-#if FUSION_MAX_VECTOR_SIZE > 10
-#include <boost/fusion/container/vector/vector20.hpp>
-#endif
-#if FUSION_MAX_VECTOR_SIZE > 20
-#include <boost/fusion/container/vector/vector30.hpp>
-#endif
-#if FUSION_MAX_VECTOR_SIZE > 30
-#include <boost/fusion/container/vector/vector40.hpp>
-#endif
-#if FUSION_MAX_VECTOR_SIZE > 40
-#include <boost/fusion/container/vector/vector50.hpp>
-#endif
-#if FUSION_MAX_VECTOR_SIZE > 50
-#error "FUSION_MAX_VECTOR_SIZE too high!"
-#endif
 
 #endif
