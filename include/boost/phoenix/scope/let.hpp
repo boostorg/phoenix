@@ -44,7 +44,7 @@ namespace boost { namespace phoenix
                     boost::result_of<
                         detail::local_var_def_eval(
                             typename proto::result_of::value<
-                                Locals &
+                                Locals const &
                             >::type
                           , Context
                         )
@@ -86,7 +86,7 @@ namespace boost { namespace phoenix
                             typename proto::result_of::value<
                                 Locals const &
                             >::type
-                          , Context &
+                          , Context const &
                         )
                     >::type
                 locals_type;

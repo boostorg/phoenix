@@ -38,13 +38,10 @@
 #define PHOENIX_TYPEDEF_LOCAL_TYPES(Z, N, D) \
             typedef \
                 typename proto::result_of::value< \
-                    typename proto::result_of::child_c< \
                         typename proto::result_of::child_c< \
                             BOOST_PP_CAT(A, N) \
                           , 0 \
                         >::type \
-                      , 0 \
-                    >::type \
                 >::type \
                 BOOST_PP_CAT(tag_type, N); \
 \

@@ -27,29 +27,8 @@ namespace boost { namespace phoenix
     {
         template <typename T>
         struct value
-            : proto::terminal<T>
-        {
-            typedef actor<typename proto::terminal<T>::type> type;
-            
-            static const type make(T t)
-            {
-                typename value<T>::type const e = {{t}};
-                return e;
-            }
-        };
-        
-        template <typename T, int N>
-        struct value<T[N]>
-            : proto::terminal<T>
-        {
-            typedef actor<typename proto::terminal<T* >::type> type;
-
-            static const type make(T t[N])
-            {
-                typename value<T *>::type const e = {{t}};
-                return e;
-            }
-        };
+            : expression::terminal<T>
+        {};
     }
 
     template <typename T>

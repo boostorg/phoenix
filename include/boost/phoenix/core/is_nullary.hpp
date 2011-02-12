@@ -82,9 +82,11 @@ namespace boost { namespace phoenix
                     typename proto::result_of::value<Expr>::type
                 >::type value_type;
 
-            typedef typename result_of::is_nullary<custom_terminal<value_type> > is_nullary_trait;
-
-
+            typedef
+                typename result_of::is_nullary<
+                    custom_terminal<value_type>
+                >
+                is_nullary_trait;
 
             typedef
                 typename mpl::eval_if<
@@ -139,16 +141,6 @@ namespace boost { namespace phoenix
         template <typename T>
         struct is_nullary<custom_terminal<T> >
             : mpl::true_
-        {};
-        
-        template <typename T>
-        struct is_nullary<custom_terminal<actor<T> const &> >
-            : evaluator
-        {};
-        
-        template <typename T>
-        struct is_nullary<custom_terminal<actor<T> &> >
-            : evaluator
         {};
         
         template <typename T>

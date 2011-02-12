@@ -10,6 +10,7 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/is_placeholder.hpp>
+#include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/terminal_fwd.hpp>
 #include <boost/proto/matches.hpp>
@@ -24,6 +25,35 @@ namespace boost { namespace phoenix
 
     template <typename T, typename Dummy>
     struct custom_terminal;
+ 
+    namespace expression
+    {
+        template <typename T>
+        struct terminal
+            : proto::terminal<T>
+        {
+            typedef actor<typename proto::terminal<T>::type> type;
+            
+            static const type make(T t)
+            {
+                typename terminal<T>::type const e = {{t}};
+                return e;
+            }
+        };
+        
+        template <typename T, int N>
+        struct terminal<T[N]>
+            : proto::terminal<T>
+        {
+            typedef actor<typename proto::terminal<T* >::type> type;
+
+            static const type make(T t[N])
+            {
+                typename terminal<T *>::type const e = {{t}};
+                return e;
+            }
+        };
+    }
 
     namespace rule
     {

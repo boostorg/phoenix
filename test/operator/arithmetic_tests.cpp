@@ -9,6 +9,8 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
+#include <boost/bind.hpp>
+
 namespace phoenix = boost::phoenix;
 
 int

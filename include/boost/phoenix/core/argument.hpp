@@ -59,13 +59,9 @@ namespace boost { namespace phoenix
     {
         template <int I>
         struct argument
+            : expression::terminal<detail::argument<I> >
         {
-            typedef
-                actor<
-                    typename proto::terminal<detail::argument<I> >::type
-                >
-                type;
-
+            typedef typename expression::terminal<detail::argument<I> >::type type;
             static const type make()
             {
                 type const e = {};
