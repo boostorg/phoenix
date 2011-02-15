@@ -130,7 +130,7 @@ main()
     BOOST_TEST(add(arg1, arg1, arg1, arg1)(i5) == (5+5+5+5));
 
     // testing composition
-    BOOST_TEST(add(arg1, arg1, arg1, power(arg1, 2))(i5) == (5+5+5+25));
+    BOOST_TEST(add(arg1, arg1, arg1, power(arg1, 2))(d5) == (5+5+5+25));
 
     int const ic5 = 5;
     // testing consts

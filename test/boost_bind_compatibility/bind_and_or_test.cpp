@@ -61,6 +61,7 @@ int main()
     // ||
 
     tester(bind(f, false) || bind(g, true), false, false, f(false) || g(true));
+
     tester(bind(f, false) || bind(g, false), false, false, f(false) || g(false));
 
     tester(bind(f, true) || bind(h), false, false, f(true) || h());
@@ -68,7 +69,7 @@ int main()
     tester(bind(f, _1) || bind(g, _2), false, true, f(false) || g(true));
     tester(bind(f, _1) || bind(g, _2), false, false, f(false) || g(false));
 
-    tester(bind(f, _1) || (h), true, false, f(true) || h());
+    tester(bind(f, _1) || bind(h), true, false, f(true) || h());
 
     //
 
