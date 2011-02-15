@@ -81,7 +81,12 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct default_actions::when<rule::custom_terminal, Dummy>
-        : proto::lazy<custom_terminal<proto::_value>(proto::_value, functional::context(_env, _actions))>
+        : proto::lazy<
+            custom_terminal<proto::_value>(
+                proto::_value
+			  , _context
+			)
+		>
     {};
 
     namespace detail

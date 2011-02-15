@@ -35,7 +35,7 @@ namespace boost { namespace phoenix
               , mpl::true_()
               , mpl::and_<
                     proto::_state
-                  , evaluator(proto::_, _context)
+                  , proto::call<evaluator(proto::_, _context)>
                 >()
             >
         {};

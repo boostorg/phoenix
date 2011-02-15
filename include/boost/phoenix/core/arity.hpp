@@ -15,6 +15,7 @@
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/terminal_fwd.hpp>
 #include <boost/phoenix/support/vector.hpp>
+#include <boost/proto/matches.hpp>
 #include <boost/proto/transform/fold.hpp>
 
 namespace boost { namespace phoenix
@@ -51,10 +52,10 @@ namespace boost { namespace phoenix
             : proto::fold<
                 proto::_
               , mpl::int_<0>
-              , mpl::max<
+              , proto::make<mpl::max<
                     proto::_state
-                  , evaluator(proto::_, functional::context(_env, _actions))
-                >()
+                  , proto::call<evaluator(proto::_, proto::call<functional::context(_env, _actions)>)>
+                >()>
             >
         {};
     };

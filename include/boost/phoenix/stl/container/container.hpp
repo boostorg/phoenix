@@ -713,7 +713,7 @@ namespace boost { namespace phoenix
         typedef void result_type;
 
         template <typename C, typename Arg1, typename Arg2>
-        void operator()(C& c, Arg1 arg1, Arg2 arg2) const
+        void operator()(C& c, Arg1 arg1, Arg2 &arg2) const
         {
             c.splice(arg1, arg2);
         }
@@ -727,7 +727,7 @@ namespace boost { namespace phoenix
         void operator()(
             C& c
           , Arg1 arg1
-          , Arg2 arg2
+          , Arg2 & arg2
           , Arg3 arg3
         ) const
         {
@@ -744,7 +744,7 @@ namespace boost { namespace phoenix
         void operator()(
             C c
           , Arg1 arg1
-          , Arg2 arg2
+          , Arg2 & arg2
           , Arg3 arg3
           , Arg4 arg4
         ) const

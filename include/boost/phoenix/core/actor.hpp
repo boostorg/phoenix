@@ -24,6 +24,11 @@
 #include <boost/mpl/void.hpp>
 #include <cstring>
 
+#ifdef BOOST_MSVC
+#pragma warning(push)
+#pragma warning(disable: 4522) // 'this' used in base member initializer list
+#endif
+
 namespace boost { namespace phoenix
 {
     template <typename Expr>
@@ -163,6 +168,11 @@ namespace boost
         : result_of<phoenix::actor<Expr>()>
     {};
 }
+
+
+#ifdef BOOST_MSVC
+#pragma warning(pop)
+#endif
 
 #endif
 

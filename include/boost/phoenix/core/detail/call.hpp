@@ -64,7 +64,7 @@
             : proto::transform_impl<Expr, State, Data>
         {
             typedef
-                typename result_of::context<State, Data>::type
+                typename boost::phoenix::result_of::context<State, Data>::type
                 context_type;
 
             BOOST_PP_REPEAT(PHOENIX_ITERATION, M0, _)
@@ -79,7 +79,7 @@
               , typename call_impl::data_param d
             ) const
             {
-                return Fun()(context(s, d) BOOST_PP_REPEAT(PHOENIX_ITERATION, M1, _));
+                return Fun()(boost::phoenix::context(s, d) BOOST_PP_REPEAT(PHOENIX_ITERATION, M1, _));
             }
         };
 
