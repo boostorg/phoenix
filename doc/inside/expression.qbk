@@ -223,6 +223,14 @@ necessary boilerplate to create Phoenix Expressions
 
 [heading Example]
 
+The example from the previous section could have been rewritten to:
+
+    BOOST_PHOENIX_DEFINE_EXPRESSION(
+        (plus)
+      , (meta_grammar)               // Cond
+        (meta_grammar)               // Do
+    )
+
 [endsect]
 
 [section PHOENIX_DEFINE_EXPRESSION_EXT]
