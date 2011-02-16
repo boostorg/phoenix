@@ -204,6 +204,14 @@ This macros also adds a specialization for `meta_grammar::case_<tag::name>`.
 
 [heading Example]
 
+The example from the previous section can be rewritten as:
+
+    BOOST_PHOENIX_DEFINE_EXPRESSION(
+        (plus)
+      , (meta_grammar)               // Lhs
+        (meta_grammar)               // Rhs
+    )
+
 [endsect]
 
 [section PHOENIX_DEFINE_EXPRESSION_VARARG]
@@ -222,14 +230,6 @@ necessary boilerplate to create Phoenix Expressions
     #include <boost/phoenix/core/expression.hpp>
 
 [heading Example]
-
-The example from the previous section could have been rewritten to:
-
-    BOOST_PHOENIX_DEFINE_EXPRESSION(
-        (plus)
-      , (meta_grammar)               // Cond
-        (meta_grammar)               // Do
-    )
 
 [endsect]
 
