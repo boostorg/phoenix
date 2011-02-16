@@ -54,7 +54,7 @@ The library provides a convenience template to define expressions:
 	You might have noticed the template template argument `Actor` used in
 	`expr_ext`. This can be a user supplied custom Actor adding other member
 	functions or objects than the default `actor` template. See
-	[link phoenix.inside.extending_actors Extending Actors] for more details.
+	[link phoenix.examples.extending_actors Extending Actors] for more details.
 ]
 
 [heading meta_grammar]
@@ -129,7 +129,7 @@ See [@../../example/define_expression.cpp define_expression.cpp] for the full ex
 	an expression having the `proto::tag::plus` and two children. This is because
 	`default_actions` uses the `proto::_default<meta_grammar>` transform to
     evaluate operators and functions. Learn more about actions
-    [link phoenix.inside.action here]
+    [link phoenix.inside.actions here]
 ]
 
 [/section Boilerplate Macros]
@@ -180,17 +180,23 @@ of namespaces under which the following symbols will be defined:
     namespace expression
     {
         template <typename A0, typename A1 ... typename AN>
-        struct name;
+        struct name
+            : boost::phoenix::expr<
+                tag::name
+              , A0
+              , A1
+                ...
+              , AN
+            >
     }
 
     namespace rule
     {
         struct name
             : boost::phoenix::expr<
-                tag::name
-              , child_grammar0
+                child_grammar0
               , child_grammar1
-              , ...
+                ...
               , child_grammarN
             >
         {};
@@ -212,6 +218,13 @@ The example from the previous section can be rewritten as:
         (meta_grammar)               // Rhs
     )
 
+    template <typename Lhs, typename Rhs>
+    typename plus<Lhs, Rhs>::type
+    plus(Lhs const & lhs, Rhs const & rhs)
+    {
+        return expression::plus<Lhs, Rhs>::make(lhs, rhs);
+    }
+
 [endsect]
 
 [section PHOENIX_DEFINE_EXPRESSION_VARARG]
@@ -222,14 +235,75 @@ The example from the previous section can be rewritten as:
 necessary boilerplate to create Phoenix Expressions
 
 [heading Synopsis]
+    
+    PHOENIX_DEFINE_EXPRESSION_VARARG(
+        (namespace_seq)(name)
+      , (child_grammar0)
+        (child_grammar1)
+        ...
+        (child_grammarN)
+      , N
+    )
 
 [heading Semantics]
+
+The above macro generates the necessary code for an expression `name` in
+namespace `namespace_seq`. `N` is the maximum number of variable children.
+All but the last elements in the grammar sequence are required children of
+the expression, and the last denotes a variable number of children. The number
+of children an expression of this kind can hold is therefor `N-1` plus the size of
+the sequence
+
+The macro should be used at global scope. `namespace_seq` shall be the sequence
+of namespaces under which the following symbols will be defined:
+
+    namespace tag
+    {
+        struct name;
+    }
+
+    namespace expression
+    {
+        template <typename A0, typename A1 ... typename AN>
+        struct name
+            : boost::phoenix::expr<
+                tag::name
+              , A0
+              , A1
+                ...
+              , AN
+            >
+        {};
+    }
+
+    namespace rule
+    {
+        struct name
+            : expression::name<
+                child_grammar0
+              , child_grammar1
+                ...
+              , proto::vararg<child_grammarN>
+            >
+        {};
+    }
 
 [heading Header]
 
     #include <boost/phoenix/core/expression.hpp>
 
 [heading Example]
+
+    PHOENIX_DEFINE_EXPRESSION_VARARG(
+        (boost)(phoenix)(mem_fun_ptr)
+      , (meta_grammar)                // Pointer to Object
+        (meta_grammar)                // Member pointer
+        (meta_grammar)                // Variable number of arguments
+      , PHOENIX_LIMIT
+    )
+
+This defines the member function pointer operator expression as described in
+[link phoenix.modules.operator operators].
 
 [endsect]
 
@@ -241,14 +315,73 @@ necessary boilerplate to create Phoenix Expressions
 necessary boilerplate to create Phoenix Expressions
 
 [heading Synopsis]
+    
+    PHOENIX_DEFINE_EXPRESSION_EXT(
+        actor
+      , (namespace_seq)(name)
+      , (child_grammar0)
+        (child_grammar1)
+        ...
+        (child_grammarN)
+      , N
+    )
 
 [heading Semantics]
+
+The above macro generates the necessary code for an expression `name` in
+namespace `namespace_seq`. The sequence of `(child_grammarN)` declares how many
+children the expression will have and what `proto::grammar` they match.
+
+The macro should be used at global scope. `namespace_seq` shall be the sequence
+of namespaces under which the following symbols will be defined:
+
+    namespace tag
+    {
+        struct name;
+    }
+
+    namespace expression
+    {
+        template <typename A0, typename A1 ... typename AN>
+        struct name
+            : boost::phoenix::expr_ext<
+                actor
+              , tag::name
+              , A0
+              , A1
+                ...
+              , AN
+            >
+    }
+
+    namespace rule
+    {
+        struct name
+            : boost::phoenix::expr<
+                child_grammar0
+              , child_grammar1
+                ...
+              , child_grammarN
+            >
+        {};
+    }
+
+This macros also adds a specialization for `meta_grammar::case_<tag::name>`.
 
 [heading Header]
 
     #include <boost/phoenix/core/expression.hpp>
 
 [heading Example]
+
+    PHOENIX_DEFINE_EXPRESSION_EXT(
+        if_actor
+      , (boost)(phoenix)(if_)
+      , (meta_grammar) // Cond
+        (meta_grammar) // Then
+    )
+
+This defines the if_ expression. The custom actor defines the `else_`.
 
 [endsect]
 
@@ -260,8 +393,60 @@ necessary boilerplate to create Phoenix Expressions
 necessary boilerplate to create Phoenix Expressions
 
 [heading Synopsis]
+    
+    PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(
+        actor
+      , (namespace_seq)(name)
+      , (child_grammar0)
+        (child_grammar1)
+        ...
+        (child_grammarN)
+      , N
+    )
 
 [heading Semantics]
+
+The above macro generates the necessary code for an expression `name` in
+namespace `namespace_seq`. `N` is the maximum number of variable children.
+All but the last elements in the grammar sequence are required children of
+the expression, and the last denotes a variable number of children. The number
+of children an expression of this kind can hold is therefor `N-1` plus the size of
+the sequence
+
+The macro should be used at global scope. `namespace_seq` shall be the sequence
+of namespaces under which the following symbols will be defined:
+
+    namespace tag
+    {
+        struct name;
+    }
+
+    namespace expression
+    {
+        template <typename A0, typename A1 ... typename AN>
+        struct name
+            : boost::phoenix::expr_ext<
+                actor
+              , tag::name
+              , A0
+              , A1
+                ...
+              , AN
+            >
+        {};
+    }
+
+    namespace rule
+    {
+        struct name
+            : expression::name<
+                child_grammar0
+              , child_grammar1
+                ...
+              , proto::vararg<child_grammarN>
+            >
+        {};
+    }
 
 [heading Header]
 
@@ -269,7 +454,8 @@ necessary boilerplate to create Phoenix Expressions
 
 [heading Example]
 
-[endsect]
+TBD
 
+[endsect]
 
 [endsect]

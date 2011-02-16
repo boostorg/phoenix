@@ -43,11 +43,11 @@ phoenix/modules/bind.html
 phoenix/modules/bind/binding_functions.html
 phoenix/modules/bind/binding_member_functions.html
 phoenix/modules/bind/binding_member_variables.html
-phoenix/modules/bind/compatibility_with_other_boost_bind.html
+phoenix/modules/bind/compatibility_with_boost_bind.html
 phoenix/modules/stl.html
 phoenix/modules/stl/container.html
 phoenix/modules/stl/algorithm.html
-phoenix/modules/fusion.html
+phoenix/placeholder_unification.html
 phoenix/inside.html
 phoenix/inside/actor.html
 phoenix/inside/expression.html
@@ -55,6 +55,8 @@ phoenix/inside/expression/phoenix_define_expression.html
 phoenix/inside/expression/phoenix_define_expression_vararg.html
 phoenix/inside/expression/phoenix_define_expression_ext.html
 phoenix/inside/expression/phoenix_define_expression_ext_vararg.html
-phoenix/inside/extending_actors.html
+phoenix/inside/actions.html
 phoenix/inside/custom_terminals.html
-phoenix/inside/adding_expressions.html
+phoenix/examples.html
+phoenix/examples/extending_actors.html
+phoenix/examples/adding_an_expression.html

@@ -105,7 +105,7 @@ The object (reference or pointer) can be lazily bound. Examples:
 
 [endsect]
 
-[section Compatibility with other Boost.Bind]
+[section Compatibility with Boost.Bind]
 
 `phoenix::bind` passes all testcases of the Boost.Bind library. It is therefore
 completely compatible and interchangeable.

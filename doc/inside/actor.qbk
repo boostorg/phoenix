@@ -157,7 +157,7 @@ C++ semantics:
     };
 
 For more Information on how to use the default_actions class and how to attach custom actions
-to the evaluation process, see the next sections.
+to the evaluation process, see [link phoenix.inside.actions more on actions].
 
 [heading Evaluation]
 

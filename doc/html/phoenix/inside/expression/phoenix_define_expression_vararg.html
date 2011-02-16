@@ -20,7 +20,7 @@
 <a name="phoenix.inside.expression.phoenix_define_expression_vararg"></a><a class="link" href="phoenix_define_expression_vararg.html" title="PHOENIX_DEFINE_EXPRESSION_VARARG">PHOENIX_DEFINE_EXPRESSION_VARARG</a>
 </h4></div></div></div>
 <a name="phoenix.inside.expression.phoenix_define_expression_vararg.description"></a><h6>
-<a name="id814483"></a>
+<a name="id639569"></a>
           <a class="link" href="phoenix_define_expression_vararg.html#phoenix.inside.expression.phoenix_define_expression_vararg.description">Description</a>
         </h6>
 <p>
@@ -29,23 +29,88 @@
           create Phoenix Expressions
         </p>
 <a name="phoenix.inside.expression.phoenix_define_expression_vararg.synopsis"></a><h6>
-<a name="id814519"></a>
+<a name="id639605"></a>
           <a class="link" href="phoenix_define_expression_vararg.html#phoenix.inside.expression.phoenix_define_expression_vararg.synopsis">Synopsis</a>
         </h6>
+<pre class="programlisting"><span class="identifier">PHOENIX_DEFINE_EXPRESSION_VARARG</span><span class="special">(</span>
+    <span class="special">(</span><span class="identifier">namespace_seq</span><span class="special">)(</span><span class="identifier">name</span><span class="special">)</span>
+  <span class="special">,</span> <span class="special">(</span><span class="identifier">child_grammar0</span><span class="special">)</span>
+    <span class="special">(</span><span class="identifier">child_grammar1</span><span class="special">)</span>
+    <span class="special">...</span>
+    <span class="special">(</span><span class="identifier">child_grammarN</span><span class="special">)</span>
+  <span class="special">,</span> <span class="identifier">N</span>
+<span class="special">)</span>
+</pre>
 <a name="phoenix.inside.expression.phoenix_define_expression_vararg.semantics"></a><h6>
-<a name="id814539"></a>
+<a name="id639736"></a>
           <a class="link" href="phoenix_define_expression_vararg.html#phoenix.inside.expression.phoenix_define_expression_vararg.semantics">Semantics</a>
         </h6>
+<p>
+          The above macro generates the necessary code for an expression <code class="computeroutput"><span class="identifier">name</span></code> in namespace <code class="computeroutput"><span class="identifier">namespace_seq</span></code>.
+          <code class="computeroutput"><span class="identifier">N</span></code> is the maximum number
+          of variable children. All but the last elements in the grammar sequence
+          are required children of the expression, and the last denotes a variable
+          number of children. The number of children an expression of this kind can
+          hold is therefor <code class="computeroutput"><span class="identifier">N</span><span class="special">-</span><span class="number">1</span></code> plus the size of the sequence
+        </p>
+<p>
+          The macro should be used at global scope. <code class="computeroutput"><span class="identifier">namespace_seq</span></code>
+          shall be the sequence of namespaces under which the following symbols will
+          be defined:
+        </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">tag</span>
+<span class="special">{</span>
+    <span class="keyword">struct</span> <span class="identifier">name</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">namespace</span> <span class="identifier">expression</span>
+<span class="special">{</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">A0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A1</span> <span class="special">...</span> <span class="keyword">typename</span> <span class="identifier">AN</span><span class="special">&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">name</span>
+        <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">expr</span><span class="special">&lt;</span>
+            <span class="identifier">tag</span><span class="special">::</span><span class="identifier">name</span>
+          <span class="special">,</span> <span class="identifier">A0</span>
+          <span class="special">,</span> <span class="identifier">A1</span>
+            <span class="special">...</span>
+          <span class="special">,</span> <span class="identifier">AN</span>
+        <span class="special">&gt;</span>
+    <span class="special">{};</span>
+<span class="special">}</span>
+
+<span class="keyword">namespace</span> <span class="identifier">rule</span>
+<span class="special">{</span>
+    <span class="keyword">struct</span> <span class="identifier">name</span>
+        <span class="special">:</span> <span class="identifier">expression</span><span class="special">::</span><span class="identifier">name</span><span class="special">&lt;</span>
+            <span class="identifier">child_grammar0</span>
+          <span class="special">,</span> <span class="identifier">child_grammar1</span>
+            <span class="special">...</span>
+          <span class="special">,</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">vararg</span><span class="special">&lt;</span><span class="identifier">child_grammarN</span><span class="special">&gt;</span>
+        <span class="special">&gt;</span>
+    <span class="special">{};</span>
+<span class="special">}</span>
+</pre>
 <a name="phoenix.inside.expression.phoenix_define_expression_vararg.header"></a><h6>
-<a name="id814558"></a>
+<a name="id640188"></a>
           <a class="link" href="phoenix_define_expression_vararg.html#phoenix.inside.expression.phoenix_define_expression_vararg.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">expression</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="phoenix.inside.expression.phoenix_define_expression_vararg.example"></a><h6>
-<a name="id814640"></a>
+<a name="id640270"></a>
           <a class="link" href="phoenix_define_expression_vararg.html#phoenix.inside.expression.phoenix_define_expression_vararg.example">Example</a>
         </h6>
+<pre class="programlisting"><span class="identifier">PHOENIX_DEFINE_EXPRESSION_VARARG</span><span class="special">(</span>
+    <span class="special">(</span><span class="identifier">boost</span><span class="special">)(</span><span class="identifier">phoenix</span><span class="special">)(</span><span class="identifier">mem_fun_ptr</span><span class="special">)</span>
+  <span class="special">,</span> <span class="special">(</span><span class="identifier">meta_grammar</span><span class="special">)</span>                <span class="comment">// Pointer to Object
+</span>    <span class="special">(</span><span class="identifier">meta_grammar</span><span class="special">)</span>                <span class="comment">// Member pointer
+</span>    <span class="special">(</span><span class="identifier">meta_grammar</span><span class="special">)</span>                <span class="comment">// Variable number of arguments
+</span>  <span class="special">,</span> <span class="identifier">PHOENIX_LIMIT</span>
+<span class="special">)</span>
+</pre>
+<p>
+          This defines the member function pointer operator expression as described
+          in <a class="link" href="../../modules/operator.html" title="Operator">operators</a>.
+        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

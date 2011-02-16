@@ -57,7 +57,10 @@
 [include organisation.qbk]
 [include actors.qbk]
 [include modules.qbk]
+[section Placeholder Unification]
+[endsect]
 [include inside.qbk]
+[include examples.qbk]
 [/include advanced.qbk]
 [/include reference.qbk]
 

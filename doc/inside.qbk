@@ -16,11 +16,11 @@ to advanced programmers who wish to extend the library.
 
 [include inside/actor.qbk]
 [include inside/expression.qbk]
-[include inside/extending_actors.qbk]
+[include inside/actions.qbk]
 [section Custom Terminals]
 [endsect]
 
-[section Adding Expressions]
-[endsect]
+[/section Adding Expressions]
+[/endsect]
 
 [endsect]

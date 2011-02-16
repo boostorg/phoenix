@@ -7,16 +7,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Modules]
-
-[include modules/core.qbk]
-[include modules/function.qbk]
-[include modules/operator.qbk]
-[include modules/statement.qbk]
-[include modules/object.qbk]
-[include modules/scope.qbk]
-[include modules/bind.qbk]
-[include modules/stl.qbk]
-[/include modules/fusion.qbk]
+[section:actions More on Actions]
 
 [endsect]
