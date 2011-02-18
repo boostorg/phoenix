@@ -9,4 +9,59 @@
 
 [section:actions More on Actions]
 
+As you know from the [link phoenix.inside.actor Actors in Detail] section,
+Actions are what brings live to a Phoenix expression tree.
+
+When dealing with a Phoenix expression tree, it gets evaluated top-down.
+Example:
+
+    _1 + 3 * _2
+
+Can be visualized in an AST as following:
+
+[$images/simple_ast.png]
+
+In terms of actions this means:
+
+* rule::plus is matched
+* evaluate left:
+ * rule::placeholder is matched
+* evaluate right:
+ * rule::multiplies is matched
+  * evaluate left:
+    * rule::value is matched
+  * evaluate right:
+    * rule::placeholder is matched
+
+Every time a rule is matched, an action will be called. The action determines
+how the Phoenix AST will be traversed.
+
+
+[variablelist Predefined Rules
+ [
+  [rule::value]
+  [...]
+ ]
+ [
+  [rule::custom_terminal]
+  [...]
+ ]
+ [
+  [rule::placeholder]
+  [...]
+ ]
+ [
+  [rule::nothing]
+  [...]
+ ]
+ [
+  [rule::function]
+  [...]
+ ]
+ [
+  [rule::nothing]
+  [...]
+ ]
+]
+
 [endsect]

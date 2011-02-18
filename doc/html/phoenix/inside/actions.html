@@ -7,17 +7,112 @@
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../inside.html" title="Inside Phoenix">
 <link rel="prev" href="expression/phoenix_define_expression_ext_vararg.html" title="PHOENIX_DEFINE_EXPRESSION_EXT_VARARG">
-<link rel="next" href="custom_terminals.html" title="Custom Terminals">
+<link rel="next" href="placeholder_unification.html" title="Placeholder Unification">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="custom_terminals.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="placeholder_unification.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
-<div class="section"><div class="titlepage"><div><div><h3 class="title">
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="phoenix.inside.actions"></a><a class="link" href="actions.html" title="More on Actions">More on Actions</a>
-</h3></div></div></div></div>
+</h3></div></div></div>
+<p>
+        As you know from the <a class="link" href="actor.html" title="Actors in Detail">Actors in Detail</a>
+        section, Actions are what brings live to a Phoenix expression tree.
+      </p>
+<p>
+        When dealing with a Phoenix expression tree, it gets evaluated top-down.
+        Example:
+      </p>
+<pre class="programlisting"><span class="identifier">_1</span> <span class="special">+</span> <span class="number">3</span> <span class="special">*</span> <span class="identifier">_2</span>
+</pre>
+<p>
+        Can be visualized in an AST as following:
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../images/simple_ast.png" alt="simple_ast"></span>
+      </p>
+<p>
+        In terms of actions this means:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            rule::plus is matched
+          </li>
+<li class="listitem">
+<p class="simpara">
+            evaluate left:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                rule::placeholder is matched
+              </li></ul></div>
+</li>
+<li class="listitem">
+<p class="simpara">
+            evaluate right:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<p class="simpara">
+                rule::multiplies is matched
+              </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="square">
+<li class="listitem">
+<p class="simpara">
+                    evaluate left:
+                  </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                        rule::value is matched
+                      </li></ul></div>
+</li>
+<li class="listitem">
+<p class="simpara">
+                    evaluate right:
+                  </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                        rule::placeholder is matched
+                      </li></ul></div>
+</li>
+</ul></div>
+</li></ul></div>
+</li>
+</ul></div>
+<p>
+        Every time a rule is matched, an action will be called. The action determines
+        how the Phoenix AST will be traversed.
+      </p>
+<div class="variablelist">
+<p class="title"><b>Predefined Rules</b></p>
+<dl>
+<dt><span class="term">rule::value</span></dt>
+<dd><p>
+              ...
+            </p></dd>
+<dt><span class="term">rule::custom_terminal</span></dt>
+<dd><p>
+              ...
+            </p></dd>
+<dt><span class="term">rule::placeholder</span></dt>
+<dd><p>
+              ...
+            </p></dd>
+<dt><span class="term">rule::nothing</span></dt>
+<dd><p>
+              ...
+            </p></dd>
+<dt><span class="term">rule::function</span></dt>
+<dd><p>
+              ...
+            </p></dd>
+<dt><span class="term">rule::nothing</span></dt>
+<dd><p>
+              ...
+            </p></dd>
+</dl>
+</div>
+</div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller<p>
@@ -28,7 +123,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="custom_terminals.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="placeholder_unification.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
