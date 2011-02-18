@@ -10,32 +10,67 @@
 [section:actions More on Actions]
 
 As you know from the [link phoenix.inside.actor Actors in Detail] section,
-Actions are what brings live to a Phoenix expression tree.
+Actions are what brings life to a Phoenix expression tree.
 
 When dealing with a Phoenix expression tree, it gets evaluated top-down.
 Example:
 
     _1 + 3 * _2
 
-Can be visualized in an AST as following:
+Can be visualized as an AST in the following way:
 
 [$images/simple_ast.png]
 
 In terms of actions this means:
 
-* rule::plus is matched
+* `rule::plus` is matched
 * evaluate left:
- * rule::placeholder is matched
+ * `rule::placeholder` is matched
 * evaluate right:
- * rule::multiplies is matched
+ * `rule::multiplies` is matched
   * evaluate left:
-    * rule::value is matched
+    * `rule::value` is matched
   * evaluate right:
-    * rule::placeholder is matched
+    * `rule::placeholder` is matched
 
 Every time a rule is matched, an action will be called. The action determines
 how the Phoenix AST will be traversed.
 
+[heading Writing an Action]
+
+As mentioned in [link phoenix.inside.actor Actors in Detail] actions are
+__proto_primitive_transforms__ for convenience Phoenix provides an abstraction
+to this:
+
+    template <typename Fun>
+    struct call;
+
+This is similar to __proto_call__ but does more. It calls the `Fun` function
+object passed as template parameter with the `Context` and the children of the
+expression associated with the rule.
+
+Lets have an (simplified) example on how to write an evaluation action for
+`rule::plus`:
+
+    struct plus_eval
+    {
+        typedef int result_type;
+
+        template <typename Lhs, typename Rhs, typename Context>
+        result_type operator()(Lhs const& lhs, Rhs const &rhs, Context const & ctx)
+        {
+            return eval(lhs, ctx) + eval(rhs, ctx);
+        }
+    };
+
+    template <>
+    struct default_actions::when<rule::plus>
+        : call<plus_eval>
+    {};
+
+That's it. When evaluating a `plus` expression, the `plus_eval` callable gets
+called with the left hand side and right hand side expression and the associated
+Context.
 
 [variablelist Predefined Rules
  [

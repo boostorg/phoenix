@@ -29,6 +29,8 @@
 [def __proto_transform__ [@http://www.boost.org/doc/libs/release/doc/html/Transform.html Proto Transform]]
 [def __proto_pass_through_transform__ [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/pass_through.html Proto Pass Through Transform]]
 [def __proto_primitive_transform__ [@http://www.boost.org/doc/libs/release/doc/html/PrimitiveTransform.html Proto Primitive Transform]]
+[def __proto_primitive_transforms__ [@http://www.boost.org/doc/libs/release/doc/html/PrimitiveTransform.html Proto Primitive Transforms]]
+[def __proto_call__ [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/pass_through.html Proto Pass Through Transform]]
 [def __haskell__        [@http://www.haskell.org Haskell]]
 [def __mpl__            [@http://www.boost.org/libs/mpl/index.html MPL]]
 [def __bll__            [@http://www.boost.org/libs/lambda/doc/index.html BLL]]

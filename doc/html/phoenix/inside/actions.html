@@ -21,7 +21,7 @@
 </h3></div></div></div>
 <p>
         As you know from the <a class="link" href="actor.html" title="Actors in Detail">Actors in Detail</a>
-        section, Actions are what brings live to a Phoenix expression tree.
+        section, Actions are what brings life to a Phoenix expression tree.
       </p>
 <p>
         When dealing with a Phoenix expression tree, it gets evaluated top-down.
@@ -30,7 +30,7 @@
 <pre class="programlisting"><span class="identifier">_1</span> <span class="special">+</span> <span class="number">3</span> <span class="special">*</span> <span class="identifier">_2</span>
 </pre>
 <p>
-        Can be visualized in an AST as following:
+        Can be visualized as an AST in the following way:
       </p>
 <p>
         <span class="inlinemediaobject"><img src="../../images/simple_ast.png" alt="simple_ast"></span>
@@ -40,14 +40,14 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            rule::plus is matched
+            <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">plus</span></code> is matched
           </li>
 <li class="listitem">
 <p class="simpara">
             evaluate left:
           </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-                rule::placeholder is matched
+                <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">placeholder</span></code> is matched
               </li></ul></div>
 </li>
 <li class="listitem">
@@ -56,7 +56,7 @@
           </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <p class="simpara">
-                rule::multiplies is matched
+                <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">multiplies</span></code> is matched
               </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="square">
 <li class="listitem">
@@ -64,7 +64,7 @@
                     evaluate left:
                   </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-                        rule::value is matched
+                        <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">value</span></code> is matched
                       </li></ul></div>
 </li>
 <li class="listitem">
@@ -72,7 +72,7 @@
                     evaluate right:
                   </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-                        rule::placeholder is matched
+                        <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">placeholder</span></code> is matched
                       </li></ul></div>
 </li>
 </ul></div>
@@ -82,6 +82,51 @@
 <p>
         Every time a rule is matched, an action will be called. The action determines
         how the Phoenix AST will be traversed.
+      </p>
+<a name="phoenix.inside.actions.writing_an_action"></a><h5>
+<a name="id775148"></a>
+        <a class="link" href="actions.html#phoenix.inside.actions.writing_an_action">Writing an Action</a>
+      </h5>
+<p>
+        As mentioned in <a class="link" href="actor.html" title="Actors in Detail">Actors in Detail</a>
+        actions are <a href="http://www.boost.org/doc/libs/release/doc/html/PrimitiveTransform.html" target="_top">Proto
+        Primitive Transforms</a> for convenience Phoenix provides an abstraction
+        to this:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Fun</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">call</span><span class="special">;</span>
+</pre>
+<p>
+        This is similar to <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/pass_through.html" target="_top">Proto
+        Pass Through Transform</a> but does more. It calls the <code class="computeroutput"><span class="identifier">Fun</span></code> function object passed as template
+        parameter with the <code class="computeroutput"><span class="identifier">Context</span></code>
+        and the children of the expression associated with the rule.
+      </p>
+<p>
+        Lets have an (simplified) example on how to write an evaluation action for
+        <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">plus</span></code>:
+      </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">plus_eval</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="keyword">int</span> <span class="identifier">result_type</span><span class="special">;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lhs</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Rhs</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Context</span><span class="special">&gt;</span>
+    <span class="identifier">result_type</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Lhs</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">Rhs</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">rhs</span><span class="special">,</span> <span class="identifier">Context</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">ctx</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="keyword">return</span> <span class="identifier">eval</span><span class="special">(</span><span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">ctx</span><span class="special">)</span> <span class="special">+</span> <span class="identifier">eval</span><span class="special">(</span><span class="identifier">rhs</span><span class="special">,</span> <span class="identifier">ctx</span><span class="special">);</span>
+    <span class="special">}</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">default_actions</span><span class="special">::</span><span class="identifier">when</span><span class="special">&lt;</span><span class="identifier">rule</span><span class="special">::</span><span class="identifier">plus</span><span class="special">&gt;</span>
+    <span class="special">:</span> <span class="identifier">call</span><span class="special">&lt;</span><span class="identifier">plus_eval</span><span class="special">&gt;</span>
+<span class="special">{};</span>
+</pre>
+<p>
+        That's it. When evaluating a <code class="computeroutput"><span class="identifier">plus</span></code>
+        expression, the <code class="computeroutput"><span class="identifier">plus_eval</span></code>
+        callable gets called with the left hand side and right hand side expression
+        and the associated Context.
       </p>
 <div class="variablelist">
 <p class="title"><b>Predefined Rules</b></p>
