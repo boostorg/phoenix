@@ -84,7 +84,7 @@
         how the Phoenix AST will be traversed.
       </p>
 <a name="phoenix.inside.actions.writing_an_action"></a><h5>
-<a name="id775148"></a>
+<a name="id728215"></a>
         <a class="link" href="actions.html#phoenix.inside.actions.writing_an_action">Writing an Action</a>
       </h5>
 <p>
@@ -128,6 +128,64 @@
         callable gets called with the left hand side and right hand side expression
         and the associated Context.
       </p>
+<p>
+        <span class="bold"><strong>But there is more:</strong></span> As Actions <span class="emphasis"><em>can</em></span>
+        be full fletched <a href="http://www.boost.org/doc/libs/release/doc/html/Transform.html" target="_top">Proto
+        Transforms</a>, you can in fact use any proto expression you can imagine
+        as the action. Phoenix predifines a set of callables and transform to deal
+        with the Context information passed along and of course every phoenix expression
+        can be used as a phoenix grammar or <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/pass_through.html" target="_top">Proto
+        Pass Through Transform</a>.
+      </p>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">functional</span><span class="special">::</span><span class="identifier">context</span><span class="special">(</span><span class="identifier">Env</span><span class="special">,</span> <span class="identifier">Actions</span><span class="special">)</span></code></span></dt>
+<dd><p>
+              A <a href="http://www.boost.org/doc/libs/release/doc/html/Callable.html" target="_top">Proto
+              Callable Transform</a> that creates a new context out of the <code class="computeroutput"><span class="identifier">Env</span></code> and <code class="computeroutput"><span class="identifier">Actions</span></code>
+              parameter
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">functional</span><span class="special">::</span><span class="identifier">env</span><span class="special">(</span><span class="identifier">Context</span><span class="special">)</span></code></span></dt>
+<dd><p>
+              A <a href="http://www.boost.org/doc/libs/release/doc/html/Callable.html" target="_top">Proto
+              Callable Transform</a> that returns the environment out of the
+              <code class="computeroutput"><span class="identifier">Context</span></code> parameter
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">functional</span><span class="special">::</span><span class="identifier">actions</span><span class="special">(</span><span class="identifier">Context</span><span class="special">)</span></code></span></dt>
+<dd><p>
+              A <a href="http://www.boost.org/doc/libs/release/doc/html/Callable.html" target="_top">Proto
+              Callable Transform</a> that returns the actions out of the <code class="computeroutput"><span class="identifier">Context</span></code> parameter
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">_context</span></code></span></dt>
+<dd><p>
+              A <a href="http://www.boost.org/doc/libs/release/doc/html/PrimitiveTransform.html" target="_top">Proto
+              Primitive Transform</a> that returns the current context
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">_env</span></code></span></dt>
+<dd><p>
+              A <a href="http://www.boost.org/doc/libs/release/doc/html/PrimitiveTransform.html" target="_top">Proto
+              Primitive Transform</a> that returns the current environment
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">_actions</span></code></span></dt>
+<dd><p>
+              A <a href="http://www.boost.org/doc/libs/release/doc/html/PrimitiveTransform.html" target="_top">Proto
+              Primitive Transform</a> that returns the current actions
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">context</span><span class="special">(</span><span class="identifier">env</span><span class="special">,</span> <span class="identifier">actions</span><span class="special">)</span></code></span></dt>
+<dd><p>
+              A regular function that creates a context
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">env</span><span class="special">(</span><span class="identifier">ctx</span><span class="special">)</span></code></span></dt>
+<dd><p>
+              A regular function that returns the environment from the given context
+            </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">actions</span><span class="special">(</span><span class="identifier">ctx</span><span class="special">)</span></code></span></dt>
+<dd><p>
+              A regular function that returns the actions from the given context
+            </p></dd>
+</dl>
+</div>
 <div class="variablelist">
 <p class="title"><b>Predefined Rules</b></p>
 <dl>

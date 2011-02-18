@@ -72,6 +72,51 @@ That's it. When evaluating a `plus` expression, the `plus_eval` callable gets
 called with the left hand side and right hand side expression and the associated
 Context.
 
+[*But there is more:] As Actions /can/ be full fletched __proto_transforms__, you can
+in fact use any proto expression you can imagine as the action. Phoenix predifines a
+set of callables and transform to deal with the Context information passed along and
+of course every phoenix expression can be used as a phoenix grammar or
+__proto_pass_through_transform__.
+
+[variablelist
+ [
+  [`functional::context(Env, Actions)`]
+  [A __proto_callable__ that creates a new context out of the `Env` and `Actions` parameter]
+ ]
+ [
+  [`functional::env(Context)`]
+  [A __proto_callable__ that returns the environment out of the `Context` parameter]
+ ]
+ [
+  [`functional::actions(Context)`]
+  [A __proto_callable__ that returns the actions out of the `Context` parameter]
+ ]
+ [
+  [`_context`]
+  [A __proto_primitive_transform__ that returns the current context]
+ ]
+ [
+  [`_env`]
+  [A __proto_primitive_transform__ that returns the current environment]
+ ]
+ [
+  [`_actions`]
+  [A __proto_primitive_transform__ that returns the current actions]
+ ]
+ [
+  [`context(env, actions)`]
+  [A regular function that creates a context]
+ ]
+ [
+  [`env(ctx)`]
+  [A regular function that returns the environment from the given context]
+ ]
+ [
+  [`actions(ctx)`]
+  [A regular function that returns the actions from the given context]
+ ]
+]
+
 [variablelist Predefined Rules
  [
   [rule::value]
