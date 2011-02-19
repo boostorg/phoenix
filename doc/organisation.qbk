@@ -16,8 +16,8 @@ The library is organized in four layers:
 
 # Actor
 # Value, Reference, Arguments
-# Function, Operator, Object, Statement, Bind, Scope
-# STL, Fusion
+# Function, Operator, Object, Statement, Scope
+# STL, Fusion, Bind
 
 [/$images/organization.png]
 

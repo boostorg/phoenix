@@ -12,15 +12,29 @@
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 
+#define PHOENIX_UNARY_EXPRESSION(__, ___, name)                                 \
+    template <typename Operand>                                                 \
+    struct name                                                                 \
+        : expr<proto::tag::name, Operand>                                       \
+    {};                                                                         \
+/**/
+
 #define PHOENIX_UNARY_RULE(__, ___, name)                                       \
     struct name                                                                 \
-        : proto::unary_expr<proto::tag::name, proto::_>                         \
+        : expression::name<meta_grammar>                                        \
+    {};                                                                         \
+/**/
+
+#define PHOENIX_BINARY_EXPRESSION(__, ___, name)                                \
+    template <typename Lhs, typename Rhs>                                       \
+    struct name                                                                 \
+        : expr<proto::tag::name, Lhs, Rhs>                                      \
     {};                                                                         \
 /**/
 
 #define PHOENIX_BINARY_RULE(__, ___, name)                                      \
     struct name                                                                 \
-        : proto::binary_expr<proto::tag::name, proto::_, proto::_>              \
+        : expression::name<meta_grammar, meta_grammar>                          \
     {};                                                                         \
 /**/
 
@@ -32,6 +46,9 @@
 /**/
 
 #define PHOENIX_UNARY_OPERATORS(ops)                                            \
+    namespace expression {                                                      \
+        BOOST_PP_SEQ_FOR_EACH(PHOENIX_UNARY_EXPRESSION, _, ops)                 \
+    }                                                                           \
     namespace rule {                                                            \
         BOOST_PP_SEQ_FOR_EACH(PHOENIX_UNARY_RULE, _, ops)                       \
     }                                                                           \
@@ -39,6 +56,9 @@
 /**/
 
 #define PHOENIX_BINARY_OPERATORS(ops)                                           \
+    namespace expression {                                                      \
+        BOOST_PP_SEQ_FOR_EACH(PHOENIX_BINARY_EXPRESSION, _, ops)                \
+    }                                                                           \
     namespace rule {                                                            \
         BOOST_PP_SEQ_FOR_EACH(PHOENIX_BINARY_RULE, _, ops)                      \
     }                                                                           \

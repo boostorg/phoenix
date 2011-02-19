@@ -9,6 +9,7 @@
 #define PHOENIX_OPERATOR_LOGICAL_HPP
 
 #include <boost/phoenix/operator/detail/define_operator.hpp>
+#include <boost/phoenix/core/expression.hpp>
 
 namespace boost { namespace phoenix
 {

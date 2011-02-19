@@ -54,10 +54,7 @@ namespace boost { namespace phoenix
     namespace rule
     {
         struct function
-            : proto::nary_expr<
-                proto::tag::function
-              , proto::vararg<meta_grammar>
-            >
+            : expression::function<proto::vararg<meta_grammar> >
         {};
     }
 

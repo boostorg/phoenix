@@ -11,7 +11,7 @@ using quickbook ;
 
 path-constant images : html ;
 
-boostbook quickbook
+boostbook phoenix-doc
     :
         phoenix3.qbk
     :

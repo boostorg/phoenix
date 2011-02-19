@@ -52,6 +52,13 @@ namespace boost { namespace phoenix
         };
     }
 
+    namespace rule
+    {
+        struct reference
+            : expression::reference<proto::_>
+        {};
+    }
+
     template <typename T>
     typename expression::reference<T>::type const
     ref(T & t)

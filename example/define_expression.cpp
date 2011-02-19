@@ -16,7 +16,7 @@ namespace proto   = boost::proto;
 namespace expression
 {
     template <typename Lhs, typename Rhs>
-    struct add
+    struct plus
         : phoenix::expr<proto::tag::plus, Lhs, Rhs>
     {};
 }
@@ -27,7 +27,7 @@ namespace boost { namespace phoenix {
     template <>
     struct meta_grammar::case_<proto::tag::plus>
         : enable_rule<
-            ::expression::add<
+            ::expression::plus<
                 meta_grammar
               , meta_grammar
             >
@@ -38,10 +38,10 @@ namespace boost { namespace phoenix {
 
 // build a generator
 template <typename Lhs, typename Rhs>
-typename expression::add<Lhs, Rhs>::type
-add(Lhs const & lhs, Rhs const & rhs)
+typename expression::plus<Lhs, Rhs>::type
+plus(Lhs const & lhs, Rhs const & rhs)
 {
-    return expression::add<Lhs, Rhs>::make(lhs, rhs);
+    return expression::plus<Lhs, Rhs>::make(lhs, rhs);
 }
 
 #include <boost/proto/proto.hpp>
@@ -50,11 +50,11 @@ add(Lhs const & lhs, Rhs const & rhs)
 int main()
 {
 
-    add(6, 5);
+    plus(6, 5);
 
-    proto::display_expr(add(6, 5));
+    proto::display_expr(plus(6, 5));
 
-    std::cout << add(5, 6)() << "\n";
+    std::cout << plus(5, 6)() << "\n";
 }
 
 

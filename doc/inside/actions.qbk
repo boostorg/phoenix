@@ -56,8 +56,8 @@ Lets have an (simplified) example on how to write an evaluation action for
     {
         typedef int result_type;
 
-        template <typename Lhs, typename Rhs, typename Context>
-        result_type operator()(Lhs const& lhs, Rhs const &rhs, Context const & ctx)
+        template <typename Context, typename Lhs, typename Rhs>
+        result_type operator()(Context const & ctx, Lhs const& lhs, Rhs const &rhs)
         {
             return eval(lhs, ctx) + eval(rhs, ctx);
         }
@@ -117,31 +117,8 @@ __proto_pass_through_transform__.
  ]
 ]
 
-[variablelist Predefined Rules
- [
-  [rule::value]
-  [...]
- ]
- [
-  [rule::custom_terminal]
-  [...]
- ]
- [
-  [rule::placeholder]
-  [...]
- ]
- [
-  [rule::nothing]
-  [...]
- ]
- [
-  [rule::function]
-  [...]
- ]
- [
-  [rule::nothing]
-  [...]
- ]
-]
+Phoenix is equipped with a predefined set of expressions, rules and actions to
+make all the stuff work you learned in the __phoenix_starter_kit__ and __phoenix_modules__
+sections. See the [link phoenix.inside.rules next section] for more details!
 
 [endsect]

@@ -26,7 +26,7 @@ function generates a suitable binder object.
 
 [section Binding Functions]
 
-    #include <boost/phoenix/bind/bind_function.hpp>
+    #include <boost/phoenix/bind/bind.hpp>
 
 Example, given a function `foo`:
 
@@ -50,7 +50,7 @@ will print out "4".
 [endsect]
 [section Binding Member Functions]
 
-    #include <boost/phoenix/bind/bind_member_function.hpp>
+    #include <boost/phoenix/bind/bind.hpp>
 
 Binding member functions can be done similarly. A bound member function takes in
 a pointer or reference to an object as the first argument. For instance, given:
@@ -76,7 +76,7 @@ the arguments can be lazily bound. Examples:
 [endsect]
 [section Binding Member Variables]
 
-    #include <boost/phoenix/bind/bind_member_variable.hpp>
+    #include <boost/phoenix/bind/bind.hpp>
 
 Member variables can also be bound much like member functions. Member variables
 are not functions. Yet, like the [link phoenix.modules.core.references `ref(x)`] that

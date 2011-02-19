@@ -31,11 +31,11 @@ namespace boost { namespace phoenix
 	namespace rule
 	{
 		struct if_else_operator
-		  : proto::nary_expr<
-		    tag::if_else_operator
-		  , meta_grammar
-		  , meta_grammar
-		  , meta_grammar>
+            : expression::if_else_operator<
+                meta_grammar
+              , meta_grammar
+              , meta_grammar
+            >
 		{};
 	}
 

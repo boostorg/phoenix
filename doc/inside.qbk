@@ -17,17 +17,7 @@ to advanced programmers who wish to extend the library.
 [include inside/actor.qbk]
 [include inside/expression.qbk]
 [include inside/actions.qbk]
-
-[section Placeholder Unification]
-
-
-
-[endsect]
-
-[section Custom Terminals]
-[endsect]
-
-[/section Adding Expressions]
-[/endsect]
+[include inside/rules.qbk]
+[include inside/custom_terminal.qbk]
 
 [endsect]

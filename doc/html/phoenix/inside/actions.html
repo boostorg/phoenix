@@ -7,13 +7,13 @@
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
 <link rel="up" href="../inside.html" title="Inside Phoenix">
 <link rel="prev" href="expression/phoenix_define_expression_ext_vararg.html" title="PHOENIX_DEFINE_EXPRESSION_EXT_VARARG">
-<link rel="next" href="placeholder_unification.html" title="Placeholder Unification">
+<link rel="next" href="rules.html" title="Predefined Expressions and Rules">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="placeholder_unification.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="rules.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -84,7 +84,7 @@
         how the Phoenix AST will be traversed.
       </p>
 <a name="phoenix.inside.actions.writing_an_action"></a><h5>
-<a name="id728215"></a>
+<a name="id805560"></a>
         <a class="link" href="actions.html#phoenix.inside.actions.writing_an_action">Writing an Action</a>
       </h5>
 <p>
@@ -110,8 +110,8 @@
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="keyword">int</span> <span class="identifier">result_type</span><span class="special">;</span>
 
-    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lhs</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Rhs</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Context</span><span class="special">&gt;</span>
-    <span class="identifier">result_type</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Lhs</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">Rhs</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">rhs</span><span class="special">,</span> <span class="identifier">Context</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">ctx</span><span class="special">)</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lhs</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Rhs</span><span class="special">&gt;</span>
+    <span class="identifier">result_type</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Context</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">ctx</span><span class="special">,</span> <span class="identifier">Lhs</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">Rhs</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">rhs</span><span class="special">)</span>
     <span class="special">{</span>
         <span class="keyword">return</span> <span class="identifier">eval</span><span class="special">(</span><span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">ctx</span><span class="special">)</span> <span class="special">+</span> <span class="identifier">eval</span><span class="special">(</span><span class="identifier">rhs</span><span class="special">,</span> <span class="identifier">ctx</span><span class="special">);</span>
     <span class="special">}</span>
@@ -186,35 +186,12 @@
             </p></dd>
 </dl>
 </div>
-<div class="variablelist">
-<p class="title"><b>Predefined Rules</b></p>
-<dl>
-<dt><span class="term">rule::value</span></dt>
-<dd><p>
-              ...
-            </p></dd>
-<dt><span class="term">rule::custom_terminal</span></dt>
-<dd><p>
-              ...
-            </p></dd>
-<dt><span class="term">rule::placeholder</span></dt>
-<dd><p>
-              ...
-            </p></dd>
-<dt><span class="term">rule::nothing</span></dt>
-<dd><p>
-              ...
-            </p></dd>
-<dt><span class="term">rule::function</span></dt>
-<dd><p>
-              ...
-            </p></dd>
-<dt><span class="term">rule::nothing</span></dt>
-<dd><p>
-              ...
-            </p></dd>
-</dl>
-</div>
+<p>
+        Phoenix is equipped with a predefined set of expressions, rules and actions
+        to make all the stuff work you learned in the <a class="link" href="../starter_kit.html" title="Starter Kit">Starter
+        Kit</a> and <a class="link" href="../modules.html" title="Modules">Modules</a> sections. See
+        the <a class="link" href="rules.html" title="Predefined Expressions and Rules">next section</a> for more details!
+      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -226,7 +203,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="placeholder_unification.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="expression/phoenix_define_expression_ext_vararg.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../inside.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="rules.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

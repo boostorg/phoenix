@@ -9,16 +9,11 @@
 # bring in rules for testing
 import testing ;
 
-#local multi-threading = <library>/boost/thread
-#                        <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
-
-#test-suite phoenix_detail :
-#    [ run detail/type_deduction_tests.cpp ] 
-#    ;
+local multi-threading = <library>/boost/thread
+                        <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
 test-suite phoenix_core :
     [ run core/primitives_tests.cpp ] 
-#    [ run core/function_composition.cpp ] 
     ;
 
 test-suite phoenix_operator :
@@ -77,7 +72,7 @@ test-suite phoenix_scope :
     [ run scope/let_tests.cpp ] 
     [ run scope/dynamic_tests.cpp ] 
 	 [ run scope/bug3289.cpp ]
-#    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
+    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
     ;
 
 test-suite phoenix_algorithm :
@@ -92,7 +87,6 @@ test-suite phoenix_algorithm :
 
 test-suite phoenix_boost_bind_compatibility :
     [ run boost_bind_compatibility/bind_and_or_test.cpp ]
-    #[ run boost_bind_compatibility/bind_cdecl_mf_test.cpp ]
     [ run boost_bind_compatibility/bind_const_test.cpp ]
     [ run boost_bind_compatibility/bind_cv_test.cpp ]
     [ run boost_bind_compatibility/bind_dm_test.cpp ]
@@ -101,8 +95,6 @@ test-suite phoenix_boost_bind_compatibility :
     [ run boost_bind_compatibility/bind_eq_test.cpp ]
     [ run boost_bind_compatibility/bind_eq2_test.cpp ]
     [ run boost_bind_compatibility/bind_eq3_test.cpp ]
-	#[ run boost_bind_compatibility/bind_fastcall_mf_test.cpp ]
-	#[ run boost_bind_compatibility/bind_fastcall_test.cpp ]
     [ run boost_bind_compatibility/bind_fn2_test.cpp ]
     [ run boost_bind_compatibility/bind_function_test.cpp ]
     [ run boost_bind_compatibility/bind_mf2_test.cpp ]
@@ -113,8 +105,6 @@ test-suite phoenix_boost_bind_compatibility :
     [ run boost_bind_compatibility/bind_rvalue_test.cpp ]
     [ run boost_bind_compatibility/bind_rv_sp_test.cpp ]
     [ run boost_bind_compatibility/bind_stateful_test.cpp ]
-	#[ run boost_bind_compatibility/bind_stdcall_mf_test.cpp ]
-	#[ run boost_bind_compatibility/bind_stdcall_test.cpp ]
     [ run boost_bind_compatibility/bind_test.cpp ]
 	 ;
 
@@ -134,8 +124,6 @@ test-suite phoenix_include :
     [ run include/stl.cpp ]
     [ run include/bind/bind.cpp : : : : bind_bind ]
     [ run include/version.cpp ]
-#    [ run include/bind/bind_member_function.cpp ]
-#    [ run include/bind/bind_member_variable.cpp ]
     [ run include/core/actor.cpp ]
     [ run include/core/argument.cpp ]
     [ run include/core/arity.cpp ]
