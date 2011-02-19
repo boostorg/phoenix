@@ -1,0 +1,21 @@
+/*==============================================================================
+    Copyright (c) 2005-2010 Joel de Guzman
+    Copyright (c) 2010 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+==============================================================================*/
+#ifndef PHOENIX_PHOENIX_HPP
+#define PHOENIX_PHOENIX_HPP
+
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/function.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.cpp>
+#include <boost/phoenix/object.cpp>
+#include <boost/phoenix/scope.cpp>
+#include <boost/phoenix/bind.cpp>
+#include <boost/phoenix/stl.cpp>
+
+
+#endif
