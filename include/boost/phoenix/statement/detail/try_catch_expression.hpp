@@ -1,7 +1,7 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
-#define PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
+#define BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
@@ -10,15 +10,15 @@
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
-#define PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
+#define BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EXPRESSION_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/try_catch_expression_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/try_catch_expression_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -29,16 +29,16 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (0, PHOENIX_CATCH_LIMIT,                                                \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (0, BOOST_PHOENIX_CATCH_LIMIT,                                          \
     <boost/phoenix/statement/detail/try_catch_expression.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -46,16 +46,25 @@
 
 #else
 
-        template <typename Try BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_typename_A>
-        struct try_catch<Try BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_A>
+        template <
+            typename Try
+            BOOST_PP_COMMA_IF(BOOST_PHOENIX_ITERATION)
+            BOOST_PHOENIX_typename_A
+        >
+        struct try_catch<
+            Try
+            BOOST_PP_COMMA_IF(BOOST_PHOENIX_ITERATION)
+            BOOST_PHOENIX_A
+        >
             : expr_ext<
                 try_catch_actor
               , tag::try_catch
               , Try
-              BOOST_PP_COMMA_IF(PHOENIX_ITERATION) PHOENIX_A>
+              BOOST_PP_COMMA_IF(BOOST_PHOENIX_ITERATION) BOOST_PHOENIX_A
+            >
         {};
     /**/
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_PHOENIX_HPP
-#define PHOENIX_PHOENIX_HPP
+#ifndef BOOST_PHOENIX_PHOENIX_HPP
+#define BOOST_PHOENIX_PHOENIX_HPP
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/function.hpp>

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_FUNCTION_EQUAL_HPP
-#define PHOENIX_CORE_FUNCTION_EQUAL_HPP
+#ifndef BOOST_PHOENIX_CORE_FUNCTION_EQUAL_HPP
+#define BOOST_PHOENIX_CORE_FUNCTION_EQUAL_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/is_placeholder.hpp>
@@ -100,14 +100,14 @@ namespace boost { namespace phoenix
             }
 
             private:
-                #define PHOENIX_FUNCTION_EQUAL_R(Z, N, DATA)                    \
+                #define BOOST_PHOENIX_FUNCTION_EQUAL_R(Z, N, DATA)              \
                     && function_equal_()(                                       \
                             proto::child_c< N >(e1)                             \
                           , proto::child_c< N >(e2)                             \
                         )                                                       \
                 /**/
 
-                #define PHOENIX_FUNCTION_EQUAL(Z, N, DATA)                      \
+                #define BOOST_PHOENIX_FUNCTION_EQUAL(Z, N, DATA)                \
                     template <typename Expr1>                                   \
                     result_type                                                 \
                     evaluate(                                                   \
@@ -124,7 +124,7 @@ namespace boost { namespace phoenix
                             BOOST_PP_REPEAT_FROM_TO(                            \
                                 1                                               \
                               , N                                               \
-                              , PHOENIX_FUNCTION_EQUAL_R                        \
+                              , BOOST_PHOENIX_FUNCTION_EQUAL_R                  \
                               , _                                               \
                             );                                                  \
                     }                                                           \
@@ -133,11 +133,11 @@ namespace boost { namespace phoenix
                 BOOST_PP_REPEAT_FROM_TO(
                     1
                   , BOOST_PROTO_MAX_ARITY
-                  , PHOENIX_FUNCTION_EQUAL
+                  , BOOST_PHOENIX_FUNCTION_EQUAL
                   , _
                 )
-                #undef PHOENIX_FUNCTION_EQUAL_R
-                #undef PHOENIX_FUNCTION_EQUAL
+                #undef BOOST_PHOENIX_FUNCTION_EQUAL_R
+                #undef BOOST_PHOENIX_FUNCTION_EQUAL
         };
     }
 

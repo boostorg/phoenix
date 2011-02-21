@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OBJECT_HPP
-#define PHOENIX_OBJECT_HPP
+#ifndef BOOST_PHOENIX_OBJECT_HPP
+#define BOOST_PHOENIX_OBJECT_HPP
 
 #include <boost/phoenix/object/const_cast.hpp>
 #include <boost/phoenix/object/construct.hpp>

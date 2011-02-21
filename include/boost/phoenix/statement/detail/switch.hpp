@@ -1,8 +1,7 @@
 
-/*
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
-#define PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
+#define BOOST_PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
@@ -10,17 +9,16 @@
 
 #endif
 #else
-*/
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
-#define PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
+#define BOOST_PHOENIX_STATEMENT_DETAIL_SWITCH_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/switch_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/switch_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -31,11 +29,11 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-        #define PHOENIX_SWITCH_EVAL_TYPEDEF_R(Z, N, DATA)                       \
+        #define BOOST_PHOENIX_SWITCH_EVAL_TYPEDEF_R(Z, N, DATA)                       \
             typedef                                                             \
                 typename fusion::result_of::deref<                              \
                     typename fusion::result_of::advance_c<                      \
@@ -56,7 +54,7 @@
                 BOOST_PP_CAT(case_label, N);                                    \
     /**/
 
-    #define PHOENIX_SWITCH_EVAL_R(Z, N, DATA)                                   \
+    #define BOOST_PHOENIX_SWITCH_EVAL_R(Z, N, DATA)                                   \
         case BOOST_PP_CAT(case_label, N)::value :                               \
             eval(                                                               \
                 proto::child_c<1>(                                              \
@@ -69,15 +67,15 @@
             break;                                                              \
     /**/
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (2, PHOENIX_LIMIT,                                                  \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                                \
+        (3, (2, BOOST_PHOENIX_LIMIT,                                                  \
         <boost/phoenix/statement/detail/switch.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-        #undef PHOENIX_SWITCH_EVAL_R
-        #undef PHOENIX_SWITCH_EVAL_TYPEDEF
+        #undef BOOST_PHOENIX_SWITCH_EVAL_R
+        #undef BOOST_PHOENIX_SWITCH_EVAL_TYPEDEF
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -90,7 +88,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<PHOENIX_ITERATION> size
+              , mpl::int_<BOOST_PHOENIX_ITERATION> size
               , mpl::false_
             ) const
             {
@@ -105,14 +103,14 @@
                 flat_view_type flat_view(proto::flatten(cases));
 
                 BOOST_PP_REPEAT(
-                    PHOENIX_ITERATION
-                  , PHOENIX_SWITCH_EVAL_TYPEDEF_R
-                  , PHOENIX_ITERATION
+                    BOOST_PHOENIX_ITERATION
+                  , BOOST_PHOENIX_SWITCH_EVAL_TYPEDEF_R
+                  , BOOST_PHOENIX_ITERATION
                 )
 
                 switch(eval(cond, ctx))
                 {
-                    BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_SWITCH_EVAL_R, _)
+                    BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, BOOST_PHOENIX_SWITCH_EVAL_R, _)
                 }
             }
 
@@ -122,7 +120,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<PHOENIX_ITERATION> size
+              , mpl::int_<BOOST_PHOENIX_ITERATION> size
               , mpl::true_
             ) const
             {
@@ -137,23 +135,23 @@
                 flat_view_type flat_view(proto::flatten(cases));
 
                 BOOST_PP_REPEAT(
-                    BOOST_PP_DEC(PHOENIX_ITERATION)
-                  , PHOENIX_SWITCH_EVAL_TYPEDEF_R
-                  , PHOENIX_ITERATION
+                    BOOST_PP_DEC(BOOST_PHOENIX_ITERATION)
+                  , BOOST_PHOENIX_SWITCH_EVAL_TYPEDEF_R
+                  , BOOST_PHOENIX_ITERATION
                 )
 
                 switch(eval(cond, ctx))
                 {
                     BOOST_PP_REPEAT(
-                        BOOST_PP_DEC(PHOENIX_ITERATION)
-                      , PHOENIX_SWITCH_EVAL_R, _
+                        BOOST_PP_DEC(BOOST_PHOENIX_ITERATION)
+                      , BOOST_PHOENIX_SWITCH_EVAL_R, _
                     )
                     default:
                         eval(
                             proto::child_c<0>(
                                 fusion::deref(
                                     fusion::advance_c<
-                                        BOOST_PP_DEC(PHOENIX_ITERATION)
+                                        BOOST_PP_DEC(BOOST_PHOENIX_ITERATION)
                                     >(fusion::begin(flat_view))
                                 )
                             )
@@ -164,4 +162,4 @@
 
 #endif
 
-//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

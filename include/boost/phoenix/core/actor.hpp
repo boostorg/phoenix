@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_ACTOR_HPP
-#define PHOENIX_CORE_ACTOR_HPP
+#ifndef BOOST_PHOENIX_CORE_ACTOR_HPP
+#define BOOST_PHOENIX_CORE_ACTOR_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 
@@ -62,10 +62,10 @@ namespace boost { namespace phoenix
         };
 
 
-    #define PHOENIX_ACTOR_ASSIGN_CHILD(Z, N, D)                                 \
+    #define BOOST_PHOENIX_ACTOR_ASSIGN_CHILD(Z, N, D)                           \
         assign(proto::_child_c<N>, proto::_child_c<N>(proto::_state))           \
     /**/
-    #define PHOENIX_ACTOR_ASSIGN_CALL(Z, N, D)                                  \
+    #define BOOST_PHOENIX_ACTOR_ASSIGN_CALL(Z, N, D)                            \
             proto::when<                                                        \
                 proto::nary_expr<proto::_ ,                                     \
                   BOOST_PP_ENUM_PARAMS(N, proto::_ BOOST_PP_INTERCEPT)          \
@@ -73,7 +73,7 @@ namespace boost { namespace phoenix
                , proto::and_<                                                   \
                   BOOST_PP_ENUM(                                                \
                         N                                                       \
-                      , PHOENIX_ACTOR_ASSIGN_CHILD                              \
+                      , BOOST_PHOENIX_ACTOR_ASSIGN_CHILD                        \
                       , _                                                       \
                     )                                                           \
                 >                                                               \
@@ -83,8 +83,8 @@ namespace boost { namespace phoenix
         struct assign
             : proto::or_<
                 BOOST_PP_ENUM_SHIFTED(
-                    PHOENIX_LIMIT
-                  , PHOENIX_ACTOR_ASSIGN_CALL
+                    BOOST_PHOENIX_LIMIT
+                  , BOOST_PHOENIX_ACTOR_ASSIGN_CALL
                   , _
                 )
               , proto::when<
@@ -93,8 +93,8 @@ namespace boost { namespace phoenix
                 >
             >
         {};
-    #undef PHOENIX_ACTOR_ASSIGN_CALL
-    #undef PHOENIX_ACTOR_ASSIGN_CHILD
+    #undef BOOST_PHOENIX_ACTOR_ASSIGN_CALL
+    #undef BOOST_PHOENIX_ACTOR_ASSIGN_CHILD
     }
 
     // Bring in the result_of::actor<>

@@ -17,8 +17,8 @@ The main concept is the `Actor`. An `Actor` is a model of the __PFO__ concept
 An `Actor` contains a valid Phoenix Expression, a call to one of the function
 call operator overloads, starts the evaluation process.
 
-[note You can set `PHOENIX_LIMIT`, the predefined maximum arity an
-actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
+[note You can set `BOOST_PHOENIX_LIMIT`, the predefined maximum arity an
+actor can take. By default, `BOOST_PHOENIX_LIMIT` is set to 10.]
 
 The `actor` template class models the `Actor` concept:
 
@@ -63,13 +63,13 @@ The `actor` template class models the `Actor` concept:
 
 [heading Function Call Operators]
 
-There are 2*N function call operators for 0 to N arguments (N == `PHOENIX_LIMIT`).
+There are 2*N function call operators for 0 to N arguments (N == `BOOST_PHOENIX_LIMIT`).
 The actor class accepts the arguments and forwards the arguments to the default
 evaluation action.
 
 Additionally, there exist function call operators accepting permutations of const
 and non-const references. These operators are created for all N <=
-`PHOENIX_PERFECT_FORWARD_LIMIT` (which defaults to 3).
+`BOOST_PHOENIX_PERFECT_FORWARD_LIMIT` (which defaults to 3).
 
 [def [$http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm]
 

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_ARITY_HPP
-#define PHOENIX_CORE_ARITY_HPP
+#ifndef BOOST_PHOENIX_CORE_ARITY_HPP
+#define BOOST_PHOENIX_CORE_ARITY_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/is_placeholder.hpp>
@@ -54,7 +54,14 @@ namespace boost { namespace phoenix
               , mpl::int_<0>
               , proto::make<mpl::max<
                     proto::_state
-                  , proto::call<evaluator(proto::_, proto::call<functional::context(_env, _actions)>)>
+                  , proto::call<
+                        evaluator(
+                            proto::_
+                          , proto::call<
+                                functional::context(_env, _actions)
+                            >
+                        )
+                    >
                 >()>
             >
         {};

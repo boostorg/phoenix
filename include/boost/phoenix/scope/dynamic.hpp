@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SCOPE_DYNAMIC_HPP
-#define PHOENIX_SCOPE_DYNAMIC_HPP
+#ifndef BOOST_PHOENIX_SCOPE_DYNAMIC_HPP
+#define BOOST_PHOENIX_SCOPE_DYNAMIC_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/assert.hpp>
@@ -22,54 +22,54 @@
 #include <boost/preprocessor/punctuation/comma.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 
-#define BOOST_PHOENIX_DYNAMIC_TEMPLATE_PARAMS(R, DATA, I, ELEM)                 \
+#define BOOST_BOOST_PHOENIX_DYNAMIC_TEMPLATE_PARAMS(R, DATA, I, ELEM)                 \
       BOOST_PP_COMMA_IF(I) BOOST_PP_TUPLE_ELEM(2, 0, ELEM)                      \
 /**/
 
-#define BOOST_PHOENIX_DYNAMIC_CTOR_INIT(R, DATA, I, ELEM)                       \
+#define BOOST_BOOST_PHOENIX_DYNAMIC_CTOR_INIT(R, DATA, I, ELEM)                       \
     BOOST_PP_COMMA_IF(I) BOOST_PP_TUPLE_ELEM(2, 1, ELEM)(init<I>(this))         \
 /**/
 
-#define BOOST_PHOENIX_DYNAMIC_MEMBER(R, DATA, I, ELEM)                          \
+#define BOOST_BOOST_PHOENIX_DYNAMIC_MEMBER(R, DATA, I, ELEM)                          \
     BOOST_PP_CAT(member, BOOST_PP_INC(I)) BOOST_PP_TUPLE_ELEM(2, 1, ELEM);      \
 /**/
 
-#define BOOST_PHOENIX_DYNAMIC_FILLER_0(X, Y)                                    \
-    ((X, Y)) BOOST_PHOENIX_DYNAMIC_FILLER_1                                     \
+#define BOOST_BOOST_PHOENIX_DYNAMIC_FILLER_0(X, Y)                                    \
+    ((X, Y)) BOOST_BOOST_PHOENIX_DYNAMIC_FILLER_1                                     \
 /**/
 
-#define BOOST_PHOENIX_DYNAMIC_FILLER_1(X, Y)                                    \
-    ((X, Y)) BOOST_PHOENIX_DYNAMIC_FILLER_0                                     \
+#define BOOST_BOOST_PHOENIX_DYNAMIC_FILLER_1(X, Y)                                    \
+    ((X, Y)) BOOST_BOOST_PHOENIX_DYNAMIC_FILLER_0                                     \
 /**/
 
-#define BOOST_PHOENIX_DYNAMIC_FILLER_0_END
-#define BOOST_PHOENIX_DYNAMIC_FILLER_1_END
+#define BOOST_BOOST_PHOENIX_DYNAMIC_FILLER_0_END
+#define BOOST_BOOST_PHOENIX_DYNAMIC_FILLER_1_END
 
-#define BOOST_PHOENIX_DYNAMIC_BASE(NAME, MEMBER)                                \
+#define BOOST_BOOST_PHOENIX_DYNAMIC_BASE(NAME, MEMBER)                                \
 struct NAME                                                                     \
     : ::boost::phoenix::dynamic<                                                \
         BOOST_PP_SEQ_FOR_EACH_I(                                                \
-                BOOST_PHOENIX_DYNAMIC_TEMPLATE_PARAMS                           \
+                BOOST_BOOST_PHOENIX_DYNAMIC_TEMPLATE_PARAMS                           \
               , _                                                               \
               , MEMBER)                                                         \
     >                                                                           \
 {                                                                               \
     NAME()                                                                      \
-        : BOOST_PP_SEQ_FOR_EACH_I(BOOST_PHOENIX_DYNAMIC_CTOR_INIT, _, MEMBER)   \
+        : BOOST_PP_SEQ_FOR_EACH_I(BOOST_BOOST_PHOENIX_DYNAMIC_CTOR_INIT, _, MEMBER)   \
     {}                                                                          \
                                                                                 \
-    BOOST_PP_SEQ_FOR_EACH_I(BOOST_PHOENIX_DYNAMIC_MEMBER, _, MEMBER)            \
+    BOOST_PP_SEQ_FOR_EACH_I(BOOST_BOOST_PHOENIX_DYNAMIC_MEMBER, _, MEMBER)            \
 }                                                                               \
 /**/
 
-#define BOOST_PHOENIX_DYNAMIC(NAME, MEMBER)                                     \
-    BOOST_PHOENIX_DYNAMIC_BASE(                                                 \
+#define BOOST_BOOST_PHOENIX_DYNAMIC(NAME, MEMBER)                                     \
+    BOOST_BOOST_PHOENIX_DYNAMIC_BASE(                                                 \
         NAME                                                                    \
-      , BOOST_PP_CAT(BOOST_PHOENIX_DYNAMIC_FILLER_0 MEMBER,_END)                \
+      , BOOST_PP_CAT(BOOST_BOOST_PHOENIX_DYNAMIC_FILLER_0 MEMBER,_END)                \
     )                                                                           \
 /**/
 
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(dynamic_member)
   , (proto::terminal<proto::_>)
     (proto::terminal<proto::_>)
@@ -153,7 +153,7 @@ namespace boost { namespace phoenix
     {};
     
     template <
-        PHOENIX_typename_A_void(PHOENIX_DYNAMIC_LIMIT)
+        BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_DYNAMIC_LIMIT)
       , typename Dummy = void
     >
     struct dynamic;

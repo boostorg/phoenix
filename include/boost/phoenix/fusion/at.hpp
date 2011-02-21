@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_FUSION_AT_HPP
-#define PHOENIX_FUSION_AT_HPP
+#ifndef BOOST_PHOENIX_FUSION_AT_HPP
+#define BOOST_PHOENIX_FUSION_AT_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at_c.hpp>
@@ -15,7 +15,7 @@
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/type_traits/remove_reference.hpp>
     
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(at_c)
   , (proto::terminal<proto::_>)
     (meta_grammar)

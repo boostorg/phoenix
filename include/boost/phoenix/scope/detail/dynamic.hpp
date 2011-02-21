@@ -1,25 +1,24 @@
 
-/*
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
-#define PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
+#define BOOST_PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
 #include <boost/phoenix/scope/detail/preprocessed/dynamic.hpp>
 
 #endif
-#else*/
+#else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
-#define PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
+#ifndef BOOST_PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
+#define BOOST_PHOENIX_SCOPE_DETAIL_DYNAMIC_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/dynamic_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/dynamic_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -30,11 +29,11 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-#define PHOENIX_SCOPE_DYNAMIC_MEMBER(_, N, __)                                  \
+#define BOOST_PHOENIX_SCOPE_DYNAMIC_MEMBER(_, N, __)                            \
         typedef                                                                 \
             typename expression::dynamic_member<                                \
                 mpl::int_<N>                                                    \
@@ -43,29 +42,29 @@
             BOOST_PP_CAT(member, BOOST_PP_INC(N));                              \
 /**/
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_DYNAMIC_LIMIT,                                              \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (1, BOOST_PHOENIX_DYNAMIC_LIMIT,                                        \
     <boost/phoenix/scope/detail/dynamic.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-#undef PHOENIX_SCOPE_DYNAMIC_MEMBER
+#undef BOOST_PHOENIX_SCOPE_DYNAMIC_MEMBER
 
 #endif
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
 #else
 
-    template <PHOENIX_typename_A>
-    struct dynamic<PHOENIX_A> : noncopyable
+    template <BOOST_PHOENIX_typename_A>
+    struct dynamic<BOOST_PHOENIX_A> : noncopyable
     {
         typedef
-            BOOST_PP_CAT(vector, PHOENIX_ITERATION)<PHOENIX_A>
+            BOOST_PP_CAT(vector, BOOST_PHOENIX_ITERATION)<BOOST_PHOENIX_A>
             tuple_type;
         typedef
-            dynamic<PHOENIX_A>
+            dynamic<BOOST_PHOENIX_A>
             self_type;
         typedef
             dynamic_frame<self_type>
@@ -85,11 +84,15 @@
                         make(mpl::int_<N>(), scope);
         }
 
-        BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_SCOPE_DYNAMIC_MEMBER, _)
+        BOOST_PP_REPEAT(
+            BOOST_PHOENIX_ITERATION
+          , BOOST_PHOENIX_SCOPE_DYNAMIC_MEMBER
+          , _
+        )
 
         mutable dynamic_frame_type* frame;
     };
 
 #endif
 
-//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

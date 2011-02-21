@@ -5,15 +5,15 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_STATEMENT_DO_WHILE_HPP
-#define PHOENIX_STATEMENT_DO_WHILE_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_DO_WHILE_HPP
+#define BOOST_PHOENIX_STATEMENT_DO_WHILE_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(do_while)
   , (meta_grammar) // Cond
     (meta_grammar) // Do

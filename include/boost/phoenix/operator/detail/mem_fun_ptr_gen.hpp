@@ -1,7 +1,7 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
-#define PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
+#define BOOST_PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
@@ -10,15 +10,15 @@
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
-#define PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
+#ifndef BOOST_PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
+#define BOOST_PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/mem_fun_ptr_gen_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/mem_fun_ptr_gen_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -29,7 +29,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
@@ -44,7 +44,7 @@ namespace boost { namespace phoenix
         namespace result_of
         {
             template <typename Object, typename MemPtr,
-                PHOENIX_typename_A_void(PHOENIX_MEMBER_LIMIT)
+                BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_MEMBER_LIMIT)
                 , typename Dummy = void>
             struct mem_fun_ptr_gen;
 
@@ -57,13 +57,13 @@ namespace boost { namespace phoenix
                     , MemPtr>
             {};
 
-#define PHOENIX_ITERATE_RESULT_OF 1
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (4, (1, PHOENIX_MEMBER_LIMIT,                                           \
+#define BOOST_PHOENIX_ITERATE_RESULT_OF 1
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+        (4, (1, BOOST_PHOENIX_MEMBER_LIMIT,                                     \
         <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>,                    \
-        PHOENIX_ITERATE_RESULT_OF))
-#include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_RESULT_OF
+        BOOST_PHOENIX_ITERATE_RESULT_OF))
+#include BOOST_PHOENIX_ITERATE()
+#undef BOOST_PHOENIX_ITERATE_RESULT_OF
 
         }
 
@@ -82,13 +82,13 @@ namespace boost { namespace phoenix
                     tag::mem_fun_ptr, phoenix_domain>(obj, ptr);
             }
 
-#define PHOENIX_ITERATE_OPERATOR 2
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (4, (1, PHOENIX_MEMBER_LIMIT,                                           \
+#define BOOST_PHOENIX_ITERATE_OPERATOR 2
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+        (4, (1, BOOST_PHOENIX_MEMBER_LIMIT,                                     \
         <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>,                    \
-        PHOENIX_ITERATE_OPERATOR))
-#include PHOENIX_ITERATE()
-#undef PHOENIX_ITERATE_OPERATOR
+        BOOST_PHOENIX_ITERATE_OPERATOR))
+#include BOOST_PHOENIX_ITERATE()
+#undef BOOST_PHOENIX_ITERATE_OPERATOR
 
             Object const& obj;
             MemPtr ptr;
@@ -98,7 +98,7 @@ namespace boost { namespace phoenix
     }
 }}
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -106,45 +106,45 @@ namespace boost { namespace phoenix
 
 #else
 
-#if BOOST_PP_ITERATION_FLAGS() == PHOENIX_ITERATE_RESULT_OF
+#if BOOST_PP_ITERATION_FLAGS() == BOOST_PHOENIX_ITERATE_RESULT_OF
 
-            template <typename Object, typename MemPtr, PHOENIX_typename_A>
-            struct mem_fun_ptr_gen<Object, MemPtr, PHOENIX_A>
+            template <typename Object, typename MemPtr, BOOST_PHOENIX_typename_A>
+            struct mem_fun_ptr_gen<Object, MemPtr, BOOST_PHOENIX_A>
                 : proto::result_of::make_expr<
                       tag::mem_fun_ptr
                     , phoenix_domain
                     , Object
                     , MemPtr
-                    , PHOENIX_A>
+                    , BOOST_PHOENIX_A>
             {};
 
-#elif BOOST_PP_ITERATION_FLAGS() == PHOENIX_ITERATE_OPERATOR
+#elif BOOST_PP_ITERATION_FLAGS() == BOOST_PHOENIX_ITERATE_OPERATOR
 
-            template <PHOENIX_typename_A>
+            template <BOOST_PHOENIX_typename_A>
             typename result_of::mem_fun_ptr_gen<
                 Object
               , MemPtr
-              , PHOENIX_A
+              , BOOST_PHOENIX_A
             >::type const
-            operator()(PHOENIX_A_const_ref_a) const
+            operator()(BOOST_PHOENIX_A_const_ref_a) const
             {
                 return proto::make_expr<
-                    tag::mem_fun_ptr, phoenix_domain>(obj, ptr, PHOENIX_a);
+                    tag::mem_fun_ptr, phoenix_domain>(obj, ptr, BOOST_PHOENIX_a);
             }
 
-            template <PHOENIX_typename_A>
+            template <BOOST_PHOENIX_typename_A>
             typename result_of::mem_fun_ptr_gen<
                 Object
               , MemPtr
-              , PHOENIX_A
+              , BOOST_PHOENIX_A
             >::type const
-            operator()(PHOENIX_A_ref_a) const
+            operator()(BOOST_PHOENIX_A_ref_a) const
             {
                 return proto::make_expr<
-                    tag::mem_fun_ptr, phoenix_domain>(obj, ptr, PHOENIX_a);
+                    tag::mem_fun_ptr, phoenix_domain>(obj, ptr, BOOST_PHOENIX_a);
             }
 
 #endif
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

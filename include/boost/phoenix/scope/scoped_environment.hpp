@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SCOPE_SCOPED_ENVIRONMENT_HPP
-#define PHOENIX_SCOPE_SCOPED_ENVIRONMENT_HPP
+#ifndef BOOST_PHOENIX_SCOPE_SCOPED_ENVIRONMENT_HPP
+#define BOOST_PHOENIX_SCOPE_SCOPED_ENVIRONMENT_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/int.hpp>
@@ -28,21 +28,11 @@ namespace boost { namespace phoenix
           , fusion::random_access_traversal_tag
         >
     {
-        /*
-        typedef typename boost::remove_reference<Env>::type env_type;
-        typedef typename boost::remove_reference<OuterEnv>::type outer_env_type;
-        typedef typename boost::remove_reference<Locals>::type locals_type;
-        */
         typedef Env env_type;
         typedef OuterEnv outer_env_type;
         typedef Locals locals_type;
 
         scoped_environment(
-                /*
-            env_type& env
-          , outer_env_type& outer_env
-          , locals_type & locals
-          */
             Env env
           , OuterEnv outer_env
           , Locals locals
@@ -58,20 +48,19 @@ namespace boost { namespace phoenix
             , locals(o.locals)
         {}
 
-        /*
-        env_type env;
-        outer_env_type outer_env;
-        locals_type locals;
-        */
         Env      env;
         OuterEnv outer_env;
         Locals   locals;
     
-        #define PHOENIX_ADAPT_SCOPED_ENVIRONMENT(INTRINSIC)                     \
+        #define BOOST_PHOENIX_ADAPT_SCOPED_ENVIRONMENT(INTRINSIC)               \
         template <typename Seq>                                                 \
         struct INTRINSIC                                                        \
         {                                                                       \
-            typedef typename fusion::result_of::INTRINSIC<typename Seq::env_type>::type type; \
+            typedef                                                             \
+                typename fusion::result_of::INTRINSIC<                          \
+                    typename Seq::env_type                                      \
+                >::type                                                         \
+                type;                                                           \
                                                                                 \
             static type call(Seq & seq)                                         \
             {                                                                   \
@@ -79,23 +68,31 @@ namespace boost { namespace phoenix
             }                                                                   \
         }                                                                       \
         /**/
-        PHOENIX_ADAPT_SCOPED_ENVIRONMENT(begin);
-        PHOENIX_ADAPT_SCOPED_ENVIRONMENT(end);
-        PHOENIX_ADAPT_SCOPED_ENVIRONMENT(size);
-        #undef PHOENIX_ADAPT_SCOPED_ENVIRONMENT
+        BOOST_PHOENIX_ADAPT_SCOPED_ENVIRONMENT(begin);
+        BOOST_PHOENIX_ADAPT_SCOPED_ENVIRONMENT(end);
+        BOOST_PHOENIX_ADAPT_SCOPED_ENVIRONMENT(size);
+        #undef BOOST_PHOENIX_ADAPT_SCOPED_ENVIRONMENT
     
         template <typename Seq, typename N>
         struct value_at
         {
             typedef
-                typename fusion::result_of::value_at<typename proto::detail::uncvref<typename Seq::env_type>::type, N>::type
+                typename fusion::result_of::value_at<
+                    typename proto::detail::uncvref<typename Seq::env_type>::type
+                  , N
+                >::type
                 type;
         };
         
         template <typename Seq, typename N>
         struct at
         {
-            typedef typename fusion::result_of::at<typename proto::detail::uncvref<typename Seq::env_type>::type, N>::type type;
+            typedef
+                typename fusion::result_of::at<
+                    typename proto::detail::uncvref<typename Seq::env_type>::type
+                  , N
+                >::type
+                type;
 
             static type call(Seq & seq)
             {

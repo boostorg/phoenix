@@ -1,24 +1,24 @@
 
-/*#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
-#define PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
+#define BOOST_PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
 #include <boost/phoenix/scope/detail/preprocessed/let_local_gen.hpp>
 
 #endif
-#else*/
+#else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
-#define PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
+#ifndef BOOST_PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
+#define BOOST_PHOENIX_SCOPE_DETAIL_LET_LOCAL_GEN_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/let_local_gen_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/let_local_gen_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -29,16 +29,16 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_LOCAL_LIMIT,                                                \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (1, BOOST_PHOENIX_LOCAL_LIMIT,                                          \
     <boost/phoenix/scope/detail/let_local_gen.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -46,15 +46,15 @@
 
 #else
 
-        template <PHOENIX_typename_A>
+        template <BOOST_PHOENIX_typename_A>
         let_actor_gen<
-            typename detail::make_locals<PHOENIX_A>::type
+            typename detail::make_locals<BOOST_PHOENIX_A>::type
         > const
-        operator()(PHOENIX_A_const_ref_a) const
+        operator()(BOOST_PHOENIX_A_const_ref_a) const
         {
-            return detail::make_locals<PHOENIX_A>::make(PHOENIX_a);
+            return detail::make_locals<BOOST_PHOENIX_A>::make(BOOST_PHOENIX_a);
         }
 
 #endif
 
-//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

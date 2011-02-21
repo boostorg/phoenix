@@ -10,10 +10,10 @@
 [section Actor]
 
 The `Actor` is the main concept behind the library. Actors are function objects.
-An actor can accept 0 to `PHOENIX_LIMIT` arguments.
+An actor can accept 0 to `BOOST_PHOENIX_LIMIT` arguments.
 
-[note You can set `PHOENIX_LIMIT`, the predefined maximum arity an
-actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
+[note You can set `BOOST_PHOENIX_LIMIT`, the predefined maximum arity an
+actor can take. By default, `BOOST_PHOENIX_LIMIT` is set to 10.]
 
 Phoenix supplies an `actor` class template whose specializations
 model the `Actor` concept.  `actor` has one template parameter, `Expr`,
@@ -49,12 +49,9 @@ that supplies the underlying expression to evaluate.
     };
 
 The actor class accepts the arguments through a set of function call operators
-for 0 to `PHOENIX_LIMIT` arities (Don't worry about the details, for now. Note, for example,
+for 0 to `BOOST_PHOENIX_LIMIT` arities (Don't worry about the details, for now. Note, for example,
 that we skimp over the details regarding `return_type`). The arguments
 are then forwarded to the actor's `Expr` for evaluation.
-
-[heading TODO]
-add some notes about the extension possibilities
 
 [endsect]
 

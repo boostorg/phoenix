@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_STL_CONTAINER_CONTAINER_HPP
-#define PHOENIX_STL_CONTAINER_CONTAINER_HPP
+#ifndef BOOST_PHOENIX_STL_CONTAINER_CONTAINER_HPP
+#define BOOST_PHOENIX_STL_CONTAINER_CONTAINER_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/and.hpp>
@@ -816,4 +816,4 @@ function<stl::value_comp> const     value_comp = stl::value_comp();
 
 }} // namespace boost::phoenix
 
-#endif // PHOENIX_STL_CONTAINERS_HPP
+#endif // BOOST_PHOENIX_STL_CONTAINERS_HPP

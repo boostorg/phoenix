@@ -19,9 +19,9 @@ expressions.
 A composite is-a tuple of 0..N actors. N is the predefined maximum actors a
 composite can take.
 
-[note You can set `PHOENIX_COMPOSITE_LIMIT`, the predefined maximum
-actors a composite can take. By default, `PHOENIX_COMPOSITE_LIMIT` is set to
-`PHOENIX_LIMIT` (See [link phoenix.reference.actor Actor]).]
+[note You can set `BOOST_PHOENIX_COMPOSITE_LIMIT`, the predefined maximum
+actors a composite can take. By default, `BOOST_PHOENIX_COMPOSITE_LIMIT` is set to
+`BOOST_PHOENIX_LIMIT` (See [link phoenix.reference.actor Actor]).]
 
 In Phoenix, every actor is a composite. Phoenix is designed in a way that
 expressions form something like a S-Expr structure. This means that the main

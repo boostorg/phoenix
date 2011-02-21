@@ -7,8 +7,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef PHOENIX_STATEMENT_TRY_CATCH_HPP
-#define PHOENIX_STATEMENT_TRY_CATCH_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_TRY_CATCH_HPP
+#define BOOST_PHOENIX_STATEMENT_TRY_CATCH_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/call.hpp>
@@ -39,7 +39,7 @@ namespace boost { namespace phoenix
     {
         template <
             typename Try
-          , PHOENIX_typename_A_void(PHOENIX_CATCH_LIMIT)
+          , BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_CATCH_LIMIT)
           , typename Dummy = void
         >
         struct try_catch;

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_REFERENCE_HPP
-#define PHOENIX_CORE_REFERENCE_HPP
+#ifndef BOOST_PHOENIX_CORE_REFERENCE_HPP
+#define BOOST_PHOENIX_CORE_REFERENCE_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/ref.hpp>
@@ -29,7 +29,9 @@ namespace boost { namespace phoenix
         struct reference
             : expression::terminal<reference_wrapper<T> >
         {
-            typedef typename expression::terminal<reference_wrapper<T> >::type type;
+            typedef
+                typename expression::terminal<reference_wrapper<T> >::type
+                type;
 
             static const type make(T & t)
             {
@@ -42,7 +44,9 @@ namespace boost { namespace phoenix
         struct reference<T const>
             : expression::terminal<reference_wrapper<T const> >
         {
-            typedef typename expression::terminal<reference_wrapper<T const> >::type type;
+            typedef
+                typename expression::terminal<reference_wrapper<T const> >::type
+                type;
 
             static const type make(T const & t)
             {

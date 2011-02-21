@@ -9,8 +9,8 @@
 //
 // Modeled after range_ex, Copyright 2004 Eric Niebler
 
-#ifndef PHOENIX_ALGORITHM_QUERYING_HPP
-#define PHOENIX_ALGORITHM_QUERYING_HPP
+#ifndef BOOST_PHOENIX_ALGORITHM_QUERYING_HPP
+#define BOOST_PHOENIX_ALGORITHM_QUERYING_HPP
 
 #include <algorithm>
 

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_FUNCTION_FUNCTION_HPP
-#define PHOENIX_FUNCTION_FUNCTION_HPP
+#ifndef BOOST_PHOENIX_FUNCTION_FUNCTION_HPP
+#define BOOST_PHOENIX_FUNCTION_FUNCTION_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at_c.hpp>
@@ -32,23 +32,25 @@ namespace boost { namespace phoenix
 
         template <
             typename F
-          , PHOENIX_typename_A_void(PHOENIX_LIMIT)
+          , BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_LIMIT)
           , typename Dummy = void
         >
         struct function;
 
-    #define PHOENIX_DEFINE_FUNCTION_EXPRESSION(_, N, __)                            \
-        template <typename F, PHOENIX_typename_A(N)>                                \
-        struct function<F, PHOENIX_A(N)>                                            \
-            : expr<tag::function, F, PHOENIX_A(N)>                                     \
+    #define BOOST_PHOENIX_DEFINE_FUNCTION_EXPRESSION(_, N, __)                      \
+        template <typename F, BOOST_PHOENIX_typename_A(N)>                                \
+        struct function<F, BOOST_PHOENIX_A(N)>                                            \
+            : expr<tag::function, F, BOOST_PHOENIX_A(N)>                                  \
         {};                                                                         \
 
         BOOST_PP_REPEAT_FROM_TO(
             1
-          , PHOENIX_LIMIT
-          , PHOENIX_DEFINE_FUNCTION_EXPRESSION
+          , BOOST_PHOENIX_LIMIT
+          , BOOST_PHOENIX_DEFINE_FUNCTION_EXPRESSION
           , _
         )
+
+    #undef BOOST_PHOENIX_DEFINE_FUNCTION_EXPRESSION
     }
 
     namespace rule

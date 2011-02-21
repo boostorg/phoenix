@@ -1,5 +1,4 @@
-
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
@@ -8,8 +7,10 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SUPPORT_VECTOR_HPP
-#define PHOENIX_SUPPORT_VECTOR_HPP
+
+
+#ifndef BOOST_PHOENIX_SUPPORT_VECTOR_HPP
+#define BOOST_PHOENIX_SUPPORT_VECTOR_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/support/iterate.hpp>
@@ -26,10 +27,10 @@
     (BOOST_PP_CAT(A, N), BOOST_PP_CAT(a, N))                                    \
 /**/
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (1, BOOST_PP_INC(PHOENIX_LIMIT),                                    \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+        (3, (1, BOOST_PP_INC(BOOST_PHOENIX_LIMIT),                              \
         <boost/phoenix/support/vector.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
 #undef M0
 #undef M1
@@ -41,17 +42,24 @@
 
 namespace boost { namespace phoenix
 {
-    template <PHOENIX_typename_A>
-    struct BOOST_PP_CAT(vector, PHOENIX_ITERATION)
+    template <BOOST_PHOENIX_typename_A>
+    struct BOOST_PP_CAT(vector, BOOST_PHOENIX_ITERATION)
     {
-        BOOST_PP_REPEAT(PHOENIX_ITERATION, M0, _)
+        BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M0, _)
     };
 }}
 
 BOOST_FUSION_ADAPT_TPL_STRUCT(
-    BOOST_PP_REPEAT(PHOENIX_ITERATION, M1, _)
-  , (BOOST_PP_CAT(boost::phoenix::vector, PHOENIX_ITERATION))BOOST_PP_REPEAT(PHOENIX_ITERATION, M1, _)
-  , BOOST_PP_REPEAT(PHOENIX_ITERATION, M2, _)
+    BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M1, _)
+  , (
+        BOOST_PP_CAT(
+            boost::phoenix::vector
+          , BOOST_PHOENIX_ITERATION
+        )
+    )
+    BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M1, _)
+  , BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M2, _)
 )
 
 #endif
+

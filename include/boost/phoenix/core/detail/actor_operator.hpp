@@ -1,25 +1,24 @@
 
-/*
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
-#define PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
+#define BOOST_PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
 #include <boost/phoenix/core/detail/preprocessed/actor_operator.hpp>
 
 #endif
-#else*/
+#else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
-#define PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
+#ifndef BOOST_PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
+#define BOOST_PHOENIX_CORE_DETAIL_ACTOR_OPERATOR_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_operator_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_operator_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
@@ -29,16 +28,16 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (1, PHOENIX_ACTOR_LIMIT,                                            \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+        (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                      \
         <boost/phoenix/core/detail/actor_operator.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -46,65 +45,65 @@
 
 #else
 
-        template <typename This, PHOENIX_typename_A>
-        struct result<This(PHOENIX_A)>
-            : result_of::actor<Expr, PHOENIX_A>
+        template <typename This, BOOST_PHOENIX_typename_A>
+        struct result<This(BOOST_PHOENIX_A)>
+            : result_of::actor<Expr, BOOST_PHOENIX_A>
         {};
 
-#if PHOENIX_ITERATION >= PHOENIX_PERFECT_FORWARD_LIMIT
+#if BOOST_PHOENIX_ITERATION >= BOOST_PHOENIX_PERFECT_FORWARD_LIMIT
 
-        template <PHOENIX_typename_A>
-        typename result_of::actor<Expr, PHOENIX_A_ref>::type
-        operator()(PHOENIX_A_ref_a)
+        template <BOOST_PHOENIX_typename_A>
+        typename result_of::actor<Expr, BOOST_PHOENIX_A_ref>::type
+        operator()(BOOST_PHOENIX_A_ref_a)
         {
             typedef
-                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
-                    const actor<Expr> *, PHOENIX_A_ref
+                BOOST_PP_CAT(vector, BOOST_PP_INC(BOOST_PHOENIX_ITERATION))<
+                    const actor<Expr> *, BOOST_PHOENIX_A_ref
                 >
                 env_type;
-            env_type env = {this, PHOENIX_a};
+            env_type env = {this, BOOST_PHOENIX_a};
             
             return eval(*this, context(env, default_actions()));
         }
 
-        template <PHOENIX_typename_A>
-        typename result_of::actor<Expr, PHOENIX_A_ref>::type
-        operator()(PHOENIX_A_ref_a) const
+        template <BOOST_PHOENIX_typename_A>
+        typename result_of::actor<Expr, BOOST_PHOENIX_A_ref>::type
+        operator()(BOOST_PHOENIX_A_ref_a) const
         {
             typedef
-                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
-                    const actor<Expr> *, PHOENIX_A_ref
+                BOOST_PP_CAT(vector, BOOST_PP_INC(BOOST_PHOENIX_ITERATION))<
+                    const actor<Expr> *, BOOST_PHOENIX_A_ref
                 >
                 env_type;
-            env_type env = {this, PHOENIX_a};
+            env_type env = {this, BOOST_PHOENIX_a};
             
             return eval(*this, context(env, default_actions()));
         }
 
-        template <PHOENIX_typename_A>
-        typename result_of::actor<Expr, PHOENIX_A_const_ref>::type
-        operator()(PHOENIX_A_const_ref_a)
+        template <BOOST_PHOENIX_typename_A>
+        typename result_of::actor<Expr, BOOST_PHOENIX_A_const_ref>::type
+        operator()(BOOST_PHOENIX_A_const_ref_a)
         {
             typedef
-                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
-                    const actor<Expr> *, PHOENIX_A_const_ref
+                BOOST_PP_CAT(vector, BOOST_PP_INC(BOOST_PHOENIX_ITERATION))<
+                    const actor<Expr> *, BOOST_PHOENIX_A_const_ref
                 >
                 env_type;
-            env_type env = {this, PHOENIX_a};
+            env_type env = {this, BOOST_PHOENIX_a};
             
             return eval(*this, context(env, default_actions()));
         }
 
-        template <PHOENIX_typename_A>
-        typename result_of::actor<Expr, PHOENIX_A_const_ref>::type
-        operator()(PHOENIX_A_const_ref_a) const
+        template <BOOST_PHOENIX_typename_A>
+        typename result_of::actor<Expr, BOOST_PHOENIX_A_const_ref>::type
+        operator()(BOOST_PHOENIX_A_const_ref_a) const
         {
             typedef
-                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<
-                    const actor<Expr> *, PHOENIX_A_const_ref
+                BOOST_PP_CAT(vector, BOOST_PP_INC(BOOST_PHOENIX_ITERATION))<
+                    const actor<Expr> *, BOOST_PHOENIX_A_const_ref
                 >
                 env_type;
-            env_type env = {this, PHOENIX_a};
+            env_type env = {this, BOOST_PHOENIX_a};
             
             return eval(*this, context(env, default_actions()));
         }
@@ -112,48 +111,48 @@
 #else
 
 // We need to define operator() for all permutations of reference types.
-// For PHOENIX_ITERATION <= PHOENIX_LIMIT_PREFECT_FORWARD
-// 2^PHOENIX_ITERATION overloads are created
+// For BOOST_PHOENIX_ITERATION <= BOOST_PHOENIX_LIMIT_PREFECT_FORWARD
+// 2^BOOST_PHOENIX_ITERATION overloads are created
 // For compile time reasons,
-// if PHOENIX_ITERATION > PHOENIX_LIMIT_PERFECT_FORWARD
+// if BOOST_PHOENIX_ITERATION > BOOST_PHOENIX_LIMIT_PERFECT_FORWARD
 // only operator()(A const &...a) and operator()(A &...a) are generated
 // this is all handled by the PP mumbo jumbo above
-#define PHOENIX_ACTOR_OPERATOR(_, I, __)                                        \
-        template <PHOENIX_typename_A>                                           \
-        typename result_of::actor<Expr, PHOENIX_PERM_A(I)>::type                \
-        operator()(PHOENIX_PERM_A_a(I)) const                                   \
+#define BOOST_PHOENIX_ACTOR_OPERATOR(_, I, __)                                  \
+        template <BOOST_PHOENIX_typename_A>                                     \
+        typename result_of::actor<Expr, BOOST_PHOENIX_PERM_A(I)>::type          \
+        operator()(BOOST_PHOENIX_PERM_A_a(I)) const                             \
         {                                                                       \
             typedef                                                             \
-                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<          \
-                    const actor<Expr> *, PHOENIX_PERM_A(I)                      \
+                BOOST_PP_CAT(vector, BOOST_PP_INC(BOOST_PHOENIX_ITERATION))<    \
+                    const actor<Expr> *, BOOST_PHOENIX_PERM_A(I)                \
                 >                                                               \
                 env_type;                                                       \
-            env_type env = {this, PHOENIX_a};                                      \
+            env_type env = {this, BOOST_PHOENIX_a};                             \
                                                                                 \
             return eval(*this, context(env, default_actions()));                \
         }                                                                       \
                                                                                 \
-        template <PHOENIX_typename_A>                                           \
-        typename result_of::actor<Expr, PHOENIX_PERM_A(I)>::type                \
-        operator()(PHOENIX_PERM_A_a(I))                                         \
+        template <BOOST_PHOENIX_typename_A>                                     \
+        typename result_of::actor<Expr, BOOST_PHOENIX_PERM_A(I)>::type          \
+        operator()(BOOST_PHOENIX_PERM_A_a(I))                                   \
         {                                                                       \
             typedef                                                             \
-                BOOST_PP_CAT(vector, BOOST_PP_INC(PHOENIX_ITERATION))<          \
-                    const actor<Expr> *, PHOENIX_PERM_A(I)                      \
+                BOOST_PP_CAT(vector, BOOST_PP_INC(BOOST_PHOENIX_ITERATION))<    \
+                    const actor<Expr> *, BOOST_PHOENIX_PERM_A(I)                \
                 >                                                               \
                 env_type;                                                       \
-            env_type env = {this, PHOENIX_a};                                   \
+            env_type env = {this, BOOST_PHOENIX_a};                             \
                                                                                 \
             return eval(*this, context(env, default_actions()));                \
         }                                                                       \
         /**/
 
-        BOOST_PP_REPEAT( PHOENIX_PERM_SIZE, PHOENIX_ACTOR_OPERATOR, _)
+        BOOST_PP_REPEAT(BOOST_PHOENIX_PERM_SIZE, BOOST_PHOENIX_ACTOR_OPERATOR, _)
 
-#undef PHOENIX_ACTOR_OPERATOR
-
-#endif
+#undef BOOST_PHOENIX_ACTOR_OPERATOR
 
 #endif
 
-//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif
+
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

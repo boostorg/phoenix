@@ -60,13 +60,13 @@ You declare local variables using the syntax:
     ]
 
 `let` allows 1..N local variable declarations (where N ==
-`PHOENIX_LOCAL_LIMIT`). Each declaration follows the form:
+`BOOST_PHOENIX_LOCAL_LIMIT`). Each declaration follows the form:
 
     local-id = lambda-expression
 
-[note You can set `PHOENIX_LOCAL_LIMIT`, the predefined maximum local
-variable declarations in a let expression. By default, `PHOENIX_LOCAL_LIMIT` is
-set to `PHOENIX_LIMIT`.]
+[note You can set `BOOST_PHOENIX_LOCAL_LIMIT`, the predefined maximum local
+variable declarations in a let expression. By default, `BOOST_PHOENIX_LOCAL_LIMIT` is
+set to `BOOST_PHOENIX_LIMIT`.]
 
 Example:
 
@@ -203,7 +203,7 @@ Simple syntax:
     ]
 
 Like `let`, local variables may be declared, allowing 1..N local variable
-declarations (where N == `PHOENIX_LOCAL_LIMIT`):
+declarations (where N == `BOOST_PHOENIX_LOCAL_LIMIT`):
 
     lambda(local-declarations)
     [

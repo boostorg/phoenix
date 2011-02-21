@@ -5,8 +5,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef BOOST_PHOENIX_SUPPORT_PP_ROUND_HPP
-#define BOOST_PHOENIX_SUPPORT_PP_ROUND_HPP
+#ifndef BOOST_BOOST_PHOENIX_SUPPORT_PP_ROUND_HPP
+#define BOOST_BOOST_PHOENIX_SUPPORT_PP_ROUND_HPP
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/comparison/less.hpp>
@@ -14,13 +14,7 @@
 
 #define BOOST_PHOENIX_PP_ROUND_UP(N)                                            \
       BOOST_PP_CAT(BOOST_PHOENIX_PP_DO_ROUND_UP_, N)()                          \
-/*
-    BOOST_PP_IF(                                                                \
-        BOOST_PP_LESS(N, 50)                                                    \
-      , BOOST_PP_CAT(BOOST_PHOENIX_PP_DO_ROUND_UP_, N)                          \
-      , BOOST_PHOENIX_PP_DO_ROUND_UP_50                                         \
-    )()                                                                         \
-    */
+/**/
 
 #define BOOST_PHOENIX_PP_DO_ROUND_UP_0()  10
 #define BOOST_PHOENIX_PP_DO_ROUND_UP_1()  10

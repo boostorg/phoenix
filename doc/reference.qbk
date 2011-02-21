@@ -336,7 +336,7 @@ environment is a Fusion Random Access Sequences.
 
 [endsect]
 
-[section:phoenix_define_expression `PHOENIX_DEFINE_EXPRESSION`]
+[section:phoenix_define_expression `BOOST_PHOENIX_DEFINE_EXPRESSION`]
 
 [heading Description]
 
@@ -349,7 +349,7 @@ environment is a Fusion Random Access Sequences.
 [heading Examples]
 [endsect]
 
-[section:phoenix_define_expression_vararg `PHOENIX_DEFINE_EXPRESSION_VARARG`]
+[section:phoenix_define_expression_vararg `BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG`]
 
 [heading Description]
 
@@ -362,7 +362,7 @@ environment is a Fusion Random Access Sequences.
 [heading Examples]
 [endsect]
 
-[section:phoenix_define_expression_ext `PHOENIX_DEFINE_EXPRESSION_EXT`]
+[section:phoenix_define_expression_ext `BOOST_PHOENIX_DEFINE_EXPRESSION_EXT`]
 
 [heading Description]
 
@@ -375,7 +375,7 @@ environment is a Fusion Random Access Sequences.
 [heading Examples]
 [endsect]
 
-[section:phoenix_define_expression_vararg_ext `PHOENIX_DEFINE_EXPRESSION_VARARG_EXT`]
+[section:phoenix_define_expression_vararg_ext `BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG_EXT`]
 
 [heading Description]
 
@@ -637,8 +637,8 @@ There are a few predefined instances of `expression::argument<N>::type` named
 `arg1`..`argN`, and its __bll__ counterpart `_1`..`_N`. (where N is a predefined
 maximum).
 
-[note You can set `PHOENIX_ARG_LIMIT`, the predefined maximum
-placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
+[note You can set `BOOST_PHOENIX_ARG_LIMIT`, the predefined maximum
+placeholder index. By default, `BOOST_PHOENIX_ARG_LIMIT` is set to `BOOST_PHOENIX_LIMIT`
 (See [link phoenix.reference.concepts.actor Actor]).]
 
 [heading Synopsis]

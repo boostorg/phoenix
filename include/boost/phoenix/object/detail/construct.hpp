@@ -1,20 +1,20 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
-#define PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
+#define BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
 
 #include <boost/phoenix/object/detail/preprocessed/construct.hpp>
 
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
-#define PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
+#ifndef BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
+#define BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_HPP
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/construct_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/construct_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -25,16 +25,16 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                                \
+    (3, (1, BOOST_PHOENIX_COMPOSITE_LIMIT,                                            \
     <boost/phoenix/object/detail/construct.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -42,16 +42,16 @@
 
 #else
 
-    template <typename T, PHOENIX_typename_A>
-    typename expression::construct<detail::target<T>, PHOENIX_A>::type const
-    construct(PHOENIX_A_const_ref_a)
+    template <typename T, BOOST_PHOENIX_typename_A>
+    typename expression::construct<detail::target<T>, BOOST_PHOENIX_A>::type const
+    construct(BOOST_PHOENIX_A_const_ref_a)
     {
         return
             expression::
-                construct<detail::target<T>, PHOENIX_A>::
-                    make(detail::target<T>(), PHOENIX_a);
+                construct<detail::target<T>, BOOST_PHOENIX_A>::
+                    make(detail::target<T>(), BOOST_PHOENIX_a);
     }
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

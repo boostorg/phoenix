@@ -8,8 +8,8 @@
 //
 // Modeled after range_ex, Copyright 2004 Eric Niebler
 
-#ifndef PHOENIX_ALGORITHM_TRANSFORMATION_HPP
-#define PHOENIX_ALGORITHM_TRANSFORMATION_HPP
+#ifndef BOOST_PHOENIX_ALGORITHM_TRANSFORMATION_HPP
+#define BOOST_PHOENIX_ALGORITHM_TRANSFORMATION_HPP
 
 #include <algorithm>
 #include <numeric>

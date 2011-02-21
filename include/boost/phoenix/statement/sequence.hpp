@@ -7,8 +7,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef PHOENIX_STATEMENT_SEQUENCE_HPP
-#define PHOENIX_STATEMENT_SEQUENCE_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_SEQUENCE_HPP
+#define BOOST_PHOENIX_STATEMENT_SEQUENCE_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>

@@ -5,8 +5,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef PHOENIX_CORE_DETAIL_EXPRESSION_HPP
-#define PHOENIX_CORE_DETAIL_EXPRESSION_HPP
+#ifndef BOOST_PHOENIX_CORE_DETAIL_EXPRESSION_HPP
+#define BOOST_PHOENIX_CORE_DETAIL_EXPRESSION_HPP
 
 #include <boost/preprocessor/empty.hpp>
 #include <boost/preprocessor/arithmetic/add.hpp>
@@ -22,58 +22,61 @@
 #include <boost/preprocessor/enum_params.hpp>
 #include <boost/preprocessor/repeat_from_to.hpp>
 
-#define PHOENIX_DEFINE_EXPRESSION(NAME_SEQ, SEQ)                                \
-    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION(NAME_SEQ, SEQ)                          \
+    BOOST_PHOENIX_DEFINE_EXPRESSION_BASE(                                       \
         NAME_SEQ                                                                \
       , SEQ                                                                     \
-      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_DEFAULT                            \
-      , PHOENIX_DEFINE_EXPRESSION_RULE_DEFAULT                                  \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_DEFAULT                      \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_RULE_DEFAULT                            \
       , _                                                                       \
     )                                                                           \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT)          \
-    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT)    \
+    BOOST_PHOENIX_DEFINE_EXPRESSION_BASE(                                       \
         NAME_SEQ                                                                \
       , GRAMMAR_SEQ                                                             \
-      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG                             \
-      , PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                                   \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG                       \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                             \
       , LIMIT                                                                   \
     )                                                                           \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXT(ACTOR, NAME_SEQ, GRAMMAR_SEQ)             \
-    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_EXT(ACTOR, NAME_SEQ, GRAMMAR_SEQ)       \
+    BOOST_PHOENIX_DEFINE_EXPRESSION_BASE(                                       \
         NAME_SEQ                                                                \
       , GRAMMAR_SEQ                                                             \
-      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_EXT                                \
-      , PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                                   \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_EXT                          \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                             \
       , ACTOR                                                                   \
     )                                                                           \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(ACTOR, NAME, GRAMMAR, LIMIT)       \
-    PHOENIX_DEFINE_EXPRESSION_BASE(                                             \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(ACTOR, NAME, GRAMMAR, LIMIT) \
+    BOOST_PHOENIX_DEFINE_EXPRESSION_BASE(                                       \
         NAME_SEQ                                                                \
       , GRAMMAR_SEQ                                                             \
-      , PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG_EXT                         \
-      , PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                                   \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG_EXT                   \
+      , BOOST_PHOENIX_DEFINE_EXPRESSION_RULE_VARARG                             \
       , ACTOR                                                                   \
     )                                                                           \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_NAMESPACE(R, D, E) \
-namespace E {
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_NAMESPACE(R, D, E)                      \
+namespace E {                                                                   \
+/**/
 
-#define PHOENIX_DEFINE_EXPRESSION_NAMESPACE_END(R, D, E) \
-}
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_NAMESPACE_END(R, D, E)                  \
+}                                                                               \
+/**/
 
-#define PHOENIX_DEFINE_EXPRESSION_NS(R, D, E) \
-E ::
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_NS(R, D, E)                             \
+E ::                                                                            \
+/**/
 
-#define PHOENIX_DEFINE_EXPRESSION_BASE(NAME_SEQ, GRAMMAR_SEQ, EXPRESSION, RULE, DATA) \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_BASE(NAME_SEQ, GRAMMAR_SEQ, EXPRESSION, RULE, DATA) \
 BOOST_PP_SEQ_FOR_EACH(                                                          \
-    PHOENIX_DEFINE_EXPRESSION_NAMESPACE                                         \
+    BOOST_PHOENIX_DEFINE_EXPRESSION_NAMESPACE                                   \
   , _                                                                           \
   , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                             \
 )                                                                               \
@@ -90,7 +93,7 @@ BOOST_PP_SEQ_FOR_EACH(                                                          
         RULE(NAME_SEQ, GRAMMAR_SEQ, DATA)                                       \
     }                                                                           \
 BOOST_PP_SEQ_FOR_EACH(                                                          \
-    PHOENIX_DEFINE_EXPRESSION_NAMESPACE_END                                     \
+    BOOST_PHOENIX_DEFINE_EXPRESSION_NAMESPACE_END                               \
   , _                                                                           \
   , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                             \
 )                                                                               \
@@ -99,7 +102,7 @@ namespace boost { namespace phoenix                                             
     template <typename Dummy>                                                   \
     struct meta_grammar::case_<                                                 \
         BOOST_PP_SEQ_FOR_EACH(                                                  \
-            PHOENIX_DEFINE_EXPRESSION_NS                                        \
+            BOOST_PHOENIX_DEFINE_EXPRESSION_NS                                  \
           , _                                                                   \
           , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                     \
         ) tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))               \
@@ -107,7 +110,7 @@ namespace boost { namespace phoenix                                             
     >                                                                           \
         : enable_rule<                                                          \
             BOOST_PP_SEQ_FOR_EACH(                                              \
-                PHOENIX_DEFINE_EXPRESSION_NS                                    \
+                BOOST_PHOENIX_DEFINE_EXPRESSION_NS                              \
               , _                                                               \
               , BOOST_PP_SEQ_POP_BACK(NAME_SEQ)                                 \
             ) rule:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))          \
@@ -117,8 +120,8 @@ namespace boost { namespace phoenix                                             
 } }                                                                             \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXPRESSION_DEFAULT(NAME_SEQ, GRAMMAR_SEQ, D)  \
-        template <PHOENIX_typename_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>           \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_DEFAULT(NAME_SEQ, GRAMMAR_SEQ, D) \
+        template <BOOST_PHOENIX_typename_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>     \
         struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                \
             : expr<                                                             \
                 tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))         \
@@ -126,16 +129,16 @@ namespace boost { namespace phoenix                                             
         {};                                                                     \
 /**/
         
-#define PHOENIX_DEFINE_EXPRESSION_RULE_DEFAULT(NAME_SEQ, GRAMMAR_SEQ, D)        \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_RULE_DEFAULT(NAME_SEQ, GRAMMAR_SEQ, D)  \
 struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        \
             : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))    \
                 <BOOST_PP_SEQ_ENUM(GRAMMAR_SEQ)>                                \
         {};                                                                     \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_VARARG_R(_, N, NAME)                          \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG_R(_, N, NAME)                    \
     template <                                                                  \
-        PHOENIX_typename_A(                                                     \
+        BOOST_PHOENIX_typename_A(                                               \
             BOOST_PP_ADD(                                                       \
                 N                                                               \
               , BOOST_PP_SEQ_SIZE(BOOST_PP_TUPLE_ELEM(2, 1, NAME))              \
@@ -143,13 +146,13 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
         )                                                                       \
     >                                                                           \
     struct BOOST_PP_TUPLE_ELEM(2, 0, NAME)<                                     \
-        PHOENIX_A(                                                              \
+        BOOST_PHOENIX_A(                                                        \
             BOOST_PP_ADD(N, BOOST_PP_SEQ_SIZE(BOOST_PP_TUPLE_ELEM(2, 1, NAME))) \
         )                                                                       \
     >                                                                           \
         : expr<                                                                 \
             tag:: BOOST_PP_TUPLE_ELEM(2, 0, NAME)                               \
-          , PHOENIX_A(                                                          \
+          , BOOST_PHOENIX_A(                                                    \
                 BOOST_PP_ADD(                                                   \
                     N                                                           \
                   , BOOST_PP_SEQ_SIZE(BOOST_PP_TUPLE_ELEM(2, 1, NAME))          \
@@ -159,9 +162,9 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
     {};                                                                         \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT)\
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT) \
         template <                                                              \
-            PHOENIX_typename_A_void(                                            \
+            BOOST_PHOENIX_typename_A_void(                                      \
                 BOOST_PP_ADD(                                                   \
                     LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ)))        \
             )                                                                   \
@@ -172,7 +175,7 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
         BOOST_PP_REPEAT_FROM_TO(                                                \
             1                                                                   \
           , BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ)))   \
-          , PHOENIX_DEFINE_EXPRESSION_VARARG_R                                  \
+          , BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG_R                            \
           , (                                                                   \
                 BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))               \
               , BOOST_PP_SEQ_POP_BACK(GRAMMAR_SEQ)                              \
@@ -180,7 +183,7 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
         )                                                                       \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_RULE_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT)     \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_RULE_VARARG(NAME_SEQ, GRAMMAR_SEQ, LIMIT) \
         struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                \
             : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ)) <  \
                 BOOST_PP_IF(                                                    \
@@ -199,19 +202,19 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
         {};                                                                     \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXPRESSION_EXT(NAME_SEQ, GRAMMAR_SEQ, ACTOR)  \
-        template <PHOENIX_typename_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>           \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_EXT(NAME_SEQ, GRAMMAR_SEQ, ACTOR) \
+        template <BOOST_PHOENIX_typename_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>     \
         struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                \
             : expr_ext<                                                         \
                 ACTOR                                                           \
               , tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))         \
-              , PHOENIX_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>                      \
+              , BOOST_PHOENIX_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>                \
         {};                                                                     \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R(_, N, NAME)                      \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R(_, N, NAME)                \
     template <                                                                  \
-        PHOENIX_typename_A(                                                     \
+        BOOST_PHOENIX_typename_A(                                               \
             BOOST_PP_ADD(                                                       \
                 N                                                               \
               , BOOST_PP_SEQ_SIZE(BOOST_PP_TUPLE_ELEM(3, 1, NAME))              \
@@ -219,14 +222,14 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
         )                                                                       \
     >                                                                           \
     struct BOOST_PP_TUPLE_ELEM(3, 0, NAME)<                                     \
-        PHOENIX_A(                                                              \
+        BOOST_PHOENIX_A(                                                        \
             BOOST_PP_ADD(N, BOOST_PP_SEQ_SIZE(BOOST_PP_TUPLE_ELEM(3, 1, NAME))) \
         )                                                                       \
     >                                                                           \
         : expr_ext<                                                             \
             BOOST_PP_TUPLE_ELEM(3, 2, NAME)                                     \
           , tag:: BOOST_PP_TUPLE_ELEM(3, 0, NAME)                               \
-          , PHOENIX_A(                                                          \
+          , BOOST_PHOENIX_A(                                                    \
                 BOOST_PP_ADD(                                                   \
                     N                                                           \
                   , BOOST_PP_SEQ_SIZE(BOOST_PP_TUPLE_ELEM(3, 1, NAME))          \
@@ -236,9 +239,9 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
     {};                                                                         \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_EXRPESSION_VARARG_EXT(N, G, D)                \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_EXRPESSION_VARARG_EXT(N, G, D)          \
         template <                                                              \
-            PHOENIX_typename_A_void(                                            \
+            BOOST_PHOENIX_typename_A_void(                                      \
                 BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(G)))         \
             )                                                                   \
           , typename Dummy = void                                               \
@@ -248,7 +251,7 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
         BOOST_PP_REPEAT_FROM_TO(                                                \
             1                                                                   \
           , BOOST_PP_ADD(LIMIT, BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(G)))             \
-          , PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R                              \
+          , BOOST_PHOENIX_DEFINE_EXPRESSION_EXT_VARARG_R                        \
           , (                                                                   \
               BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N))                        \
             , BOOST_PP_SEQ_POP_BACK(G)                                          \
@@ -257,7 +260,7 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
         )                                                                       \
 /**/
 
-#define PHOENIX_DEFINE_EXPRESSION_RULE_VARARG_EXT(N, GRAMMAR, D)                \
+#define BOOST_PHOENIX_DEFINE_EXPRESSION_RULE_VARARG_EXT(N, GRAMMAR, D)          \
         struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N))                       \
             : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N)) <         \
                 BOOST_PP_IF(                                                    \

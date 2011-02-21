@@ -1,7 +1,7 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_CORE_EXPRESSION_HPP
-#define PHOENIX_CORE_EXPRESSION_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_CORE_EXPRESSION_HPP
+#define BOOST_PHOENIX_CORE_EXPRESSION_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
@@ -17,10 +17,10 @@
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_CORE_EXPRESSION_HPP
-#define PHOENIX_CORE_EXPRESSION_HPP
+#ifndef BOOST_PHOENIX_CORE_EXPRESSION_HPP
+#define BOOST_PHOENIX_CORE_EXPRESSION_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
@@ -31,8 +31,8 @@
 #include <boost/proto/make_expr.hpp>
 #include <boost/proto/transform/pass_through.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/expression_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/expression_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*=============================================================================
@@ -44,7 +44,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
@@ -55,62 +55,62 @@ namespace boost { namespace phoenix
     template <
         template <typename> class Actor
       , typename Tag
-      , PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)
+      , BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_COMPOSITE_LIMIT)
       , typename Dummy = void>
     struct expr_ext;
 
     template <
         typename Tag
-      , PHOENIX_typename_A_void(PHOENIX_COMPOSITE_LIMIT)
+      , BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_COMPOSITE_LIMIT)
       , typename Dummy = void
     >
-    struct expr : expr_ext<actor, Tag, PHOENIX_A(PHOENIX_COMPOSITE_LIMIT)> {};
+    struct expr : expr_ext<actor, Tag, BOOST_PHOENIX_A(BOOST_PHOENIX_COMPOSITE_LIMIT)> {};
 
     struct default_domain_with_basic_expr
         : proto::domain<proto::use_basic_expr<proto::default_generator> >
     {};
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_COMPOSITE_LIMIT,                                            \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (1, BOOST_PHOENIX_COMPOSITE_LIMIT,                                      \
     <boost/phoenix/core/expression.hpp>))                                       \
 /**/
-    #include PHOENIX_ITERATE()
+    #include BOOST_PHOENIX_ITERATE()
 
 }}
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
 #endif
 
 #else
-    template <template <typename> class Actor, typename Tag, PHOENIX_typename_A>
-    struct expr_ext<Actor, Tag, PHOENIX_A>
-        : proto::transform<expr_ext<Actor, Tag, PHOENIX_A>, int>
+    template <template <typename> class Actor, typename Tag, BOOST_PHOENIX_typename_A>
+    struct expr_ext<Actor, Tag, BOOST_PHOENIX_A>
+        : proto::transform<expr_ext<Actor, Tag, BOOST_PHOENIX_A>, int>
     {
         typedef
             typename proto::result_of::make_expr<
                 Tag
               , default_domain_with_basic_expr
-              , PHOENIX_A
+              , BOOST_PHOENIX_A
             >::type
             base_type;
 
         typedef Actor<base_type> type;
 
         typedef
-            typename proto::nary_expr<Tag, PHOENIX_A>::proto_grammar
+            typename proto::nary_expr<Tag, BOOST_PHOENIX_A>::proto_grammar
             proto_grammar;
         
-        static type make(PHOENIX_A_a)
+        static type make(BOOST_PHOENIX_A_a)
         {
             actor<base_type> const e =
                 {
                     proto::make_expr<
                         Tag
                       , default_domain_with_basic_expr
-                    >(PHOENIX_a)
+                    >(BOOST_PHOENIX_a)
                 };
             return e;
         }
@@ -124,7 +124,7 @@ namespace boost { namespace phoenix
     #define BOOST_PHOENIX_ENUM_CHILDREN(_, N, __)                               \
         typedef BOOST_PP_CAT(A, N) BOOST_PP_CAT(proto_child, N);                \
     /**/
-        BOOST_PP_REPEAT(PHOENIX_ITERATION, BOOST_PHOENIX_ENUM_CHILDREN, _)
+        BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, BOOST_PHOENIX_ENUM_CHILDREN, _)
     #undef BOOST_PHOENIX_ENUM_CHILDREN
     };
 

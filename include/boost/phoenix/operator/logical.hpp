@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OPERATOR_LOGICAL_HPP
-#define PHOENIX_OPERATOR_LOGICAL_HPP
+#ifndef BOOST_PHOENIX_OPERATOR_LOGICAL_HPP
+#define BOOST_PHOENIX_OPERATOR_LOGICAL_HPP
 
 #include <boost/phoenix/operator/detail/define_operator.hpp>
 #include <boost/phoenix/core/expression.hpp>
@@ -14,10 +14,10 @@
 namespace boost { namespace phoenix
 {
 	
-	PHOENIX_UNARY_OPERATORS(
+	BOOST_PHOENIX_UNARY_OPERATORS(
 		(logical_not)
 	)
-	PHOENIX_BINARY_OPERATORS(
+	BOOST_PHOENIX_BINARY_OPERATORS(
 		(logical_and)
 		(logical_or)
 	)

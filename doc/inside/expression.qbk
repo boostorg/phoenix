@@ -147,16 +147,16 @@ These expressions generate the following:
 * an expression type in namespace expression
 ]
 
-[section PHOENIX_DEFINE_EXPRESSION]
+[section BOOST_PHOENIX_DEFINE_EXPRESSION]
 
 [heading Description]
 
-`PHOENIX_DEFINE_EXPRESSION` is a macro that can be used to generate all the
+`BOOST_PHOENIX_DEFINE_EXPRESSION` is a macro that can be used to generate all the
 necessary boilerplate to create Phoenix Expressions
 
 [heading Synopsis]
     
-    PHOENIX_DEFINE_EXPRESSION(
+    BOOST_PHOENIX_DEFINE_EXPRESSION(
         (namespace_seq)(name)
       , (child_grammar0)
         (child_grammar1)
@@ -227,16 +227,16 @@ The example from the previous section can be rewritten as:
 
 [endsect]
 
-[section PHOENIX_DEFINE_EXPRESSION_VARARG]
+[section BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG]
 
 [heading Description]
 
-`PHOENIX_DEFINE_EXPRESSION_VARARG` is a macro that can be used to generate all the
+`BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG` is a macro that can be used to generate all the
 necessary boilerplate to create Phoenix Expressions
 
 [heading Synopsis]
     
-    PHOENIX_DEFINE_EXPRESSION_VARARG(
+    BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
         (namespace_seq)(name)
       , (child_grammar0)
         (child_grammar1)
@@ -294,12 +294,12 @@ of namespaces under which the following symbols will be defined:
 
 [heading Example]
 
-    PHOENIX_DEFINE_EXPRESSION_VARARG(
+    BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
         (boost)(phoenix)(mem_fun_ptr)
       , (meta_grammar)                // Pointer to Object
         (meta_grammar)                // Member pointer
         (meta_grammar)                // Variable number of arguments
-      , PHOENIX_LIMIT
+      , BOOST_PHOENIX_LIMIT
     )
 
 This defines the member function pointer operator expression as described in
@@ -307,16 +307,16 @@ This defines the member function pointer operator expression as described in
 
 [endsect]
 
-[section PHOENIX_DEFINE_EXPRESSION_EXT]
+[section BOOST_PHOENIX_DEFINE_EXPRESSION_EXT]
 
 [heading Description]
 
-`PHOENIX_DEFINE_EXPRESSION_EXT` is a macro that can be used to generate all the
+`BOOST_PHOENIX_DEFINE_EXPRESSION_EXT` is a macro that can be used to generate all the
 necessary boilerplate to create Phoenix Expressions
 
 [heading Synopsis]
     
-    PHOENIX_DEFINE_EXPRESSION_EXT(
+    BOOST_PHOENIX_DEFINE_EXPRESSION_EXT(
         actor
       , (namespace_seq)(name)
       , (child_grammar0)
@@ -374,7 +374,7 @@ This macros also adds a specialization for `meta_grammar::case_<tag::name>`.
 
 [heading Example]
 
-    PHOENIX_DEFINE_EXPRESSION_EXT(
+    BOOST_PHOENIX_DEFINE_EXPRESSION_EXT(
         if_actor
       , (boost)(phoenix)(if_)
       , (meta_grammar) // Cond
@@ -385,16 +385,16 @@ This defines the if_ expression. The custom actor defines the `else_`.
 
 [endsect]
 
-[section PHOENIX_DEFINE_EXPRESSION_EXT_VARARG]
+[section BOOST_PHOENIX_DEFINE_EXPRESSION_EXT_VARARG]
 
 [heading Description]
 
-`PHOENIX_DEFINE_EXPRESSION_EXT_VARARG` is a macro that can be used to generate all the
+`BOOST_PHOENIX_DEFINE_EXPRESSION_EXT_VARARG` is a macro that can be used to generate all the
 necessary boilerplate to create Phoenix Expressions
 
 [heading Synopsis]
     
-    PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(
+    BOOST_PHOENIX_DEFINE_EXPRESSION_EXT_VARARG(
         actor
       , (namespace_seq)(name)
       , (child_grammar0)

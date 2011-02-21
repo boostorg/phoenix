@@ -143,10 +143,10 @@ In Phoenix we emulated perfect forwarding through preprocessor macros generating
 code to allow const and non-const references.
 
 We generate these second-stage overloads for Phoenix expression up to
-`PHOENIX_PERFECT_FORWARD_LIMIT`
+`BOOST_PHOENIX_PERFECT_FORWARD_LIMIT`
 
-[note You can set `PHOENIX_PERFECT_FORWARD_LIMIT`, the predefined maximum perfect
-forward arguments an actor can take. By default, `PHOENIX_PERFECT_FORWARDLIMIT`
+[note You can set `BOOST_PHOENIX_PERFECT_FORWARD_LIMIT`, the predefined maximum perfect
+forward arguments an actor can take. By default, `BOOST_PHOENIX_PERFECT_FORWARDLIMIT`
 is set to 3.]
 
 

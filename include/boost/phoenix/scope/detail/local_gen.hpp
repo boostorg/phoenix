@@ -1,7 +1,7 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
-#define PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
+#define BOOST_PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
@@ -10,15 +10,15 @@
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
-#define PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
+#ifndef BOOST_PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
+#define BOOST_PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/local_gen_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/local_gen_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -29,11 +29,11 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-#define PHOENIX_LOCAL_GEN_KEY_TYPES(_, N, __)                                   \
+#define BOOST_PHOENIX_LOCAL_GEN_KEY_TYPES(_, N, __)                             \
     BOOST_PP_COMMA_IF(N)                                                        \
     typename proto::result_of::value<                                           \
         typename proto::result_of::child_c<                                     \
@@ -43,24 +43,24 @@
     >::type::type::key_type                                                     \
 /**/
 
-#define PHOENIX_LOCAL_GEN_ACTOR(_, N, __)                                       \
+#define BOOST_PHOENIX_LOCAL_GEN_ACTOR(_, N, __)                                 \
     BOOST_PP_COMMA_IF(N) proto::child_c<1>(a ## N)                              \
 /**/
 
-#define PHOENIX_LOCAL_GEN_ACTOR_TYPES(_, n, __)                                 \
+#define BOOST_PHOENIX_LOCAL_GEN_ACTOR_TYPES(_, n, __)                           \
     BOOST_PP_COMMA_IF(n) typename proto::result_of::child_c<A ## n, 1>::type    \
 /**/
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (3, PHOENIX_LOCAL_LIMIT,                                                \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (3, BOOST_PHOENIX_LOCAL_LIMIT,                                          \
     <boost/phoenix/scope/detail/local_gen.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-#undef PHOENIX_LOCAL_GEN_KEY_TYPES
-#undef PHOENIX_LOCAL_GEN_ACTOR
-#undef PHOENIX_LOCAL_GEN_ACTOR_TYPES
+#undef BOOST_PHOENIX_LOCAL_GEN_KEY_TYPES
+#undef BOOST_PHOENIX_LOCAL_GEN_ACTOR
+#undef BOOST_PHOENIX_LOCAL_GEN_ACTOR_TYPES
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -68,18 +68,40 @@
 
 #else
 
-        template <PHOENIX_typename_A>
-        PHOENIX_LOCAL_GEN_NAME<
-            BOOST_PP_CAT(vector, PHOENIX_ITERATION)<PHOENIX_LOCAL_GEN_ACTOR_TYPES>
-          , detail::map_local_index_to_tuple<BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_KEY_TYPES, _)>
+        template <BOOST_PHOENIX_typename_A>
+        BOOST_PHOENIX_LOCAL_GEN_NAME<
+            BOOST_PP_CAT(
+                vector
+              , BOOST_PHOENIX_ITERATION)<BOOST_PHOENIX_LOCAL_GEN_ACTOR_TYPES>
+          , detail::map_local_index_to_tuple<
+                BOOST_PP_REPEAT(
+                    BOOST_PHOENIX_ITERATION
+                  , BOOST_PHOENIX_LOCAL_GEN_KEY_TYPES
+                  , _
+                )
+            >
         > const
-        operator()(PHOENIX_A_const_ref_a) const
+        operator()(BOOST_PHOENIX_A_const_ref_a) const
         {
             return
                 BOOST_PP_CAT(
-                     vector, PHOENIX_ITERATION)<BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_ACTOR_TYPES_I, _)>(BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_LOCAL_GEN_ACTOR, _));
+                     vector
+                  , BOOST_PHOENIX_ITERATION
+                )<
+                    BOOST_PP_REPEAT(
+                        BOOST_PHOENIX_ITERATION
+                      , BOOST_PHOENIX_LOCAL_GEN_ACTOR_TYPES_I
+                      , _
+                    )
+                >(
+                    BOOST_PP_REPEAT(
+                        BOOST_PHOENIX_ITERATION
+                      , BOOST_PHOENIX_LOCAL_GEN_ACTOR
+                      , _
+                    )
+                );
         }
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

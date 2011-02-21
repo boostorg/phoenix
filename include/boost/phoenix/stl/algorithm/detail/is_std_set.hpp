@@ -16,8 +16,8 @@
 # pragma once
 #endif
 
-#ifndef IS_STD_SET_EN_16_12_2004
-#define IS_STD_SET_EN_16_12_2004
+#ifndef BOOST_PHOENIX_IS_STD_SET_EN_16_12_2004
+#define BOOST_PHOENIX_IS_STD_SET_EN_16_12_2004
 
 #include <boost/mpl/bool.hpp>
 #include <boost/detail/container_fwd.hpp>

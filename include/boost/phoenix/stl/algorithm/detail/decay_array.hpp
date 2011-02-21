@@ -7,8 +7,8 @@
 //
 // Modeled after range_ex, Copyright 2004 Eric Niebler
 
-#ifndef PHOENIX_ALGORITHM_DETAIL_DECAY_ARRAY_HPP
-#define PHOENIX_ALGORITHM_DETAIL_DECAY_ARRAY_HPP
+#ifndef BOOST_PHOENIX_ALGORITHM_DETAIL_DECAY_ARRAY_HPP
+#define BOOST_PHOENIX_ALGORITHM_DETAIL_DECAY_ARRAY_HPP
 
 namespace boost { namespace phoenix {
 namespace detail

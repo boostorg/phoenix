@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_IS_ACTOR_HPP
-#define PHOENIX_CORE_IS_ACTOR_HPP
+#ifndef BOOST_PHOENIX_CORE_IS_ACTOR_HPP
+#define BOOST_PHOENIX_CORE_IS_ACTOR_HPP
 
 #include <boost/mpl/bool.hpp>
 

@@ -5,21 +5,21 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if !defined(PHOENIX_PREPROCESSED_DYNAMIC)
-#define PHOENIX_PREPROCESSED_DYNAMIC
+#if !defined(BOOST_PHOENIX_PREPROCESSED_DYNAMIC)
+#define BOOST_PHOENIX_PREPROCESSED_DYNAMIC
 
-#if PHOENIX_LIMIT <= 10
+#if BOOST_PHOENIX_LIMIT <= 10
 #include <boost/phoenix/scope/detail/preprocessed/dynamic_10.hpp>
-#elif PHOENIX_LIMIT <= 20
+#elif BOOST_PHOENIX_LIMIT <= 20
 #include <boost/phoenix/scope/detail/preprocessed/dynamic_20.hpp>
-#elif PHOENIX_LIMIT <= 30
+#elif BOOST_PHOENIX_LIMIT <= 30
 #include <boost/phoenix/scope/detail/preprocessed/dynamic_30.hpp>
-#elif PHOENIX_LIMIT <= 40
+#elif BOOST_PHOENIX_LIMIT <= 40
 #include <boost/phoenix/scope/detail/preprocessed/dynamic_40.hpp>
-#elif PHOENIX_LIMIT <= 50
+#elif BOOST_PHOENIX_LIMIT <= 50
 #include <boost/phoenix/scope/detail/preprocessed/dynamic_50.hpp>
 #else
-#error "PHOENIX_LIMIT out of bounds for preprocessed headers"
+#error "BOOST_PHOENIX_LIMIT out of bounds for preprocessed headers"
 #endif
 
 #endif

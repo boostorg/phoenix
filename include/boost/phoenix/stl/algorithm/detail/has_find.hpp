@@ -12,12 +12,8 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#if defined(_MSC_VER) && _MSC_VER >= 1000
-#pragma once
-#endif
-
-#ifndef HAS_FIND_EN_14_12_2004
-#define HAS_FIND_EN_14_12_2004
+#ifndef BOOST_PHOENIX_HAS_FIND_EN_14_12_2004
+#define BOOST_PHOENIX_HAS_FIND_EN_14_12_2004
 
 #include <boost/mpl/or.hpp>
 #include "./is_std_map.hpp"

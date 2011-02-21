@@ -16,8 +16,8 @@
 #pragma once
 #endif
 
-#ifndef HAS_EQUAL_RANGE_EN_14_12_2004
-#define HAS_EQUAL_RANGE_EN_14_12_2004
+#ifndef BOOST_PHOENIX_HAS_EQUAL_RANGE_EN_14_12_2004
+#define BOOST_PHOENIX_HAS_EQUAL_RANGE_EN_14_12_2004
 
 #include <boost/mpl/or.hpp>
 #include "./is_std_map.hpp"

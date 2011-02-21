@@ -1,8 +1,7 @@
 
-/*
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
-#define PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
+#define BOOST_PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
@@ -10,17 +9,16 @@
 
 #endif
 #else
-*/
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
-#define PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
+#ifndef BOOST_PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
+#define BOOST_PHOENIX_CORE_DETAIL_ACTOR_RESULT_OF_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_result_of_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_result_of_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -31,14 +29,14 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
     namespace result_of
     {
         template <typename Expr
-            , PHOENIX_typename_A_void(PHOENIX_ACTOR_LIMIT)
+            , BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_ACTOR_LIMIT)
             , typename Dummy = void>
         struct actor;
 
@@ -70,14 +68,14 @@
             type;
         };
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_ACTOR_LIMIT,                                                \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                          \
     <boost/phoenix/core/detail/actor_result_of.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
     }
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -85,8 +83,8 @@
 
 #else
 
-        template <typename Expr, PHOENIX_typename_A>
-        struct actor<Expr, PHOENIX_A>
+        template <typename Expr, BOOST_PHOENIX_typename_A>
+        struct actor<Expr, BOOST_PHOENIX_A>
         {
             typedef
                 typename phoenix::evaluator::
@@ -95,8 +93,8 @@
                       , vector2<
                             BOOST_PP_CAT(
                                 vector
-                              , BOOST_PP_INC(PHOENIX_ITERATION)
-                            )<const ::boost::phoenix::actor<Expr> *, PHOENIX_A> &
+                              , BOOST_PP_INC(BOOST_PHOENIX_ITERATION)
+                            )<const ::boost::phoenix::actor<Expr> *, BOOST_PHOENIX_A> &
                           , default_actions
                         > const &
                       , int
@@ -106,4 +104,4 @@
 
 #endif
 
-//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

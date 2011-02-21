@@ -16,7 +16,7 @@
     struct dynamic<A0> : noncopyable
     {
         typedef
-            fusion::vector1<A0>
+            vector1<A0>
             tuple_type;
         typedef
             dynamic<A0>
@@ -50,7 +50,7 @@
     struct dynamic<A0 , A1> : noncopyable
     {
         typedef
-            fusion::vector2<A0 , A1>
+            vector2<A0 , A1>
             tuple_type;
         typedef
             dynamic<A0 , A1>
@@ -84,7 +84,7 @@
     struct dynamic<A0 , A1 , A2> : noncopyable
     {
         typedef
-            fusion::vector3<A0 , A1 , A2>
+            vector3<A0 , A1 , A2>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2>
@@ -118,7 +118,7 @@
     struct dynamic<A0 , A1 , A2 , A3> : noncopyable
     {
         typedef
-            fusion::vector4<A0 , A1 , A2 , A3>
+            vector4<A0 , A1 , A2 , A3>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2 , A3>
@@ -152,7 +152,7 @@
     struct dynamic<A0 , A1 , A2 , A3 , A4> : noncopyable
     {
         typedef
-            fusion::vector5<A0 , A1 , A2 , A3 , A4>
+            vector5<A0 , A1 , A2 , A3 , A4>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2 , A3 , A4>
@@ -186,7 +186,7 @@
     struct dynamic<A0 , A1 , A2 , A3 , A4 , A5> : noncopyable
     {
         typedef
-            fusion::vector6<A0 , A1 , A2 , A3 , A4 , A5>
+            vector6<A0 , A1 , A2 , A3 , A4 , A5>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2 , A3 , A4 , A5>
@@ -220,7 +220,7 @@
     struct dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6> : noncopyable
     {
         typedef
-            fusion::vector7<A0 , A1 , A2 , A3 , A4 , A5 , A6>
+            vector7<A0 , A1 , A2 , A3 , A4 , A5 , A6>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6>
@@ -254,7 +254,7 @@
     struct dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7> : noncopyable
     {
         typedef
-            fusion::vector8<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>
+            vector8<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>
@@ -288,7 +288,7 @@
     struct dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8> : noncopyable
     {
         typedef
-            fusion::vector9<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>
+            vector9<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>
@@ -322,7 +322,7 @@
     struct dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9> : noncopyable
     {
         typedef
-            fusion::vector10<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9>
+            vector10<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9>
             tuple_type;
         typedef
             dynamic<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9>

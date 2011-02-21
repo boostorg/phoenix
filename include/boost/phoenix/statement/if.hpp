@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_STATEMENT_IF_HPP
-#define PHOENIX_STATEMENT_IF_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_IF_HPP
+#define BOOST_PHOENIX_STATEMENT_IF_HPP
 
 #include <boost/config.hpp>
 #include <boost/phoenix/core/limits.hpp>
@@ -25,14 +25,14 @@ namespace boost { namespace phoenix
     template <typename> struct if_actor;
 }}
     
-PHOENIX_DEFINE_EXPRESSION_EXT(
+BOOST_PHOENIX_DEFINE_EXPRESSION_EXT(
     if_actor
   , (boost)(phoenix)(if_)
   , (meta_grammar) // Cond
     (meta_grammar) // Then
 )
     
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(if_else_statement)
   , (meta_grammar) // Cond
     (meta_grammar) // Then

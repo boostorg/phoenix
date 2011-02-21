@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SCOPE_LAMBDA_HPP
-#define PHOENIX_SCOPE_LAMBDA_HPP
+#ifndef BOOST_PHOENIX_SCOPE_LAMBDA_HPP
+#define BOOST_PHOENIX_SCOPE_LAMBDA_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/mpl/int.hpp>
@@ -17,7 +17,7 @@
 #include <boost/phoenix/scope/local_variable.hpp>
 #include <boost/phoenix/scope/scoped_environment.hpp>
     
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(lambda)
   , (proto::terminal<proto::_>) // OuterEnv 
     (proto::terminal<proto::_>) // Locals
@@ -349,18 +349,25 @@ namespace boost { namespace phoenix
             return lambda_actor_gen<>();
         }
 
-    #define PHOENIX_LAMBDA_LOCAL_GEN(Z, N, DATA)                                \
-        template <PHOENIX_typename_A(N)>                                        \
+    #define BOOST_PHOENIX_LAMBDA_LOCAL_GEN(Z, N, DATA)                          \
+        template <BOOST_PHOENIX_typename_A(N)>                                  \
         lambda_actor_gen<                                                       \
-            typename detail::make_locals<PHOENIX_A(N)>::type                    \
+            typename detail::make_locals<BOOST_PHOENIX_A(N)>::type              \
         > const                                                                 \
-        operator()(PHOENIX_A_const_ref_a(N)) const                              \
+        operator()(BOOST_PHOENIX_A_const_ref_a(N)) const                        \
         {                                                                       \
-            return detail::make_locals<PHOENIX_A(N)>::make(PHOENIX_a(N));       \
+            return                                                              \
+                detail::make_locals<BOOST_PHOENIX_A(N)>                         \
+                    ::make(BOOST_PHOENIX_a(N));                                 \
         }                                                                       \
     /**/
-        BOOST_PP_REPEAT_FROM_TO(1, PHOENIX_LOCAL_LIMIT, PHOENIX_LAMBDA_LOCAL_GEN, _)
-
+        BOOST_PP_REPEAT_FROM_TO(
+            1
+          , BOOST_PHOENIX_LOCAL_LIMIT
+          , BOOST_PHOENIX_LAMBDA_LOCAL_GEN
+          , _
+        )
+    #undef BOOST_PHOENIX_LAMBDA_LOCAL_GEN
     };
 
     lambda_local_gen const lambda = lambda_local_gen();

@@ -17,10 +17,10 @@
             typedef
                 typename evaluator::impl<
                     Expr const&
-                  , fusion::vector2<
-						      fusion::vector1<const ::boost::phoenix::actor<Expr> *>
+                  , vector2<
+                        vector1<const ::boost::phoenix::actor<Expr> *> &
                       , default_actions
-						  >
+                    > const &
                   , int
                 >::result_type
                 type;
@@ -31,7 +31,7 @@
             typedef
                 
                 typename mpl::eval_if<
-                    typename result_of::is_nullary<Expr>::type
+                    result_of::is_nullary<Expr>
                   , nullary_actor_result<Expr>
                   , mpl::identity<detail::error_expecting_arguments>
                 >::type
@@ -51,10 +51,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector2<const ::boost::phoenix::actor<Expr> *, A0>
+                      , vector2<
+                            vector2<const ::boost::phoenix::actor<Expr> *, A0> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -73,10 +73,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector3<const ::boost::phoenix::actor<Expr> *, A0 , A1>
+                      , vector2<
+                            vector3<const ::boost::phoenix::actor<Expr> *, A0 , A1> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -95,10 +95,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector4<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2>
+                      , vector2<
+                            vector4<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -117,10 +117,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector5<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3>
+                      , vector2<
+                            vector5<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -139,10 +139,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector6<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4>
+                      , vector2<
+                            vector6<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -161,10 +161,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector7<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5>
+                      , vector2<
+                            vector7<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -183,10 +183,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector8<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6>
+                      , vector2<
+                            vector8<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -205,10 +205,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector9<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>
+                      , vector2<
+                            vector9<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -227,10 +227,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector10<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>
+                      , vector2<
+                            vector10<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -249,10 +249,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector11<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9>
+                      , vector2<
+                            vector11<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -271,10 +271,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector12<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10>
+                      , vector2<
+                            vector12<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -293,10 +293,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector13<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11>
+                      , vector2<
+                            vector13<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -315,10 +315,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector14<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12>
+                      , vector2<
+                            vector14<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -337,10 +337,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector15<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13>
+                      , vector2<
+                            vector15<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -359,10 +359,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector16<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14>
+                      , vector2<
+                            vector16<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -381,10 +381,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector17<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15>
+                      , vector2<
+                            vector17<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -403,10 +403,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector18<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16>
+                      , vector2<
+                            vector18<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -425,10 +425,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector19<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17>
+                      , vector2<
+                            vector19<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -447,10 +447,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector20<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18>
+                      , vector2<
+                            vector20<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -469,10 +469,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector21<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19>
+                      , vector2<
+                            vector21<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -491,10 +491,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector22<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20>
+                      , vector2<
+                            vector22<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -513,10 +513,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector23<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21>
+                      , vector2<
+                            vector23<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -535,10 +535,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector24<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22>
+                      , vector2<
+                            vector24<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -557,10 +557,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector25<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23>
+                      , vector2<
+                            vector25<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -579,10 +579,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector26<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24>
+                      , vector2<
+                            vector26<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -601,10 +601,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector27<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25>
+                      , vector2<
+                            vector27<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -623,10 +623,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector28<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26>
+                      , vector2<
+                            vector28<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -645,10 +645,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector29<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27>
+                      , vector2<
+                            vector29<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -667,10 +667,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector30<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28>
+                      , vector2<
+                            vector30<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -689,10 +689,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector31<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29>
+                      , vector2<
+                            vector31<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -711,10 +711,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector32<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30>
+                      , vector2<
+                            vector32<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -733,10 +733,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector33<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31>
+                      , vector2<
+                            vector33<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -755,10 +755,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector34<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32>
+                      , vector2<
+                            vector34<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -777,10 +777,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector35<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33>
+                      , vector2<
+                            vector35<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -799,10 +799,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector36<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34>
+                      , vector2<
+                            vector36<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -821,10 +821,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector37<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35>
+                      , vector2<
+                            vector37<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -843,10 +843,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector38<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36>
+                      , vector2<
+                            vector38<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -865,10 +865,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector39<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36 , A37>
+                      , vector2<
+                            vector39<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36 , A37> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -887,10 +887,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector40<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36 , A37 , A38>
+                      , vector2<
+                            vector40<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36 , A37 , A38> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;
@@ -909,10 +909,10 @@
                 typename phoenix::evaluator::
                     impl<
                         Expr const&
-                      , fusion::vector2<
-                            fusion::vector41<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36 , A37 , A38 , A39>
+                      , vector2<
+                            vector41<const ::boost::phoenix::actor<Expr> *, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9 , A10 , A11 , A12 , A13 , A14 , A15 , A16 , A17 , A18 , A19 , A20 , A21 , A22 , A23 , A24 , A25 , A26 , A27 , A28 , A29 , A30 , A31 , A32 , A33 , A34 , A35 , A36 , A37 , A38 , A39> &
                           , default_actions
-                        >
+                        > const &
                       , int
                     >::result_type
                 type;

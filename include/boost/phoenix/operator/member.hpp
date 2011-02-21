@@ -1,7 +1,7 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_OPERATOR_MEMBER_HPP
-#define PHOENIX_OPERATOR_MEMBER_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_OPERATOR_MEMBER_HPP
+#define BOOST_PHOENIX_OPERATOR_MEMBER_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/get_pointer.hpp>
@@ -18,10 +18,10 @@
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_OPERATOR_MEMBER_HPP
-#define PHOENIX_OPERATOR_MEMBER_HPP
+#ifndef BOOST_PHOENIX_OPERATOR_MEMBER_HPP
+#define BOOST_PHOENIX_OPERATOR_MEMBER_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/get_pointer.hpp>
@@ -33,8 +33,8 @@
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/member_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/member_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -45,23 +45,21 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
 #include <boost/phoenix/operator/detail/define_operator.hpp>
 
-PHOENIX_DEFINE_EXPRESSION_VARARG(
+BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
     (boost)(phoenix)(mem_fun_ptr)
   , (meta_grammar)
-    (meta_grammar)
-    (meta_grammar)
-  , PHOENIX_LIMIT
+  , BOOST_PHOENIX_LIMIT
 )
 
 namespace boost { namespace phoenix
 {
-    PHOENIX_BINARY_OPERATORS(
+    BOOST_PHOENIX_BINARY_OPERATORS(
         (mem_ptr)
     )
 
@@ -79,7 +77,7 @@ namespace boost { namespace phoenix
     {
         template <
             typename Context
-          , PHOENIX_typename_A_void(PHOENIX_LIMIT)
+          , BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_LIMIT)
           , typename Dummy = void
         >
         struct mem_fun_ptr_eval;
@@ -92,18 +90,18 @@ namespace boost { namespace phoenix
         template<typename Sig>
         struct result;
 
-    #define PHOENIX_MEMBER_EVAL(Z, N, D)                                        \
+    #define BOOST_PHOENIX_MEMBER_EVAL(Z, N, D)                                  \
         BOOST_PP_COMMA_IF(BOOST_PP_NOT(BOOST_PP_EQUAL(N, 2)))                   \
-        eval(BOOST_PP_CAT(a, N), ctx)                                    \
+        eval(BOOST_PP_CAT(a, N), ctx)                                           \
     /**/
 
-    #define PHOENIX_ITERATION_PARAMS                                            \
-        (4, (2, PHOENIX_LIMIT,                                                  \
+    #define BOOST_PHOENIX_ITERATION_PARAMS                                      \
+        (4, (2, BOOST_PHOENIX_LIMIT,                                            \
         <boost/phoenix/operator/member.hpp>,                                    \
-        PHOENIX_ITERATE_OPERATOR))                                              \
+        BOOST_PHOENIX_ITERATE_OPERATOR))                                        \
     /**/
-        #include PHOENIX_ITERATE()
-    #undef PHOENIX_MEMBER_EVAL
+        #include BOOST_PHOENIX_ITERATE()
+    #undef BOOST_PHOENIX_MEMBER_EVAL
     };
 
     template <typename Dummy>
@@ -114,28 +112,28 @@ namespace boost { namespace phoenix
 
 #include <boost/phoenix/operator/detail/undef_operator.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
 #endif
 
-#else // PHOENIX_IS_ITERATING
+#else // BOOST_PHOENIX_IS_ITERATING
 
-        template <typename This, typename Context, PHOENIX_typename_A>
-        struct result<This(Context, PHOENIX_A)>
-            : result<This(Context, PHOENIX_A_const_ref)>
+        template <typename This, typename Context, BOOST_PHOENIX_typename_A>
+        struct result<This(Context, BOOST_PHOENIX_A)>
+            : result<This(Context, BOOST_PHOENIX_A_const_ref)>
         {};
 
-        template <typename This, typename Context, PHOENIX_typename_A>
-        struct result<This(Context, PHOENIX_A_ref)>
-            : result_of::mem_fun_ptr_eval<Context, PHOENIX_A>
+        template <typename This, typename Context, BOOST_PHOENIX_typename_A>
+        struct result<This(Context, BOOST_PHOENIX_A_ref)>
+            : result_of::mem_fun_ptr_eval<Context, BOOST_PHOENIX_A>
         {};
 
-        template <typename Context, PHOENIX_typename_A>
-        typename result_of::mem_fun_ptr_eval<Context, PHOENIX_A>::type
+        template <typename Context, BOOST_PHOENIX_typename_A>
+        typename result_of::mem_fun_ptr_eval<Context, BOOST_PHOENIX_A>::type
         operator()(
-            Context const & ctx, PHOENIX_A_const_ref_a
+            Context const & ctx, BOOST_PHOENIX_A_const_ref_a
         ) const
         {
             return
@@ -145,9 +143,9 @@ namespace boost { namespace phoenix
                 )(
                     BOOST_PP_REPEAT_FROM_TO(
                         2
-                      , PHOENIX_ITERATION
-                      , PHOENIX_MEMBER_EVAL
-                      , PHOENIX_ITERATION
+                      , BOOST_PHOENIX_ITERATION
+                      , BOOST_PHOENIX_MEMBER_EVAL
+                      , BOOST_PHOENIX_ITERATION
                     )
                 );
         }
@@ -155,4 +153,4 @@ namespace boost { namespace phoenix
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

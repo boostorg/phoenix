@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
-#define PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
+#ifndef BOOST_PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
+#define BOOST_PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/container/map.hpp>
@@ -259,7 +259,7 @@ namespace boost { namespace phoenix
     namespace detail
     {
         template <
-            PHOENIX_typename_A_void(PHOENIX_LOCAL_LIMIT)
+            BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_LOCAL_LIMIT)
           , typename Dummy = void
         >
         struct make_locals;

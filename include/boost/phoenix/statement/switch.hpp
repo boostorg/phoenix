@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_STATEMENT_SWITCH_HPP
-#define PHOENIX_STATEMENT_SWITCH_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_SWITCH_HPP
+#define BOOST_PHOENIX_STATEMENT_SWITCH_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/call.hpp>
@@ -16,13 +16,13 @@
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/make_expr.hpp>
 
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(switch_case)
   , (proto::terminal<proto::_>)
     (meta_grammar)
 )
 
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(switch_default_case)
   , (meta_grammar)
 )
@@ -100,7 +100,7 @@ namespace boost { namespace phoenix
     }
 }}
 
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(switch_)
   , (meta_grammar)           // Cond
     (detail::switch_grammar) // Cases

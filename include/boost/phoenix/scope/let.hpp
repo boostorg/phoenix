@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SCOPE_LET_HPP
-#define PHOENIX_SCOPE_LET_HPP
+#ifndef BOOST_PHOENIX_SCOPE_LET_HPP
+#define BOOST_PHOENIX_SCOPE_LET_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/algorithm/transformation/transform.hpp>
@@ -19,7 +19,7 @@
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/phoenix/support/vector.hpp>
 
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(let)
   , (proto::terminal<proto::_>)
     (meta_grammar)

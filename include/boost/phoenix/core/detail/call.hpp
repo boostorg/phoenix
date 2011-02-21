@@ -1,19 +1,20 @@
 
-/*
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_CORE_DETAIL_CALL_HPP
-#define PHOENIX_CORE_DETAIL_CALL_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
+#define BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
+
+#include <boost/phoenix/core/detail/preprocessed/call.hpp>
 
 #endif
 #else
-*/
-#if !PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_CORE_DETAIL_CALL_HPP
-#define PHOENIX_CORE_DETAIL_CALL_HPP
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/call_" PHOENIX_LIMIT_STR ".hpp")
+#ifndef BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
+#define BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
+
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/call_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -26,7 +27,7 @@
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
@@ -42,16 +43,16 @@
 
     namespace detail
     {
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_LIMIT,                                                      \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (1, BOOST_PHOENIX_LIMIT,                                                \
     <boost/phoenix/core/detail/call.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
     }
 
 #undef M0
 #undef M1
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -60,17 +61,19 @@
 #else
         
         template <typename Fun, typename Expr, typename State, typename Data>
-        struct call_impl<Fun, Expr, State, Data, PHOENIX_ITERATION>
+        struct call_impl<Fun, Expr, State, Data, BOOST_PHOENIX_ITERATION>
             : proto::transform_impl<Expr, State, Data>
         {
             typedef
                 typename boost::phoenix::result_of::context<State, Data>::type
                 context_type;
 
-            BOOST_PP_REPEAT(PHOENIX_ITERATION, M0, _)
+            BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M0, _)
 
             typedef
-                typename boost::result_of<Fun(context_type, PHOENIX_A)>::type
+                typename boost::result_of<
+                    Fun(context_type, BOOST_PHOENIX_A)
+                >::type
                 result_type;
 
             result_type operator()(
@@ -79,10 +82,11 @@
               , typename call_impl::data_param d
             ) const
             {
-                return Fun()(boost::phoenix::context(s, d) BOOST_PP_REPEAT(PHOENIX_ITERATION, M1, _));
+                return Fun()(boost::phoenix::context(s, d)
+                    BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M1, _));
             }
         };
 
 #endif
 
-//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

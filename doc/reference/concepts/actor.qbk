@@ -13,14 +13,14 @@
 
 The Actor is the main concept behind the library.
 
-Actors are TR1 function objects and can accept 0 to `PHOENIX_LIMIT` arguments.
+Actors are TR1 function objects and can accept 0 to `BOOST_PHOENIX_LIMIT` arguments.
 An Actor is responsible for setting up the __phoenix_concept_environment__ which
 is then passed to the __phoenix_concept_evaluator__.
 Every Actor needs to somehow embed the expression it is supposed to evaluate.
 An Actor itself is required to be a valid Expression.
 
-[note You can set `PHOENIX_LIMIT`, the predefined maximum arity an
-actor can take. By default, `PHOENIX_LIMIT` is set to 10.]
+[note You can set `BOOST_PHOENIX_LIMIT`, the predefined maximum arity an
+actor can take. By default, `BOOST_PHOENIX_LIMIT` is set to 10.]
 
 
 [variablelist Notation

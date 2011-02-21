@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OBJECT_NEW_HPP
-#define PHOENIX_OBJECT_NEW_HPP
+#ifndef BOOST_PHOENIX_OBJECT_NEW_HPP
+#define BOOST_PHOENIX_OBJECT_NEW_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
@@ -16,11 +16,11 @@
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 
-PHOENIX_DEFINE_EXPRESSION_VARARG(
+BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
     (boost)(phoenix)(new_)
   , (proto::terminal<detail::target<proto::_> >)
     (meta_grammar)
-  , PHOENIX_COMPOSITE_LIMIT
+  , BOOST_PHOENIX_COMPOSITE_LIMIT
 )
 
 namespace boost { namespace phoenix

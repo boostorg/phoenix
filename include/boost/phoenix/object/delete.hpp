@@ -5,15 +5,15 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OBJECT_DELETE_HPP
-#define PHOENIX_OBJECT_DELETE_HPP
+#ifndef BOOST_PHOENIX_OBJECT_DELETE_HPP
+#define BOOST_PHOENIX_OBJECT_DELETE_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/call.hpp>
 
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(delete_)
   , (meta_grammar)
 )

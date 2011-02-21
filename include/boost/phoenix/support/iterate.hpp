@@ -4,14 +4,14 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SUPPORT_ITERATE_HPP
-#define PHOENIX_SUPPORT_ITERATE_HPP
+#ifndef BOOST_PHOENIX_SUPPORT_ITERATE_HPP
+#define BOOST_PHOENIX_SUPPORT_ITERATE_HPP
 
 #include <boost/preprocessor/iteration/iterate.hpp>
 
-#define PHOENIX_IS_ITERATING 0
+#define BOOST_PHOENIX_IS_ITERATING 0
 
-#define PHOENIX_ITERATE()                                                       \
+#define BOOST_PHOENIX_ITERATE()                                                 \
     <boost/phoenix/support/detail/iterate.hpp>
 
 #include <boost/phoenix/support/detail/iterate_define.hpp>

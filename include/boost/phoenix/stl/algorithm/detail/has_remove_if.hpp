@@ -16,8 +16,8 @@
 #pragma once
 #endif
 
-#ifndef HAS_REMOVE_IF_EN_14_12_2004
-#define HAS_REMOVE_IF_EN_14_12_2004
+#ifndef BOOST_PHOENIX_HAS_REMOVE_IF_EN_14_12_2004
+#define BOOST_PHOENIX_HAS_REMOVE_IF_EN_14_12_2004
 
 #include "./is_std_list.hpp"
 

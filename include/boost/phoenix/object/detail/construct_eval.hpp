@@ -1,19 +1,21 @@
 
-/*
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
-#define PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
+#define BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
 
 #include <boost/phoenix/object/detail/preprocessed/construct_eval.hpp>
 
 #endif
 #else
-*/
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
-#define PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
+#ifndef BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
+#define BOOST_PHOENIX_OBJECT_DETAIL_CONSTRUCT_EVAL_HPP
+
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/construct_eval_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#endif
 
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
@@ -23,12 +25,16 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (2, PHOENIX_COMPOSITE_LIMIT,                                            \
-    <boost/phoenix/object/detail/construct_eval.hpp>))
-#include PHOENIX_ITERATE()
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 1)
+#endif
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (2, BOOST_PHOENIX_COMPOSITE_LIMIT,                                      \
+    <boost/phoenix/object/detail/construct_eval.hpp>))
+#include BOOST_PHOENIX_ITERATE()
+
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -36,26 +42,30 @@
 
 #else
 
-        template <typename This, typename Context, PHOENIX_typename_A>
-        struct result<This(Context, PHOENIX_A)>
+        template <typename This, typename Context, BOOST_PHOENIX_typename_A>
+        struct result<This(Context, BOOST_PHOENIX_A)>
             : detail::result_of::target<A0>
         {
         };
         
-        template <typename Context, PHOENIX_typename_A>
+        template <typename Context, BOOST_PHOENIX_typename_A>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, PHOENIX_A_const_ref_a) const
+        operator()(Context const& ctx, BOOST_PHOENIX_A_const_ref_a) const
         {
 #define EVAL_a(_,n,__) \
             BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) eval(a ## n, ctx)
 
             return
                 typename detail::result_of::target<A0>::type(
-                    BOOST_PP_REPEAT_FROM_TO(1, PHOENIX_ITERATION, EVAL_a, _)
+                    BOOST_PP_REPEAT_FROM_TO(
+                        1
+                      , BOOST_PHOENIX_ITERATION
+                      , EVAL_a, _
+                    )
                 );
 #undef EVAL_a
         }
 
 #endif
 
-//#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

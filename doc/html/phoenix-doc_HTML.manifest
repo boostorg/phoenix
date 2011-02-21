@@ -50,10 +50,10 @@ phoenix/modules/stl/algorithm.html
 phoenix/inside.html
 phoenix/inside/actor.html
 phoenix/inside/expression.html
-phoenix/inside/expression/phoenix_define_expression.html
-phoenix/inside/expression/phoenix_define_expression_vararg.html
-phoenix/inside/expression/phoenix_define_expression_ext.html
-phoenix/inside/expression/phoenix_define_expression_ext_vararg.html
+phoenix/inside/expression/boost_phoenix_define_expression.html
+phoenix/inside/expression/boost_phoenix_define_expression_vararg.html
+phoenix/inside/expression/boost_phoenix_define_expression_ext.html
+phoenix/inside/expression/boost_phoenix_define_expression_ext_vararg.html
 phoenix/inside/actions.html
 phoenix/inside/rules.html
 phoenix/inside/custom_terminals.html

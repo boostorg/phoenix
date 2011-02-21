@@ -145,8 +145,8 @@ and its __bll__ `_1`..`_N` style counterparts:
         expression::argument<2>::type const _3 = {};
     }
 
-[note You can set `PHOENIX_ARG_LIMIT`, the predefined maximum
-placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
+[note You can set `BOOST_PHOENIX_ARG_LIMIT`, the predefined maximum
+placeholder index. By default, `BOOST_PHOENIX_ARG_LIMIT` is set to `BOOST_PHOENIX_LIMIT`
 (See [link phoenix.actor Actor]).]
 
 [heading User Defined Arguments]

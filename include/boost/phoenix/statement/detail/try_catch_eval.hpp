@@ -1,7 +1,7 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
-#define PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
+#define BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
@@ -10,15 +10,15 @@
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
-#define PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
+#ifndef BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
+#define BOOST_PHOENIX_STATEMENT_DETAIL_TRY_CATCH_EVAL_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/try_catch_eval_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/try_catch_eval_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -29,11 +29,11 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-    #define PHOENIX_TRY_CATCH_EVAL_R(Z, N, DATA)                                \
+    #define BOOST_PHOENIX_TRY_CATCH_EVAL_R(Z, N, DATA)                          \
             catch(                                                              \
                 typename proto::result_of::value<                               \
                     typename proto::result_of::child_c<                         \
@@ -48,14 +48,14 @@
     /**/
 
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-        (3, (1, PHOENIX_CATCH_LIMIT,                                            \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+        (3, (1, BOOST_PHOENIX_CATCH_LIMIT,                                      \
         <boost/phoenix/statement/detail/try_catch_eval.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
-    #undef PHOENIX_TRY_CATCH_EVAL_R
+    #undef BOOST_PHOENIX_TRY_CATCH_EVAL_R
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -63,46 +63,46 @@
 
 #else
 
-        template <typename Context, typename Try, PHOENIX_typename_A>
+        template <typename Context, typename Try, BOOST_PHOENIX_typename_A>
         typename boost::enable_if<
             proto::matches<
-                BOOST_PP_CAT(A, BOOST_PP_DEC(PHOENIX_ITERATION))
+                BOOST_PP_CAT(A, BOOST_PP_DEC(BOOST_PHOENIX_ITERATION))
               , rule::catch_
             >
           , result_type
         >::type
-        operator()(Context & ctx, Try const & try_, PHOENIX_A_const_ref_a) const
+        operator()(Context & ctx, Try const & try_, BOOST_PHOENIX_A_const_ref_a) const
         {
             try
             {
                 eval(proto::child_c<0>(try_), ctx);
             }
-            BOOST_PP_REPEAT(PHOENIX_ITERATION, PHOENIX_TRY_CATCH_EVAL_R, _)
+            BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, BOOST_PHOENIX_TRY_CATCH_EVAL_R, _)
         }
 
-        template <typename Context, typename Try, PHOENIX_typename_A>
+        template <typename Context, typename Try, BOOST_PHOENIX_typename_A>
         typename boost::disable_if<
             proto::matches<
-                BOOST_PP_CAT(A, BOOST_PP_DEC(PHOENIX_ITERATION))
+                BOOST_PP_CAT(A, BOOST_PP_DEC(BOOST_PHOENIX_ITERATION))
               , rule::catch_
             >
           , result_type
         >::type
-        operator()(Context & ctx, Try const & try_, PHOENIX_A_const_ref_a) const
+        operator()(Context & ctx, Try const & try_, BOOST_PHOENIX_A_const_ref_a) const
         {
             try
             {
                 eval(proto::child_c<0>(try_), ctx);
             }
             BOOST_PP_REPEAT(
-                BOOST_PP_DEC(PHOENIX_ITERATION)
-              , PHOENIX_TRY_CATCH_EVAL_R, _
+                BOOST_PP_DEC(BOOST_PHOENIX_ITERATION)
+              , BOOST_PHOENIX_TRY_CATCH_EVAL_R, _
             )
             catch(...)
             {
                 eval(
                     proto::child_c<0>(
-                        BOOST_PP_CAT(a, BOOST_PP_DEC(PHOENIX_ITERATION))
+                        BOOST_PP_CAT(a, BOOST_PP_DEC(BOOST_PHOENIX_ITERATION))
                     )
                   , ctx);
             }
@@ -110,4 +110,4 @@
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

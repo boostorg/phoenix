@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OBJECT_STATIC_CAST_HPP
-#define PHOENIX_OBJECT_STATIC_CAST_HPP
+#ifndef BOOST_PHOENIX_OBJECT_STATIC_CAST_HPP
+#define BOOST_PHOENIX_OBJECT_STATIC_CAST_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/call.hpp>
@@ -15,7 +15,7 @@
 #include <boost/phoenix/object/detail/target.hpp>
 #include <boost/proto/transform/lazy.hpp>
     
-PHOENIX_DEFINE_EXPRESSION(
+BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(static_cast_)
   , (proto::terminal<detail::target<proto::_> >)
     (meta_grammar)

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_SCOPE_THIS_HPP
-#define PHOENIX_SCOPE_THIS_HPP
+#ifndef BOOST_PHOENIX_SCOPE_THIS_HPP
+#define BOOST_PHOENIX_SCOPE_THIS_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
@@ -16,10 +16,10 @@
 #include <boost/phoenix/core/terminal.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 
-PHOENIX_DEFINE_EXPRESSION_VARARG(
+BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
     (boost)(phoenix)(this_function)
   , (meta_grammar)
-  , PHOENIX_LIMIT
+  , BOOST_PHOENIX_LIMIT
 )
 
 namespace boost { namespace phoenix {

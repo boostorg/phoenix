@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_CORE_ARGUMENT_HPP
-#define PHOENIX_CORE_ARGUMENT_HPP
+#ifndef BOOST_PHOENIX_CORE_ARGUMENT_HPP
+#define BOOST_PHOENIX_CORE_ARGUMENT_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
@@ -77,14 +77,14 @@ namespace boost { namespace phoenix
 
     namespace placeholders
     {
-        BOOST_PP_REPEAT(PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, arg)
-        BOOST_PP_REPEAT(PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, _)
+        BOOST_PP_REPEAT(BOOST_PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, arg)
+        BOOST_PP_REPEAT(BOOST_PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, _)
     }
 
     namespace arg_names
     {
-        BOOST_PP_REPEAT(PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, arg)
-        BOOST_PP_REPEAT(PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, _)
+        BOOST_PP_REPEAT(BOOST_PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, arg)
+        BOOST_PP_REPEAT(BOOST_PHOENIX_ARG_LIMIT, BOOST_PHOENIX_ARGUMENT_N, _)
     }
 
     #undef BOOST_PHOENIX_ARGUMENT_N

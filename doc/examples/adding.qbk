@@ -14,7 +14,7 @@ This is not a toy example. This is actually part of the library. Remember the
 everything we've learned so far, we eill present it here in its entirety
 (verbatim):
 
-    PHOENIX_DEFINE_EXPRESSION(
+    BOOST_PHOENIX_DEFINE_EXPRESSION(
         (boost)(phoenix)(while_)
       , (meta_grammar)           // Cond
         (meta_grammar)           // Do

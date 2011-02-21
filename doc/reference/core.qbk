@@ -134,8 +134,8 @@ and its __bll__ `_1`..`_N` style counterparts:
     make_argument<mpl::int_<1> >::type const _2 = {};
     make_argument<mpl::int_<2> >::type const _3 = {};
 
-[note You can set `PHOENIX_ARG_LIMIT`, the predefined maximum
-placeholder index. By default, `PHOENIX_ARG_LIMIT` is set to `PHOENIX_LIMIT`
+[note You can set `BOOST_PHOENIX_ARG_LIMIT`, the predefined maximum
+placeholder index. By default, `BOOST_PHOENIX_ARG_LIMIT` is set to `BOOST_PHOENIX_LIMIT`
 (See [link phoenix.reference.concepts.actor Actor]).]
 
 You see the use of make_argument this is a convenience class wrapping the `compose` class:

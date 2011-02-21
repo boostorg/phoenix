@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#ifndef PHOENIX_OBJECT_DETAIL_CAST_TARGET_HPP
-#define PHOENIX_OBJECT_DETAIL_CAST_TARGET_HPP
+#ifndef BOOST_PHOENIX_OBJECT_DETAIL_CAST_TARGET_HPP
+#define BOOST_PHOENIX_OBJECT_DETAIL_CAST_TARGET_HPP
 
 namespace boost { namespace phoenix
 {

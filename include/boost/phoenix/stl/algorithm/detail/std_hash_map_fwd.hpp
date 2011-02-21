@@ -16,8 +16,8 @@
 # pragma once
 #endif
 
-#ifndef STD_HASH_MAP_FWD_EN_16_12_2004
-#define STD_HASH_MAP_FWD_EN_16_12_2004
+#ifndef BOOST_PHOENIX_STD_HASH_MAP_FWD_EN_16_12_2004
+#define BOOST_PHOENIX_STD_HASH_MAP_FWD_EN_16_12_2004
 
 #include <boost/config.hpp>
 

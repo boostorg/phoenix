@@ -1,20 +1,20 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
-#define PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
+#define BOOST_PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
 
 #include <boost/phoenix/function/detail/preprocessed/function_result_of.hpp>
 
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
-#define PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
+#ifndef BOOST_PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
+#define BOOST_PHOENIX_FUNCTION_DETAIL_FUNCTION_RESULT_OF_HPP
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/function_result_of_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/function_result_of_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -25,16 +25,16 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_ACTOR_LIMIT,                                                \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                          \
     <boost/phoenix/function/detail/function_result_of.hpp>))
 #include PHOENIX_ITERATE()
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -42,13 +42,13 @@
 
 #else
 
-        template <typename F, PHOENIX_typename_A>
-        struct function<F, PHOENIX_A>
+        template <typename F, BOOST_PHOENIX_typename_A>
+        struct function<F, BOOST_PHOENIX_A>
             : proto::result_of::make_expr<
                 proto::tag::function
               , phoenix_domain
               , F
-              , PHOENIX_A
+              , BOOST_PHOENIX_A
             >
         {};
 

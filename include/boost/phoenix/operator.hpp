@@ -6,8 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef PHOENIX_OPERATOR_HPP
-#define PHOENIX_OPERATOR_HPP
+#ifndef BOOST_PHOENIX_OPERATOR_HPP
+#define BOOST_PHOENIX_OPERATOR_HPP
 
 #include <boost/phoenix/version.hpp>
 #include <boost/phoenix/operator/arithmetic.hpp>

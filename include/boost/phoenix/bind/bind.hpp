@@ -1,7 +1,7 @@
 
-#if !defined(PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef PHOENIX_BIND_BIND_HPP
-#define PHOENIX_BIND_BIND_HPP
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#ifndef BOOST_PHOENIX_BIND_BIND_HPP
+#define BOOST_PHOENIX_BIND_BIND_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/function.hpp>
@@ -13,18 +13,18 @@
 #endif
 #else
 
-#if !PHOENIX_IS_ITERATING
+#if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef PHOENIX_BIND_BIND_HPP
-#define PHOENIX_BIND_BIND_HPP
+#ifndef BOOST_PHOENIX_BIND_BIND_HPP
+#define BOOST_PHOENIX_BIND_BIND_HPP
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/function.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/utility/result_of.hpp>
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/bind_" PHOENIX_LIMIT_STR ".hpp")
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/bind_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*==============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
@@ -34,7 +34,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 1)
 #endif
 
@@ -51,14 +51,14 @@ namespace boost { namespace phoenix
         return function<F>(f)();
     }
 
-#define PHOENIX_ITERATION_PARAMS                                                \
-    (3, (1, PHOENIX_ARG_LIMIT,                                                  \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                                \
+    (3, (1, BOOST_PHOENIX_ARG_LIMIT,                                                  \
     <boost/phoenix/bind/bind.hpp>))
-#include PHOENIX_ITERATE()
+#include BOOST_PHOENIX_ITERATE()
 
 }}
 
-#if defined(__WAVE__) && defined(PHOENIX_CREATE_PREPROCESSED_FILES)
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
 #endif
 
@@ -66,13 +66,13 @@ namespace boost { namespace phoenix
 
 #else
     
-    template <typename F, PHOENIX_typename_A>
-    typename expression::function<F, PHOENIX_A>::type const
-    bind(F f, PHOENIX_A_const_ref_a)
+    template <typename F, BOOST_PHOENIX_typename_A>
+    typename expression::function<F, BOOST_PHOENIX_A>::type const
+    bind(F f, BOOST_PHOENIX_A_const_ref_a)
     {
-        return function<F>(f)(PHOENIX_a);
+        return function<F>(f)(BOOST_PHOENIX_a);
     }
 
 #endif
 
-#endif // PHOENIX_DONT_USE_PREPROCESSED_FILES
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

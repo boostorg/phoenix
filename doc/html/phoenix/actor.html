@@ -22,7 +22,7 @@
 <p>
       The <code class="computeroutput"><span class="identifier">Actor</span></code> is the main concept
       behind the library. Actors are function objects. An actor can accept 0 to
-      <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code> arguments.
+      <code class="computeroutput"><span class="identifier">BOOST_PHOENIX_LIMIT</span></code> arguments.
     </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -30,8 +30,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-        You can set <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code>,
-        the predefined maximum arity an actor can take. By default, <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code> is set to 10.
+        You can set <code class="computeroutput"><span class="identifier">BOOST_PHOENIX_LIMIT</span></code>,
+        the predefined maximum arity an actor can take. By default, <code class="computeroutput"><span class="identifier">BOOST_PHOENIX_LIMIT</span></code> is set to 10.
       </p></td></tr>
 </table></div>
 <p>
@@ -60,9 +60,9 @@
 </pre>
 <p>
       The actor class accepts the arguments through a set of function call operators
-      for 0 to <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code> arities
-      (Don't worry about the details, for now. Note, for example, that we skimp over
-      the details regarding <code class="computeroutput"><span class="identifier">return_type</span></code>).
+      for 0 to <code class="computeroutput"><span class="identifier">BOOST_PHOENIX_LIMIT</span></code>
+      arities (Don't worry about the details, for now. Note, for example, that we
+      skimp over the details regarding <code class="computeroutput"><span class="identifier">return_type</span></code>).
       The arguments are passed through to the evaluation mechanism. For more information
       see <a class="link" href="inside/actor.html" title="Actors in Detail">Inside Actors</a>.
     </p>

@@ -9,9 +9,9 @@
 
 [def __limit_note__ 
 The maximum number of actual parameters is limited by the
-preprocessor constant PHOENIX_COMPOSITE_LIMIT. Note though, that this limit
-should not be greater than PHOENIX_LIMIT. By default, `PHOENIX_COMPOSITE_LIMIT`
-is set to `PHOENIX_LIMIT` (See [link phoenix.actor Actor]).
+preprocessor constant BOOST_PHOENIX_COMPOSITE_LIMIT. Note though, that this limit
+should not be greater than BOOST_PHOENIX_LIMIT. By default, `BOOST_PHOENIX_COMPOSITE_LIMIT`
+is set to `BOOST_PHOENIX_LIMIT` (See [link phoenix.actor Actor]).
 ]
 
 [section Object]
