@@ -33,7 +33,7 @@
 #pragma wave option(preserve: 1)
 #endif
 
-        #define BOOST_PHOENIX_SWITCH_EVAL_TYPEDEF_R(Z, N, DATA)                       \
+        #define BOOST_PHOENIX_SWITCH_EVAL_TYPEDEF_R(Z, N, DATA)                 \
             typedef                                                             \
                 typename fusion::result_of::deref<                              \
                     typename fusion::result_of::advance_c<                      \
@@ -54,7 +54,7 @@
                 BOOST_PP_CAT(case_label, N);                                    \
     /**/
 
-    #define BOOST_PHOENIX_SWITCH_EVAL_R(Z, N, DATA)                                   \
+    #define BOOST_PHOENIX_SWITCH_EVAL_R(Z, N, DATA)                             \
         case BOOST_PP_CAT(case_label, N)::value :                               \
             eval(                                                               \
                 proto::child_c<1>(                                              \
@@ -67,8 +67,8 @@
             break;                                                              \
     /**/
 
-#define BOOST_PHOENIX_ITERATION_PARAMS                                                \
-        (3, (2, BOOST_PHOENIX_LIMIT,                                                  \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+        (3, (2, BOOST_PHOENIX_LIMIT,                                            \
         <boost/phoenix/statement/detail/switch.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
@@ -88,7 +88,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<BOOST_PHOENIX_ITERATION> size
+              , mpl::int_<BOOST_PHOENIX_ITERATION>
               , mpl::false_
             ) const
             {
@@ -120,7 +120,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<BOOST_PHOENIX_ITERATION> size
+              , mpl::int_<BOOST_PHOENIX_ITERATION>
               , mpl::true_
             ) const
             {

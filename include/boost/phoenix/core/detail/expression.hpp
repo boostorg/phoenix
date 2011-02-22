@@ -188,9 +188,11 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
             : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ)) <  \
                 BOOST_PP_IF(                                                    \
                     BOOST_PP_EQUAL(1, BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))           \
-                  , BOOST_PP_EMPTY()                                            \
-                  , BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_POP_BACK(GRAMMAR_SEQ))       \
-                )                                                               \
+                  , BOOST_PP_EMPTY                                              \
+                  , BOOST_PP_IDENTITY(                                          \
+                      BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_POP_BACK(GRAMMAR_SEQ))     \
+                    )                                                           \
+                )()                                                             \
                 BOOST_PP_COMMA_IF(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))) \
                 proto::vararg<                                                  \
                     BOOST_PP_SEQ_ELEM(                                          \
@@ -265,9 +267,11 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
             : expression:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(N)) <         \
                 BOOST_PP_IF(                                                    \
                     BOOST_PP_EQUAL(1, BOOST_PP_SEQ_SIZE(GRAMMAR))               \
-                  , BOOST_PP_EMPTY()                                            \
-                  , BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_POP_BACK(GRAMMAR))           \
-                )                                                               \
+                  , BOOST_PP_EMPTY                                              \
+                  , BOOST_PP_IDENTITY(                                          \
+                      BOOST_PP_SEQ_ENUM(BOOST_PP_SEQ_POP_BACK(GRAMMAR))         \
+                    )                                                           \
+                )()                                                             \
                 BOOST_PP_COMMA_IF(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(GRAMMAR)))     \
                 proto::vararg<                                                  \
                     BOOST_PP_SEQ_ELEM(                                          \

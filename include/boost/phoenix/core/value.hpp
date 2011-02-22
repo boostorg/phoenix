@@ -10,6 +10,7 @@
 
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/as_actor.hpp>
 #include <boost/phoenix/core/terminal.hpp>
 #include <boost/utility/result_of.hpp>
 

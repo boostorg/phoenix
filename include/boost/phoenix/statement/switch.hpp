@@ -122,7 +122,7 @@ namespace boost { namespace phoenix {
         
         template <typename Context>
         result_type
-        operator()(Context & ctx) const
+        operator()(Context &) const
         {
         }
 
@@ -146,7 +146,7 @@ namespace boost { namespace phoenix {
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<1> size
+              , mpl::int_<1>
               , mpl::false_
             ) const
             {
@@ -172,7 +172,7 @@ namespace boost { namespace phoenix {
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<1> size
+              , mpl::int_<1>
               , mpl::true_
             ) const
             {
@@ -259,7 +259,7 @@ namespace boost { namespace phoenix {
                 Cond
               , Cases
             >::type
-            generate(Cases const & cases, mpl::false_) const
+            generate(Cases const &, mpl::false_) const
             {
                 BOOST_MPL_ASSERT_MSG(
                     false
@@ -274,7 +274,7 @@ namespace boost { namespace phoenix {
     switch_(Cond const& cond)
     {
         return switch_gen<Cond>(cond);
-    };
+    }
 
 }}
 

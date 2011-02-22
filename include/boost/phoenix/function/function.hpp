@@ -12,6 +12,7 @@
 #include <boost/fusion/sequence/intrinsic/at_c.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/tags.hpp>
 #include <boost/utility/result_of.hpp>
