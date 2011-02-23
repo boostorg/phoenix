@@ -11,11 +11,11 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/function.hpp>
 #include <boost/phoenix/operator.hpp>
-#include <boost/phoenix/statement.cpp>
-#include <boost/phoenix/object.cpp>
-#include <boost/phoenix/scope.cpp>
-#include <boost/phoenix/bind.cpp>
-#include <boost/phoenix/stl.cpp>
+#include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/scope.hpp>
+#include <boost/phoenix/bind.hpp>
+#include <boost/phoenix/stl.hpp>
 
 
 #endif
