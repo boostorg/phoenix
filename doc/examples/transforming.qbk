@@ -132,8 +132,8 @@ Run some tests to see if it is working:
     invert(_1 * _2 / _3);          // --> _1 / _2 * _3
     invert(_1 * _2 + _3);          // --> _1 / _2 - _3
     invert(_1 * _2 - _3);          // --> _1 / _2 + _2
-    invert(if_(_1 * _4)[_2 - _3]); // --> if_(_1 / _4)[_2 - _3]
-    _1 * invert(_2 - _3));         // --> _1 * _2 - _3
+    invert(if_(_1 * _4)[_2 - _3]); // --> if_(_1 / _4)[_2 + _3]
+    _1 * invert(_2 - _3));         // --> _1 * _2 + _3
 
 __note__ The complete example can be found here: [@../../example/invert.cpp example/invert.cpp]
 
