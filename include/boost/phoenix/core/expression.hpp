@@ -25,6 +25,7 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/phoenix/core/detail/expression.hpp>
+#include <boost/phoenix/core/domain.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/preprocessor/comparison/equal.hpp>
 #include <boost/proto/domain.hpp>

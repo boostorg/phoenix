@@ -27,6 +27,16 @@ namespace boost { namespace phoenix
         : mpl::false_
     {};
 
+    template <typename T>
+    struct is_actor<T const &>
+        : is_actor<T>
+    {};
+
+    template <typename T>
+    struct is_actor<T &>
+        : is_actor<T>
+    {};
+
     template <typename Expr>
     struct is_actor<actor<Expr> >
         : mpl::true_

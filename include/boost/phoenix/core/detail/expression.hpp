@@ -21,6 +21,7 @@
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/enum_params.hpp>
 #include <boost/preprocessor/repeat_from_to.hpp>
+#include <iostream>
 
 #define BOOST_PHOENIX_DEFINE_EXPRESSION(NAME_SEQ, SEQ)                          \
     BOOST_PHOENIX_DEFINE_EXPRESSION_BASE(                                       \
@@ -83,6 +84,15 @@ BOOST_PP_SEQ_FOR_EACH(                                                          
     namespace tag                                                               \
     {                                                                           \
         struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ)) {};            \
+        std::ostream &operator<<(                                               \
+            std::ostream & os                                                   \
+          , BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ)))                  \
+        {                                                                       \
+            os << BOOST_PP_STRINGIZE(                                           \
+                BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))               \
+            );                                                                  \
+            return os;                                                          \
+        }                                                                       \
     }                                                                           \
     namespace expression                                                        \
     {                                                                           \
@@ -123,7 +133,7 @@ namespace boost { namespace phoenix                                             
 #define BOOST_PHOENIX_DEFINE_EXPRESSION_EXPRESSION_DEFAULT(NAME_SEQ, GRAMMAR_SEQ, D) \
         template <BOOST_PHOENIX_typename_A(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ))>     \
         struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                \
-            : expr<                                                             \
+            : boost::phoenix::expr<                                             \
                 tag:: BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))         \
               , BOOST_PP_ENUM_PARAMS(BOOST_PP_SEQ_SIZE(GRAMMAR_SEQ), A)>        \
         {};                                                                     \
@@ -150,7 +160,7 @@ struct BOOST_PP_SEQ_HEAD(BOOST_PP_SEQ_REVERSE(NAME_SEQ))                        
             BOOST_PP_ADD(N, BOOST_PP_SEQ_SIZE(BOOST_PP_TUPLE_ELEM(2, 1, NAME))) \
         )                                                                       \
     >                                                                           \
-        : expr<                                                                 \
+        : boost::phoenix::expr<                                                 \
             tag:: BOOST_PP_TUPLE_ELEM(2, 0, NAME)                               \
           , BOOST_PHOENIX_A(                                                    \
                 BOOST_PP_ADD(                                                   \

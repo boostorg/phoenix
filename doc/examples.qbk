@@ -11,5 +11,6 @@
 
 [include examples/extending_actors.qbk]
 [include examples/adding.qbk]
+[include examples/transforming.qbk]
 
 [endsect]

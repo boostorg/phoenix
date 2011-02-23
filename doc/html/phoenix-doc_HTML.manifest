@@ -60,6 +60,7 @@ phoenix/inside/custom_terminals.html
 phoenix/examples.html
 phoenix/examples/extending_actors.html
 phoenix/examples/adding_an_expression.html
+phoenix/examples/transforming_the_expression_tree.html
 phoenix/wrap_up.html
 phoenix/acknowledgments.html
 phoenix/references.html
