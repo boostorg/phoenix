@@ -7,7 +7,6 @@
 ==============================================================================*/
 
 #include <boost/phoenix/phoenix.hpp>
-#include <boost/phoenix/operator.hpp>
 #include <boost/proto/proto.hpp>
 #include <boost/proto/debug.hpp>
 
@@ -22,12 +21,18 @@ struct invert_actions
     {};
 };
 
+using phoenix::evaluator;
+
+#ifdef _MSC_VER
+#define evaluator(A0, A1) proto::call<phoenix::evaluator(A0, A1)>
+#endif
+
 template <>
 struct invert_actions::when<phoenix::rule::plus>
     : proto::call<
         proto::functional::make_expr<proto::tag::minus>(
-            phoenix::evaluator(proto::_left, phoenix::_context)
-          , phoenix::evaluator(proto::_right, phoenix::_context)
+            evaluator(proto::_left, phoenix::_context)
+          , evaluator(proto::_right, phoenix::_context)
         )
     >
 {};
@@ -36,8 +41,8 @@ template <>
 struct invert_actions::when<phoenix::rule::minus>
     : proto::call<
         proto::functional::make_expr<proto::tag::plus>(
-            phoenix::evaluator(proto::_left, phoenix::_context)
-          , phoenix::evaluator(proto::_right, phoenix::_context)
+            evaluator(proto::_left, phoenix::_context)
+          , evaluator(proto::_right, phoenix::_context)
         )
     >
 {};
@@ -46,8 +51,8 @@ template <>
 struct invert_actions::when<phoenix::rule::multiplies>
     : proto::call<
         proto::functional::make_expr<proto::tag::divides>(
-            phoenix::evaluator(proto::_left, phoenix::_context)
-          , phoenix::evaluator(proto::_right, phoenix::_context)
+            evaluator(proto::_left, phoenix::_context)
+          , evaluator(proto::_right, phoenix::_context)
         )
     >
 {};
@@ -56,11 +61,15 @@ template <>
 struct invert_actions::when<phoenix::rule::divides>
     : proto::call<
         proto::functional::make_expr<proto::tag::multiplies>(
-            phoenix::evaluator(proto::_left, phoenix::_context)
-          , phoenix::evaluator(proto::_right, phoenix::_context)
+            evaluator(proto::_left, phoenix::_context)
+          , evaluator(proto::_right, phoenix::_context)
         )
     >
 {};
+
+#ifdef _MSC_VER
+#undef evaluator
+#endif
 
 template <typename Expr>
 void print_expr(Expr const & expr)
