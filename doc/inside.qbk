@@ -19,5 +19,6 @@ to advanced programmers who wish to extend the library.
 [include inside/actions.qbk]
 [include inside/rules.qbk]
 [include inside/custom_terminal.qbk]
+[include inside/placeholder.qbk]
 
 [endsect]

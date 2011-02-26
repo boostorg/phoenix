@@ -19,6 +19,6 @@ Phoenix uses `boost::is_placeholder` for recognizing placeholders:
     };
 
 To adapt your own placeholder, the nested value needs to be greater than 0
-for your types.
+for your types. This is done with specializing this trait.
 
 [endsect]

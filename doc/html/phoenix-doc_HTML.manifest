@@ -57,6 +57,7 @@ phoenix/inside/expression/boost_phoenix_define_expression_ext_vararg.html
 phoenix/inside/actions.html
 phoenix/inside/rules.html
 phoenix/inside/custom_terminals.html
+phoenix/inside/placeholder_unification.html
 phoenix/examples.html
 phoenix/examples/extending_actors.html
 phoenix/examples/adding_an_expression.html
