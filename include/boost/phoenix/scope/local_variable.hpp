@@ -169,7 +169,7 @@ namespace boost { namespace phoenix
 
         template <typename Env, typename Key>
         typename result<get_local(Env&, Key)>::type
-        operator()(Env &env, Key k) const
+        operator()(Env &, Key) const
         {
             return detail::local_var_not_found();
         }

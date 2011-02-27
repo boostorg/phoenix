@@ -13,6 +13,8 @@
 #ifndef BOOST_PHOENIX_OBJECT_DETAIL_NEW_EVAL_HPP
 #define BOOST_PHOENIX_OBJECT_DETAIL_NEW_EVAL_HPP
 
+#include <boost/preprocessor/repetition/enum_shifted_binary_params.hpp>
+
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 2, line: 0, output: "preprocessed/new_eval_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
@@ -56,7 +58,15 @@
 
         template <typename Context, BOOST_PHOENIX_typename_A>
         typename result<new_eval(Context const &, BOOST_PHOENIX_A_const_ref)>::type
-        operator()(Context const & ctx, BOOST_PHOENIX_A_const_ref_a) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , BOOST_PP_ENUM_SHIFTED_BINARY_PARAMS(
+                BOOST_PHOENIX_ITERATION
+              , A
+              , const& a
+            )
+        ) const
         {
 #define EVAL_a(_,n,__) \
             BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) eval(a ## n, ctx)

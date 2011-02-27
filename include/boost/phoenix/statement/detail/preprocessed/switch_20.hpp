@@ -18,7 +18,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<2> size
+              , mpl::int_<2>
               , mpl::false_
             ) const
             {
@@ -41,7 +41,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<2> size
+              , mpl::int_<2>
               , mpl::true_
             ) const
             {
@@ -82,7 +82,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<3> size
+              , mpl::int_<3>
               , mpl::false_
             ) const
             {
@@ -105,7 +105,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<3> size
+              , mpl::int_<3>
               , mpl::true_
             ) const
             {
@@ -146,7 +146,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<4> size
+              , mpl::int_<4>
               , mpl::false_
             ) const
             {
@@ -169,7 +169,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<4> size
+              , mpl::int_<4>
               , mpl::true_
             ) const
             {
@@ -210,7 +210,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<5> size
+              , mpl::int_<5>
               , mpl::false_
             ) const
             {
@@ -233,7 +233,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<5> size
+              , mpl::int_<5>
               , mpl::true_
             ) const
             {
@@ -274,7 +274,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<6> size
+              , mpl::int_<6>
               , mpl::false_
             ) const
             {
@@ -297,7 +297,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<6> size
+              , mpl::int_<6>
               , mpl::true_
             ) const
             {
@@ -338,7 +338,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<7> size
+              , mpl::int_<7>
               , mpl::false_
             ) const
             {
@@ -361,7 +361,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<7> size
+              , mpl::int_<7>
               , mpl::true_
             ) const
             {
@@ -402,7 +402,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<8> size
+              , mpl::int_<8>
               , mpl::false_
             ) const
             {
@@ -425,7 +425,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<8> size
+              , mpl::int_<8>
               , mpl::true_
             ) const
             {
@@ -466,7 +466,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<9> size
+              , mpl::int_<9>
               , mpl::false_
             ) const
             {
@@ -489,7 +489,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<9> size
+              , mpl::int_<9>
               , mpl::true_
             ) const
             {
@@ -530,7 +530,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<10> size
+              , mpl::int_<10>
               , mpl::false_
             ) const
             {
@@ -553,7 +553,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<10> size
+              , mpl::int_<10>
               , mpl::true_
             ) const
             {
@@ -594,7 +594,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<11> size
+              , mpl::int_<11>
               , mpl::false_
             ) const
             {
@@ -617,7 +617,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<11> size
+              , mpl::int_<11>
               , mpl::true_
             ) const
             {
@@ -658,7 +658,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<12> size
+              , mpl::int_<12>
               , mpl::false_
             ) const
             {
@@ -681,7 +681,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<12> size
+              , mpl::int_<12>
               , mpl::true_
             ) const
             {
@@ -722,7 +722,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<13> size
+              , mpl::int_<13>
               , mpl::false_
             ) const
             {
@@ -745,7 +745,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<13> size
+              , mpl::int_<13>
               , mpl::true_
             ) const
             {
@@ -786,7 +786,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<14> size
+              , mpl::int_<14>
               , mpl::false_
             ) const
             {
@@ -809,7 +809,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<14> size
+              , mpl::int_<14>
               , mpl::true_
             ) const
             {
@@ -850,7 +850,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<15> size
+              , mpl::int_<15>
               , mpl::false_
             ) const
             {
@@ -873,7 +873,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<15> size
+              , mpl::int_<15>
               , mpl::true_
             ) const
             {
@@ -914,7 +914,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<16> size
+              , mpl::int_<16>
               , mpl::false_
             ) const
             {
@@ -937,7 +937,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<16> size
+              , mpl::int_<16>
               , mpl::true_
             ) const
             {
@@ -978,7 +978,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<17> size
+              , mpl::int_<17>
               , mpl::false_
             ) const
             {
@@ -1001,7 +1001,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<17> size
+              , mpl::int_<17>
               , mpl::true_
             ) const
             {
@@ -1042,7 +1042,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<18> size
+              , mpl::int_<18>
               , mpl::false_
             ) const
             {
@@ -1065,7 +1065,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<18> size
+              , mpl::int_<18>
               , mpl::true_
             ) const
             {
@@ -1106,7 +1106,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<19> size
+              , mpl::int_<19>
               , mpl::false_
             ) const
             {
@@ -1129,7 +1129,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<19> size
+              , mpl::int_<19>
               , mpl::true_
             ) const
             {
@@ -1170,7 +1170,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<20> size
+              , mpl::int_<20>
               , mpl::false_
             ) const
             {
@@ -1193,7 +1193,7 @@
                 Context & ctx
               , Cond const & cond
               , Cases const & cases
-              , mpl::int_<20> size
+              , mpl::int_<20>
               , mpl::true_
             ) const
             {

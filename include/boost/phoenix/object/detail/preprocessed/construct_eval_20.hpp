@@ -20,7 +20,11 @@
         
         template <typename Context, typename A0 , typename A1>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -42,7 +46,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -64,7 +72,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -86,7 +98,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -108,7 +124,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -130,7 +150,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -152,7 +176,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -174,7 +202,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -196,7 +228,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -218,7 +254,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -240,7 +280,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -262,7 +306,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -284,7 +332,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12 , typename A13>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -306,7 +358,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12 , typename A13 , typename A14>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -328,7 +384,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12 , typename A13 , typename A14 , typename A15>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -350,7 +410,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12 , typename A13 , typename A14 , typename A15 , typename A16>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -372,7 +436,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12 , typename A13 , typename A14 , typename A15 , typename A16 , typename A17>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16 , A17 const& a17) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16 , A17 const& a17
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -394,7 +462,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12 , typename A13 , typename A14 , typename A15 , typename A16 , typename A17 , typename A18>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16 , A17 const& a17 , A18 const& a18) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16 , A17 const& a17 , A18 const& a18
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(
@@ -416,7 +488,11 @@
         
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9 , typename A10 , typename A11 , typename A12 , typename A13 , typename A14 , typename A15 , typename A16 , typename A17 , typename A18 , typename A19>
         typename detail::result_of::target<A0>::type
-        operator()(Context const& ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16 , A17 const& a17 , A18 const& a18 , A19 const& a19) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9 , A10 const& a10 , A11 const& a11 , A12 const& a12 , A13 const& a13 , A14 const& a14 , A15 const& a15 , A16 const& a16 , A17 const& a17 , A18 const& a18 , A19 const& a19
+        ) const
         {
             return
                 typename detail::result_of::target<A0>::type(

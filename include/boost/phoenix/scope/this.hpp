@@ -18,7 +18,7 @@
 
 BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
     (boost)(phoenix)(this_function)
-  , (meta_grammar)
+  , (meta_grammar)(meta_grammar)
   , BOOST_PHOENIX_LIMIT
 )
 
@@ -238,7 +238,7 @@ namespace boost { namespace phoenix {
                 return e;
             }
         };
-    };
+    }
     
     expression::_this::type const _this = expression::_this::make();
     

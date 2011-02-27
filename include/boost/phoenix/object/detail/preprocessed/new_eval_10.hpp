@@ -25,7 +25,11 @@
         };
         template <typename Context, typename A0 , typename A1>
         typename result<new_eval(Context const &, A0 const& , A1 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1
+        ) const
         {
             return
                 new typename result<
@@ -54,7 +58,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2
+        ) const
         {
             return
                 new typename result<
@@ -83,7 +91,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const& , A3 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3
+        ) const
         {
             return
                 new typename result<
@@ -112,7 +124,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const& , A3 const& , A4 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4
+        ) const
         {
             return
                 new typename result<
@@ -141,7 +157,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5
+        ) const
         {
             return
                 new typename result<
@@ -170,7 +190,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const& , A6 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6
+        ) const
         {
             return
                 new typename result<
@@ -199,7 +223,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const& , A6 const& , A7 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7
+        ) const
         {
             return
                 new typename result<
@@ -228,7 +256,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const& , A6 const& , A7 const& , A8 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8
+        ) const
         {
             return
                 new typename result<
@@ -257,7 +289,11 @@
         };
         template <typename Context, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8 , typename A9>
         typename result<new_eval(Context const &, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const& , A6 const& , A7 const& , A8 const& , A9 const&)>::type
-        operator()(Context const & ctx, A0 const& a0 , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9) const
+        operator()(
+            Context const& ctx
+          , A0 const&
+          , A1 const& a1 , A2 const& a2 , A3 const& a3 , A4 const& a4 , A5 const& a5 , A6 const& a6 , A7 const& a7 , A8 const& a8 , A9 const& a9
+        ) const
         {
             return
                 new typename result<

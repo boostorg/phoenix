@@ -40,7 +40,7 @@ namespace boost { namespace phoenix
             struct target<T&>
                 : target<T>
             {};
-        };
+        }
     }
 }}
 

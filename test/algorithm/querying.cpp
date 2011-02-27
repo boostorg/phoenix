@@ -47,7 +47,7 @@ namespace
             const int rhs)
         {
             return lhs % 2 == rhs % 2;
-        };
+        }
     };
 
     void find_test()

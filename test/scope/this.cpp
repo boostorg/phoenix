@@ -71,6 +71,7 @@ int main()
         )
     ));
     
+    /*
     f(( // fac(n) = n * fac(n-1); fac(1) = 1
         if_else(
             _1 > 1
@@ -78,6 +79,7 @@ int main()
           , 1
         )
     ));
+    */
     
     f(( // fib(n) = fib(n-1) + fib(n-2); fib(0) = 0; fib(1) = 1
         if_else(
