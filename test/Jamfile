@@ -135,7 +135,6 @@ test-suite phoenix_include :
     [ run include/core/is_nullary.cpp ]
     [ run include/core/nothing.cpp ]
     [ run include/core/meta_grammar.cpp ]
-    [ run include/core/mem_obj_ptr.cpp ]
     [ run include/core/limits.cpp ]
     [ run include/core/terminal.cpp ]
     [ run include/core/value.cpp ]
