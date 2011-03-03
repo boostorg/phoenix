@@ -11,7 +11,7 @@
 
 This chapter explains in more detail how the library operates. The information
 henceforth should not be necessary to those who are interested in just using the
-library. However, a microscopic view might prove to be beneficial to moderate
+library. However, a microscopic view might prove to be beneficial
 to advanced programmers who wish to extend the library.
 
 [include inside/actor.qbk]

@@ -75,7 +75,7 @@ Context.
 [*But there is more:] As Actions /can/ be full fletched __proto_transforms__, you can
 in fact use any proto expression you can imagine as the action. Phoenix predifines a
 set of callables and transform to deal with the Context information passed along and
-of course every phoenix expression can be used as a phoenix grammar or
+of course every Phoenix expression can be used as a Phoenix grammar or
 __proto_pass_through_transform__.
 
 [variablelist

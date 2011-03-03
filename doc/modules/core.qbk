@@ -67,7 +67,7 @@ cannot write:
 
 In C++, we can pass in a reference to a variable as the first argument in our
 example above. Yet, by default, the library forces arguments passed to partially
-applied functions functions to be immutable values (see [link phoenix.modules.core.values
+applied functions to be immutable values (see [link phoenix.modules.core.values
 Values]). To achieve our intent, we use:
 
     expression::reference<T>::type
@@ -229,7 +229,7 @@ used as callbacks.]
 
     #include <boost/phoenix/core/nothing.hpp>
 
-Finally, the `expression::null<mpl::void_>::type` does nothing; (a "bum", if you will :-).
+Finally, the `expression::null<mpl::void_>::type` does nothing; (a "bum", if you will :-) ).
 There's a sole `expression::null<mpl::void_>::type` instance named "nothing". This actor is
 actually useful in situations where we don't want to do anything. (See
 [link phoenix.modules.statement.for_statement for_ Statement] for example).

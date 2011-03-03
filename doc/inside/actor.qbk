@@ -132,7 +132,7 @@ concept to hold other information such as local variables, etc.
 [heading Actions]
 
 Actions is the part of Phoenix which are responsible for giving the actual expressions
-a specific behaviour. During the traversal of the Phoenix Expression Tree theses actions
+a specific behaviour. During the traversal of the Phoenix Expression Tree these actions
 are called whenever a specified rule in the grammar matches.
 
     struct actions
@@ -142,7 +142,7 @@ are called whenever a specified rule in the grammar matches.
     };
 
 The nested `when` template is required to be __proto_primitive_transform__. No
-Worries, you don't have to learn __proto__ just yet! Phoenix provides some wrappers
+worries, you don't have to learn __proto__ just yet! Phoenix provides some wrappers
 to let you define simple actions without the need to dive deep into proto.
 
 Phoenix ships with a predefined `default_actions` class that evaluates the expressions with
@@ -156,7 +156,7 @@ C++ semantics:
         {};
     };
 
-For more Information on how to use the default_actions class and how to attach custom actions
+For more information on how to use the default_actions class and how to attach custom actions
 to the evaluation process, see [link phoenix.inside.actions more on actions].
 
 [heading Evaluation]
@@ -172,7 +172,7 @@ to the evaluation process, see [link phoenix.inside.actions more on actions].
 The evaluation of a Phoenix expression is started by a call to the function call operator of
 `evaluator`.
 
-The evaluator is called by the `actor` functio operator overloads after the context is built up.
+The evaluator is called by the `actor` function operator overloads after the context is built up.
 For reference, here is a typical `actor::operator()` that accepts two arguments:
 
     template <typename T0, typename T1>
@@ -188,7 +188,7 @@ For reference, here is a typical `actor::operator()` that accepts two arguments:
 
 For reasons of symmetry to the family of `actor::operator()` there is a special
 metafunction usable for actor result type calculation named `result_of::actor`. This
-metafunction allows us to directly to specify the types of the parameters to be
+metafunction allows us to directly specify the types of the parameters to be
 passed to the `actor::operator()` function. Here's a typical `actor_result` that
 accepts two arguments:
 

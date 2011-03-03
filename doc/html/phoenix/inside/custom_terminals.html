@@ -20,9 +20,9 @@
 <a name="phoenix.inside.custom_terminals"></a><a class="link" href="custom_terminals.html" title="Custom Terminals">Custom Terminals</a>
 </h3></div></div></div>
 <p>
-        Custom Terminals are used in phoenix to handle special values transparently.
-        For example, as phoenix captures everything by value, we needed to use <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">reference_wrapper</span></code> to bring in reference
-        semantics into phoenix.
+        Custom Terminals are used in Phoenix to handle special values transparently.
+        For example, as Phoenix captures everything by value, we needed to use <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">reference_wrapper</span></code> to bring reference semantics
+        into Phoenix.
       </p>
 <p>
         Custom terminals could be any wrapper class:
@@ -31,7 +31,7 @@
 <span class="keyword">struct</span> <span class="identifier">is_custom_terminal</span><span class="special">;</span>
 </pre>
 <p>
-        needs to be specialized in order for phoenix to recognize this wrapper type.
+        needs to be specialized in order for Phoenix to recognize this wrapper type.
         <code class="computeroutput"><span class="identifier">default_action</span></code> calls <code class="computeroutput"><span class="identifier">custom_terminal</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>.
       </p>
 <p>

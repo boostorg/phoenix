@@ -9,16 +9,16 @@
 
 [section Custom Terminals]
 
-Custom Terminals are used in phoenix to handle special values transparently.
-For example, as phoenix captures everything by value, we needed to use
-`boost::reference_wrapper` to bring in reference semantics into phoenix.
+Custom Terminals are used in Phoenix to handle special values transparently.
+For example, as Phoenix captures everything by value, we needed to use
+`boost::reference_wrapper` to bring reference semantics into Phoenix.
 
 Custom terminals could be any wrapper class:
 
     template <typename T>
     struct is_custom_terminal;
 
-needs to be specialized in order for phoenix to recognize this wrapper type.
+needs to be specialized in order for Phoenix to recognize this wrapper type.
 `default_action` calls `custom_terminal<T>`.
 
 Example:

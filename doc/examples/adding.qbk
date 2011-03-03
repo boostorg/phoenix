@@ -66,7 +66,7 @@ everything we've learned so far, we eill present it here in its entirety
     }}
 
 `while_eval` is an example of how to evaluate an expression. It gets called in
-the `rule::while` action. `while_gen` and `while? are the expression template
+the `rule::while` action. `while_gen` and `while_` are the expression template
 front ends. Let's break this apart to undestand what's happening. Let's start at
 the bottom. It's easier that way.
 
@@ -87,8 +87,8 @@ it will generate a proper composite with the type:
 
     expression::while_<Cond, Do>::type
 
-where `Cond` is the type of `cond` and `Do` is the type of `do_`. Notice how we are using phoenix's
-[link phoenix.inside.expression Expression) mechanism here
+where `Cond` is the type of `cond` and `Do` is the type of `do_`. Notice how we are using Phoenix's
+[link phoenix.inside.expression Expression] mechanism here
         
     template <typename Do>
     typename expression::while_<Cond, Do>::type const

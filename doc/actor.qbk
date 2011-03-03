@@ -50,7 +50,7 @@ that supplies the underlying expression to evaluate.
 
 The actor class accepts the arguments through a set of function call operators
 for 0 to `BOOST_PHOENIX_LIMIT` arities (Don't worry about the details, for now. Note, for example,
-that we skimp over the details regarding `return_type`). The arguments
+that we skimed over the details regarding `return_type`). The arguments
 are then forwarded to the actor's `Expr` for evaluation.
 
 [endsect]

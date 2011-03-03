@@ -79,9 +79,9 @@
 <p>
         <code class="computeroutput"><span class="identifier">while_eval</span></code> is an example
         of how to evaluate an expression. It gets called in the <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="keyword">while</span></code> action.
-        <code class="computeroutput"><span class="identifier">while_gen</span></code> and `while? are
-        the expression template front ends. Let's break this apart to undestand what's
-        happening. Let's start at the bottom. It's easier that way.
+        <code class="computeroutput"><span class="identifier">while_gen</span></code> and <code class="computeroutput"><span class="identifier">while_</span></code> are the expression template front
+        ends. Let's break this apart to undestand what's happening. Let's start at
+        the bottom. It's easier that way.
       </p>
 <p>
         When you write:
@@ -108,9 +108,8 @@
         where <code class="computeroutput"><span class="identifier">Cond</span></code> is the type of
         <code class="computeroutput"><span class="identifier">cond</span></code> and <code class="computeroutput"><span class="identifier">Do</span></code>
         is the type of <code class="computeroutput"><span class="identifier">do_</span></code>. Notice
-        how we are using phoenix's <a class="link" href="../inside/expression.html" title="Phoenix Expressions">Expression)
-        mechanism here</a>[link phoenix.inside.expression Expression) mechanism
-        here
+        how we are using Phoenix's <a class="link" href="../inside/expression.html" title="Phoenix Expressions">Expression</a>
+        mechanism here
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Do</span><span class="special">&gt;</span>
 <span class="keyword">typename</span> <span class="identifier">expression</span><span class="special">::</span><span class="identifier">while_</span><span class="special">&lt;</span><span class="identifier">Cond</span><span class="special">,</span> <span class="identifier">Do</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="keyword">const</span>

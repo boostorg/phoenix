@@ -13,7 +13,7 @@
 library, and one of the many customization points. The default actor implementation
 provides several operator() overloads which deal with the evaluation of expressions.
 
-For some uses cases this might not be enough. For convenience it is thinkable to
+For some use cases this might not be enough. For convenience it is thinkable to
 provide custom member functions which generate new expressions. An example is the
 [link phoenix.modules.statement.___if_else_____statement '''if_else_'''
 Statement] which provides an additional else member for generating a lazy if-else

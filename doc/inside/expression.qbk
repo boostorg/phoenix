@@ -12,11 +12,10 @@
 A Phoenix Expression is a model of the __proto_expr__ Concept. These expressions
 are wrapped inside an [link phoenix.inside.actor Actor] template. The `actor` provides
 the function call operator which evaluates the expressions.
-The `actor` is the domain specific wrapper around phoenix expressions.
+The `actor` is the domain specific wrapper around Phoenix expressions.
 
 By design, Phoenix Expressions do not carry any information on how they will be
-evaluated later on. They are the data structure on which the `Actions` will work
-on.
+evaluated later on. They are the data structure on which the `Actions` will work.
 
 The library provides a convenience template to define expressions:
     
@@ -59,8 +58,8 @@ The library provides a convenience template to define expressions:
 
 [heading meta_grammar]
 
-Defining Expressions is only part of the game to make it a valid Phoenix Expression.
-In order to use the expressions in the Phoenix domain, we need to "register" our newly created
+Defining expressions is only part of the game to make it a valid Phoenix Expression.
+In order to use the expressions in the Phoenix domain, we need to "register" them
 to our grammar.
 
 The `meta_grammar` is a struct for exactly that purpose. It is an openly extendable __proto__ Grammar:
@@ -107,7 +106,7 @@ Define a generator function to make the life of our potential users easier:
         return expression::plus<Lhs, Rhs>::make(lhs, rhs);
     }
 
-Look of it really works:
+Look if it really works:
 
     plus(6, 5)();
 
@@ -125,11 +124,11 @@ prints:
 See [@../../example/define_expression.cpp define_expression.cpp] for the full example.
 
 [note
-	The example shown here only works because `default_actions` know how to handle
+	The example shown here only works because `default_actions` knows how to handle
 	an expression having the `proto::tag::plus` and two children. This is because
 	`default_actions` uses the `proto::_default<meta_grammar>` transform to
     evaluate operators and functions. Learn more about actions
-    [link phoenix.inside.actions here]
+    [link phoenix.inside.actions here].
 ]
 
 [/section Boilerplate Macros]
@@ -138,7 +137,7 @@ When having more and more expressions, you start to realize that this is a very
 repetetive task. Phoenix provides boilerplate macros that make defining Phoenix
 Expressions as you have seen in the
 [link phoenix.inside.expression previous section] look like a piece of cake.
-]
+
 
 [/
 These expressions generate the following:
