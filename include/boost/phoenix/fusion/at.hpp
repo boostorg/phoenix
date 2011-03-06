@@ -34,6 +34,7 @@ namespace boost { namespace phoenix
     {};
 
     template <int N, typename Tuple>
+    inline
     typename expression::at_c<mpl::int_<N>, Tuple>::type const
     at_c(Tuple const& tuple)
     {

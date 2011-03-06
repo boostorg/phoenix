@@ -45,6 +45,7 @@ namespace boost { namespace phoenix
     ////////////////////////////////////////////////////////////////////////////
     
     template <typename F>
+    inline
     typename expression::function<F>::type
     bind(F f)
     {
@@ -67,6 +68,7 @@ namespace boost { namespace phoenix
 #else
     
     template <typename F, BOOST_PHOENIX_typename_A>
+    inline
     typename expression::function<F, BOOST_PHOENIX_A>::type const
     bind(F f, BOOST_PHOENIX_A_const_ref_a)
     {

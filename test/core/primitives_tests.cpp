@@ -15,13 +15,20 @@
 using boost::phoenix::cref;
 using boost::phoenix::ref;
 using boost::phoenix::val;
-using boost::phoenix::arg_names::_1;
-using boost::phoenix::arg_names::arg1;
-using boost::phoenix::arg_names::arg2;
+
 
 int
 main()
 {
+#ifndef BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
+    using boost::phoenix::arg_names::_1;
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::arg_names::arg2;
+#else 
+    boost::phoenix::arg_names::_1_type _1;
+    boost::phoenix::arg_names::arg1_type arg1;
+    boost::phoenix::arg_names::arg2_type arg2;
+#endif
     char c1 = '1';
     int i1 = 1, i2 = 2, i = 4;
     const char* s2 = "2";

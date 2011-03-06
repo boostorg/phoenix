@@ -14,7 +14,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/void.hpp>
 #include <boost/phoenix/stl/container/detail/container.hpp>
-#include <boost/phoenix/function/function.hpp>
+#include <boost/phoenix/function/adapt_function.hpp>
 #include <boost/type_traits/is_const.hpp>
 
 namespace boost { namespace phoenix
@@ -783,36 +783,45 @@ namespace boost { namespace phoenix
 
 } // namespace stl
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  The lazy functions themselves.
-//
-///////////////////////////////////////////////////////////////////////////////
-function<stl::assign> const         assign = stl::assign();
-function<stl::at> const             at = stl::at();
-function<stl::back> const           back = stl::back();
-function<stl::begin> const          begin = stl::begin();
-function<stl::capacity> const       capacity = stl::capacity();
-function<stl::clear> const          clear = stl::clear();
-function<stl::empty> const          empty = stl::empty();
-function<stl::end> const            end = stl::end();
-function<stl::erase> const          erase = stl::erase();
-function<stl::front> const          front = stl::front();
-function<stl::get_allocator> const  get_allocator = stl::get_allocator();
-function<stl::insert> const         insert = stl::insert();
-function<stl::key_comp> const       key_comp = stl::key_comp();
-function<stl::max_size> const       max_size = stl::max_size();
-function<stl::pop_back> const       pop_back  = stl::pop_back();
-function<stl::pop_front> const      pop_front = stl::pop_front();
-function<stl::push_back> const      push_back  = stl::push_back();
-function<stl::push_front> const     push_front = stl::push_front();
-function<stl::rbegin> const         rbegin = stl::rbegin();
-function<stl::rend> const           rend = stl::rend();
-function<stl::reserve> const        reserve = stl::reserve();
-function<stl::resize> const         resize = stl::resize();
-function<stl::size> const           size = stl::size();
-function<stl::splice> const         splice = stl::splice();
-function<stl::value_comp> const     value_comp = stl::value_comp();
+    ///////////////////////////////////////////////////////////////////////////////
+    //
+    //  The lazy functions themselves.
+    //
+    ///////////////////////////////////////////////////////////////////////////////
+    BOOST_PHOENIX_ADAPT_FUNCTION(assign, stl::assign, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(assign, stl::assign, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(assign, stl::assign, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(at, stl::at, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(back, stl::back, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(begin, stl::begin, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(capacity, stl::capacity, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(clear, stl::clear, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(empty, stl::empty, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(end, stl::end, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(erase, stl::erase, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(erase, stl::erase, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(front, stl::front, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(get_allocator, stl::get_allocator, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(insert, stl::insert, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(insert, stl::insert, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(insert, stl::insert, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(key_comp, stl::key_comp, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(max_size, stl::max_size, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(pop_back, stl::pop_back, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(pop_front, stl::pop_front, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(push_back, stl::push_back, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(push_front, stl::push_front, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(rbegin, stl::rbegin, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(rend, stl::rend, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(reserve, stl::reserve, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(resize, stl::resize, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(resize, stl::resize, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(size, stl::size, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(splice, stl::splice, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(splice, stl::splice, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(splice, stl::splice, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(splice, stl::splice, 5)
+    BOOST_PHOENIX_ADAPT_FUNCTION(value_comp, stl::value_comp, 1)
 
 }} // namespace boost::phoenix
 

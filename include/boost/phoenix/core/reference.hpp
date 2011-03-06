@@ -65,14 +65,14 @@ namespace boost { namespace phoenix
 
     template <typename T>
     typename expression::reference<T>::type const
-    ref(T & t)
+    inline ref(T & t)
     {
         return expression::reference<T>::make(t);
     }
 
     template <typename T>
     typename expression::reference<T const>::type const
-    cref(T const & t)
+    inline cref(T const & t)
     {
         return expression::reference<T const>::make(t);
     }

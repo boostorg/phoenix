@@ -9,7 +9,6 @@
 #define BOOST_PHOENIX_FUNCTION_FUNCTION_HPP
 
 #include <boost/phoenix/core/limits.hpp>
-#include <boost/fusion/sequence/intrinsic/at_c.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/call.hpp>
@@ -38,11 +37,11 @@ namespace boost { namespace phoenix
         >
         struct function;
 
-    #define BOOST_PHOENIX_DEFINE_FUNCTION_EXPRESSION(_, N, __)                      \
-        template <typename F, BOOST_PHOENIX_typename_A(N)>                                \
-        struct function<F, BOOST_PHOENIX_A(N)>                                            \
-            : expr<tag::function, F, BOOST_PHOENIX_A(N)>                                  \
-        {};                                                                         \
+    #define BOOST_PHOENIX_DEFINE_FUNCTION_EXPRESSION(_, N, __)                  \
+        template <typename F, BOOST_PHOENIX_typename_A(N)>                      \
+        struct function<F, BOOST_PHOENIX_A(N)>                                  \
+            : expr<tag::function, F, BOOST_PHOENIX_A(N)>                        \
+        {};                                                                     \
 
         BOOST_PP_REPEAT_FROM_TO(
             1

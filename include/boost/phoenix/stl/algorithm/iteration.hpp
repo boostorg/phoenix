@@ -17,7 +17,7 @@
 #include <boost/phoenix/stl/algorithm/detail/begin.hpp>
 #include <boost/phoenix/stl/algorithm/detail/end.hpp>
 
-#include <boost/phoenix/function/function.hpp>
+#include <boost/phoenix/function/adapt_function.hpp>
 
 namespace boost { namespace phoenix {
     namespace impl
@@ -88,8 +88,9 @@ namespace boost { namespace phoenix {
         };
     }
 
-    function<impl::for_each> const for_each = impl::for_each();
-    function<impl::accumulate> const accumulate = impl::accumulate();
+    BOOST_PHOENIX_ADAPT_FUNCTION(for_each, impl::for_each, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(accumulate, impl::accumulate, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(accumulate, impl::accumulate, 3)
 
 }}
 

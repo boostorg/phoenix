@@ -370,6 +370,7 @@ namespace boost { namespace phoenix
     #undef BOOST_PHOENIX_LAMBDA_LOCAL_GEN
     };
 
+    typedef lambda_local_gen lambda_type;
     lambda_local_gen const lambda = lambda_local_gen();
 
 }}

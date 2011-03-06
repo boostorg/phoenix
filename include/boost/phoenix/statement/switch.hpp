@@ -193,6 +193,7 @@ namespace boost { namespace phoenix {
     {};
 
     template <int N, typename A>
+    inline
     typename proto::result_of::make_expr<
         tag::switch_case
       , default_domain_with_basic_expr
@@ -209,6 +210,7 @@ namespace boost { namespace phoenix {
     }
 
     template <typename A>
+    inline
     typename proto::result_of::make_expr<
         tag::switch_default_case
       , default_domain_with_basic_expr
@@ -270,6 +272,7 @@ namespace boost { namespace phoenix {
     };
 
     template <typename Cond>
+    inline
     switch_gen<Cond> const
     switch_(Cond const& cond)
     {

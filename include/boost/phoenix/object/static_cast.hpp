@@ -50,6 +50,7 @@ namespace boost { namespace phoenix
     {};
 
     template <typename T, typename U>
+    inline
     typename expression::static_cast_<detail::target<T>, U>::type const
     static_cast_(U const& u)
     {
@@ -60,6 +61,7 @@ namespace boost { namespace phoenix
     }
     
     template <typename T, typename U>
+    inline
     typename expression::static_cast_<detail::target<T>, U>::type const
     static_cast_(U & u)
     {

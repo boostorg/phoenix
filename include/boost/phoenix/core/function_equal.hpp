@@ -142,13 +142,13 @@ namespace boost { namespace phoenix
     }
 
     template <typename Expr1, typename Expr2>
-    bool function_equal_impl(actor<Expr1> const& a1, actor<Expr2> const& a2)
+    inline bool function_equal_impl(actor<Expr1> const& a1, actor<Expr2> const& a2)
     {
         return detail::function_equal_()(a1, a2);
     }
 
     template <typename Expr1, typename Expr2>
-    bool function_equal(actor<Expr1> const& a1, actor<Expr2> const& a2)
+    inline bool function_equal(actor<Expr1> const& a1, actor<Expr2> const& a2)
     {
         return function_equal_impl(a1, a2);
     }

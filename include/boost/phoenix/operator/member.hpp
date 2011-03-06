@@ -64,6 +64,7 @@ namespace boost { namespace phoenix
     )
 
     template <typename Object, typename MemPtr>
+    inline
     typename enable_if<
         is_member_function_pointer<MemPtr>
       , detail::mem_fun_ptr_gen<actor<Object>, MemPtr> const

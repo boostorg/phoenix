@@ -26,7 +26,7 @@
 #include <boost/phoenix/stl/algorithm/detail/end.hpp>
 #include <boost/phoenix/stl/algorithm/detail/decay_array.hpp>
 
-#include <boost/phoenix/function/function.hpp>
+#include <boost/phoenix/function/adapt_function.hpp>
 
 #include <boost/range/result_iterator.hpp>
 #include <boost/range/difference_type.hpp>
@@ -1121,51 +1121,75 @@ namespace boost { namespace phoenix { namespace impl
 
 namespace boost { namespace phoenix
 {
-    function<impl::swap> const swap = impl::swap();
-    function<impl::copy> const copy = impl::copy();
-    function<impl::copy_backward> const copy_backward = impl::copy_backward();
-    function<impl::transform> const transform = impl::transform();
-    function<impl::replace> const replace = impl::replace();
-    function<impl::replace_if> const replace_if = impl::replace_if();
-    function<impl::replace_copy> const replace_copy = impl::replace_copy();
-    function<impl::replace_copy_if> const replace_copy_if = impl::replace_copy_if();
-    function<impl::fill> const fill = impl::fill();
-    function<impl::fill_n> const fill_n = impl::fill_n();
-    function<impl::generate> const generate = impl::generate();
-    function<impl::generate_n> const generate_n = impl::generate_n();
-    function<impl::remove> const remove = impl::remove();
-    function<impl::remove_if> const remove_if = impl::remove_if();
-    function<impl::remove_copy> const remove_copy = impl::remove_copy();
-    function<impl::remove_copy_if> const remove_copy_if = impl::remove_copy_if();
-    function<impl::unique> const unique = impl::unique();
-    function<impl::unique_copy> const unique_copy = impl::unique_copy();
-    function<impl::reverse> const reverse = impl::reverse();
-    function<impl::reverse_copy> const reverse_copy = impl::reverse_copy();
-    function<impl::rotate> const rotate = impl::rotate();
-    function<impl::rotate_copy> const rotate_copy = impl::rotate_copy();
-    function<impl::random_shuffle> const random_shuffle = impl::random_shuffle();
-    function<impl::partition> const partition = impl::partition();
-    function<impl::stable_partition> const stable_partition = impl::stable_partition();
-    function<impl::sort> const sort = impl::sort();
-    function<impl::stable_sort> const stable_sort = impl::stable_sort();
-    function<impl::partial_sort> const partial_sort = impl::partial_sort();
-    function<impl::partial_sort_copy> const partial_sort_copy = impl::partial_sort_copy();
-    function<impl::nth_element> const nth_element = impl::nth_element();
-    function<impl::merge> const merge = impl::merge();
-    function<impl::inplace_merge> const inplace_merge = impl::inplace_merge();
-    function<impl::next_permutation> const next_permutation = impl::next_permutation();
-    function<impl::prev_permutation> const prev_permutation = impl::prev_permutation();
-    function<impl::inner_product> const inner_product = impl::inner_product();
-    function<impl::partial_sum> const partial_sum = impl::partial_sum();
-    function<impl::adjacent_difference> const adjacent_difference = impl::adjacent_difference();
-    function<impl::push_heap> const push_heap = impl::push_heap();
-    function<impl::pop_heap> const pop_heap = impl::pop_heap();
-    function<impl::make_heap> const make_heap = impl::make_heap();
-    function<impl::sort_heap> const sort_heap = impl::sort_heap();
-    function<impl::set_union> const set_union = impl::set_union();
-    function<impl::set_intersection> const set_intersection = impl::set_intersection();
-    function<impl::set_difference> const set_difference = impl::set_difference();
-    function<impl::set_symmetric_difference> const set_symmetric_difference = impl::set_symmetric_difference();
+    BOOST_PHOENIX_ADAPT_FUNCTION(swap, impl::swap, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(copy, impl::copy, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(copy_backward, impl::copy_backward, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(transform, impl::transform, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(transform, impl::transform, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(replace, impl::replace, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(replace_if, impl::replace_if, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(replace_copy, impl::replace_copy, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(replace_copy_if, impl::replace_copy_if, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(fill, impl::fill, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(fill_n, impl::fill_n, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(generate, impl::generate, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(generate_n, impl::generate_n, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(remove, impl::remove, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(remove_if, impl::remove_if, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(remove_copy, impl::remove_copy, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(remove_copy_if, impl::remove_copy_if, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(unique, impl::unique, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(unique, impl::unique, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(unique_copy, impl::unique_copy, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(unique_copy, impl::unique_copy, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(reverse, impl::reverse, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(reverse_copy, impl::reverse_copy, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(rotate, impl::rotate, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(rotate_copy, impl::rotate_copy, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(random_shuffle, impl::random_shuffle, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(random_shuffle, impl::random_shuffle, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(partition, impl::partition, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(stable_partition, impl::stable_partition, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(sort, impl::sort, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(sort, impl::sort, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(stable_sort, impl::stable_sort, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(stable_sort, impl::stable_sort, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(partial_sort, impl::partial_sort, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(partial_sort, impl::partial_sort, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(partial_sort_copy, impl::partial_sort_copy, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(partial_sort_copy, impl::partial_sort_copy, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(nth_element, impl::nth_element, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(nth_element, impl::nth_element, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(merge, impl::merge, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(merge, impl::merge, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(inplace_merge, impl::inplace_merge, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(inplace_merge, impl::inplace_merge, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(next_permutation, impl::next_permutation, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(next_permutation, impl::next_permutation, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(prev_permutation, impl::prev_permutation, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(prev_permutation, impl::prev_permutation, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(inner_product, impl::inner_product, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(inner_product, impl::inner_product, 5)
+    BOOST_PHOENIX_ADAPT_FUNCTION(partial_sum, impl::partial_sum, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(partial_sum, impl::partial_sum, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(adjacent_difference, impl::adjacent_difference, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(adjacent_difference, impl::adjacent_difference, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(push_heap, impl::push_heap, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(push_heap, impl::push_heap, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(pop_heap, impl::pop_heap, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(pop_heap, impl::pop_heap, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(make_heap, impl::make_heap, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(make_heap, impl::make_heap, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(sort_heap, impl::sort_heap, 1)
+    BOOST_PHOENIX_ADAPT_FUNCTION(sort_heap, impl::sort_heap, 2)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_union, impl::set_union, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_union, impl::set_union, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_intersection, impl::set_intersection, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_intersection, impl::set_intersection, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_difference, impl::set_difference, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_difference, impl::set_difference, 4)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_symmetric_difference, impl::set_symmetric_difference, 3)
+    BOOST_PHOENIX_ADAPT_FUNCTION(set_symmetric_difference, impl::set_symmetric_difference, 4)
 }}
 
 #endif

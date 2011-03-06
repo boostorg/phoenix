@@ -70,10 +70,24 @@ namespace boost { namespace phoenix
         };
     }
 
+#ifndef BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
+
     #define BOOST_PHOENIX_ARGUMENT_N(_, N, name)                                \
+    typedef                                                                     \
+        expression::argument<BOOST_PP_INC(N)>::type                             \
+        BOOST_PP_CAT(BOOST_PP_CAT(name, BOOST_PP_INC(N)), _type);               \
     expression::argument<BOOST_PP_INC(N)>::type const                           \
         BOOST_PP_CAT(name, BOOST_PP_INC(N)) = {};                               \
     /**/
+
+#else // BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
+
+    #define BOOST_PHOENIX_ARGUMENT_N(_, N, name)                                \
+    typedef                                                                     \
+        expression::argument<BOOST_PP_INC(N)>::type                             \
+        BOOST_PP_CAT(BOOST_PP_CAT(name, BOOST_PP_INC(N)), _type);               \
+    /**/
+#endif // BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
 
     namespace placeholders
     {

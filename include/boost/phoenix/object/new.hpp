@@ -57,6 +57,7 @@ namespace boost { namespace phoenix
     {};
 
     template <typename T>
+    inline
     typename expression::new_<detail::target<T> >::type const
     new_()
     {

@@ -202,7 +202,7 @@ namespace boost { namespace phoenix
 
     template <typename Env, typename Actions>
     typename result_of::context<Env const &, Actions const&>::type const
-    context(Env const& env, Actions const& actions)
+    inline context(Env const& env, Actions const& actions)
     {
         vector2<Env const&, Actions const &> e = {env, actions};
         return e;
@@ -210,7 +210,7 @@ namespace boost { namespace phoenix
 
     template <typename Env, typename Actions>
     typename result_of::context<Env &, Actions const&>::type const
-    context(Env & env, Actions const& actions)
+    inline context(Env & env, Actions const& actions)
     {
         vector2<Env &, Actions const &> e = {env, actions};
         return e;
@@ -218,7 +218,7 @@ namespace boost { namespace phoenix
 
     template <typename Env, typename Actions>
     typename result_of::context<Env const &, Actions &>::type const
-    context(Env const& env, Actions & actions)
+    inline context(Env const& env, Actions & actions)
     {
         vector2<Env const&, Actions &> e = {env, actions};
         return e;
@@ -226,7 +226,7 @@ namespace boost { namespace phoenix
     
     template <typename Env, typename Actions>
     typename result_of::context<Env &, Actions &>::type const
-    context(Env & env, Actions & actions)
+    inline context(Env & env, Actions & actions)
     {
         vector2<Env &, Actions &> e = {env, actions};
         return e;
@@ -275,14 +275,14 @@ namespace boost { namespace phoenix
 
     template <typename Context>
     typename fusion::result_of::at_c<Context, 0>::type
-    env(Context & ctx)
+    inline env(Context & ctx)
     {
         return fusion::at_c<0>(ctx);
     }
 
     template <typename Context>
     typename fusion::result_of::at_c<Context const, 0>::type
-    env(Context const & ctx)
+    inline env(Context const & ctx)
     {
         return fusion::at_c<0>(ctx);
     }
@@ -330,14 +330,14 @@ namespace boost { namespace phoenix
 
     template <typename Context>
     typename fusion::result_of::at_c<Context, 1>::type
-    actions(Context & ctx)
+    inline actions(Context & ctx)
     {
         return fusion::at_c<1>(ctx);
     }
 
     template <typename Context>
     typename fusion::result_of::at_c<Context const, 1>::type
-    actions(Context const & ctx)
+    inline actions(Context const & ctx)
     {
         return fusion::at_c<1>(ctx);
     }

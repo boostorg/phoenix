@@ -142,6 +142,7 @@ namespace boost { namespace phoenix
     };
 
     template<typename Cond>
+    inline
     if_gen<Cond> const
     if_(Cond const & cond)
     {

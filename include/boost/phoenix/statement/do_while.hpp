@@ -66,7 +66,9 @@ namespace boost { namespace phoenix
         }
     };
 
+#ifndef BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
     do_gen const do_ = {};
+#endif
 
 }}
 

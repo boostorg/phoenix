@@ -62,6 +62,7 @@ namespace boost { namespace phoenix
     {};
 
     template <typename ThrowExpr>
+    inline
     typename expression::throw_<ThrowExpr>::type const
     throw_(ThrowExpr const& throw_expr)
     {
@@ -97,6 +98,7 @@ namespace boost { namespace phoenix
         }
     };
 
+    inline
     expression::rethrow::type const
     throw_()
     {

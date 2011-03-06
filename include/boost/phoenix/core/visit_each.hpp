@@ -33,7 +33,7 @@ namespace boost { namespace phoenix
     }
 
     template <typename Visitor, typename Expr>
-    void visit_each(Visitor& visitor, actor<Expr> const& a, long)
+    inline void visit_each(Visitor& visitor, actor<Expr> const& a, long)
     {
         fusion::for_each(a, detail::visit_each_impl<Visitor>(visitor));
     }

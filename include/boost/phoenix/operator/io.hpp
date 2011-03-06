@@ -31,6 +31,7 @@ namespace boost { namespace phoenix
     //
     /////////////////////////////////////////////////////////////////////////////
     template <typename Expr>
+    inline
     typename proto::result_of::make_expr<
           proto::tag::shift_left
         , phoenix_domain
@@ -44,6 +45,7 @@ namespace boost { namespace phoenix
     }
 
     template <typename Expr>
+    inline
     typename proto::result_of::make_expr<
           proto::tag::shift_left
         , phoenix_domain
@@ -57,6 +59,7 @@ namespace boost { namespace phoenix
     }
 
     template <typename Expr>
+    inline
     typename proto::result_of::make_expr<
           proto::tag::shift_right
         , phoenix_domain
@@ -70,6 +73,7 @@ namespace boost { namespace phoenix
     }
 
     template <typename Expr>
+    inline
     typename proto::result_of::make_expr<
           proto::tag::shift_right
         , phoenix_domain

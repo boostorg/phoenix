@@ -73,6 +73,7 @@ namespace boost { namespace phoenix
     };
 
     template <typename Init, typename Cond, typename Step>
+    inline
     for_gen<Init, Cond, Step> const
     for_(Init const& init, Cond const& cond, Step const& step)
     {

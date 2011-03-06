@@ -38,6 +38,7 @@ namespace boost { namespace phoenix
     {};
 
     template <typename P>
+    inline
     typename expression::delete_<P>::type const
     delete_(P const& p)
     {

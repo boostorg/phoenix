@@ -239,8 +239,10 @@ namespace boost { namespace phoenix {
             }
         };
     }
-    
+
+#ifndef BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
     expression::_this::type const _this = expression::_this::make();
+#endif
     
 }}
 

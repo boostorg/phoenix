@@ -57,6 +57,7 @@ namespace boost { namespace phoenix
     };
 
     template <typename Cond>
+    inline
     while_gen<Cond> const
     while_(Cond const& cond)
     {

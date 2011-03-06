@@ -321,7 +321,9 @@ namespace boost { namespace phoenix
         }
     };
 
+#ifndef BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
     try_gen const try_ = {};
+#endif
 }}
 
 #endif

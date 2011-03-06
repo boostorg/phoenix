@@ -35,14 +35,45 @@ namespace boost { namespace phoenix
 
         template <typename Expr, typename State, typename Data>
         struct impl
-            : proto::call<
-                meta_grammar(
-                    proto::_
-                  , _env
-                  , _actions
-                )
-            >::impl<Expr, State, Data>
-        {};
+            : proto::transform_impl<Expr, State, Data>
+        {
+            typedef meta_grammar::impl<Expr, State, Data> what;
+
+            typedef typename what::result_type result_type;
+
+            result_type operator()(
+                typename impl::expr_param e
+              , typename impl::state_param s
+              , typename impl::data_param d
+            ) const
+            {
+                return what()(e, s, d);
+            }
+        };
+
+        template <typename Expr, typename State>
+        struct impl<Expr, State, int>
+            : proto::transform_impl<Expr, State, int>
+        {
+            typedef
+                meta_grammar::impl<
+                    Expr
+                  , typename result_of::env<State>::type
+                  , typename result_of::actions<State>::type
+                >
+                what;
+
+            typedef typename what::result_type result_type;
+
+            result_type operator()(
+                typename impl::expr_param e
+              , typename impl::state_param s
+              , typename impl::data_param
+            ) const
+            {
+                return what()(e, env(s), actions(s));
+            }
+        };
     };
     
     /////////////////////////////////////////////////////////////////////////////
@@ -62,8 +93,32 @@ namespace boost { namespace phoenix
     {};
 
     /////////////////////////////////////////////////////////////////////////////
-    // A function object we can call to evaluate our expression
-    evaluator const eval = {};
+    // A function we can call to evaluate our expression
+    template <typename Expr, typename Context>
+    inline
+    typename meta_grammar::template impl<
+        Expr const&
+      , typename result_of::env<Context const&>::type
+      , typename result_of::actions<Context const&>::type
+    >::result_type
+    eval(Expr const& expr, Context const & ctx)
+    {
+        static evaluator const e = {};
+        return e(expr, ctx);
+    }
+    
+    template <typename Expr, typename Context>
+    inline
+    typename meta_grammar::template impl<
+        Expr &
+      , typename result_of::env<Context const&>::type
+      , typename result_of::actions<Context const&>::type
+    >::result_type
+    eval(Expr & expr, Context const & ctx)
+    {
+        static evaluator const e = {};
+        return e(expr, ctx);
+    }
 }}
 
 #endif

@@ -43,6 +43,7 @@
 #else
 
     template <typename T, BOOST_PHOENIX_typename_A>
+    inline
     typename expression::construct<detail::target<T>, BOOST_PHOENIX_A>::type const
     construct(BOOST_PHOENIX_A_const_ref_a)
     {

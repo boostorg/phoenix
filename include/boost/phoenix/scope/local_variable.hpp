@@ -228,32 +228,61 @@ namespace boost { namespace phoenix
 
     namespace local_names
     {
-        expression::local_variable<struct _a_key>::type const _a = {};
-        expression::local_variable<struct _b_key>::type const _b = {};
-        expression::local_variable<struct _c_key>::type const _c = {};
-        expression::local_variable<struct _d_key>::type const _d = {};
-        expression::local_variable<struct _e_key>::type const _e = {};
-        expression::local_variable<struct _f_key>::type const _f = {};
-        expression::local_variable<struct _g_key>::type const _g = {};
-        expression::local_variable<struct _h_key>::type const _h = {};
-        expression::local_variable<struct _i_key>::type const _i = {};
-        expression::local_variable<struct _j_key>::type const _j = {};
-        expression::local_variable<struct _k_key>::type const _k = {};
-        expression::local_variable<struct _l_key>::type const _l = {};
-        expression::local_variable<struct _m_key>::type const _m = {};
-        expression::local_variable<struct _n_key>::type const _n = {};
-        expression::local_variable<struct _o_key>::type const _o = {};
-        expression::local_variable<struct _p_key>::type const _p = {};
-        expression::local_variable<struct _q_key>::type const _q = {};
-        expression::local_variable<struct _r_key>::type const _r = {};
-        expression::local_variable<struct _s_key>::type const _s = {};
-        expression::local_variable<struct _t_key>::type const _t = {};
-        expression::local_variable<struct _u_key>::type const _u = {};
-        expression::local_variable<struct _v_key>::type const _v = {};
-        expression::local_variable<struct _w_key>::type const _w = {};
-        expression::local_variable<struct _x_key>::type const _x = {};
-        expression::local_variable<struct _y_key>::type const _y = {};
-        expression::local_variable<struct _z_key>::type const _z = {};
+        typedef expression::local_variable<struct _a_key>::type _a_type;
+        typedef expression::local_variable<struct _b_key>::type _b_type;
+        typedef expression::local_variable<struct _c_key>::type _c_type;
+        typedef expression::local_variable<struct _d_key>::type _d_type;
+        typedef expression::local_variable<struct _e_key>::type _e_type;
+        typedef expression::local_variable<struct _f_key>::type _f_type;
+        typedef expression::local_variable<struct _g_key>::type _g_type;
+        typedef expression::local_variable<struct _h_key>::type _h_type;
+        typedef expression::local_variable<struct _i_key>::type _i_type;
+        typedef expression::local_variable<struct _j_key>::type _j_type;
+        typedef expression::local_variable<struct _k_key>::type _k_type;
+        typedef expression::local_variable<struct _l_key>::type _l_type;
+        typedef expression::local_variable<struct _m_key>::type _m_type;
+        typedef expression::local_variable<struct _n_key>::type _n_type;
+        typedef expression::local_variable<struct _o_key>::type _o_type;
+        typedef expression::local_variable<struct _p_key>::type _p_type;
+        typedef expression::local_variable<struct _q_key>::type _q_type;
+        typedef expression::local_variable<struct _r_key>::type _r_type;
+        typedef expression::local_variable<struct _s_key>::type _s_type;
+        typedef expression::local_variable<struct _t_key>::type _t_type;
+        typedef expression::local_variable<struct _u_key>::type _u_type;
+        typedef expression::local_variable<struct _v_key>::type _v_type;
+        typedef expression::local_variable<struct _w_key>::type _w_type;
+        typedef expression::local_variable<struct _x_key>::type _x_type;
+        typedef expression::local_variable<struct _y_key>::type _y_type;
+        typedef expression::local_variable<struct _z_key>::type _z_type;
+
+#ifndef BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
+        _a_type const _a = {};
+        _b_type const _b = {};
+        _c_type const _c = {};
+        _d_type const _d = {};
+        _e_type const _e = {};
+        _f_type const _f = {};
+        _g_type const _g = {};
+        _h_type const _h = {};
+        _i_type const _i = {};
+        _j_type const _j = {};
+        _k_type const _k = {};
+        _l_type const _l = {};
+        _m_type const _m = {};
+        _n_type const _n = {};
+        _o_type const _o = {};
+        _p_type const _p = {};
+        _q_type const _q = {};
+        _r_type const _r = {};
+        _s_type const _s = {};
+        _t_type const _t = {};
+        _u_type const _u = {};
+        _v_type const _v = {};
+        _w_type const _w = {};
+        _x_type const _x = {};
+        _y_type const _y = {};
+        _z_type const _z = {};
+#endif
     }
     
     namespace detail
