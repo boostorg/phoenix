@@ -58,7 +58,7 @@ main()
 
                 (std::cout << clos.message << clos.num << ", " << clos.real << '\n')();
                 BOOST_TEST(clos.num() == -1);
-                BOOST_TEST(clos.real() == 3.14);
+                BOOST_TEST(std::fabs(clos.real()- 3.14) < 1.e-8);
                 BOOST_TEST(clos.message() == "Direct Init ");
             }
 
