@@ -32,8 +32,8 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 
-        template <typename This, typename Context, typename Locals, typename Let>
-        struct result<This(Context, Locals const &, Let const &)>
+        template <typename This, typename Locals, typename Let, typename Context>
+        struct result<This(Locals const &, Let const &, Context)>
         {
             typedef
                 typename result_of::actions<Context>::type
@@ -67,9 +67,9 @@ namespace boost { namespace phoenix
                 type;
         };
 
-        template <typename Context, typename Locals, typename Let>
-        typename result<let_eval(Context const&, Locals const &, Let const &)>::type
-        operator()(Context const& ctx, Locals const & locals, Let const & let) const
+        template <typename Locals, typename Let, typename Context>
+        typename result<let_eval(Locals const &, Let const &, Context &)>::type
+        operator()(Locals const & locals, Let const & let, Context & ctx) const
         {
             typedef
                 typename result_of::env<Context>::type
@@ -86,7 +86,7 @@ namespace boost { namespace phoenix
                             typename proto::result_of::value<
                                 Locals const &
                             >::type
-                          , Context const &
+                          , Context &
                         )
                     >::type
                 locals_type;
@@ -164,14 +164,29 @@ namespace boost { namespace phoenix
     struct is_nullary::when<rule::let, Dummy>
         : proto::make<
             mpl::and_<
-                detail::local_var_def_is_nullary<proto::_value(proto::_child_c<0>), _context>()
+                proto::make<
+                    detail::local_var_def_is_nullary<
+                        proto::call<
+                            proto::_value(proto::_child_c<0>)
+                        >
+                      , _context
+                    >()
+                >
               , evaluator(
                     proto::_child_c<1>
-                  , vector2<
-                        mpl::true_
-                      , detail::scope_is_nullary_actions
-                    >()
-                  , int()
+                  , proto::call<
+                        functional::context(
+                            proto::make<
+                                mpl::true_()
+                            >
+                          , proto::make<
+                                detail::scope_is_nullary_actions()
+                            >
+                        )
+                    >
+                  , proto::make<
+                        int()
+                    >
                 )
             >()
         >

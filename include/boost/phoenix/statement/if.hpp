@@ -14,6 +14,7 @@
 #include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
+#include <boost/phoenix/core/is_actor.hpp>
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
@@ -53,21 +54,21 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
         
-        template<typename Context, typename Cond, typename Then>
+        template<typename Cond, typename Then, typename Context>
         result_type
-        operator()(Context const & ctx, Cond const & cond, Then const & then) const
+        operator()(Cond const & cond, Then const & then, Context & ctx) const
         {
             if(eval(cond, ctx))
                 eval(then, ctx);
         }
         
-        template<typename Context, typename Cond, typename Then, typename Else>
+        template<typename Cond, typename Then, typename Else, typename Context>
         result_type
         operator()(
-              Context const & ctx
-            , Cond const & cond
+              Cond const & cond
             , Then const & then
             , Else const & else_
+            , Context const & ctx
         ) const
         {
             if(eval(cond, ctx))
@@ -124,6 +125,11 @@ namespace boost { namespace phoenix
 
         else_gen<cond_type, then_type> else_;
     };
+
+    template <typename Expr>
+    struct is_actor<if_actor<Expr> >
+        : mpl::true_
+    {};
 
     // Generator for if( cond )[ then ] branch.
     template<typename Cond>
