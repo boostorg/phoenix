@@ -146,6 +146,8 @@ int f8(int & state_, int x1, int x2, int x3, int x4, int x5, int x6, int x7, int
     return state_ += x1+x2+x3+x4+x5+x6+x7+x8;
 }
 
+template <typename> struct wrap {};
+
 template<class F> void test(F f, int a, int b)
 {
     BOOST_TEST( f() == a +   b );
@@ -158,49 +160,49 @@ using boost::phoenix::ref;
 
 void stateful_function_object_test()
 {
-    test( bind( X() ), 0, 17041 );
-    test( bind( X(), 1 ), 0, 1 );
-    test( bind( X(), 1, 2 ), 0, 1+2 );
-    test( bind( X(), 1, 2, 3 ), 0, 1+2+3 );
-    test( bind( X(), 1, 2, 3, 4 ), 0, 1+2+3+4 );
-    test( bind( X(), 1, 2, 3, 4, 5 ), 0, 1+2+3+4+5 );
-    test( bind( X(), 1, 2, 3, 4, 5, 6 ), 0, 1+2+3+4+5+6 );
-    test( bind( X(), 1, 2, 3, 4, 5, 6, 7 ), 0, 1+2+3+4+5+6+7 );
-    test( bind( X(), 1, 2, 3, 4, 5, 6, 7, 8 ), 0, 1+2+3+4+5+6+7+8 );
-    test( bind( X(), 1, 2, 3, 4, 5, 6, 7, 8, 9 ), 0, 1+2+3+4+5+6+7+8+9 );
+    ::test( bind( X() ), 0, 17041 );
+    ::test( bind( X(), 1 ), 0, 1 );
+    ::test( bind( X(), 1, 2 ), 0, 1+2 );
+    ::test( bind( X(), 1, 2, 3 ), 0, 1+2+3 );
+    ::test( bind( X(), 1, 2, 3, 4 ), 0, 1+2+3+4 );
+    ::test( bind( X(), 1, 2, 3, 4, 5 ), 0, 1+2+3+4+5 );
+    ::test( bind( X(), 1, 2, 3, 4, 5, 6 ), 0, 1+2+3+4+5+6 );
+    ::test( bind( X(), 1, 2, 3, 4, 5, 6, 7 ), 0, 1+2+3+4+5+6+7 );
+    ::test( bind( X(), 1, 2, 3, 4, 5, 6, 7, 8 ), 0, 1+2+3+4+5+6+7+8 );
+    ::test( bind( X(), 1, 2, 3, 4, 5, 6, 7, 8, 9 ), 0, 1+2+3+4+5+6+7+8+9 );
 
     X x;
 
     int n = x.state();
 
-    test( bind( ref(x) ), n, 17041 );
+    ::test( bind( ref(x) ), n, 17041 );
     n += 3 * 17041;
 
-    test( bind( ref(x), 1 ), n, 1 );
+    ::test( bind( ref(x), 1 ), n, 1 );
     n += 3*1;
 
-    test( bind( ref(x), 1, 2 ), n, 1+2 );
+    ::test( bind( ref(x), 1, 2 ), n, 1+2 );
     n += 3*(1+2);
 
-    test( bind( ref(x), 1, 2, 3 ), n, 1+2+3 );
+    ::test( bind( ref(x), 1, 2, 3 ), n, 1+2+3 );
     n += 3*(1+2+3);
 
-    test( bind( ref(x), 1, 2, 3, 4 ), n, 1+2+3+4 );
+    ::test( bind( ref(x), 1, 2, 3, 4 ), n, 1+2+3+4 );
     n += 3*(1+2+3+4);
 
-    test( bind( ref(x), 1, 2, 3, 4, 5 ), n, 1+2+3+4+5 );
+    ::test( bind( ref(x), 1, 2, 3, 4, 5 ), n, 1+2+3+4+5 );
     n += 3*(1+2+3+4+5);
 
-    test( bind( ref(x), 1, 2, 3, 4, 5, 6 ), n, 1+2+3+4+5+6 );
+    ::test( bind( ref(x), 1, 2, 3, 4, 5, 6 ), n, 1+2+3+4+5+6 );
     n += 3*(1+2+3+4+5+6);
 
-    test( bind( ref(x), 1, 2, 3, 4, 5, 6, 7 ), n, 1+2+3+4+5+6+7 );
+    ::test( bind( ref(x), 1, 2, 3, 4, 5, 6, 7 ), n, 1+2+3+4+5+6+7 );
     n += 3*(1+2+3+4+5+6+7);
 
-    test( bind( ref(x), 1, 2, 3, 4, 5, 6, 7, 8 ), n, 1+2+3+4+5+6+7+8 );
+    ::test( bind( ref(x), 1, 2, 3, 4, 5, 6, 7, 8 ), n, 1+2+3+4+5+6+7+8 );
     n += 3*(1+2+3+4+5+6+7+8);
 
-    test( bind( ref(x), 1, 2, 3, 4, 5, 6, 7, 8, 9 ), n, 1+2+3+4+5+6+7+8+9 );
+    ::test( bind( ref(x), 1, 2, 3, 4, 5, 6, 7, 8, 9 ), n, 1+2+3+4+5+6+7+8+9 );
     n += 3*(1+2+3+4+5+6+7+8+9);
 
     BOOST_TEST( x.state() == n );
@@ -210,15 +212,15 @@ void stateful_function_test()
 {
     using boost::phoenix::ref;
 
-    test( bind( f0, 0), 0, 17041 );
-    test( bind( f1, 0, 1 ), 0, 1 );
-    test( bind( f2, 0, 1, 2 ), 0, 1+2 );
-    test( bind( f3, 0, 1, 2, 3 ), 0, 1+2+3 );
-    test( bind( f4, 0, 1, 2, 3, 4 ), 0, 1+2+3+4 );
-    test( bind( f5, 0, 1, 2, 3, 4, 5 ), 0, 1+2+3+4+5 );
-    test( bind( f6, 0, 1, 2, 3, 4, 5, 6 ), 0, 1+2+3+4+5+6 );
-    test( bind( f7, 0, 1, 2, 3, 4, 5, 6, 7 ), 0, 1+2+3+4+5+6+7 );
-    test( bind( f8, 0, 1, 2, 3, 4, 5, 6, 7, 8 ), 0, 1+2+3+4+5+6+7+8 );
+    ::test( bind( f0, 0), 0, 17041 );
+    ::test( bind( f1, 0, 1 ), 0, 1 );
+    ::test( bind( f2, 0, 1, 2 ), 0, 1+2 );
+    ::test( bind( f3, 0, 1, 2, 3 ), 0, 1+2+3 );
+    ::test( bind( f4, 0, 1, 2, 3, 4 ), 0, 1+2+3+4 );
+    ::test( bind( f5, 0, 1, 2, 3, 4, 5 ), 0, 1+2+3+4+5 );
+    ::test( bind( f6, 0, 1, 2, 3, 4, 5, 6 ), 0, 1+2+3+4+5+6 );
+    ::test( bind( f7, 0, 1, 2, 3, 4, 5, 6, 7 ), 0, 1+2+3+4+5+6+7 );
+    ::test( bind( f8, 0, 1, 2, 3, 4, 5, 6, 7, 8 ), 0, 1+2+3+4+5+6+7+8 );
 }
 
 int main()
