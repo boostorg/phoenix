@@ -59,11 +59,11 @@
               , A
               , const& a
             )
-          , Context & ctx
+          , Context const & ctx
         ) const
         {
 #define EVAL_a(_,n,__) \
-            BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) eval(a ## n, ctx)
+            BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) boost::phoenix::eval(a ## n, ctx)
 
             return
                 typename detail::result_of::target<A0>::type(

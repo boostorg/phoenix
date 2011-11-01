@@ -1,21 +1,16 @@
 
-#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#ifndef BOOST_PHOENIX_STATEMENT_DETAIL_CATCH_PUSH_BACK_HPP
-#define BOOST_PHOENIX_STATEMENT_DETAIL_CATCH_PUSH_BACK_HPP
-
-#include <boost/phoenix/support/iterate.hpp>
-
-#include <boost/phoenix/statement/detail/preprocessed/catch_push_back.hpp>
-
-#endif
-#else
-
 #if !BOOST_PHOENIX_IS_ITERATING
 
 #ifndef BOOST_PHOENIX_STATEMENT_DETAIL_CATCH_PUSH_BACK_HPP
 #define BOOST_PHOENIX_STATEMENT_DETAIL_CATCH_PUSH_BACK_HPP
 
 #include <boost/phoenix/support/iterate.hpp>
+
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+
+#include <boost/phoenix/statement/detail/preprocessed/catch_push_back.hpp>
+
+#else
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(preserve: 2, line: 0, output: "preprocessed/catch_push_back_" BOOST_PHOENIX_LIMIT_STR ".hpp")
@@ -54,6 +49,8 @@
 #pragma wave option(output: null)
 #endif
 
+#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES
+
 #endif
 
 #else
@@ -62,14 +59,14 @@
         {
             typedef
                 typename proto::result_of::make_expr<
-                    tag::catch_
-                  , default_domain_with_basic_expr
+                    phoenix::tag::catch_
+                  , proto::basic_default_domain
                   , catch_exception<Exception>
                   , Expr
                 >::type
                 catch_expr;
 
-            typedef expression::try_catch<
+            typedef phoenix::expression::try_catch<
                 BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, BOOST_PHOENIX_CATCH_PUSH_BACK_R0, _)
               , catch_expr> gen_type;
             typedef typename gen_type::type type;
@@ -88,8 +85,8 @@
                           , _
                         )
                       , proto::make_expr<
-                            tag::catch_
-                          , default_domain_with_basic_expr
+                            phoenix::tag::catch_
+                          , proto::basic_default_domain
                         >(catch_exception<Exception>(), catch_)
                     );
             }
@@ -100,13 +97,13 @@
         {
             typedef
                 typename proto::result_of::make_expr<
-                    tag::catch_all
-                  , default_domain_with_basic_expr
+                    phoenix::tag::catch_all
+                  , proto::basic_default_domain
                   , Expr
                 >::type
                 catch_expr;
 
-            typedef expression::try_catch<
+            typedef phoenix::expression::try_catch<
                 BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, BOOST_PHOENIX_CATCH_PUSH_BACK_R0, _)
               , catch_expr> gen_type;
             typedef typename gen_type::type type;
@@ -125,13 +122,11 @@
                           , _
                         )
                       , proto::make_expr<
-                            tag::catch_all
-                          , default_domain_with_basic_expr
+                            phoenix::tag::catch_all
+                          , proto::basic_default_domain
                         >(catch_)
                     );
             }
         };
 
 #endif
-
-#endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES

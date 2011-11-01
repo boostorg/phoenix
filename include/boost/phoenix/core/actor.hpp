@@ -50,6 +50,24 @@ namespace boost { namespace phoenix
             error_invalid_lambda_expr(T const&) {}
         };
 
+        template <typename T>
+        struct result_type_deduction_helper
+        {
+            typedef T const & type;
+        };
+
+        template <typename T>
+        struct result_type_deduction_helper<T &>
+        {
+            typedef T & type;
+        };
+
+        template <typename T>
+        struct result_type_deduction_helper<T const &>
+        {
+            typedef T const & type;
+        };
+
         struct do_assign
         {
             BOOST_PROTO_CALLABLE()
@@ -62,7 +80,6 @@ namespace boost { namespace phoenix
                 proto::value(t1) = proto::value(t2);
             }
         };
-
 
     #define BOOST_PHOENIX_ACTOR_ASSIGN_CHILD(Z, N, D)                           \
         assign(                                                                 \
@@ -87,6 +104,24 @@ namespace boost { namespace phoenix
             >                                                                   \
       /**/
 
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+#include <boost/phoenix/core/preprocessed/actor.hpp>
+#else
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#endif
+/*==============================================================================
+    Copyright (c) 2005-2010 Joel de Guzman
+    Copyright (c) 2010-2011 Thomas Heller
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+==============================================================================*/
+
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 1)
+#endif
+
         struct assign
             : proto::or_<
                 BOOST_PP_ENUM_SHIFTED(
@@ -100,6 +135,12 @@ namespace boost { namespace phoenix
                 >
             >
         {};
+
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(output: null)
+#endif
+
+#endif
     #undef BOOST_PHOENIX_ACTOR_ASSIGN_CALL
     #undef BOOST_PHOENIX_ACTOR_ASSIGN_CHILD
     }
@@ -120,11 +161,11 @@ namespace boost { namespace phoenix
     struct actor
     {
         typedef typename
-            mpl::eval_if<
+            mpl::eval_if_c<
                 mpl::or_<
                     is_custom_terminal<Expr>
                   , mpl::bool_<is_placeholder<Expr>::value>
-                >
+                >::value
               , proto::terminal<Expr>
               , mpl::identity<Expr>
             >::type
@@ -150,7 +191,7 @@ namespace boost { namespace phoenix
           , phoenix_domain
           , proto_base_expr
           , A0
-        >::type
+        >::type const
         operator=(A0 const & a0) const
         {
             return proto::make_expr<proto::tag::assign, phoenix_domain>(this->proto_expr_, a0);
@@ -162,14 +203,35 @@ namespace boost { namespace phoenix
           , phoenix_domain
           , proto_base_expr
           , A0
-        >::type
+        >::type const
         operator=(A0 & a0) const
         {
             return proto::make_expr<proto::tag::assign, phoenix_domain>(this->proto_expr_, a0);
         }
+        
+        template <typename A0>
+        typename proto::result_of::make_expr<
+            proto::tag::subscript
+          , phoenix_domain
+          , proto_base_expr
+          , A0
+        >::type const
+        operator[](A0 const & a0) const
+        {
+            return proto::make_expr<proto::tag::subscript, phoenix_domain>(this->proto_expr_, a0);
+        }
 
-        //BOOST_PROTO_EXTENDS_ASSIGN_()
-        BOOST_PROTO_EXTENDS_SUBSCRIPT()
+        template <typename A0>
+        typename proto::result_of::make_expr<
+            proto::tag::subscript
+          , phoenix_domain
+          , proto_base_expr
+          , A0
+        >::type const
+        operator[](A0 & a0) const
+        {
+            return proto::make_expr<proto::tag::subscript, phoenix_domain>(this->proto_expr_, a0);
+        }
 
         template <typename Sig>
         struct result;
@@ -180,7 +242,7 @@ namespace boost { namespace phoenix
             typedef vector1<const actor<Expr> *> env_type;
             env_type env = {this};
             
-            return phoenix::eval(*this, context(env, default_actions()));
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
         typename result_of::actor<proto_base_expr>::type
@@ -189,7 +251,7 @@ namespace boost { namespace phoenix
             typedef vector1<const actor<Expr> *> env_type;
             env_type env = {this};
             
-            return phoenix::eval(*this, context(env, default_actions()));
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
         template <typename Env>
@@ -203,7 +265,7 @@ namespace boost { namespace phoenix
         >::result_type
         eval(Env const & env) const
         {
-            return phoenix::eval(*this, context(env, default_actions()));
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
         
         // Bring in the rest
@@ -222,7 +284,7 @@ namespace boost
     
     template <typename Expr>
     struct result_of<phoenix::actor<Expr> const()>
-        : result_of<phoenix::actor<typename phoenix::actor<Expr>::proto_base_expr>()>
+        : phoenix::result_of::actor<typename phoenix::actor<Expr>::proto_base_expr>
     {};
 }
 

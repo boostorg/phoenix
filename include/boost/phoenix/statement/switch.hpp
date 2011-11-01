@@ -9,12 +9,14 @@
 #define BOOST_PHOENIX_STATEMENT_SWITCH_HPP
 
 #include <boost/phoenix/core/limits.hpp>
+#include <boost/fusion/iterator/advance.hpp>
 #include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 #include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/proto/make_expr.hpp>
+#include <boost/proto/fusion.hpp>
 
 BOOST_PHOENIX_DEFINE_EXPRESSION(
     (boost)(phoenix)(switch_case)
@@ -54,7 +56,7 @@ namespace boost { namespace phoenix
                 proto::when<
                     proto::comma<
                         switch_case_is_nullary
-                      , proto::or_<rule::switch_default_case, rule::switch_case>
+                      , proto::or_<phoenix::rule::switch_default_case, phoenix::rule::switch_case>
                     >
                   , mpl::and_<
                         switch_case_is_nullary(
@@ -68,7 +70,7 @@ namespace boost { namespace phoenix
                     >()
                 >
               , proto::when<
-                    proto::or_<rule::switch_default_case, rule::switch_case>
+                    proto::or_<phoenix::rule::switch_default_case, phoenix::rule::switch_case>
                   , evaluator(proto::_child_c<0>, proto::_state)
                 >
             >
@@ -76,15 +78,15 @@ namespace boost { namespace phoenix
 
         struct switch_case_grammar
             : proto::or_<
-                proto::comma<switch_case_grammar, rule::switch_case>
-              , proto::when<rule::switch_case, proto::_>
+                proto::comma<switch_case_grammar, phoenix::rule::switch_case>
+              , proto::when<phoenix::rule::switch_case, proto::_>
             >
         {};
 
         struct switch_case_with_default_grammar
             : proto::or_<
-                proto::comma<switch_case_grammar, rule::switch_default_case>
-              , proto::when<rule::switch_default_case, proto::_>
+                proto::comma<switch_case_grammar, phoenix::rule::switch_default_case>
+              , proto::when<phoenix::rule::switch_default_case, proto::_>
             >
         {};
 
@@ -159,10 +161,10 @@ namespace boost { namespace phoenix {
                     >::type
                     case_label;
 
-                switch(eval(cond, ctx))
+                switch(boost::phoenix::eval(cond, ctx))
                 {
                     case case_label::value:
-                        eval(proto::child_c<1>(cases), ctx);
+                        boost::phoenix::eval(proto::child_c<1>(cases), ctx);
                 }
             }
             
@@ -176,10 +178,10 @@ namespace boost { namespace phoenix {
               , mpl::true_
             ) const
             {
-                switch(eval(cond, ctx))
+                switch(boost::phoenix::eval(cond, ctx))
                 {
                     default:
-                        eval(proto::child_c<0>(cases), ctx);
+                        boost::phoenix::eval(proto::child_c<0>(cases), ctx);
                 }
             }
 
@@ -196,14 +198,17 @@ namespace boost { namespace phoenix {
     inline
     typename proto::result_of::make_expr<
         tag::switch_case
-      , default_domain_with_basic_expr
+      , proto::basic_default_domain
       , mpl::int_<N>
       , A
     >::type const
     case_(A const & a)
     {
         return
-            proto::make_expr<tag::switch_case, default_domain_with_basic_expr>(
+            proto::make_expr<
+                tag::switch_case
+              , proto::basic_default_domain
+            >(
                 mpl::int_<N>()
               , a
             );
@@ -213,14 +218,15 @@ namespace boost { namespace phoenix {
     inline
     typename proto::result_of::make_expr<
         tag::switch_default_case
-      , default_domain_with_basic_expr
+      , proto::basic_default_domain
       , A
     >::type const
     default_(A const& a)
     {
         return
             proto::make_expr<
-                tag::switch_default_case, default_domain_with_basic_expr
+                tag::switch_default_case
+              , proto::basic_default_domain
             >(a);
     }
 

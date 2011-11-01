@@ -32,10 +32,16 @@
 #pragma wave option(preserve: 1)
 #endif
 
+#define M0(Z, N, D)                                                             \
+    typename detail::result_type_deduction_helper<BOOST_PP_CAT(A, N)>::type     \
+/**/
+
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
         (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                      \
         <boost/phoenix/core/detail/actor_operator.hpp>))
 #include BOOST_PHOENIX_ITERATE()
+
+#undef M0
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
@@ -45,12 +51,17 @@
 
 #else
 
+#if BOOST_PHOENIX_ITERATION >= BOOST_PHOENIX_PERFECT_FORWARD_LIMIT
+
         template <typename This, BOOST_PHOENIX_typename_A>
         struct result<This(BOOST_PHOENIX_A)>
-            : result_of::actor<proto_base_expr, BOOST_PHOENIX_A>
+            : result<This(BOOST_PHOENIX_A_const_ref)>
         {};
 
-#if BOOST_PHOENIX_ITERATION >= BOOST_PHOENIX_PERFECT_FORWARD_LIMIT
+        template <typename This, BOOST_PHOENIX_typename_A>
+        struct result<This(BOOST_PHOENIX_A_ref)>
+            : result_of::actor<proto_base_expr, BOOST_PHOENIX_A_ref>
+        {};
 
         template <BOOST_PHOENIX_typename_A>
         typename result_of::actor<proto_base_expr, BOOST_PHOENIX_A_ref>::type
@@ -63,7 +74,7 @@
                 env_type;
             env_type env = {this, BOOST_PHOENIX_a};
             
-            return phoenix::eval(*this, context(env, default_actions()));
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
         template <BOOST_PHOENIX_typename_A>
@@ -77,7 +88,7 @@
                 env_type;
             env_type env = {this, BOOST_PHOENIX_a};
             
-            return phoenix::eval(*this, context(env, default_actions()));
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
         template <BOOST_PHOENIX_typename_A>
@@ -91,7 +102,7 @@
                 env_type;
             env_type env = {this, BOOST_PHOENIX_a};
             
-            return phoenix::eval(*this, context(env, default_actions()));
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
         template <BOOST_PHOENIX_typename_A>
@@ -105,7 +116,7 @@
                 env_type;
             env_type env = {this, BOOST_PHOENIX_a};
             
-            return phoenix::eval(*this, context(env, default_actions()));
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
 #else
@@ -118,8 +129,13 @@
 // only operator()(A const &...a) and operator()(A &...a) are generated
 // this is all handled by the PP mumbo jumbo above
 #define BOOST_PHOENIX_ACTOR_OPERATOR(_, I, __)                                  \
+        template <typename This, BOOST_PHOENIX_typename_A>                      \
+        struct result<This(BOOST_PHOENIX_PERM_A(I))>                            \
+            : result_of::actor<proto_base_expr, BOOST_PHOENIX_PERM_A(I)>        \
+        {};                                                                     \
+                                                                                \
         template <BOOST_PHOENIX_typename_A>                                     \
-        typename result_of::actor<proto_base_expr, BOOST_PHOENIX_PERM_A(I)>::type          \
+        typename result_of::actor<proto_base_expr, BOOST_PHOENIX_PERM_A(I)>::type\
         operator()(BOOST_PHOENIX_PERM_A_a(I)) const                             \
         {                                                                       \
             typedef                                                             \
@@ -129,11 +145,11 @@
                 env_type;                                                       \
             env_type env = {this, BOOST_PHOENIX_a};                             \
                                                                                 \
-            return phoenix::eval(*this, context(env, default_actions()));                \
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));\
         }                                                                       \
                                                                                 \
         template <BOOST_PHOENIX_typename_A>                                     \
-        typename result_of::actor<proto_base_expr, BOOST_PHOENIX_PERM_A(I)>::type          \
+        typename result_of::actor<proto_base_expr, BOOST_PHOENIX_PERM_A(I)>::type\
         operator()(BOOST_PHOENIX_PERM_A_a(I))                                   \
         {                                                                       \
             typedef                                                             \
@@ -143,9 +159,14 @@
                 env_type;                                                       \
             env_type env = {this, BOOST_PHOENIX_a};                             \
                                                                                 \
-            return phoenix::eval(*this, context(env, default_actions()));                \
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));\
         }                                                                       \
         /**/
+
+        template <typename This, BOOST_PHOENIX_typename_A>
+        struct result<This(BOOST_PHOENIX_A)>
+            : result<This(BOOST_PP_ENUM(BOOST_PHOENIX_ITERATION, M0, _))>
+        {};
 
         BOOST_PP_REPEAT(BOOST_PHOENIX_PERM_SIZE, BOOST_PHOENIX_ACTOR_OPERATOR, _)
 

@@ -33,8 +33,9 @@ namespace boost { namespace phoenix
     }
 
     template <typename T>
+    inline
     typename expression::value<T>::type const
-    inline val(T t)
+    val(T t)
     {
         return expression::value<T>::make(t);
     }
@@ -54,16 +55,18 @@ namespace boost { namespace phoenix
 
         template <typename This, typename Actor, typename Context>
         struct result<This(Actor, Context)>
-            : boost::remove_reference<
-                typename evaluator::impl<Actor, Context, int>::result_type
-            >
+            : boost::remove_const<
+				    typename boost::remove_reference<
+                    typename evaluator::impl<Actor, Context, int>::result_type
+                >::type
+				>
         {};     
 
         template <typename Context>
         typename result<custom_terminal(actor<Expr> const &, Context &)>::type
         operator()(actor<Expr> const & expr, Context & ctx) const
         {
-            return eval(expr, ctx);
+            return boost::phoenix::eval(expr, ctx);
         }
     };
 
@@ -76,51 +79,33 @@ namespace boost { namespace phoenix
 
         template<typename T>
         struct argument_type
-            : mpl::eval_if<
-            is_function<typename remove_pointer<T>::type>,
-            mpl::identity<T>,
-            const_ref<T> >
+            : mpl::eval_if_c<
+                is_function<typename remove_pointer<T>::type>::value
+              , mpl::identity<T>
+              , const_ref<T>
+            >
         {
             typedef T type;
         };
+
+        template <typename T>
+        struct decay
+        {
+            typedef T type;
+        };
+        template <typename T, int N>
+        struct decay<T[N]> : decay<T const *> {};
     }
     
     template <typename T>
-    struct as_actor_base
+    struct as_actor<T, mpl::false_>
     {
-        typedef typename expression::value<T>::type type;
+        typedef typename expression::value<typename meta::decay<T>::type >::type type;
 
-        static typename expression::value<T>::type
-        convert(typename meta::argument_type<T>::type x)
+        static type
+        convert(typename meta::argument_type<typename meta::decay<T>::type>::type t)
         {
-            return expression::value<T>::make(x);
-        }
-    };
-
-    // Sometimes it is necessary to auto-convert references to
-    // a value<T>. This happens when we are re-currying. This
-    // cannot happen through the standard public actor interfaces.
-    template <typename T>
-    struct as_actor_base<T&>
-    {
-        typedef typename expression::value<T>::type type;
-
-        static typename expression::value<T>::type
-        convert(T& x)
-        {
-            return expression::value<T>::make(x);
-        }
-    };
-
-    template <typename T, int N>
-    struct as_actor_base<T[N]>
-    {
-        typedef typename expression::value<T const *>::type type;
-
-        static typename expression::value<T const *>::type
-        convert(T const x[N])
-        {
-            return expression::value<T const*>::make(x);
+            return expression::value<typename meta::decay<T>::type >::make(t);
         }
     };
 }}

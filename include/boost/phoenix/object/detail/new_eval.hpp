@@ -31,8 +31,8 @@
 #pragma wave option(preserve: 1)
 #endif
 
-#define BOOST_PHOENIX_ITERATION_PARAMS                                                \
-    (3, (2, BOOST_PHOENIX_COMPOSITE_LIMIT,                                            \
+#define BOOST_PHOENIX_ITERATION_PARAMS                                          \
+    (3, (2, BOOST_PHOENIX_COMPOSITE_LIMIT,                                      \
     <boost/phoenix/object/detail/new_eval.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
@@ -65,11 +65,11 @@
               , A
               , const& a
             )
-          , Context & ctx
+          , Context const & ctx
         ) const
         {
 #define EVAL_a(_,n,__) \
-            BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) eval(a ## n, ctx)
+            BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) boost::phoenix::eval(a ## n, ctx)
             return
                 new typename result<
                     new_eval(BOOST_PHOENIX_A_const_ref, Context &)

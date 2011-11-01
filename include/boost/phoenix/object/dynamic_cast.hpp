@@ -29,7 +29,7 @@ namespace boost { namespace phoenix
         struct result;
 
         template <typename This, typename Target, typename Source, typename Context>
-        struct result<This(Target const &, Source const&, Context)>
+        struct result<This(Target, Source, Context)>
             : detail::result_of::target<Target>
         {};
 
@@ -40,7 +40,7 @@ namespace boost { namespace phoenix
             return
                 dynamic_cast<
                     typename detail::result_of::target<Target>::type
-                >(eval(u, ctx));
+                >(boost::phoenix::eval(u, ctx));
         }
     };
 

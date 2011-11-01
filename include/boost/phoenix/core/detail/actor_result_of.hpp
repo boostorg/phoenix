@@ -44,7 +44,7 @@
         struct nullary_actor_result
         {
             typedef
-                typename evaluator::impl<
+                typename boost::phoenix::evaluator::impl<
                     Expr const&
                   , vector2<
                         vector1<const ::boost::phoenix::actor<Expr> *> &
@@ -60,8 +60,8 @@
         {
             typedef
                 // avoid calling result_of::actor when this is false
-                typename mpl::eval_if<
-                    result_of::is_nullary<Expr>
+                typename mpl::eval_if_c<
+                    result_of::is_nullary<Expr>::value
                   , nullary_actor_result<Expr>
                   , mpl::identity<detail::error_expecting_arguments>
                 >::type

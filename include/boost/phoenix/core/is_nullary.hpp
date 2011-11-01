@@ -52,50 +52,50 @@ namespace boost { namespace phoenix
         };
     };
     
+    template <
+        typename Trait
+      , typename Expr
+      , typename State
+      , typename Data
+      , bool IsTransform = proto::is_transform<Trait>::value
+    >
+    struct is_nullary_custom_terminal_impl
+    {
+        typedef typename Trait::type result_type;
+    };
+    
+    template <typename Transform, typename Expr, typename State, typename Data>
+    struct is_nullary_custom_terminal_impl<Transform, Expr, State, Data, true>
+    {
+        typedef
+            typename Transform::template impl<
+                Expr
+              , State
+              , Data
+            >::result_type
+            result_type;
+    };
+
     template <typename Dummy>
     struct is_nullary::when<rule::custom_terminal, Dummy>
     {
         BOOST_PROTO_TRANSFORM(is_nullary::when<rule::custom_terminal>)
         
         template <typename Expr, typename State, typename Data>
-        struct defer_result
-            : mpl::identity<
-                typename result_of::is_nullary<
+        struct impl
+            : is_nullary_custom_terminal_impl<
+                result_of::is_nullary<
                     custom_terminal<
                         typename proto::detail::uncvref<
                             typename proto::result_of::value<Expr>::type
                         >::type
                     >
-                >::template impl<
-                    typename proto::result_of::value<Expr>::type
-                  , State
-                  , Data
-                >::result_type
+                >
+              , typename proto::result_of::value<Expr>::type
+              , State
+              , Data
             >
         {};
-
-        template <typename Expr, typename State, typename Data>
-        struct impl
-        {
-            typedef 
-                typename proto::detail::uncvref<
-                    typename proto::result_of::value<Expr>::type
-                >::type value_type;
-
-            typedef
-                typename result_of::is_nullary<
-                    custom_terminal<value_type>
-                >
-                is_nullary_trait;
-
-            typedef
-                typename mpl::eval_if<
-                    proto::is_transform<is_nullary_trait>
-                  , defer_result<Expr, State, Data>
-                  , is_nullary_trait
-                >::type
-                result_type;
-        };
     };
     
     template <typename Dummy>
@@ -147,6 +147,28 @@ namespace boost { namespace phoenix
         struct is_nullary<custom_terminal<actor<T> > >
             : evaluator
         {};
+        
+        template <typename T>
+        struct is_nullary<custom_terminal<boost::reference_wrapper<actor<T> > > >
+        {
+            BOOST_PROTO_TRANSFORM(is_nullary<custom_terminal<boost::reference_wrapper<actor<T> > > >)
+            template <typename Expr, typename State, typename Data>
+            struct impl
+            {
+                typedef typename evaluator::template impl<actor<T>, State, Data>::result_type result_type;
+            };
+        };
+        
+        template <typename T>
+        struct is_nullary<custom_terminal<boost::reference_wrapper<actor<T> const> > >
+        {
+            BOOST_PROTO_TRANSFORM(is_nullary<custom_terminal<boost::reference_wrapper<actor<T> const> > >)
+            template <typename Expr, typename State, typename Data>
+            struct impl
+            {
+                typedef typename evaluator::template impl<actor<T> const, State, Data>::result_type result_type;
+            };
+        };
     }
 
 }}
