@@ -52,7 +52,8 @@ static const int number_of_calls_per_thread=20000;
 
 struct test_dynamic : boost::phoenix::dynamic<int>
 {
-    test_dynamic() : b(*this) {}
+  //    test_dynamic() : b(*this) {}
+  test_dynamic() : b(init<0>(this)) {}
     member1 b;
 };
 
