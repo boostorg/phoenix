@@ -43,8 +43,8 @@ namespace boost { namespace phoenix
     template <typename Do>
     struct do_while_gen
     {
-        do_while_gen(Do const& do_)
-            : do_(do_) {}
+        do_while_gen(Do const& do_it)
+            : do_(do_it) {}
 
         template <typename Cond>
         typename expression::do_while<Cond, Do>::type const

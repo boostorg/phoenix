@@ -37,8 +37,8 @@ namespace boost { namespace phoenix
           : f()
         {}
 
-        BOOST_CONSTEXPR function(F f)
-          : f(f)
+        BOOST_CONSTEXPR function(F f_)
+          : f(f_)
         {}
 
         template <typename Sig>
