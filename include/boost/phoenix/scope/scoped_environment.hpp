@@ -44,11 +44,11 @@ namespace boost { namespace phoenix
             , locals(locals)
         {}
 
-		  scoped_environment(scoped_environment const & o)
-		      : env(o.env)
+        scoped_environment(scoped_environment const & o)
+            : env(o.env)
             , outer_env(o.outer_env)
-			   , locals(o.locals)
-		 {};
+            , locals(o.locals)
+        {};
 
         Env      const & env;
         OuterEnv const & outer_env;
