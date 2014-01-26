@@ -1,0 +1,48 @@
+Boost Phoenix: A Standard compliant C++ preprocessor library
+http://www.boost.org/
+
+Copyright (c) 2005-2010 Joel de Guzman
+Copyright (c) 2010-2013 Thomas Heller
+Copyright (c) 2014      John Fletcher
+
+Distributed under the Boost Software License, Version 1.0. (See accompanying
+file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+-------------------------------------------------------------------------------
+
+TODO (known issues):
+- Create a full list of known issues.
+- Inspection report outstanding issues
+	Fix copyright and licence in preprocessed files for function_equal
+	Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
+- Investigate fixes needed for the following bugs
+(all refer to phoenix though not all may be in fact phoenix bugs)
+#9295, #9291, #9260, #8820, #8800, #8774, #8704
+#8564, #8558, #8504, #8298, #8187, #8156, #7996
+#7953, #7946, #7730, #7633, #7481, #7480, #7423
+#7391, #7356, #7166, #7165, #6911, #6848, #6665
+#6202, #6133, #6026, #5875, #5824, #5715, #5687
+- Complete work on the following under investigation
+#9363, #9362, #7624, #7199
+- #9113 warnings on -Wshadow - find and fix remaining warnings
+-------------------------------------------------------------------------------
+
+CHANGELOG
+
+- V3.0.1 
+- Started CHANGELOG
+- Fixed bug_000008 to use phoenix headers correctly.
+	This fixes it for most systems but not for
+	Clang Linux C++11 with libstdc++ where the problem seems
+	to be in boost/thread. Clang Linux C++11 with libc++ works.
+- Fixed #9113 warnings on -Wshadow (some fixed)
+- Fixed #9111 unused parameter warning in phoenix bind
+- Fixed #8417 Minor documentation
+- Fixed #7181 MSVC warnings
+- Fixed #6268 phoenix and fusion operator < and added test bug6268
+- Fixed many issues from Inspection report
+	phoenix/core/detail/phx_result.hpp Fixed clash with Apple macro 'check'
+
+Boost V1.55:
+- V3.0.0
+
