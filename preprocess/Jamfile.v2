@@ -15,7 +15,7 @@ toolset.flags wave PHOENIX-LIMIT <phoenix-limit> ;
 actions wave bind PHOENIX-LIMIT
 {
   echo Preprocessing with BOOST_PHOENIX_LIMIT=$(PHOENIX-LIMIT)...
-  $(>[2]) -o- -DBOOST_PHOENIX_LIMIT=$(PHOENIX-LIMIT) --config-file wave-msvc-10.0.cfg $(>[1])
+  $(>[2]) -o- -DBOOST_PHOENIX_LIMIT=$(PHOENIX-LIMIT) --config-file wave.cfg $(>[1])
 }
 
 W = /boost/libs/wave/tool//wave ;
