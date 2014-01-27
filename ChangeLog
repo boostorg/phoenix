@@ -12,6 +12,13 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 TODO (known issues):
 - Create a full list of known issues.
+- Check all the examples and ammend as needed.
+- Update documentation to be consistent with examples.
+- Identify other boost libraries using Phoenix in order to
+  decide on priorities for fixing the bugs below.
+	One such library is Boost log.
+- Identify dependencies on other libraries and cooperate on bugs.
+- Add more examples and documentation.
 - Inspection report outstanding issues
 	Fix copyright and licence in preprocessed files for function_equal
 	Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
