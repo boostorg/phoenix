@@ -28,13 +28,16 @@ TODO (known issues):
 #8564, #8558, #8504, #8298, #8187, #8156, #7996
 #7953, #7946, #7730, #7633, #7481, #7480, #7423
 #7391, #7356, #7166, #7165, #6911, #6848, #6665
-#6202, #6133, #6026, #5875, #5824, #5715, #5687
+#6202, #6133, #6026, #5875, #5824, #5687
 - Complete work on the following under investigation
 #9363, #9362, #7624, #7199
 - #9113 warnings on -Wshadow - find and fix remaining warnings
 -------------------------------------------------------------------------------
 
 CHANGELOG
+
+- Fixed #5715 sequencing with comma does not work for boost::phoenix::bind
+	Added test bug5715
 
 - V3.0.1
 - Started CHANGELOG
