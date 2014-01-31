@@ -13,6 +13,6 @@
 //  This is the version of the library
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define BOOST_PHOENIX_VERSION   0x3001    // 3.0.1
+#define BOOST_PHOENIX_VERSION   0x3002    // 3.0.2
 
 #endif
