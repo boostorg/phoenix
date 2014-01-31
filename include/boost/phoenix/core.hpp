@@ -18,5 +18,6 @@
 #include <boost/phoenix/core/function_equal.hpp>
 #include <boost/phoenix/core/visit_each.hpp>
 #include <boost/phoenix/core/v2_eval.hpp>
+#include <boost/phoenix/scope/local_variable.hpp> // to fix 5824
 
 #endif
