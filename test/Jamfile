@@ -125,6 +125,7 @@ test-suite phoenix_boost_bind_compatibility :
 test-suite phoenix_regression :
     [ run regression/bug4853.cpp ]
     [ run regression/bug5626.cpp ]
+    [ run regression/bug5824.cpp ]
     [ run regression/bug5968.cpp ]
     [ run regression/bug6040.cpp ]
     [ run regression/bug6268.cpp ]
