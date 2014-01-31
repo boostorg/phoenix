@@ -16,10 +16,12 @@
 
 namespace test
 {
-  int  x = 0;
+  int x = 0;
+  int y = 0;
+  int z = 0;
 
-  void f() { ++x; }
-  void g() { --x; }
+  void f() { ++x; ++y; }
+  void g() { --x; ++z; }
 
 }
 int main()
@@ -29,4 +31,6 @@ int main()
      boost::phoenix::bind(test::g)
     )();
     BOOST_TEST(test::x == 0);
+    BOOST_TEST(test::y == 1);
+    BOOST_TEST(test::z == 1);
 }
