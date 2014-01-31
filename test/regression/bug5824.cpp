@@ -20,5 +20,5 @@ int main()
 {
   int a = 0;
   (++arg1, ++arg1)(a);
-  BOOST_TEST(test::a == 2);
+  BOOST_TEST(a == 2);
 }
