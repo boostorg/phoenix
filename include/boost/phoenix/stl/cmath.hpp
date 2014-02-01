@@ -36,7 +36,7 @@ namespace boost {
     };                                                                  \
     }                                                                   \
     namespace phoenix {                                                 \
-    BOOST_PHOENIX_ADAPT_CALLABLE(name, phoenix_impl::name ## _impl, 1)  \
+    BOOST_PHOENIX_ADAPT_CALLABLE(name, phoenix_impl::name ## _impl, n)  \
     }
 
 BOOST_PHOENIX_MATH_FUNCTION(acos, 1)
