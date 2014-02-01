@@ -27,7 +27,7 @@ TODO (known issues):
 #9295, #9291, #9260, #8820, #8800, #8774, #8704
 #8564, #8558, #8504, #8298, #8187, #8156, #7996
 #7953, #7946, #7730, #7633, #7481, #7480, #7423
-#7391, #7356, #7166, #7165, #6911, #6848, #6665
+#7391, #7356, #7166, #7165, #6911, #6848,
 #6202, #6133, #6026, #5875, #5687
 - Complete work on the following under investigation
 #9363, #9362, #7624, #7199
@@ -36,6 +36,8 @@ TODO (known issues):
 
 CHANGELOG
 
+- Fixed #6665 not-unary phoenix stl cmath adapted functions not working
+	Added test cmath
 - Fixed #5824 Block statement headers and docs
 	Added test bug5824
 
