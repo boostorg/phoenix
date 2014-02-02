@@ -30,13 +30,16 @@ TODO (known issues):
 #7391, #7356, #7166, #7165, #6911, #6848,
 #6202, #6133, #6026, #5687
 - Complete work on the following under investigation
-#9363, #9362, #7624, #7199
+#9363, #9362, #7199
 - #9113 warnings on -Wshadow - find and fix remaining warnings
 -------------------------------------------------------------------------------
 
 CHANGELOG
 
 - DEVELOP (to be V3.0.3)
+- Fixed #7624 Deduction failure
+	This works for C++11 but needs workaround for C++03
+	Test bug7624 tests both versions.
 - Fixed #6665 not-unary phoenix stl cmath adapted functions not working
 	Added test cmath
 - Fixed #5875 local variable in phoenix let discards value
