@@ -134,6 +134,7 @@ test-suite phoenix_regression :
     [ run regression/bug5968.cpp ]
     [ run regression/bug6040.cpp ]
     [ run regression/bug6268.cpp ]
+    [ run regression/bug7624.cpp ]
     ;
 
 test-suite phoenix_include :
