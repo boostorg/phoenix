@@ -135,6 +135,7 @@ test-suite phoenix_regression :
     [ run regression/bug6040.cpp ]
     [ run regression/bug6268.cpp ]
     [ run regression/bug7165.cpp ]
+    [ compile-fail regression/bug7166.cpp ]
     [ run regression/bug7624.cpp ]
     ;
 
