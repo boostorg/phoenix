@@ -31,7 +31,8 @@
 #pragma warning(push)
 #pragma warning(disable: 4522) // 'this' used in base member initializer list
 #pragma warning(disable: 4510) // default constructor could not be generated
-#pragma warning(disable: 4610) // can never be instantiated - user defined const#endif
+#pragma warning(disable: 4610) // can never be instantiated - user defined cons
+#endif
 
 namespace boost { namespace phoenix
 {
