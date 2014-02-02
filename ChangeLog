@@ -27,26 +27,32 @@ TODO (known issues):
 #9295, #9291, #9260, #8820, #8800, #8774, #8704
 #8564, #8558, #8504, #8298, #8187, #8156, #7996
 #7953, #7946, #7730, #7633, #7481, #7480, #7423
-#7391, #7356, #7166, #6911, #6848,
+#7391, #7356, #6911, #6848,
 #6202, #6133, #6026, #5687
 - Complete work on the following under investigation
 #9363, #9362, #7199
 - #9113 warnings on -Wshadow - find and fix remaining warnings
+- #5875 local variable in phoenix let discards value
+	This seemed already fixed but is not doing well in tests.
+	Added test bug5875
 -------------------------------------------------------------------------------
 
 CHANGELOG
 
-- DEVELOP (to be V3.0.3)
+- DEVELOP (to be V3.0.4)
 - Fixed #7624 Deduction failure
 	This works for C++11 but needs workaround for C++03
 	Test bug7624 tests both versions.
-- Fixed #7165 cannot change BOOST_PHOENIX_LIMIT using patch supplied
+- Fixed #7166 Phoenix unconditionally sets BOOST_PROTO_MAX_ARITY
+	using patch supplied
+	Added test bug7166
+- Fixed #7165 cannot change BOOST_PHOENIX_LIMIT
+	using patch supplied
 	Added test bug7165
 - Fixed #6665 not-unary phoenix stl cmath adapted functions not working
 	Added test cmath
-- Fixed #5875 local variable in phoenix let discards value
-	This was already fixed.
-	Added test bug5875
+
+- V3.0.3
 - Fixed #5824 Block statement headers and docs
 	Added test bug5824
 
