@@ -13,6 +13,19 @@
 //  This is the version of the library
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define BOOST_PHOENIX_VERSION   0x3002    // 3.0.2
+#define BOOST_PHOENIX_VERSION   0x3003    // 3.0.3
+
+// boost/predef is not in Boost before 1.55.0
+#include <boost/version.hpp>
+#if BOOST_VERSION >= 105500
+// Also note that it has a nonstandard header which could change,
+// so I have not relied on its own internal define.
+#include <boost/predef.h>
+#define BOOST_PHOENIX_HAVE_BOOST_PREDEF
+#endif
+
+#ifdef BOOST_PHOENIX_HAVE_BOOST_PREDEF
+#define BOOST_PHOENIX_VERSION_NUMBER = BOOST_VERSION_NUMBER(3,0,3) 
+#endif
 
 #endif
