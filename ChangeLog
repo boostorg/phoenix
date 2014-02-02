@@ -26,9 +26,11 @@ TODO (known issues):
 (all refer to phoenix though not all may be in fact phoenix bugs)
 #9295, #9291, #9260, #8820, #8800, #8774
 #8564, #8558, #8504, #8298, #8187, #8156, #7996
-#7953, #7946, #7730, #7633, #7481, #7480, #7423
+#7953, #7946, #7730, #7481, #7480, #7423
 #7391, #7356, #6911, #6848,
 #6202, #6133, #6026, #5687
+- Feature requests
+#7633, #5541
 - Complete work on the following under investigation
 #9363, #9362, #7199
 - #9113 warnings on -Wshadow - find and fix remaining warnings
