@@ -36,7 +36,7 @@ TODO (known issues):
 - #9113 warnings on -Wshadow - find and fix remaining warnings
 - #5875 local variable in phoenix let discards value
 This seemed already fixed but is not doing well in tests.
-Added test bug5875
+Added test bug5875 - test withdrawn for further checking.
 -------------------------------------------------------------------------------
 
 CHANGELOG
