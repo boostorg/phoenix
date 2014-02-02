@@ -36,6 +36,7 @@ TODO (known issues):
 
 CHANGELOG
 
+- V3.0.3
 - Fixed #5824 Block statement headers and docs
 	Added test bug5824
 
