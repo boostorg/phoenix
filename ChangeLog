@@ -40,6 +40,8 @@ TODO (known issues):
 CHANGELOG
 
 - DEVELOP (to be V3.0.4)
+- boost/phoenix/version.hpp Added BOOST_PHOENIX_VERSION_NUMBER
+	when boost/predef is available.
 - Fixed #7624 Deduction failure
 	This works for C++11 but needs workaround for C++03
 	Test bug7624 tests both versions.
