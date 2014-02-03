@@ -24,7 +24,7 @@ TODO (known issues):
     Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
 - Investigate fixes needed for the following bugs
 (all refer to phoenix though not all may be in fact phoenix bugs
-#9291, #9260, #8820, #8800, #8774
+#9291, #9260, #8820, #8800
 #8564, #8558, #8504, #8298, #8187, #8156, #7996
 #7953, #7946, #7730, #7481, #7480, #7423
 #7391, #7356, #6911, #6848,
