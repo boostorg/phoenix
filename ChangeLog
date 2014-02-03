@@ -23,8 +23,8 @@ TODO (known issues):
     Fix copyright and licence in preprocessed files for function_equal
     Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
 - Investigate fixes needed for the following bugs
-(all refer to phoenix though not all may be in fact phoenix bugs)
-#9295, #9291, #9260, #8820, #8800, #8774
+(all refer to phoenix though not all may be in fact phoenix bugs
+#9291, #9260, #8820, #8800, #8774
 #8564, #8558, #8504, #8298, #8187, #8156, #7996
 #7953, #7946, #7730, #7481, #7480, #7423
 #7391, #7356, #6911, #6848,
@@ -45,6 +45,7 @@ CHANGELOG
 - boost/phoenix/version.hpp Added BOOST_PHOENIX_VERSION_NUMBER
     when boost/predef is available.
 - Fixed tabs in ChangeLog!!
+- Fxied #9295 PHOENIX_LIMIT macro clash: property_tree -- log/sink
 - Fixed #8704 Using Phoenix lambdas on top of custom Proto expressions
     This works for C++11 only.
     Test cmath applies to this.
