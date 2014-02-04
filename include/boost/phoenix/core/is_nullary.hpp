@@ -138,7 +138,7 @@ namespace boost { namespace phoenix
             : is_nullary<T>
         {};
 
-#ifdef BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL
+#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
         template <typename T>
         struct is_nullary<custom_terminal<T>,
         typename custom_terminal<T>::_is_default_custom_terminal >
