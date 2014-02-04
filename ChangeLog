@@ -26,7 +26,7 @@ TODO (known issues):
 (all refer to phoenix though not all may be in fact phoenix bugs
 #9291, #9260, #8820, #8800
 #8564, #8558, #8504, #8298, #8187, #8156, #7996
-#7953, #7946, #7730, #7481, #7480, #7423
+#7953, #7946, #7481, #7480, #7423
 #7391, #7356, #6911, #6848,
 #6202, #6133, #6026, #5687
 - Feature requests
@@ -49,6 +49,9 @@ CHANGELOG
 - Fixed #8704 Using Phoenix lambdas on top of custom Proto expressions
     This works for C++11 only.
     Test cmath applies to this.
+- Fixed #7730 Generic specializations of is_nullary for custom terminals are not possible
+    Define BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL to use this.
+    Test bug7730 tests this.
 - Fixed #7624 Deduction failure
     This works for C++11 and has a workaround for C++03
     Test bug7624 tests both versions.
