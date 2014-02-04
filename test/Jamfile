@@ -166,7 +166,7 @@ test-suite phoenix_include :
     [ run include/core/nothing.cpp ]
     [ run include/core/reference.cpp ]
     [ run include/core/terminal.cpp ]
-    [ run include/core/bug7730.cpp ]
+#    [ run include/core/bug7730.cpp ]
     [ run include/core/value.cpp ]
     [ run include/core/visit_each.cpp ]
     [ run include/function/function.cpp : : : : function_function ]

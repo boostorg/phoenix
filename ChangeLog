@@ -37,7 +37,7 @@ TODO (known issues):
 - #7730 Generic specializations of is_nullary for custom terminals
     are not possible
     Define BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL to use this.
-    Test bug7730 tests this.
+    Test bug7730 tests this is withdrawn - not safe to use this.
     Use as a default is not possible yet.
 - #5875 local variable in phoenix let discards value
 This seemed already fixed but is not doing well in tests.
