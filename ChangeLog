@@ -34,6 +34,11 @@ TODO (known issues):
 - Complete work on the following under investigation
 #9363, #9362, #7199
 - #9113 warnings on -Wshadow - find and fix remaining warnings
+- #7730 Generic specializations of is_nullary for custom terminals
+    are not possible
+    Define BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL to use this.
+    Test bug7730 tests this.
+    Use as a default is not possible yet.
 - #5875 local variable in phoenix let discards value
 This seemed already fixed but is not doing well in tests.
 Added test bug5875 - test withdrawn for further checking.
@@ -50,10 +55,6 @@ CHANGELOG
 - Fixed #8704 Using Phoenix lambdas on top of custom Proto expressions
     This works for C++11 only.
     Test cmath applies to this.
-- Fixed #7730 Generic specializations of is_nullary for custom terminals
-    are not possible
-    Define BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL to use this.
-    Test bug7730 tests this.
 - Fixed #7624 Deduction failure
     This works for C++11 and has a workaround for C++03
     Test bug7624 tests both versions.
