@@ -137,12 +137,20 @@ namespace boost { namespace phoenix
         struct is_nullary<T const >
             : is_nullary<T>
         {};
-        
+
+#ifdef BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL
+        template <typename T>
+        struct is_nullary<custom_terminal<T>,
+        typename custom_terminal<T>::_is_default_custom_terminal >
+            : mpl::true_
+        {};
+#else
         template <typename T>
         struct is_nullary<custom_terminal<T> >
             : mpl::true_
         {};
-        
+#endif
+
         template <typename T>
         struct is_nullary<custom_terminal<actor<T> > >
             : evaluator
