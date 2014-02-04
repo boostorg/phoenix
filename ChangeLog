@@ -45,11 +45,13 @@ CHANGELOG
 - boost/phoenix/version.hpp Added BOOST_PHOENIX_VERSION_NUMBER
     when boost/predef is available.
 - Fixed tabs in ChangeLog!!
-- Fxied #9295 PHOENIX_LIMIT macro clash: property_tree -- log/sink
+- Fixed #9295 PHOENIX_LIMIT macro clash: property_tree -- log/sink
+    This will not show up in phoenix - used in spirit/classic
 - Fixed #8704 Using Phoenix lambdas on top of custom Proto expressions
     This works for C++11 only.
     Test cmath applies to this.
-- Fixed #7730 Generic specializations of is_nullary for custom terminals are not possible
+- Fixed #7730 Generic specializations of is_nullary for custom terminals
+    are not possible
     Define BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL to use this.
     Test bug7730 tests this.
 - Fixed #7624 Deduction failure
