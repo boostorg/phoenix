@@ -21,19 +21,23 @@ local multi-threading = <library>/boost/thread
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
 test-suite phoenix_core :
-    [ run core/primitives_tests.cpp ] 
+    [ run core/primitives_tests.cpp ]
+    ;
+
+test-suite phoenix_stdlib :
+    [ run stdlib/cmath.cpp ]
     ;
 
 test-suite phoenix_operator :
-    [ run operator/arithmetic_tests.cpp ] 
+    [ run operator/arithmetic_tests.cpp ]
     [ run operator/bitwise_tests.cpp ]
-    [ run operator/comparison_tests.cpp ] 
+    [ run operator/comparison_tests.cpp ]
     [ run operator/if_else_tests.cpp ]
     [ run operator/io_tests.cpp ]
     [ run operator/logical_tests.cpp ]
     [ run operator/misc_binary_tests.cpp ]
     [ run operator/self_tests.cpp ]
-    [ run operator/unary_tests.cpp ] 
+    [ run operator/unary_tests.cpp ]
     [ run operator/member.cpp ]
     ;
 
@@ -126,9 +130,13 @@ test-suite phoenix_regression :
     [ run regression/bug4853.cpp ]
     [ run regression/bug5626.cpp ]
     [ run regression/bug5824.cpp ]
+ #   [ run regression/bug5875.cpp ]
     [ run regression/bug5968.cpp ]
     [ run regression/bug6040.cpp ]
     [ run regression/bug6268.cpp ]
+    [ run regression/bug7165.cpp ]
+    [ compile-fail regression/bug7166.cpp ]
+    [ run regression/bug7624.cpp ]
     ;
 
 test-suite phoenix_include :
@@ -158,6 +166,7 @@ test-suite phoenix_include :
     [ run include/core/nothing.cpp ]
     [ run include/core/reference.cpp ]
     [ run include/core/terminal.cpp ]
+#    [ run include/core/bug7730.cpp ]
     [ run include/core/value.cpp ]
     [ run include/core/visit_each.cpp ]
     [ run include/function/function.cpp : : : : function_function ]

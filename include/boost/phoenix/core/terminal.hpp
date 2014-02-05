@@ -48,7 +48,15 @@ namespace boost { namespace phoenix
         : mpl::false_ {};
 
     template <typename T, typename Dummy>
-    struct custom_terminal;
+    struct custom_terminal
+    /*
+#ifdef BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL
+    {
+      typedef void _is_default_custom_terminal; // suggested fix for #7730
+    }
+#endif
+    */
+      ;
  
     namespace expression
     {
