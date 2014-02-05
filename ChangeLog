@@ -46,7 +46,9 @@ Added test bug5875 - test withdrawn for further checking.
 
 CHANGELOG
 
-- DEVELOP (to be V3.0.4)
+- DEVELOP (to be V3.0.5)
+
+- V3.0.4
 - boost/phoenix/version.hpp Added BOOST_PHOENIX_VERSION_NUMBER
     when boost/predef is available.
 - Fixed tabs in ChangeLog!!
