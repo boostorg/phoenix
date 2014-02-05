@@ -28,5 +28,4 @@
 #define BOOST_PHOENIX_VERSION_NUMBER = BOOST_VERSION_NUMBER(3,0,4)
 #endif
 
-
 #endif
