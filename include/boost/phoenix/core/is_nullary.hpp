@@ -160,7 +160,7 @@ namespace boost { namespace phoenix
 	    {};
 
         template <typename T>
-        struct is_nullary<T>,
+        struct is_nullary<custom_terminal<T>,
         typename custom_terminal<T>::_is_local_var_custom_terminal >
             : mpl::true_
 	    {};
