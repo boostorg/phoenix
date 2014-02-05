@@ -149,7 +149,7 @@ namespace boost { namespace phoenix
         struct is_nullary<custom_terminal<T> >
             : mpl::true_
         {};
-#endif
+//#endif
 
         template <typename T>
         struct is_nullary<custom_terminal<actor<T> > >
