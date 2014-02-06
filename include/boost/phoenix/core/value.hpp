@@ -53,7 +53,7 @@ namespace boost { namespace phoenix
         template <typename Sig>
         struct result;
 #ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
-        typedef void _is_value_custom_terminal; // fix for #7730
+      //        typedef void _is_value_custom_terminal; // fix for #7730
 #endif
 
         template <typename This, typename Actor, typename Context>
