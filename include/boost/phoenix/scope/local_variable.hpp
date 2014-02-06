@@ -50,6 +50,7 @@ namespace boost { namespace phoenix
         {};
     }
 
+#ifdef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
     namespace result_of
     {
         template <typename Key>
@@ -57,6 +58,7 @@ namespace boost { namespace phoenix
             : mpl::false_
         {};
     }
+#endif
 
     namespace detail
     {
