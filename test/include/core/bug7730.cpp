@@ -4,5 +4,5 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #define BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
-#include <boost/phoenix/core/terminal.hpp>
+#include <boost/phoenix.hpp>
 int main() {}
