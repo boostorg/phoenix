@@ -34,11 +34,6 @@ TODO (known issues):
 - Complete work on the following under investigation
 #9363, #9362, #7199
 - #9113 warnings on -Wshadow - find and fix remaining warnings
-- #7730 Generic specializations of is_nullary for custom terminals
-    are not possible
-    Define BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL to use this.
-    Test bug7730 tests this is withdrawn - not safe to use this.
-    Use as a default is not possible yet.
 - #5875 local variable in phoenix let discards value
 This seemed already fixed but is not doing well in tests.
 Added test bug5875 - test withdrawn for further checking.
@@ -47,6 +42,11 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP (to be V3.0.5)
+- Fixed #7730 Generic specializations of is_nullary for custom terminals
+    are not possible
+    Fix to specialze custom terminals is now set as a default.
+    Define BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL not to use this.
+    Test bug7730 tests the not use case.
 
 - V3.0.4
 - boost/phoenix/version.hpp Added BOOST_PHOENIX_VERSION_NUMBER
