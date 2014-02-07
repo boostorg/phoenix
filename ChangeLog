@@ -45,6 +45,7 @@ CHANGELOG
 - Fixed #8298 Clang error with Boost Phoenix Local Name Assignment using C++11
     This is not expected to compile.
     Added test bug8298 to show correct operation.
+    Added test bug8298f to show expected failure.
 - Fixed #7730 Generic specializations of is_nullary for custom terminals
     are not possible
     Fix to specialize custom terminals is now set as a default.
