@@ -91,6 +91,7 @@ test-suite phoenix_scope :
     [ run scope/dynamic_tests.cpp ]
     [ run scope/bug3289.cpp ]
     [ run scope/bug8298.cpp ]
+    [ compile-fail scope/bug8298f.cpp ]
     [ run scope/bug_000008.cpp : : : $(multi-threading) ]
     ;
 
