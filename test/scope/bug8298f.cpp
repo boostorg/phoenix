@@ -9,17 +9,15 @@
 #include <boost/detail/lightweight_test.hpp>
 
 namespace phoenix = boost::phoenix;
-using boost::phoenix::ref;
 using namespace phoenix::local_names;
 using boost::phoenix::arg_names::_1;
 
 int main(int argc, char *argv[])
 {
-  int x = 17;
-  int y = phoenix::lambda(_a=x)
+  int y = phoenix::lambda(_a=_1)
   [
     _a = 18
-  ]()();
+  ](17)();
   BOOST_TEST(y==18);
 
   return boost::report_errors();
