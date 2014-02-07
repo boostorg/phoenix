@@ -24,7 +24,7 @@ TODO (known issues):
 - Investigate fixes needed for the following bugs
 (all refer to phoenix though not all may be in fact phoenix bugs
 #9291, #9260, #8820, #8800
-#8564, #8558, #8504, #8298, #8187, #8156, #7996
+#8564, #8558, #8504, #8187, #8156, #7996
 #7953, #7946, #7481, #7480, #7423
 #7391, #7356, #6911, #6848,
 #6202, #6133, #6026, #5687
@@ -42,6 +42,9 @@ CHANGELOG
 - DEVELOP (to be V3.0.5)
 - Fixed #9113 warnings on -Wshadow
     fixed more warnings - 2 batches
+- Fixed #8298 Clang error with Boost Phoenix Local Name Assignment using C++11
+    This is not expected to compile.
+    Added test bug8298 to show correct operation.
 - Fixed #7730 Generic specializations of is_nullary for custom terminals
     are not possible
     Fix to specialize custom terminals is now set as a default.
