@@ -277,8 +277,8 @@ namespace boost { namespace phoenix
     template <typename Locals, typename Map>
     struct lambda_actor_gen<Locals, Map>
     {
-        lambda_actor_gen(Locals const & locals)
-            : locals(locals)
+        lambda_actor_gen(Locals const & locals_)
+            : locals(locals_)
         {}
         lambda_actor_gen(lambda_actor_gen const & o)
             : locals(o.locals)
