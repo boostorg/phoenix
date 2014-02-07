@@ -27,8 +27,8 @@ namespace boost { namespace phoenix { namespace detail
     {
         typedef typename function_ptr_impl<N>::template impl<RT, FP> base;
 
-        function_ptr(FP fp)
-            : base(fp) {}
+        function_ptr(FP fp_)
+            : base(fp_) {}
         
         using base::fp;
 
