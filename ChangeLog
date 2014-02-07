@@ -20,7 +20,6 @@ TODO (known issues):
 - Identify dependencies on other libraries and cooperate on bugs.
 - Add more examples and documentation.
 - Inspection report outstanding issues
-    Fix copyright and licence in preprocessed files for function_equal
     Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
 - Investigate fixes needed for the following bugs
 (all refer to phoenix though not all may be in fact phoenix bugs
@@ -42,14 +41,16 @@ CHANGELOG
 
 - DEVELOP (to be V3.0.5)
 - Fixed #9113 warnings on -Wshadow
-    fixed more warnings
+    fixed more warnings - 2 batches
 - Fixed #7730 Generic specializations of is_nullary for custom terminals
     are not possible
-    Fix to specialze custom terminals is now set as a default.
+    Fix to specialize custom terminals is now set as a default.
     Define BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL not to use this.
     Test bug7730 tests the not use case.
 
 - V3.0.4
+- Inspection report outstanding issues
+    Fixed copyright and licence in preprocessed files for function_equal
 - boost/phoenix/version.hpp Added BOOST_PHOENIX_VERSION_NUMBER
     when boost/predef is available.
 - Fixed tabs in ChangeLog!!
