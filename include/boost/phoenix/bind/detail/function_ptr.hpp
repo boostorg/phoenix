@@ -53,8 +53,8 @@ namespace boost { namespace phoenix { namespace detail
         {
             typedef RT result_type;
 
-            impl(FP fp)
-                : fp(fp) {}
+            impl(FP fp_)
+                : fp(fp_) {}
 
             RT operator()() const
             {
@@ -73,8 +73,8 @@ namespace boost { namespace phoenix { namespace detail
         {
             typedef RT result_type;
 
-            impl(FP fp)
-                : fp(fp) {}
+            impl(FP fp_)
+                : fp(fp_) {}
 
             template <typename A>
             RT operator()(A &a) const
@@ -135,8 +135,8 @@ namespace boost { namespace phoenix { namespace detail
         {
             typedef RT result_type;
 
-            impl(FP fp)
-                : fp(fp) {}
+            impl(FP fp_)
+                : fp(fp_) {}
 
             template <BOOST_PHOENIX_typename_A>
             RT operator()(BOOST_PHOENIX_A_ref_a) const
