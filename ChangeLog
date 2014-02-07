@@ -33,7 +33,6 @@ TODO (known issues):
 #7633, #5541
 - Complete work on the following under investigation
 #9363, #9362, #7199
-- #9113 warnings on -Wshadow - find and fix remaining warnings
 - #5875 local variable in phoenix let discards value
 This seemed already fixed but is not doing well in tests.
 Added test bug5875 - test withdrawn for further checking.
@@ -42,6 +41,8 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP (to be V3.0.5)
+- Fixed #9113 warnings on -Wshadow
+    fixed more warnings
 - Fixed #7730 Generic specializations of is_nullary for custom terminals
     are not possible
     Fix to specialze custom terminals is now set as a default.
