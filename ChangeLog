@@ -40,8 +40,10 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP (to be V3.0.5)
+- Documentation
+    Fixed reference for FC++ in two locations.
 - Fixed #9113 warnings on -Wshadow
-    fixed all warnings
+    Fixed all warnings
 - Fixed #8298 Clang error with Boost Phoenix Local Name Assignment using C++11
     This is not expected to compile in the form supplied.
     Added test bug8298 to show correct operation.
