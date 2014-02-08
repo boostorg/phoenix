@@ -53,8 +53,8 @@ namespace boost { namespace phoenix { namespace detail
         {
             typedef RT result_type;
 
-            impl(FP fp)
-                : fp(fp) {}
+            impl(FP fp_)
+                : fp(fp_) {}
 
             template <typename Class>
             RT operator()(Class& obj) const
