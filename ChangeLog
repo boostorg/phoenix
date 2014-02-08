@@ -41,9 +41,9 @@ CHANGELOG
 
 - DEVELOP (to be V3.0.5)
 - Fixed #9113 warnings on -Wshadow
-    fixed more warnings - 2 batches
+    fixed all warnings
 - Fixed #8298 Clang error with Boost Phoenix Local Name Assignment using C++11
-    This is not expected to compile.
+    This is not expected to compile in the form supplied.
     Added test bug8298 to show correct operation.
     Added test bug8298f to show expected failure.
 - Fixed #7730 Generic specializations of is_nullary for custom terminals
