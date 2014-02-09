@@ -39,7 +39,7 @@ namespace boost { namespace phoenix { namespace detail
         }
 
         template <int M, typename RhsRT, typename RhsFP>
-        bool operator==(member_function_ptr<M, RhsRT, RhsFP> const & rhs) const
+        bool operator==(member_function_ptr<M, RhsRT, RhsFP> const &) const
         {
             return false;
         }
