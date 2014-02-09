@@ -40,7 +40,7 @@ Therefore the internal extension mechanism is different.
   deduction protocol. The same is true for [link phoenix.modules.bind Bind].]
 * Boilerplate macros to easily adapt already existing functions and function
   objects
-* [link phoenix.modules.bind Bind] is now completely compatible with Boost.Bind
+* [link phoenix.modules.bind Bind] is not completely compatible with Boost.Bind
 
 [endsect]
 
