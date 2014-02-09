@@ -138,7 +138,7 @@ The actual values of the parameters _1, _2 and _3 are supplied from the
 bracketed list at the end of the `let`.
 
 There is currently a limitation that the inner `let` cannot be supplied with a
-constant e.g. let(_x = 1).
+constant e.g. `let(_x = 1)`.
 
 The RHS (right hand side lambda-expression) of each local-declaration cannot
 refer to any LHS local-id. At this point, the local-ids are not in scope yet;
