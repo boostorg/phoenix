@@ -1,4 +1,4 @@
-Boost Phoenix: A Standard compliant C++ preprocessor library
+Boost Phoenix: A Library for Functional Programming in C++
 http://www.boost.org/
 
 Copyright (c) 2005-2010 Joel de Guzman
@@ -18,27 +18,21 @@ TODO (known issues):
   decide on priorities for fixing the bugs below.
     One such library is Boost log.
 - Identify dependencies on other libraries and cooperate on bugs.
-- Add more examples and documentation.
+- Add more examples
+- Develop documentation.
 - Inspection report outstanding issues
-    Fix copyright and licence in preprocessed files for function_equal
     Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
 - Investigate fixes needed for the following bugs
 (all refer to phoenix though not all may be in fact phoenix bugs
 #9291, #9260, #8820, #8800
-#8564, #8558, #8504, #8298, #8187, #8156, #7996
+#8558, #8504, #8187, #8156, #7996
 #7953, #7946, #7481, #7480, #7423
 #7391, #7356, #6911, #6848,
 #6202, #6133, #6026, #5687
 - Feature requests
 #7633, #5541
 - Complete work on the following under investigation
-#9363, #9362, #7199
-- #9113 warnings on -Wshadow - find and fix remaining warnings
-- #7730 Generic specializations of is_nullary for custom terminals
-    are not possible
-    Define BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL to use this.
-    Test bug7730 tests this is withdrawn - not safe to use this.
-    Use as a default is not possible yet.
+#9363, #9362, #8564, #7199
 - #5875 local variable in phoenix let discards value
 This seemed already fixed but is not doing well in tests.
 Added test bug5875 - test withdrawn for further checking.
@@ -46,9 +40,28 @@ Added test bug5875 - test withdrawn for further checking.
 
 CHANGELOG
 
-- DEVELOP (to be V3.0.5)
+- DEVELOP
+
+- V3.0.5
+- Documentation
+    Start on fixing main documentation - whats new.
+    Fixed reference for FC++ in two locations.
+    Fixed example for nested let (#8564)
+- Fixed #9113 warnings on -Wshadow
+    Fixed all warnings
+- Fixed #8298 Clang error with Boost Phoenix Local Name Assignment using C++11
+    This is not expected to compile in the form supplied.
+    Added test bug8298 to show correct operation.
+    Added test bug8298f to show expected failure.
+- Fixed #7730 Generic specializations of is_nullary for custom terminals
+    are not possible
+    Fix to specialize custom terminals is now set as a default.
+    Define BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL not to use this.
+    Test bug7730 tests the not use case.
 
 - V3.0.4
+- Inspection report outstanding issues
+    Fixed copyright and licence in preprocessed files for function_equal
 - boost/phoenix/version.hpp Added BOOST_PHOENIX_VERSION_NUMBER
     when boost/predef is available.
 - Fixed tabs in ChangeLog!!

@@ -17,7 +17,9 @@
 #include <boost/phoenix/support/vector.hpp>
 #include <boost/proto/transform/fold.hpp>
 #include <boost/proto/transform/lazy.hpp>
-
+#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
+//#include <boost/phoenix/scope/local_variable.hpp>
+#endif
 namespace boost { namespace phoenix
 {
     namespace result_of
@@ -137,19 +139,43 @@ namespace boost { namespace phoenix
         struct is_nullary<T const >
             : is_nullary<T>
         {};
-      /*
-#ifdef BOOST_PHOENIX_SPECIALIZE_CUSTOM_TERMINAL
+
+#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
         template <typename T>
         struct is_nullary<custom_terminal<T>,
         typename custom_terminal<T>::_is_default_custom_terminal >
             : mpl::true_
         {};
-#else */
+
+        template <typename T>
+        struct is_nullary<custom_terminal<T>,
+        typename custom_terminal<T>::_is_nothing_custom_terminal >
+            : mpl::true_
+	    {};
+
+        template <typename T>
+        struct is_nullary<custom_terminal<T>,
+        typename custom_terminal<T>::_is_throw_custom_terminal >
+            : mpl::true_
+	    {};
+
+        template <typename T>
+        struct is_nullary<custom_terminal<T>,
+        typename custom_terminal<T>::_is_local_var_custom_terminal >
+            : mpl::false_
+	    {};
+
+        template <typename T>
+        struct is_nullary<custom_terminal<T>,
+        typename custom_terminal<T>::_is_reference_custom_terminal >
+            : mpl::true_
+	    {};
+#else
         template <typename T>
         struct is_nullary<custom_terminal<T> >
             : mpl::true_
         {};
-//#endif
+#endif
 
         template <typename T>
         struct is_nullary<custom_terminal<actor<T> > >

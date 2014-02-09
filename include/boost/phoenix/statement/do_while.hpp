@@ -27,10 +27,10 @@ namespace boost { namespace phoenix
 
         template <typename Cond, typename Do, typename Context>
         result_type
-        operator()(Cond const& cond, Do const& do_, Context const & ctx) const
+        operator()(Cond const& cond, Do const& do_it, Context const & ctx) const
         {
             do
-                boost::phoenix::eval(do_, ctx);
+                boost::phoenix::eval(do_it, ctx);
             while (boost::phoenix::eval(cond, ctx));
         }
     };

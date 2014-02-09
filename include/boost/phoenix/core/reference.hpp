@@ -90,6 +90,9 @@ namespace boost { namespace phoenix
     struct custom_terminal<boost::reference_wrapper<T> >
     {
         typedef T &result_type;
+#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
+        typedef void _is_reference_custom_terminal; // fix for #7730
+#endif
 
         template <typename Context>
         T &operator()(boost::reference_wrapper<T> r, Context &) const
