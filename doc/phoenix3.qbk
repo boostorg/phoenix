@@ -1,6 +1,6 @@
 [library Phoenix
     [quickbook 1.3]
-    [version 3.0]
+    [version 3.0.4]
     [authors [de Guzman, Joel], [Marsden, Dan], [Heller, Thomas], [Fletcher, John] ]
     [copyright 2002 2003 2004 2005 2010 2014 Joel de Guzman, Dan Marsden, Thomas Heller, John Fletcher]
     [category string-text]
@@ -24,6 +24,7 @@
 [def __alert__          [$images/alert.png]]
 [def __tip__            [$images/tip.png]]
 
+[def __changelog__      [@http://www.boost.org/doc/libs/release/libs/phoenix/ChangeLog ChangeLog]]
 [def __spirit__         [@http://spirit.sourceforge.net Spirit]]
 [def __proto__          [@http://www.boost.org/doc/libs/release/libs/proto/index.html Boost.Proto]]
 [def __proto_expr__     [@http://www.boost.org/doc/libs/release/doc/html/Expr.html Proto Expression]]
