@@ -41,6 +41,7 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+- Fixed bug4853 - added header <iostream> for gcc 4.9 test
 
 - V3.0.5
 - Documentation

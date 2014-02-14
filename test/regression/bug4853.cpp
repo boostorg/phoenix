@@ -18,6 +18,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 
 namespace phoenix = boost::phoenix;
