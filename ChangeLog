@@ -48,6 +48,9 @@ CHANGELOG
     For now this drops through to the boost Proto version.
     I intend to add some more tags for better information.
     New test debug for the new header.
+- Fixed bug in boost/phoenix/core/terminal.hpp
+    Changed actor to Actor.
+    This will change the type definition when overriding the default actor.
 
 - V3.0.5
 - Documentation
