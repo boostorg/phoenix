@@ -55,6 +55,10 @@ namespace boost { namespace phoenix
     }
 #endif
       ;
+
+    namespace tag {
+      struct terminal : public proto::tag::terminal {};
+    }
  
     namespace expression
     {
@@ -66,7 +70,8 @@ namespace boost { namespace phoenix
         {
             typedef
                 proto::basic_expr<
-                    proto::tag::terminal
+	            proto::tag::terminal
+	      // tag::terminal //cannot change to use phoenix tag - breaks code.
                   , proto::term<T>
                   , 0
                 >
