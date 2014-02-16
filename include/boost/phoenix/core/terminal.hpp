@@ -57,7 +57,7 @@ namespace boost { namespace phoenix
       ;
 
     namespace tag {
-      struct terminal : public proto::tag::terminal {};
+      struct terminal /*: public proto::tag::terminal */ {};
     }
  
     namespace expression
