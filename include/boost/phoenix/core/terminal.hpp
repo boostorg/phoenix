@@ -75,7 +75,8 @@ namespace boost { namespace phoenix
             
             static const type make(typename call_traits<T>::param_type t)
 	  { // ?? Should the next line be Actor not actor which is the default?
-                actor<base_type> const e = {base_type::make(t)};
+	    //actor<base_type> const e = {base_type::make(t)};
+                Actor<base_type> const e = {base_type::make(t)};
                 return e;
             }
         };
