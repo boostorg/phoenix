@@ -158,6 +158,7 @@ test-suite phoenix_include :
     [ run include/core/actor.cpp ]
     [ run include/core/argument.cpp ]
     [ run include/core/arity.cpp ]
+    [ run include/core/debug.cpp ]
     [ run include/core/domain.cpp ]
     [ run include/core/environment.cpp ]
     [ run include/core/expression.cpp ]
