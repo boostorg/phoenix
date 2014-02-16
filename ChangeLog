@@ -47,6 +47,7 @@ CHANGELOG
     and also included from boost/phoenix/core.hpp
     For now this drops through to the boost Proto version.
     I intend to add some more tags for better information.
+    New test debug for the new header.
 
 - V3.0.5
 - Documentation
