@@ -42,6 +42,11 @@ CHANGELOG
 
 - DEVELOP
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
+- New Feature - boost::phoenix::display_expr(expr)
+    In file boost/phoenix/core/debug.hpp
+    and also included from boost/phoenix/core.hpp
+    For now this drops through to the boost Proto version.
+    I intend to add some more tags for better information.
 
 - V3.0.5
 - Documentation
