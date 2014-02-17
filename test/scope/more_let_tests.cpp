@@ -58,14 +58,14 @@ main()
     }
     {
         // show that we can return a local from an outer scope
-        int y = 0;
+        //int y = 0;
         int x = (let(_a = 1)[let(_b = _a)[ _a ]])();
 
         BOOST_TEST(x == 1);
     }
     {
         // show that we can return a local from an inner scope
-        int y = 0;
+        //int y = 0;
         int x = (let(_a = 1)[let(_b = _a)[ _b ]])();
 
         BOOST_TEST(x == 1);
