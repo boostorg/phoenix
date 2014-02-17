@@ -51,6 +51,7 @@ CHANGELOG
 - Fixed bug in boost/phoenix/core/terminal.hpp
     Changed actor to Actor.
     This will change the type definition when overriding the default actor.
+- New test more_let_tests to check for problems with losing temporary values.
 
 - V3.0.5
 - Documentation
