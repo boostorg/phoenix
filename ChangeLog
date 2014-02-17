@@ -51,7 +51,12 @@ CHANGELOG
 - Fixed bug in boost/phoenix/core/terminal.hpp
     Changed actor to Actor.
     This will change the type definition when overriding the default actor.
+KNOWN BUG - WARNING
 - New test more_let_tests to check for problems with losing temporary values.
+    I think this is a serious problem which is affecting some compilers
+    and not others. I have seen the problem with Clang 3.4 although not
+    when run with C++11. These tests should find out where else there is a
+    problem.
 
 - V3.0.5
 - Documentation
