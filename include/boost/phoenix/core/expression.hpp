@@ -104,7 +104,8 @@ namespace boost { namespace phoenix
         
         static type make(BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M1, _))
       { //?? actor or Actor??
-            actor<base_type> const e =
+	// actor<base_type> const e =
+            Actor<base_type> const e =
                 {
                     proto::make_expr<
                         Tag
