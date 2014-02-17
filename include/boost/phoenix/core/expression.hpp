@@ -103,7 +103,7 @@ namespace boost { namespace phoenix
             proto_grammar;
         
         static type make(BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M1, _))
-        {
+      { //?? actor or Actor??
             actor<base_type> const e =
                 {
                     proto::make_expr<
