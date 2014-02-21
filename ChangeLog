@@ -41,6 +41,17 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+
+- ******************************************************************
+- WARNING - Fix for #7730 is a BREAKING CHANGE for some client code.
+- ******************************************************************
+  The fix to this can break code which uses the phoenix custom terminal.
+  This has occurred in boost spirit. The fix is to insert a tag as follows
+  into any overloads of the struct boost::phoenix::custom_terminal
+#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
+        typedef void _is_default_custom_terminal; // fix for #7730
+#endif
+
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
 - New Feature - boost::phoenix::display_expr(expr)
     In file boost/phoenix/core/debug.hpp
@@ -56,7 +67,7 @@ KNOWN BUG - WARNING
     I think this is a serious problem which is affecting some compilers
     and not others. I have seen the problem with Clang 3.4 although not
     when run with C++11. These tests should find out where else there is a
-    problem.
+    problem. At the moment these tests are passing.
 
 - V3.0.5
 - Documentation
