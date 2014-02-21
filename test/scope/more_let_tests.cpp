@@ -52,7 +52,7 @@ main()
     {
         // show that we can return a local from an inner scope
         int y = 1;
-        int x = (let(_a = 1)[let(_b = _1)[ _b ]])(y);
+        int x = (let(_a = 0)[let(_b = _1)[ _b ]])(y);
 
         BOOST_TEST(x == 1);
     }
