@@ -4,5 +4,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 // Cross check that I have not broken spirit
-#include <boost/spirit.hpp>
+#include <boost/spirit/home/karma.hpp>
+#include <boost/spirit/home/lex.hpp>
+#include <boost/spirit/home/qi.hpp>
 int main() {}
