@@ -151,6 +151,7 @@ test-suite phoenix_include :
     [ run include/object.cpp ]
     [ run include/operator.cpp ]
     [ run include/scope.cpp ]
+    [ run include/spirit.cpp ]
     [ run include/statement.cpp ]
     [ run include/stl.cpp ]
     [ run include/version.cpp ]
