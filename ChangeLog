@@ -55,6 +55,7 @@ CHANGELOG
 
   typedef void _is_default_custom_terminal; // fix for #7730
 
+  An alternative is under investigation which would remove this need.
 - ******************************************************************
 
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
@@ -73,6 +74,8 @@ KNOWN BUG - WARNING
     and not others. I have seen the problem with Clang 3.4 although not
     when run with C++11. These tests should find out where else there is a
     problem. At the moment these tests are passing.
+    I now have cases which fail for Clang 3.4 with optimization -O2 but not
+    without optimization. Under investigation.
 
 - V3.0.5
 - Documentation
