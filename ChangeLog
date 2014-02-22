@@ -44,13 +44,17 @@ CHANGELOG
 
 - ******************************************************************
 - WARNING - Fix for #7730 is a BREAKING CHANGE for some client code.
+  Any code which specializes the struct boost::phoenix::custom_terminal
 - ******************************************************************
   The fix to this can break code which uses the phoenix custom terminal.
   This has occurred in boost spirit. The fix is to insert a tag as follows
-  into any overloads of the struct boost::phoenix::custom_terminal
+  into any specializations of the struct boost::phoenix::custom_terminal
 #ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
         typedef void _is_default_custom_terminal; // fix for #7730
 #endif
+  The previous behaviour can be restored by defining
+  BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL before calling any headers.
+- ******************************************************************
 
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
 - New Feature - boost::phoenix::display_expr(expr)
