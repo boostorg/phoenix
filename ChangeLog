@@ -45,15 +45,16 @@ CHANGELOG
 - ******************************************************************
 - WARNING - Fix for #7730 is a BREAKING CHANGE for some client code.
   Any code which specializes the struct boost::phoenix::custom_terminal
+
+  Code which uses custom_terminal should not be affected.
 - ******************************************************************
-  The fix to this can break code which uses the phoenix custom terminal.
-  This has occurred in boost spirit. The fix is to insert a tag as follows
+  The fix to this can break code which specializes the phoenix custom terminal.
+  This has occurred in boost spirit where it is now fixed.
+  The fix is to insert a tag as follows
   into any specializations of the struct boost::phoenix::custom_terminal
-#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
-        typedef void _is_default_custom_terminal; // fix for #7730
-#endif
-  The previous behaviour can be restored by defining
-  BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL before calling any headers.
+
+  typedef void _is_default_custom_terminal; // fix for #7730
+
 - ******************************************************************
 
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
