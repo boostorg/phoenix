@@ -152,7 +152,7 @@ test-suite phoenix_include :
     [ run include/operator.cpp ]
     [ run include/scope.cpp ]
     [ run include/spirit.cpp ]
-    [ run include/spirit_no_specialize.cpp ]
+#    [ run include/spirit_no_specialize.cpp ]
     [ run include/statement.cpp ]
     [ run include/stl.cpp ]
     [ run include/version.cpp ]
