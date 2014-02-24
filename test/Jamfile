@@ -21,6 +21,7 @@ local multi-threading = <library>/boost/thread
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
 test-suite phoenix_core :
+    [ run core/custom_terminal.cpp ]
     [ run core/primitives_tests.cpp ]
     ;
 
