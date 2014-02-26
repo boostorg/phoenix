@@ -22,6 +22,7 @@ local multi-threading = <library>/boost/thread
 
 test-suite phoenix_core :
     [ run core/custom_terminal.cpp ]
+    [ run core/intel_test.cpp ]
     [ run core/primitives_tests.cpp ]
     ;
 
