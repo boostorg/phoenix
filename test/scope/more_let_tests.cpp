@@ -85,6 +85,48 @@ main()
         BOOST_TEST(x == 1);
     }
 
+	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 // Be very careful. Some of these cases give a silly answer
+	 // with clang 3.4 with C++03 and work for C++11.
+	 // gcc 4.8.2 seems O.K. both ways. Oh dear.
+	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  {
+    int y = 0;
+    int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _a ]])(y);
+    //std::cout << x << " P1A "; //clang - empty memory
+        BOOST_TEST(x == 1);
+  }
+  {
+    int y = 0;
+    int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _b ]])(y);
+    //std::cout << x << " P1B "; //clang - 42 value- one step better
+        BOOST_TEST(x == 1);
+  }
+  {
+    int y = 0;
+    int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _a ]])(y);
+    //std::cout << x << " P2A "; //clang - 42 value - one step better
+  }
+  {
+    int y = 0;
+    int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _b ]])(y);
+    //std::cout << x << " P2B "; //clang - 42 value - one step better
+        BOOST_TEST(x == 1);
+  }
+  {
+    int y = 1;
+    int x = (let(_a = _1, _b = val(2))[let(_b = _a)[ _a ]])(y);
+    //std::cout << x << " P3 "; //clang - OK - one step better still
+        BOOST_TEST(x == 1);
+  }
+
+  {
+    int y = 0;
+    int x = (let(_a = 1, _b = 2)[let(_b = _1)[ _a ]])(y);
+    //    std::cout << x << " Q "; // clang 4201472
+        BOOST_TEST(x == 1);
+  }
+
     
     return boost::report_errors();
 }
