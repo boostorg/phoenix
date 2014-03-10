@@ -49,11 +49,11 @@ namespace boost { namespace phoenix
 
     template <typename T, typename Dummy>
     struct custom_terminal
-    //#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
+    #ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
     {
       typedef void _is_default_custom_terminal; // fix for #7730
     }
-    //#endif
+    #endif
       ;
 
     namespace tag {
