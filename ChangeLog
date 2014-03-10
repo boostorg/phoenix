@@ -58,6 +58,7 @@ CHANGELOG
   An alternative is under investigation which would remove this need.
 - ******************************************************************
 
+- Fixed bug4853 and 5626 - added header <utility> for std::forward.
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
 - New Feature - boost::phoenix::display_expr(expr)
     In file boost/phoenix/core/debug.hpp
