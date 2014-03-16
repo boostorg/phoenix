@@ -50,7 +50,6 @@ namespace boost { namespace phoenix
         {};
     }
 
-  #ifdef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
     namespace result_of
     {
         template <typename Key>
@@ -58,7 +57,6 @@ namespace boost { namespace phoenix
             : mpl::false_
         {};
     }
-  #endif
   
     namespace detail
     {
@@ -95,9 +93,6 @@ namespace boost { namespace phoenix
     {
         template <typename Sig>
         struct result;
-      #ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
-        typedef void _is_local_var_custom_terminal; // fix for #7730
-      #endif
 
         template <typename This, typename Local, typename Context>
         struct result<This(Local, Context)>
