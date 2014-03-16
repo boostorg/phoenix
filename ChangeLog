@@ -31,6 +31,7 @@ TODO (known issues):
 #7391, #7356, #6911, #6848,
 #6202, #6133, #6026, #5687
 - Feature requests
+#7730 Potential fixes for this have been removed for further work.
 #7633, #5541
 - Complete work on the following under investigation
 #9363, #9362, #8564, #7199
@@ -43,22 +44,6 @@ CHANGELOG
 
 - DEVELOP
 
-- ******************************************************************
-- WARNING - Fix for #7730 is a BREAKING CHANGE for some client code.
-  Any code which specializes the struct boost::phoenix::custom_terminal
-
-  Code which uses custom_terminal should not be affected.
-- ******************************************************************
-  The fix to this can break code which specializes the phoenix custom terminal.
-  This has occurred in boost spirit where it is now fixed.
-  The fix is to insert a tag as follows
-  into any specializations of the struct boost::phoenix::custom_terminal
-
-  typedef void _is_default_custom_terminal; // fix for #7730
-
-  An alternative is under investigation which would remove this need.
-- ******************************************************************
-
 - Fixed bug4853 and 5626 - added header <utility> for std::forward.
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
 - New Feature - boost::phoenix::display_expr(expr)
@@ -67,9 +52,6 @@ CHANGELOG
     For now this drops through to the boost Proto version.
     I intend to add some more tags for better information.
     New test debug for the new header.
-- Fixed bug in boost/phoenix/core/terminal.hpp
-    Changed actor to Actor.
-    This will change the type definition when overriding the default actor.
 KNOWN BUG - WARNING
 - New test more_let_tests to check for problems with losing temporary values.
     I think this is a serious problem which is affecting some compilers
