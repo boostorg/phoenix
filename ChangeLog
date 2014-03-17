@@ -24,12 +24,14 @@ TODO (known issues):
     Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
 - Investigate fixes needed for the following bugs
 (all refer to phoenix though not all may be in fact phoenix bugs
+#9742 (NEW)
 #9291, #9260, #8820, #8800
 #8558, #8504, #8187, #8156, #7996
 #7953, #7946, #7481, #7480, #7423
 #7391, #7356, #6911, #6848,
 #6202, #6133, #6026, #5687
 - Feature requests
+#7730 Potential fixes for this have been removed for further work.
 #7633, #5541
 - Complete work on the following under investigation
 #9363, #9362, #8564, #7199
@@ -41,7 +43,25 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+
+- V3.0.6
+- Fixed bug in example/container_actor.cpp in end() function.
+- Fixed bug4853 and 5626 - added header <utility> for std::forward.
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
+- New Feature - boost::phoenix::display_expr(expr)
+    In file boost/phoenix/core/debug.hpp
+    and also included from boost/phoenix/core.hpp
+    For now this drops through to the boost Proto version.
+    I intend to add some more tags for better information.
+    New test debug for the new header.
+KNOWN BUG - WARNING
+- New test more_let_tests to check for problems with losing temporary values.
+    I think this is a serious problem which is affecting some compilers
+    and not others. I have seen the problem with Clang 3.4 although not
+    when run with C++11. These tests should find out where else there is a
+    problem. At the moment these tests are passing.
+    I now have cases which fail for Clang 3.4 with optimization -O2 but not
+    without optimization. Under investigation.
 
 - V3.0.5
 - Documentation

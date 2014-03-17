@@ -45,9 +45,6 @@ namespace boost { namespace phoenix
     struct custom_terminal<detail::nothing, Dummy>
     {
         typedef void result_type;
-#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
-        typedef void _is_nothing_custom_terminal; // fix for #7730
-#endif
         template <typename Context>
         void operator()(detail::nothing, Context &) const
         {

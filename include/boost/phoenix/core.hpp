@@ -10,6 +10,7 @@
 #include <boost/phoenix/version.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/debug.hpp>
 #include <boost/phoenix/core/is_actor.hpp>
 #include <boost/phoenix/core/argument.hpp>
 #include <boost/phoenix/core/value.hpp>
@@ -19,5 +20,6 @@
 #include <boost/phoenix/core/visit_each.hpp>
 #include <boost/phoenix/core/v2_eval.hpp>
 #include <boost/phoenix/scope/local_variable.hpp> // to fix 5824
+#include <boost/proto/generate.hpp> // attempt to fix problems in intel 14.0.1
 
 #endif
