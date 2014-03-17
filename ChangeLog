@@ -44,6 +44,7 @@ CHANGELOG
 
 - DEVELOP
 
+- Fixed bug in example/container_actor.cpp in end() function.
 - Fixed bug4853 and 5626 - added header <utility> for std::forward.
 - Fixed bug4853 - added header <iostream> for gcc 4.9 test
 - New Feature - boost::phoenix::display_expr(expr)
