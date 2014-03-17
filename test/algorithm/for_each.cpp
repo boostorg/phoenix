@@ -7,52 +7,45 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
+#include <boost/phoenix.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/stl/algorithm/iteration.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <functional>
+#include <vector>
+#include <string>
+#include <sstream>
 
 namespace
 {
-    struct for_each_tester
-    {
-        int value_;
-        for_each_tester() : value_(0) { }
-        void operator()(
-            int& i)
-        {
-            value_ += i++;
-            return;
-        }
-    };
 
     void for_each_test()
     {
         using boost::phoenix::for_each;
+        using boost::phoenix::lambda;
+        using boost::phoenix::val;
         using boost::phoenix::arg_names::arg1;
-        int array[] = {1,2,3};
-        BOOST_TEST(for_each(arg1, for_each_tester())(array).value_ == 6);
-        BOOST_TEST(array[0] == 2);
-        BOOST_TEST(array[1] == 3);
-        BOOST_TEST(array[2] == 4);
+
+        std::vector<int> v;
+        for (int i = 1; i < 10; i++)
+           v.push_back(i);
+
+	std::string test_str("(123456789)");
+        std::ostringstream out;
+        (
+            out << val("("),
+            for_each(arg1, lambda[out << arg1]),
+            out << val(")")
+        )(v);
+        BOOST_TEST(out.str() == test_str);
         return;
     }
 
-    void accumulate_test()
-    {
-        using boost::phoenix::accumulate;
-        using boost::phoenix::arg_names::arg1;
-        int array[] = {1,2,3};
-        BOOST_TEST(accumulate(arg1, 0)(array) == 6);
-        BOOST_TEST(boost::phoenix::accumulate(arg1, 0, std::minus<int>())(array) == -6);
-        return;
-    }
 }
 
 int main()
 {
     for_each_test();
-    accumulate_test();
     boost::report_errors();
 }
