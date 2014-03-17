@@ -85,11 +85,11 @@ main()
         BOOST_TEST(x == 1);
     }
 
-	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 // Be very careful. Some of these cases give a silly answer
-	 // with clang 3.4 with C++03 and work for C++11.
-	 // gcc 4.8.2 seems O.K. both ways. Oh dear.
-	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Be very careful. Some of these cases give a silly answer
+    // with clang 3.4 with C++03 and work for C++11.
+    // gcc 4.8.2 seems O.K. both ways. Oh dear.
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   {
     int y = 0;
     int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _a ]])(y);
