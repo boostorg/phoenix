@@ -31,7 +31,7 @@ namespace
         for (int i = 1; i < 10; i++)
            v.push_back(i);
 
-	std::string test_str("(123456789)");
+        std::string test_str("(123456789)");
         std::ostringstream out;
         (
             out << val("("),
