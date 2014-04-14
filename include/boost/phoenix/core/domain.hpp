@@ -25,7 +25,7 @@ namespace boost { namespace phoenix
         : proto::switch_<phoenix_generator>
     {
 
-      BOOST_PROTO_USE_BASIC_EXPR()
+        BOOST_PROTO_USE_BASIC_EXPR()
 
         template<typename Tag>
         struct case_
