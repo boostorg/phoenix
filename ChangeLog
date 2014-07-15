@@ -43,6 +43,7 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+- #9742 New tests for_each and for_test to attempt to resolve this.
 
 - V3.0.6
 - Fixed bug in example/container_actor.cpp in end() function.
