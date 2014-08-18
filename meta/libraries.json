@@ -1,0 +1,17 @@
+{
+    "key": "phoenix",
+    "name": "Phoenix",
+    "authors": [
+        "Joel de Guzman",
+        "Dan Marsden",
+        "Thomas Heller"
+    ],
+    "description": "Define small unnamed function objects at the actual call site, and more.",
+    "category": [
+        "Function-objects"
+    ],
+    "maintainers": [
+        "Joel de Guzman <joel -at- boost-consulting.com>",
+        "Thomas Heller <thom.heller -at- gmail.com>"
+    ]
+}
