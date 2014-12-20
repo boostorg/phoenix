@@ -8,6 +8,7 @@
 #ifndef PHOENIX_BIND_BIND_MEMBER_VARIABLE_HPP
 #define PHOENIX_BIND_BIND_MEMBER_VARIABLE_HPP
 
+#include <boost/utility/enable_if.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/detail/function_eval.hpp>
 #include <boost/phoenix/bind/detail/member_variable.hpp>
@@ -16,10 +17,11 @@ namespace boost { namespace phoenix
 {
     template <typename RT, typename ClassT, typename ClassA>
     inline
-    typename
-        detail::expression::function_eval<
+    typename boost::disable_if<
+      boost::is_member_pointer<ClassT>,
+        typename detail::expression::function_eval<
             detail::member_variable<RT, RT ClassT::*>
-          , ClassA
+          , ClassA >::type
         >::type const
     bind(RT ClassT::*mp, ClassA const& obj)
     {
@@ -31,10 +33,11 @@ namespace boost { namespace phoenix
 
     template <typename RT, typename ClassT>
     inline
-    typename
-        detail::expression::function_eval<
+    typename boost::disable_if<
+      boost::is_member_pointer<ClassT>,
+        typename detail::expression::function_eval<
             detail::member_variable<RT, RT ClassT::*>
-          , ClassT
+          , ClassT >::type
         >::type const
     bind(RT ClassT::*mp, ClassT& obj)
     {
