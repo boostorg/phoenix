@@ -18,7 +18,7 @@ namespace boost { namespace phoenix
     template <typename RT, typename ClassT, typename ClassA>
     inline
     typename boost::disable_if<
-      boost::is_member_pointer<ClassT>,
+      boost::is_member_function_pointer<RT ClassT::*>,
         typename detail::expression::function_eval<
             detail::member_variable<RT, RT ClassT::*>
           , ClassA >::type
@@ -34,7 +34,7 @@ namespace boost { namespace phoenix
     template <typename RT, typename ClassT>
     inline
     typename boost::disable_if<
-      boost::is_member_pointer<ClassT>,
+      boost::is_member_function_pointer<RT ClassT::*>,
         typename detail::expression::function_eval<
             detail::member_variable<RT, RT ClassT::*>
           , ClassT >::type
