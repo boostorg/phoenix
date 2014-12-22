@@ -43,6 +43,7 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+- Add more cases to cmath test to test failures on some compilers.
 - #7165 and #7166 Change tests to phoenix/core.hpp to reduce compiler load
 - Testing fix for failures of tests as follows
   bind_member_function_tests, bind_mf2_test, bind_test
