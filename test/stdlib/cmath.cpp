@@ -18,9 +18,9 @@ int main()
     using namespace boost::phoenix::arg_names;
     boost::function<bool(double, double)> f = fabs(_1 - _2) < eps;
 
-    double x = boost::phoenix::pow(_1,_2)(2.,0.);
+    double x = boost::phoenix::pow(_1,_2)(2.,2.);
 
     BOOST_TEST(f(0.0, 0 * eps));
     BOOST_TEST(!f(0.0, eps));
-    BOOST_TEST(fabs(x-1.) < eps );
+    BOOST_TEST(fabs(x-4.) < eps );
 }
