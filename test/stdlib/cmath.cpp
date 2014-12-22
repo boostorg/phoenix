@@ -19,8 +19,11 @@ int main()
     boost::function<bool(double, double)> f = fabs(_1 - _2) < eps;
 
     double x = boost::phoenix::pow(_1,_2)(2.,2.);
+    double y = boost::phoenix::atan2(_1,_2)(1.,1.);
+    double z = boost::phoenix::tan(_1)(y);
 
     BOOST_TEST(f(0.0, 0 * eps));
     BOOST_TEST(!f(0.0, eps));
     BOOST_TEST(fabs(x-4.) < eps );
+    BOOST_TEST(fabs(z-1.) < eps );
 }
