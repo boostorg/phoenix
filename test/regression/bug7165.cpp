@@ -8,7 +8,7 @@
 ==============================================================================*/
 
 #define BOOST_PHOENIX_LIMIT 20
-#include <boost/phoenix.hpp>
+#include <boost/phoenix/core.hpp>
  
 int main()
 {

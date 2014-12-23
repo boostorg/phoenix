@@ -43,6 +43,17 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+
+- V3.1.0
+- Bump version number to 3.1.0 in version.hpp and branch for release.
+- Add more cases to cmath test to test failures on some compilers.
+- #7165 and #7166 Change tests to phoenix/core.hpp to reduce compiler load
+- Testing fix for failures of tests as follows
+  bind_member_function_tests, bind_mf2_test, bind_test
+  with compilers including gcc 4.9.0 and clang 3.5
+  This involves use of boost::lazy_disable_if to resolve
+  the choice of overloaded bind functions in
+  bind/bind_member_variable.hpp
 - #9742 New tests for_each and for_test to attempt to resolve this.
 
 - V3.0.6
