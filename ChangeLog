@@ -43,6 +43,9 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+
+- V3.1.0
+- Bump version number to 3.1.0 in version.hpp and branch for release.
 - Add more cases to cmath test to test failures on some compilers.
 - #7165 and #7166 Change tests to phoenix/core.hpp to reduce compiler load
 - Testing fix for failures of tests as follows
