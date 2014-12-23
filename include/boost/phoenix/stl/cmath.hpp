@@ -16,7 +16,7 @@
 
 namespace boost {
 
-#ifdef BOOST_NO_CXX11_DECLTYPE
+#if (defined (BOOST_NO_CXX11_DECLTYPE) || defined (BOOST_INTEL_CXX_VERSION))
 #define BOOST_PHOENIX_MATH_FUNCTION(name, n)                            \
     namespace phoenix_impl {                                            \
     struct name ## _impl {                                              \
