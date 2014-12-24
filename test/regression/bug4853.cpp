@@ -55,12 +55,14 @@ int range_test_complex() {
 
     for(unsigned i = 0; i < result1.size(); ++i)
         std::cout << result1[i] << "\n";
-    
+
+#if !(BOOST_GCC_VERSION < 40500)
     boost::push_back(result2, source | transformed(phoenix::bind(&Foo::value_, *arg1)) | uniqued);
 
     for(unsigned i = 0; i < result2.size(); ++i)
         std::cout << result2[i] << "\n";
-    
+#endif
+   
     return 0;
     
 }
