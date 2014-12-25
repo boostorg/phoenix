@@ -54,6 +54,8 @@ CHANGELOG
   This involves use of boost::lazy_disable_if to resolve
   the choice of overloaded bind functions in
   bind/bind_member_variable.hpp
+  bind/bind_member_function.hpp Add reverse test boost::lazy_enable_if
+  This resolves a smaller number of failures.
 - #9742 New tests for_each and for_test to attempt to resolve this.
 
 - V3.0.6
