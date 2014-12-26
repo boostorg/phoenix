@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2014      John Fletcher
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -161,14 +162,15 @@ main()
         using boost::phoenix::for_each;
         using boost::phoenix::push_back;
 
+#if (!defined(BOOST_MSVC) || (BOOST_MSVC < 1700))
         int x = 10;
         std::vector<std::vector<int> > v(10);
-
         for_each(_1, lambda(_a = _2)[push_back(_1, _a)])(v, x);
 
         int y = 0;
         for_each(arg1, lambda[ref(y) += _1[0]])(v);
         BOOST_TEST(y == 100);
+#endif
     }
 
     {
