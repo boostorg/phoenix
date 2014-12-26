@@ -59,8 +59,10 @@ namespace
         std::set<int> s(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(s) == s.find(2));
 
+#if (defined(BOOST_MSVC) && (BOOST_MSVC >= 1700))
         std::map<int, int> m = boost::assign::map_list_of(0, 1)(2, 3)(4, 5);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(m) == m.find(2));
+#endif
 
 #ifdef BOOST_PHOENIX_HAS_HASH
 
