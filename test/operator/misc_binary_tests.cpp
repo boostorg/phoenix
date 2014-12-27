@@ -26,7 +26,7 @@ main()
         const char* world = " world";
 
 
-#if !(defined(BOOST_MSVC) && (BOOST_MSVC >= 1700))
+#if !(defined(BOOST_MSVC) && (BOOST_MSVC >= 1900))
         BOOST_TEST((ref(i) = ref(i))() == 5);
 #endif
         BOOST_TEST((ref(i) = 3)() == 3);
