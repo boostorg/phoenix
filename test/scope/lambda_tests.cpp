@@ -149,20 +149,21 @@ main()
 
     {
         using boost::phoenix::for_each;
-
+#if (!defined(BOOST_MSVC) || (BOOST_MSVC < 1800))
         int init[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         std::vector<int> v(init, init+10);
 
         int x = 0;
         for_each(_1, lambda(_a = _2)[_a += _1])(v, x);
         BOOST_TEST(x == 55);
+#endif
     }
 
     {
         using boost::phoenix::for_each;
         using boost::phoenix::push_back;
 
-#if (!defined(BOOST_MSVC) || (BOOST_MSVC < 1700))
+#if (!defined(BOOST_MSVC) || (BOOST_MSVC < 1800))
         int x = 10;
         std::vector<std::vector<int> > v(10);
         for_each(_1, lambda(_a = _2)[push_back(_1, _a)])(v, x);
