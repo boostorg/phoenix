@@ -10,6 +10,7 @@
 #define PHOENIX_BIND_BIND_MEMBER_VARIABLE_HPP
 
 #include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/is_member_function_pointer.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/detail/function_eval.hpp>
 #include <boost/phoenix/bind/detail/member_variable.hpp>
