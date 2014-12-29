@@ -61,7 +61,8 @@ namespace
 
 	//#if !(defined(BOOST_MSVC) && (BOOST_MSVC >= 1900))
         //std::map<int, int> m = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).to_container(m);
-        std::map<int, int> m = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).convert_to_container<std::map<int, int> >();
+        std::map<int, int> m = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
+                               convert_to_container<std::map<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(m) == m.find(2));
 	//#endif
 	
@@ -70,7 +71,8 @@ namespace
         BOOST_PHOENIX_HASH_NAMESPACE::hash_set<int> hs(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(hs) == hs.find(2));
 
-        BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).convert_to_container<BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> >();
+        BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
+        convert_to_container<BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
 
 #endif
