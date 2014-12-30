@@ -18,8 +18,11 @@ TODO (known issues):
   decide on priorities for fixing the bugs below.
     One such library is Boost log.
 - Identify dependencies on other libraries and cooperate on bugs.
+    It is now known that the other libraries which use Boost Phoenix
+    are Boost Spirit and Boost Meta State Machine (MSM)
 - Add more examples
 - Develop documentation.
+    A start has been made on this in release 3.1.0
 - Inspection report outstanding issues
     Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
 - Investigate fixes needed for the following bugs
@@ -46,6 +49,9 @@ CHANGELOG
 
 - V3.1.0
 - Bump version number to 3.1.0 in version.hpp and branch for release.
+- New file boost/phoenix/config.hpp to centralise configuration issues.
+  At the moment it simply includes boost/config.hpp
+- Changes to some tests to identify problems with several compilers.
 - Add more cases to cmath test to test failures on some compilers.
 - #7165 and #7166 Change tests to phoenix/core.hpp to reduce compiler load
 - Testing fix for failures of tests as follows
