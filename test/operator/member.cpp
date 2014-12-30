@@ -79,12 +79,20 @@ int main()
     BOOST_TEST((arg1->*&Test::value)(cscptr) == 2);
     BOOST_TEST((arg1->*&Test::func)(9)(cscptr) == 9);
 
+#ifdef BOOST_NO_CXX11_SMART_PTR
     std::auto_ptr<Test> aptr(new Test(test));
+#else
+    std::unique_ptr<Test> aptr(new Test(test));
+#endif
 
     BOOST_TEST((arg1->*&Test::value)(aptr) == 2);
     BOOST_TEST((arg1->*&Test::func)(10)(aptr) == 10);
 
+#ifdef BOOST_NO_CXX11_SMART_PTR
     std::auto_ptr<const Test> captr(new Test(test));
+#else
+    std::unique_ptr<const Test> captr(new Test(test));
+#endif
 
     BOOST_TEST((arg1->*&Test::value)(captr) == 2);
     BOOST_TEST((arg1->*&Test::func)(11)(captr) == 11);
