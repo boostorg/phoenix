@@ -26,6 +26,7 @@
 #include <hash_map>
 #define BOOST_PHOENIX_HAS_HASH
 #define BOOST_PHOENIX_HASH_NAMESPACE stdext
+#endif
 #else
 #define BOOST_PHOENIX_HAS_UNDORDERED_SET_AND_MAP
 #include <unordered_set>
