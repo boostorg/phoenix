@@ -77,9 +77,9 @@ namespace
         std::unordered_set<int> hs(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(hs) == hs.find(2));
 
-        std::unordered_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
-        convert_to_container<std::unordered_map<int, int> >();
-        BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
+        //std::unordered_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
+	// convert_to_container<std::unordered_map<int, int> >();
+	// BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
 
 #else
 #ifdef BOOST_PHOENIX_HAS_HASH
