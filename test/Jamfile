@@ -108,6 +108,7 @@ test-suite phoenix_algorithm :
     [ run algorithm/transformation3.cpp ]
     [ run algorithm/transformation4.cpp ]
     [ run algorithm/querying.cpp ]
+    [ run algorithm/querying_find.cpp ]
     [ run algorithm/querying2.cpp ]
     ;
 
