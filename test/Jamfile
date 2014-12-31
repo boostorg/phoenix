@@ -88,6 +88,7 @@ test-suite phoenix_container :
 
 test-suite phoenix_scope :
     [ run scope/lambda_tests.cpp ]
+    [ run scope/lambda_tests1.cpp ]
 #    [ run scope/lambda_tests_phx2.cpp ]
     [ run scope/let_tests.cpp ]
     [ run scope/more_lambda_tests.cpp ]
