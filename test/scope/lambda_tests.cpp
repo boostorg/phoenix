@@ -16,7 +16,7 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/function.hpp>
-#include <boost/phoenix/bind.hpp>
+//#include <boost/phoenix/bind.hpp>
 #include <boost/phoenix/scope.hpp>
 
 namespace boost { namespace phoenix
