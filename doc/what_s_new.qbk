@@ -9,6 +9,16 @@
 
 [section What's New]
 
+[section Phoenix - warning on *lambda and let*]
+
+* There are a number of bugs in the implementation of *lambda* and *let* constructs in the current version of Boost Phoenix (Boost release 1.57.0).
+* These are currently being investigated in the hope of providing a better version for the next Boost release.
+* The constructs are not completely unusable and many of the tests run.
+* Some usage may work with some compilers but not others.
+* More information will be made available as soon as possible.
+
+[endsect]
+
 [section Phoenix 3.1.0]
 
 This is the latest in a series of updates to Phoenix to fix some bugs and
@@ -35,10 +45,11 @@ and the release number will be increased for each set of changes released.
 * Introduction of __changelog__ and release number increments.
 * Added BOOST_PHOENIX_VERSION_NUMBER using boost/predef style.
 * Fixes to bugs #5714 and #5824 are particularly important as they fixed silent errors
-  in the processing of some compound expressions with commas. *This could cause output
-  from some user codes to change unexpectedly.*
+  in the processing of some compound expressions with commas.
+* *This could cause output from some user codes to change unexpectedly.*
 
 [endsect]
+
 
 [section Phoenix 3.0]
 
