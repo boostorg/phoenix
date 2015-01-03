@@ -1,8 +1,9 @@
 /*=============================================================================
     Copyright (c) 2003 Martin Wille
     Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2015 John Fletcher
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
@@ -17,6 +18,7 @@
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/type_traits/is_copy_constructible.hpp>
 #include <boost/phoenix/scope/dynamic.hpp>
 
 #if defined(DONT_HAVE_BOOST)                        \
