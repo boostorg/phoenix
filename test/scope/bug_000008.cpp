@@ -18,7 +18,10 @@
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/type_traits/is_copy_constructible.hpp>
+ // Testing problems in thread/future
+#include <boost/move/move.hpp>
+#include <boost/move/detail/type_traits.hpp>
+using boost::move_detail::is_copy_constructible;
 #include <boost/phoenix/scope/dynamic.hpp>
 
 #if defined(DONT_HAVE_BOOST)                        \
