@@ -42,8 +42,8 @@ namespace boost { namespace phoenix
     {
         template <typename T>
         struct as_child
-        : proto_base_domain::as_expr<T> // proto lambda example.
-        // : as_expr<T>
+        //: proto_base_domain::as_expr<T> // proto lambda example.
+          : as_expr<T>
         {};
     };
 }}
