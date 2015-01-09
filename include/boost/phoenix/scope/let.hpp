@@ -9,6 +9,8 @@
 #ifndef BOOST_PHOENIX_SCOPE_LET_HPP
 #define BOOST_PHOENIX_SCOPE_LET_HPP
 
+#include <boost/assert.hpp>
+#include <sstream>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/as_vector.hpp>
@@ -118,6 +120,13 @@ namespace boost { namespace phoenix
             >
             env(phoenix::env(ctx), phoenix::env(ctx), locals);
 
+            // Fix for bugs (trial)
+            // The idea is to do something which will not be optimised away.
+            int vsize = boost::fusion::size(vars);
+            std::stringstream strm;
+            strm << vsize << std::endl;
+            int size = strm.str().length();
+            BOOST_ASSERT(size >= 0);
             return eval(expr, phoenix::context(env, phoenix::actions(ctx)));
         }
     };
