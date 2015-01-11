@@ -10,8 +10,8 @@
 #ifndef BOOST_PHOENIX_SCOPE_LET_HPP
 #define BOOST_PHOENIX_SCOPE_LET_HPP
 
-#include <boost/assert.hpp>
-#include <sstream>
+//#include <boost/assert.hpp>
+//#include <sstream>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/as_vector.hpp>
@@ -88,6 +88,8 @@ namespace boost { namespace phoenix
         typename result<let_eval(Vars const&, Map const&, Expr const &, Context const &)>::type const
         operator()(Vars const & vars, Map, Expr const & expr, Context const & ctx) const
         {
+            Vars vars_(vars);
+
             typedef
                 typename proto::detail::uncvref<
                     typename result_of::env<Context>::type
@@ -111,7 +113,7 @@ namespace boost { namespace phoenix
                 >::type
             locals_type;
 
-            locals_type locals = initialize_locals(proto::value(vars), ctx);
+            locals_type locals = initialize_locals(proto::value(vars_), ctx);
 
             scoped_environment<
                 env_type
@@ -123,11 +125,11 @@ namespace boost { namespace phoenix
 
             // Fix for bugs (trial)
             // The idea is to do something which will not be optimised away.
-            int vsize = boost::fusion::size(vars);
-            std::stringstream strm;
-            strm << vsize << std::endl;
-            int size = strm.str().length();
-            BOOST_ASSERT(size >= 0);
+            //int vsize = boost::fusion::size(vars);
+            //std::stringstream strm;
+            //strm << vsize << std::endl;
+            //int size = strm.str().length();
+            //BOOST_ASSERT(size >= 0);
             return eval(expr, phoenix::context(env, phoenix::actions(ctx)));
         }
     };
