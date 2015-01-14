@@ -226,21 +226,13 @@ namespace boost { namespace phoenix
                     typename result_of::env<Context>::type
                 >::type
                 env_type;
-            typedef
-                typename proto::detail::uncvref<
-                    typename result_of::actions<Context>::type
-                >::type
-                actions_type;
+            
             typedef
                 typename proto::detail::uncvref<
                     typename proto::result_of::value<Vars>::type
                      >::type
                      vars_type;
-            typedef
-                typename proto::detail::uncvref<
-                    typename proto::result_of::value<Map>::type
-                     >::type
-                     map_type;
+            
             typedef typename
                 detail::result_of::initialize_locals<
                     vars_type
