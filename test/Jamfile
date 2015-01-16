@@ -126,6 +126,7 @@ test-suite phoenix_boost_bind_compatibility :
     [ run boost_bind_compatibility/bind_const_test.cpp ]
     [ run boost_bind_compatibility/bind_cv_test.cpp ]
     [ run boost_bind_compatibility/bind_dm_test.cpp ]
+    [ run boost_bind_compatibility/bind_dm1_test.cpp ]
     [ run boost_bind_compatibility/bind_dm2_test.cpp ]
     [ run boost_bind_compatibility/bind_dm3_test.cpp ]
     [ run boost_bind_compatibility/bind_eq_test.cpp ]
