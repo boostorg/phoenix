@@ -31,7 +31,7 @@ main()
     using boost::phoenix::arg_names::_1;
     //using boost::phoenix::arg_names::_2;
     using boost::phoenix::local_names::_a;
-    using boost::phoenix::local_names::_b;
+    //using boost::phoenix::local_names::_b;
     //    using boost::phoenix::placeholders::arg1;
 
     /*
