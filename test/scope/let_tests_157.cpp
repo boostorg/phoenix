@@ -30,18 +30,18 @@ main()
     using boost::phoenix::let;
     using boost::phoenix::val;
     using boost::phoenix::arg_names::_1;
-    using boost::phoenix::arg_names::_2;
-    using boost::phoenix::arg_names::_3;
+    //using boost::phoenix::arg_names::_2;
+    //using boost::phoenix::arg_names::_3;
     using boost::phoenix::local_names::_a;
     using boost::phoenix::local_names::_b;
-    using boost::phoenix::local_names::_c;
-    using boost::phoenix::local_names::_d;
-    using boost::phoenix::local_names::_e;
-    using boost::phoenix::local_names::_x;
-    using boost::phoenix::local_names::_y;
-    using boost::phoenix::local_names::_z;
-    using boost::phoenix::placeholders::arg1;
-
+    //using boost::phoenix::local_names::_c;
+    //using boost::phoenix::local_names::_d;
+    //using boost::phoenix::local_names::_e;
+    //using boost::phoenix::local_names::_x;
+    //using boost::phoenix::local_names::_y;
+    //using boost::phoenix::local_names::_z;
+    //using boost::phoenix::placeholders::arg1;
+    /*
     {
         int x = 1;
         BOOST_TEST(
@@ -148,7 +148,7 @@ main()
         (_a + _b)(i);
     }
 #endif
- 
+    */
     {
         // show that we can return a local from an outer scope
         int y = 0;
@@ -156,7 +156,7 @@ main()
 
         BOOST_TEST(x == 1);
     }
-
+    /*
     {
         // show that this code returns an lvalue
         int i = 1;
@@ -185,7 +185,7 @@ main()
         let(_a = _1)[_a = _2](i, 2);
         BOOST_TEST(i == 2);
     }
-    
+    */
     return boost::report_errors();
 }
 

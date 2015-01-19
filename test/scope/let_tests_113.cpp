@@ -30,18 +30,18 @@ main()
     using boost::phoenix::let;
     using boost::phoenix::val;
     using boost::phoenix::arg_names::_1;
-    using boost::phoenix::arg_names::_2;
-    using boost::phoenix::arg_names::_3;
-    using boost::phoenix::local_names::_a;
-    using boost::phoenix::local_names::_b;
-    using boost::phoenix::local_names::_c;
-    using boost::phoenix::local_names::_d;
-    using boost::phoenix::local_names::_e;
+    //using boost::phoenix::arg_names::_2;
+    //using boost::phoenix::arg_names::_3;
+    //using boost::phoenix::local_names::_a;
+    //using boost::phoenix::local_names::_b;
+    //using boost::phoenix::local_names::_c;
+    //using boost::phoenix::local_names::_d;
+    //using boost::phoenix::local_names::_e;
     using boost::phoenix::local_names::_x;
-    using boost::phoenix::local_names::_y;
-    using boost::phoenix::local_names::_z;
-    using boost::phoenix::placeholders::arg1;
-
+    //using boost::phoenix::local_names::_y;
+    //using boost::phoenix::local_names::_z;
+    //using boost::phoenix::placeholders::arg1;
+    /*
     {
         int x = 1;
         BOOST_TEST(
@@ -106,7 +106,7 @@ main()
         
         BOOST_TEST(x == 888 + 999);    
     }
-
+    */
     {
         int x = 999;
 
@@ -119,7 +119,7 @@ main()
         );
 
         BOOST_TEST(x == 999);
-
+	/*
         BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value 
             [
@@ -128,9 +128,9 @@ main()
             (x) == x + 888
         );
         
-        BOOST_TEST(x == 999);
+        BOOST_TEST(x == 999); */
     }
-
+    /*
     {
         BOOST_TEST(
             let(_a = 1, _b = 2, _c = 3, _d = 4, _e = 5)
@@ -185,7 +185,7 @@ main()
         let(_a = _1)[_a = _2](i, 2);
         BOOST_TEST(i == 2);
     }
-    
+    */
     return boost::report_errors();
 }
 
