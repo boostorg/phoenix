@@ -64,7 +64,7 @@ int main()
     // Change bind_rv_sp_test.cpp to bind to _1. Renamed f to g in y
     //BOOST_TEST( bind( &X::f, _1) ( bind( &Y::g, &y )()) == 42 );
     boost::shared_ptr<X> xp = bind( &Y::f, &y )();
-    BOOST_TEST( bind( &X::f, xp)()  == 42 );
-
+    //BOOST_TEST( bind( &X::f, xp)()  == 42 );
+    BOOST_TEST( (*xp).f() == 42 );
     return boost::report_errors();
 }
