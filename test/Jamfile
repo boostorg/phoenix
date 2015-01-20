@@ -153,6 +153,8 @@ test-suite phoenix_boost_bind_compatibility :
 #    [ run boost_bind_compatibility/bind_rv_sp3_test.cpp ]
 #    [ run boost_bind_compatibility/bind_rv_sp4_test.cpp ]
     [ run boost_bind_compatibility/bind_rv_sp5_test.cpp ]
+    [ run boost_bind_compatibility/bind_rv_sp6_test.cpp ]
+    [ run boost_bind_compatibility/bind_rv_sp7_test.cpp ]
     [ run boost_bind_compatibility/bind_stateful_test.cpp ]
     [ run boost_bind_compatibility/bind_test.cpp ]
     ;
