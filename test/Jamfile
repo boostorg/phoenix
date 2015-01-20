@@ -104,6 +104,7 @@ test-suite phoenix_scope :
     [ run scope/let_tests_113.cpp ]
     [ run scope/let_tests_113a.cpp ]
     [ run scope/let_tests_157.cpp ]
+    [ run scope/let_tests_157a.cpp ]
     [ run scope/let_tests_rest.cpp ]
     [ run scope/more_lambda_tests.cpp ]
     [ run scope/more_let_tests.cpp ]
