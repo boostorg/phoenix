@@ -60,7 +60,15 @@ int main()
 
     Y y;
 
+    // MSVC 10,9 and 8 all give a COMDAT error with the full test.
+    // This also fails:
+    //boost::shared_ptr<X> xp = bind( &Y::f, &y )();
+#if defined(BOOST_MSVC) && (BOOST_MSVC < 1700)
+    boost::shared_ptr<X> xp = y.f();
+    BOOST_TEST( bind( &X::f, xp)()  == 42 );
+#else
     BOOST_TEST( bind( &X::f, bind( &Y::f, &y ) )() == 42 );
+#endif
 
     return boost::report_errors();
 }
