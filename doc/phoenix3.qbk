@@ -3,7 +3,7 @@
     [compatibility-mode 1.3]
     [version 3.1.0]
     [authors [de Guzman, Joel], [Marsden, Dan], [Heller, Thomas], [Fletcher, John] ]
-    [copyright 2002 2003 2004 2005 2010 2014 Joel de Guzman, Dan Marsden, Thomas Heller, John Fletcher]
+    [copyright 2002 2003 2004 2005 2010 2014 2015 Joel de Guzman, Dan Marsden, Thomas Heller, John Fletcher]
     [category string-text]
     [purpose Lambda Expressions in C++]
     [license
@@ -19,6 +19,7 @@
 [/ June 2010]
 [/ February 2014]
 [/ December 2014]
+[/ January 2015]
 
 [/ Some links]
 
@@ -29,6 +30,7 @@
 [def __changelog__      [@http://www.boost.org/doc/libs/release/libs/phoenix/ChangeLog ChangeLog]]
 [def __spirit__         [@http://spirit.sourceforge.net Spirit]]
 [def __proto__          [@http://www.boost.org/doc/libs/release/libs/proto/index.html Boost.Proto]]
+[def __fusion__         [@http://www.boost.org/doc/libs/release/libs/fusion/index.html Boost.Fusion]]
 [def __proto_expr__     [@http://www.boost.org/doc/libs/release/doc/html/Expr.html Proto Expression]]
 [def __proto_transform__ [@http://www.boost.org/doc/libs/release/doc/html/Transform.html Proto Transform]]
 [def __proto_transforms__ [@http://www.boost.org/doc/libs/release/doc/html/Transform.html Proto Transforms]]
@@ -40,7 +42,7 @@
 [def __haskell__        [@http://www.haskell.org Haskell]]
 [def __mpl__            [@http://www.boost.org/libs/mpl/index.html MPL]]
 [def __bll__            [@http://www.boost.org/libs/lambda/doc/index.html BLL]]
-[def __fcpp__           [@http://cgi.di.uoa.gr/~smaragd/fc++/]]
+[def __fcpp__           [@http://cgi.di.uoa.gr/~smaragd/fc++/ FC++]]
 [def __spirit_repo__    [@http://spirit.sourceforge.net/repository/applications/show_contents.php Spirit Repository]]
 [def __spirit_list__    [@https://lists.sourceforge.net/lists/listinfo/spirit-general Spirit Mailing List]]
 [def __spirit_general__ [@news://news.gmane.org/gmane.comp.spirit.general Spirit General NNTP news portal]]
@@ -59,6 +61,17 @@
 [def __phoenix_placeholder_unification__ [link phoenix.inside.placeholder_unification Placeholder Unification]]
 [def __unspecified__            /unspecified/]
 
+[/ Defines for maintenance tools ]
+[def __git__  [@http://git-scm.com Git ]]
+[def __git_branching_model__ [@http://nvie.com/posts/a-successful-git-branching-model/ git branching model]]
+
+[/ Defines for operating systems ]
+[def __ubuntu__ [@http://www.ubuntu.com/ Ubuntu ]]
+
+[/ Defines for compilers.]
+[def __clang__ [@http://clang.llvm.org Clang ]]
+[def __gcc__ [@https://gcc.gnu.org gcc ]]
+
 [include preface.qbk]
 [include what_s_new.qbk]
 [include introduction.qbk]
@@ -70,6 +83,7 @@
 [include inside.qbk]
 [include examples.qbk]
 
+[include maintenance.qbk]
 [include wrap_up.qbk]
 [include acknowledgment.qbk]
 [include references.qbk]
