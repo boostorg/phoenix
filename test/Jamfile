@@ -159,6 +159,7 @@ test-suite phoenix_boost_bind_compatibility :
 #    [ run boost_bind_compatibility/bind_rv_sp7_test.cpp ]
     [ run boost_bind_compatibility/bind_stateful_test.cpp ]
     [ run boost_bind_compatibility/bind_test.cpp ]
+#    [ run boost_bind_compatibility/bind_void_dm_test.cpp ]
     ;
 
 test-suite phoenix_regression :
