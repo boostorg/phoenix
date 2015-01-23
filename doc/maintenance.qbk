@@ -21,7 +21,7 @@ Phoenix is a complicated library and the current version 3 is built on two other
 There are two ways to work with Phoenix.
 
 * One is to ignore the previous statement and assume everything works.
-* The second is to understand the relationships between the libraries. 
+* The second is to understand the relationships between the libraries.
 
 Unfortunately, while most things now work, there are a number of subtle bugs where things do not work as expected, and that is the challenge which is there for the maintainer who did not write any version of the library.
 
