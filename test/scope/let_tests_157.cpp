@@ -30,7 +30,7 @@ main()
     using boost::phoenix::let;
     using boost::phoenix::val;
     using boost::phoenix::arg_names::_1;
-    //using boost::phoenix::arg_names::_2;
+    using boost::phoenix::arg_names::_2;
     //using boost::phoenix::arg_names::_3;
     using boost::phoenix::local_names::_a;
     using boost::phoenix::local_names::_b;
@@ -152,8 +152,11 @@ main()
     {
         // show that we can return a local from an outer scope
         int y = 0;
+#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+        int x = (let(_a = _2)[let(_b = _1)[ _a ]])(y,1);
+#else
         int x = (let(_a = 1)[let(_b = _1)[ _a ]])(y);
-
+#endif
         BOOST_TEST(x == 1);
     }
     /*

@@ -114,7 +114,11 @@ main()
         BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value
             [
+#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+                val(_x += 888)
+#else
                 _x += 888
+#endif
             ]
             (x) == x + 888
         );
