@@ -71,7 +71,11 @@ int main()
 
     int const v = 42;
 
+#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+    // Change bind_dm_test.cpp to bind to _1 twice.
+    BOOST_TEST( bind( &X::m, _1)( bind( f, _1 )( v ) ) == v );
+#else
     BOOST_TEST( bind( &X::m, bind( f, _1 ) )( v ) == v );
-
+#endif
     return boost::report_errors();
 }
