@@ -1,7 +1,8 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2015 John Fletcher
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
@@ -109,9 +110,9 @@ main()
     /*
     {
         int x = 999;
-	
+
         BOOST_TEST(
-            let(_x = val(_1)) // _x holds x by value 
+            let(_x = val(_1)) // _x holds x by value
             [
                 _x += 888
             ]
@@ -121,7 +122,7 @@ main()
         BOOST_TEST(x == 999);
 
         BOOST_TEST(
-            let(_x = val(_1)) // _x holds x by value 
+            let(_x = val(_1)) // _x holds x by value
             [
                 val(_x += 888)
             ]

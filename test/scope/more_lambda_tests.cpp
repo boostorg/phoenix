@@ -40,7 +40,7 @@ main()
     }
 
     {
-	int x = lambda[val(1)]()();
+        int x = lambda[val(1)]()();
         BOOST_TEST(x == 1);
     }
 

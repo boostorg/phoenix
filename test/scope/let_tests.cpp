@@ -111,7 +111,7 @@ main()
         int x = 999;
 
         BOOST_TEST(
-            let(_x = val(_1)) // _x holds x by value 
+            let(_x = val(_1)) // _x holds x by value
             [
                 _x += 888
             ]
@@ -121,7 +121,7 @@ main()
         BOOST_TEST(x == 999);
 
         BOOST_TEST(
-            let(_x = val(_1)) // _x holds x by value 
+            let(_x = val(_1)) // _x holds x by value
             [
                 val(_x += 888)
             ]

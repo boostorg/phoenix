@@ -53,7 +53,7 @@ main()
        }
 
        {
-	 int x = (let(_a = _1)[bind(_a)])(lambda[val(1)]());
+            int x = (let(_a = _1)[bind(_a)])(lambda[val(1)]());
             BOOST_TEST(x == 1);
          // Take this out too, I am not sure about this.
        }
