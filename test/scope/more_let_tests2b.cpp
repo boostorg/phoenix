@@ -33,7 +33,7 @@ main()
     using boost::phoenix::arg_names::_1;
     using boost::phoenix::local_names::_a;
     using boost::phoenix::local_names::_b;
-
+    /*
     {
         // show that we can return a local from an outer scope
         int y = 0;
@@ -76,13 +76,13 @@ main()
 
         BOOST_TEST(x == 1);
     }
-
+    */
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Be very careful. Some of these cases give a silly answer
     // with clang 3.4 with C++03 and work for C++11.
     // gcc 4.8.2 seems O.K. both ways. Oh dear.
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  {
+    /*{
     int y = 0;
     int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _a ]])(y);
     //std::cout << x << " P1A "; //clang - empty memory
@@ -99,7 +99,7 @@ main()
     int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _a ]])(y);
     //std::cout << x << " P2A "; //clang - 42 value - one step better
         BOOST_TEST(x == 1);
-  }
+  }*/
   {
     int y = 0;
     int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _b ]])(y);
