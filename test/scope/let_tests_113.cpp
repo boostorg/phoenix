@@ -111,29 +111,27 @@ main()
     {
         int x = 999;
 
-        BOOST_TEST(
+#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 40800) && __OPTIMIZE__
+       BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value
             [
-#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 40800) && __OPTIMIZE__
                 val(_x += 888)
-#else
-                _x += 888
-#endif
             ]
             (x) == x + 888
         );
 
         BOOST_TEST(x == 999);
-        /*
+#else
         BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value
             [
-                val(_x += 888)
+                _x += 888
             ]
             (x) == x + 888
         );
         
-        BOOST_TEST(x == 999); */
+        BOOST_TEST(x == 999);
+#endif
     }
     /*
     {
