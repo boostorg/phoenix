@@ -58,16 +58,29 @@ main()
     */
     {
         int x = 1, y = 10;
+#if defined(BOOST_MSVC) && (BOOST_MSVC >= 1700)
         BOOST_TEST(
         (
-                _1 + 
+                _1 +
                 lambda(_a = _1)
                 [
                     _a + lambda[_a + 2]
                 ]
             )
-            (x)(y)(y) == 1+1+1+2
+            (x)(y) == 1+1+1+2
         );
+#else
+        BOOST_TEST(
+        (
+                _1 +
+                lambda(_a = _1)
+                [
+                    _a + lambda[_a + 2]
+                ]
+            )
+	(x)(y)(y) == 1+1+1+2
+        );
+#endif
     }
 
     return boost::report_errors();
