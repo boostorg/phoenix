@@ -30,6 +30,7 @@ main()
 {
     using boost::phoenix::let;
     using boost::phoenix::val;
+    using boost::phoenix::ref;
     using boost::phoenix::arg_names::_1;
     //using boost::phoenix::arg_names::_2;
     //using boost::phoenix::arg_names::_3;
@@ -111,19 +112,18 @@ main()
     {
         int x = 999;
 
-#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 40800) && __OPTIMIZE__
-       BOOST_TEST(
+        BOOST_TEST(
             let(_x = val(_1)) // _x holds x by value
             [
-                val(_x += 888)
+               val(_x += 888) // so use value here too.
             ]
             (x) == x + 888
         );
 
         BOOST_TEST(x == 999);
-#else
+	/*
         BOOST_TEST(
-            let(_x = val(_1)) // _x holds x by value
+            let(_x = ref(_1)) // _x holds x by reference
             [
                 _x += 888
             ]
@@ -131,7 +131,17 @@ main()
         );
         
         BOOST_TEST(x == 999);
-#endif
+	*/
+        
+        BOOST_TEST(
+            let( _x = _1 ) // _x holds x by reference
+            [
+                _x += 888
+            ]
+            (x) == 999 + 888
+        );
+        
+        BOOST_TEST(x == 888 + 999);
     }
     /*
     {
