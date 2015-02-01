@@ -150,6 +150,7 @@ test-suite phoenix_boost_bind_compatibility :
     [ run boost_bind_compatibility/bind_eq3_test.cpp ]
     [ run boost_bind_compatibility/bind_fn2_test.cpp ]
     [ run boost_bind_compatibility/bind_function_test.cpp ]
+    [ run boost_bind_compatibility/bind_interoperation_test.cpp ]
     [ run boost_bind_compatibility/bind_mf2_test.cpp ]
     [ run boost_bind_compatibility/bind_not_test.cpp ]
     [ run boost_bind_compatibility/bind_placeholder_test.cpp ]
