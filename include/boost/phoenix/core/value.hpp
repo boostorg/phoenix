@@ -12,6 +12,7 @@
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/as_actor.hpp>
 #include <boost/phoenix/core/terminal.hpp>
+#include <boost/phoenix/core/is_value.hpp>
 #include <boost/utility/result_of.hpp>
 
 namespace boost { namespace phoenix
