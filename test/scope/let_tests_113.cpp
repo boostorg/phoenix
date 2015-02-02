@@ -121,7 +121,7 @@ main()
         );
 
         BOOST_TEST(x == 999);
-	/*
+        /*
         BOOST_TEST(
             let(_x = ref(_1)) // _x holds x by reference
             [
@@ -131,7 +131,7 @@ main()
         );
         
         BOOST_TEST(x == 999);
-	*/
+        */
         
         BOOST_TEST(
             let( _x = _1 ) // _x holds x by reference
