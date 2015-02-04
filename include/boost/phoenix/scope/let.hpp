@@ -115,6 +115,8 @@ namespace boost { namespace phoenix
 
             locals_type locals = initialize_locals(proto::value(vars_), ctx);
 
+            typedef typename result<let_eval(Vars const&, Map const&, Expr const &, Context const &)>::type result_type;
+
             scoped_environment<
                 env_type
               , env_type
@@ -130,7 +132,15 @@ namespace boost { namespace phoenix
             //strm << vsize << std::endl;
             //int size = strm.str().length();
             //BOOST_ASSERT(size >= 0);
-            return eval(expr, phoenix::context(env, phoenix::actions(ctx)));
+            result_type r = eval(expr, phoenix::context(env, phoenix::actions(ctx)));
+	    // typedef is_value<result_type> is_val;
+            //if(is_val::value) This seems always to be true
+            //{
+            //   std::cout << "let result has value type" << std::endl;
+	    // }
+            //if (is_val(r) ) std::cout << "let returns val" << std::endl;
+	    //std::cout << "result is " << r << std::endl;
+            return r;
         }
     };
 
@@ -158,7 +168,19 @@ namespace boost { namespace phoenix
         >::type const
         operator[](Expr const & expr) const
         {
-            return expression::let_<Locals, Map, Expr>::make(locals, Map(), expr);
+           typedef typename expression::let_<
+              Locals
+            , Map
+            , Expr
+           >::type let_type;
+           typedef is_value<let_type> is_val;
+
+           let_type let_exp = expression::let_<Locals, Map, Expr>::make(locals, Map(), expr);
+           if(is_val::value) //This seems always to be true
+           {
+             std::cout << "let has value type" << std::endl;
+           }
+           return let_exp;
         }
 
         Locals locals;
