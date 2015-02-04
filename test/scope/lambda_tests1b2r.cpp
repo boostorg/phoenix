@@ -29,7 +29,8 @@ main()
     using boost::phoenix::ref;
     using boost::phoenix::val;
     using boost::phoenix::arg_names::_1;
-    //using boost::phoenix::arg_names::_2;
+    using boost::phoenix::arg_names::_2;
+    using boost::phoenix::arg_names::_3;
     using boost::phoenix::local_names::_a;
     //using boost::phoenix::local_names::_b;
     //    using boost::phoenix::placeholders::arg1;
@@ -59,15 +60,16 @@ main()
     {
         int x = 1, y = 10;
 #if defined(BOOST_MSVC) && (BOOST_MSVC >= 1700)
+        int z;
         BOOST_TEST(
         (
-                _1 +
+                _3 = _1 +
                 lambda(_a = _1)
                 [
-                    _a + lambda[_a + 2]
+                  _a + lambda[_a + 2]
                 ]
             )
-        (x)(y)() == 1+1+1+2
+        (x)(y)(z) == 1+1+1+2
         );
 #else
         BOOST_TEST(
