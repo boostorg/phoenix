@@ -46,9 +46,17 @@ namespace boost { namespace phoenix
     {};
 
     template <typename T>
-    struct is_value<expression::value<T> >
+    struct is_value< expression::value<T> >
         : mpl::true_
     {};
+
+
+    template <typename T>
+    bool is_val(T const &t)
+    {
+      return is_value<T>::value;
+    }
+
   }}
 
 #endif
