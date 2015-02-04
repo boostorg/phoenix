@@ -78,7 +78,10 @@ namespace boost { namespace phoenix
         typename result<custom_terminal(actor<Expr> const &, Context &)>::type
         operator()(actor<Expr> const & expr, Context & ctx) const
         {
-            return boost::phoenix::eval(expr, ctx);
+          typedef typename result<custom_terminal(actor<Expr> const &, Context &)>::type result_type;
+          result_type r = boost::phoenix::eval(expr, ctx);
+          // std::cout << "Evaluating val() = " << r << std::endl;
+          return r;
         }
     };
 
