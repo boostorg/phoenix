@@ -52,6 +52,12 @@ namespace boost { namespace phoenix
         return expression::value<T>::make(t);
     }
 
+    // Identifies this Expr as a value.
+    template <typename Expr>
+    struct is_value<actor<Expr>  >
+        : mpl::true_
+    {};
+
     // Call out actor for special handling
     template<typename Expr>
     struct is_custom_terminal<actor<Expr> >

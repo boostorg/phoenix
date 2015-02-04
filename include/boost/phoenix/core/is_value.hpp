@@ -45,11 +45,12 @@ namespace boost { namespace phoenix
         : is_value<T>
     {};
 
+    // This does not seem to work.
+    // There is an alternative in value.hpp which does work.
     template <typename T>
     struct is_value< expression::value<T> >
         : mpl::true_
     {};
-
 
     template <typename T>
     bool is_val(T const &t)
