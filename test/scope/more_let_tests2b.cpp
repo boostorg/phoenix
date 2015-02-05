@@ -31,6 +31,7 @@ main()
     using boost::phoenix::let;
     using boost::phoenix::val;
     using boost::phoenix::arg_names::_1;
+    using boost::phoenix::arg_names::_2;
     using boost::phoenix::local_names::_a;
     using boost::phoenix::local_names::_b;
     /*
@@ -102,9 +103,13 @@ main()
   }*/
   {
     int y = 0;
+#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+    //int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _b ]])(y);
+#else
     int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _b ]])(y);
     //std::cout << x << " P2B "; //clang - 42 value - one step better
         BOOST_TEST(x == 1);
+#endif
   }
   {
     int y = 1;
@@ -115,7 +120,12 @@ main()
 
   {
     int y = 0;
+#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+    int z = 2;
+    int x = (let(_a = _1, _b = _2)[let(_b = _1)[ _a ]])(y,z);
+#else
     int x = (let(_a = 1, _b = 2)[let(_b = _1)[ _a ]])(y);
+#endif
     //    std::cout << x << " Q "; // clang 4201472
         BOOST_TEST(x == 1);
   }
