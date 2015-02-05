@@ -31,14 +31,18 @@ main()
     using boost::phoenix::let;
     using boost::phoenix::val;
     using boost::phoenix::arg_names::_1;
+    using boost::phoenix::arg_names::_2;
     using boost::phoenix::local_names::_a;
     using boost::phoenix::local_names::_b;
 
     {
         // show that we can return a local from an outer scope
         int y = 0;
+#ifdef __OPTIMIZE__
+        int x = (let(_a = _2)[let(_b = _1)[ _a ]])(y,1);
+#else
         int x = (let(_a = 1)[let(_b = _1)[ _a ]])(y);
-
+#endif
         BOOST_TEST(x == 1);
     }
     {
@@ -51,15 +55,21 @@ main()
     {
         // show that we can return a local from an outer scope
         //int y = 0;
+#ifdef __OPTIMIZE__
+        int x = (let(_a = _1)[let(_b = _a)[ _a ]])(1);
+#else
         int x = (let(_a = 1)[let(_b = _a)[ _a ]])();
-
+#endif
         BOOST_TEST(x == 1);
     }
     {
         // show that we can return a local from an inner scope
         //int y = 0;
+#ifdef __OPTIMIZE__
+        int x = (let(_a = _1)[let(_b = _a)[ _b ]])(1);
+#else
         int x = (let(_a = 1)[let(_b = _a)[ _b ]])();
-
+#endif
         BOOST_TEST(x == 1);
     }
     {
@@ -84,25 +94,41 @@ main()
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   {
     int y = 0;
+#ifdef __OPTIMIZE__
+    int x = (let(_a = _1, _b = _2)[let(_b = _a)[ _a ]])(1,2);
+#else
     int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _a ]])(y);
+#endif
     //std::cout << x << " P1A "; //clang - empty memory
         BOOST_TEST(x == 1);
   }
   {
     int y = 0;
+#ifdef __OPTIMIZE__
+    int x = (let(_a = _1, _b = _2)[let(_b = _a)[ _b ]])(1,2);
+#else
     int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _b ]])(y);
+#endif
     //std::cout << x << " P1B "; //clang - 42 value- one step better
         BOOST_TEST(x == 1);
   }
   {
     int y = 0;
+#ifdef __OPTIMIZE__
+    int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ val(_a) ]])(y);
+#else
     int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _a ]])(y);
+#endif
     //std::cout << x << " P2A "; //clang - 42 value - one step better
         BOOST_TEST(x == 1);
   }
   {
     int y = 0;
+#ifdef __OPTIMIZE__
+    int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ val(_b) ]])(y);
+#else
     int x = (let(_a = val(1), _b = val(2))[let(_b = _a)[ _b ]])(y);
+#endif
     //std::cout << x << " P2B "; //clang - 42 value - one step better
         BOOST_TEST(x == 1);
   }
@@ -115,7 +141,11 @@ main()
 
   {
     int y = 0;
+#ifdef __OPTIMIZE__
+    int x = (let(_a = 1, _b = 2)[let(_b = _1)[ val(_a) ]])(y);
+#else
     int x = (let(_a = 1, _b = 2)[let(_b = _1)[ _a ]])(y);
+#endif
     //    std::cout << x << " Q "; // clang 4201472
         BOOST_TEST(x == 1);
   }
