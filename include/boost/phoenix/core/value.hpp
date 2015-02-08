@@ -53,12 +53,17 @@ namespace boost { namespace phoenix
     }
 
     // Identifies this Expr as a value.
-    template <typename Expr>
-    struct is_value<actor<Expr>  >
-        : mpl::true_
-    {};
+    // I think this is wrong. It is identifying all actors as values.
+    // Yes, it is giving false positives and needs a rethink.
+    // And this gives no positives.
+    //template <typename T>
+    //struct is_value<expression::value<T> >
+    //    : mpl::true_
+    //{};
 
     // Call out actor for special handling
+  // Is this correct? It applies to any actor.
+  // In which case why is it here?
     template<typename Expr>
     struct is_custom_terminal<actor<Expr> >
       : mpl::true_
