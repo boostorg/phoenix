@@ -101,8 +101,8 @@ void delete_value3(std::vector< std::string > &list, const std::string & value)
         list.begin(),
         list.end(),
         // This needs header boost/phoenix/operator/comparison.
-	// arg1 is a Boost.Phoenix placeholder.
-        arg1 == phx::cref( value ) ), 
+        // arg1 is a Boost.Phoenix placeholder.
+        arg1 == phx::cref( value ) ),
         list.end() );
 }
 
