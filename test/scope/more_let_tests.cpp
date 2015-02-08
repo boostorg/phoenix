@@ -39,7 +39,7 @@ main()
         // show that we can return a local from an outer scope
         int y = 0;
 #ifdef __OPTIMIZE__
-        int x = (let(_a = _2)[let(_b = _1)[ _a ]])(y,1);
+        int x = (let(_a = 1)[let(_b = _1)[ _a + 0 ]])(y);
 #else
         int x = (let(_a = 1)[let(_b = _1)[ _a ]])(y);
 #endif
@@ -56,7 +56,7 @@ main()
         // show that we can return a local from an outer scope
         //int y = 0;
 #ifdef __OPTIMIZE__
-        int x = (let(_a = _1)[let(_b = _a)[ _a ]])(1);
+        int x = (let(_a = 1)[let(_b = _a)[ _a + 0 ]])();
 #else
         int x = (let(_a = 1)[let(_b = _a)[ _a ]])();
 #endif
@@ -66,7 +66,7 @@ main()
         // show that we can return a local from an inner scope
         //int y = 0;
 #ifdef __OPTIMIZE__
-        int x = (let(_a = _1)[let(_b = _a)[ _b ]])(1);
+        int x = (let(_a = 1)[let(_b = _a)[ _b + 0 ]])();
 #else
         int x = (let(_a = 1)[let(_b = _a)[ _b ]])();
 #endif
@@ -95,7 +95,7 @@ main()
   {
     int y = 0;
 #ifdef __OPTIMIZE__
-    int x = (let(_a = _1, _b = _2)[let(_b = _a)[ _a ]])(1,2);
+    int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _a + 0 ]])(y);
 #else
     int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _a ]])(y);
 #endif
@@ -105,7 +105,7 @@ main()
   {
     int y = 0;
 #ifdef __OPTIMIZE__
-    int x = (let(_a = _1, _b = _2)[let(_b = _a)[ _b ]])(1,2);
+    int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _b + 0 ]])(y);
 #else
     int x = (let(_a = 1, _b = 2)[let(_b = _a)[ _b ]])(y);
 #endif
@@ -142,7 +142,7 @@ main()
   {
     int y = 0;
 #ifdef __OPTIMIZE__
-    int x = (let(_a = 1, _b = 2)[let(_b = _1)[ val(_a) ]])(y);
+    int x = (let(_a = 1, _b = 2)[let(_b = _1)[ _a + 0 ]])(y);
 #else
     int x = (let(_a = 1, _b = 2)[let(_b = _1)[ _a ]])(y);
 #endif
