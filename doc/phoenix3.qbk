@@ -88,3 +88,5 @@
 [include wrap_up.qbk]
 [include acknowledgment.qbk]
 [include references.qbk]
+
+[endsect] [/added because it was complaining!]
