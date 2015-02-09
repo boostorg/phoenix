@@ -35,7 +35,7 @@ Almost exactly a year ago, Joel de Guzman asked me to take on the lead maintenan
 
 At the end of 2014 I came back to the task anew. In the meantime I have learned a lot, particularly about Boost Fusion and Boost Proto which are used a lot by Boost Phoenix. I have also learned how to edit the QuickBooks files and regenerate them.
 
-I have still not solved all the problems in Boost Phoenix. I think I am closing in on some of the remaining ones.
+I have still not solved all the problems in Boost Phoenix. I think I am closing in on some of the remaining ones. I now know that some of the problems in Phoenix V3 were also present in Phoenix V2. This has changed the approach to how to solve them as I know that the problems cannot be in the use of Boost Proto as it was not used in V2.
 
 I want in this document to share some of what I have been doing and how I have solved some of the problems. One reason for doing this is that there may be other people who are considering taking on library maintenance of a library they did not themselves write. I hope I can make that easier for people to do.
 
@@ -98,7 +98,11 @@ I have been attempting to understand the differences between compilers and envir
   * __clang__ 3.4,  3.5 &  3.6 (pre-release in the last case)
 [/* That means I do not have any __intel__ of __VC__ compilers.
   * For these I have to rely on the tests run by others. ]
-
+* The most difficult problems to diagnose have been some which occur when the compilation uses optimization.
+  * Some of the boost tests use optimization but most do not.
+  * It is not usually documented which tests are optimized.
+  * This means that a lot of tests run there which fail when optimized.
+  * This has made the identification of the cause of the problems more difficult.
 [endsect]
 
 [endsect]
