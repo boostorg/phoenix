@@ -1,5 +1,6 @@
 #==============================================================================
 #    Copyright (c) 2003-2006 Joel de Guzman
+#    Copyright (c) 2014-2015 John Fletcher
 #
 #   Use, modification and distribution is subject to the Boost Software
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -51,6 +52,7 @@ test-suite phoenix_object :
 test-suite phoenix_function :
     [ run function/adapt_function.cpp ]
     [ run function/function_tests.cpp ]
+    [ run function/lazy_make_pair_tests.cpp ]
 #    [ run function/function_tests_phx2.cpp ]
     ;
 
