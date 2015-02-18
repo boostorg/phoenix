@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
-// phoenix_lazy_make_pair.cpp
+// lazy_make_pair_tests.cpp
 //
-// Build lazy make_pair test solving the optimizer problem.
+// lazy make_pair test solving the optimizer problem.
 //
 ////////////////////////////////////////////////////////////////////////////
 /*=============================================================================
