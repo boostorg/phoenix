@@ -53,6 +53,7 @@ test-suite phoenix_function :
     [ run function/adapt_function.cpp ]
     [ run function/function_tests.cpp ]
     [ run function/lazy_make_pair_tests.cpp ]
+    [ run function/lazy_templated_struct_tests.cpp ]
 #    [ run function/function_tests_phx2.cpp ]
     ;
 
