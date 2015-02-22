@@ -46,8 +46,8 @@ T h(F f, T const& t)
 
 int main()
 {
-  BOOST_TEST(h(gg,1) ==2);
-  BOOST_TEST(h<GG,int>(gg,1) ==2);
+  BOOST_TEST( h(gg,1) == 2);
+  BOOST_TEST(( h<GG,int>(gg,1) == 2));
 
   return boost::report_errors();
 }
