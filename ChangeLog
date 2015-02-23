@@ -47,6 +47,14 @@ CHANGELOG
 
 - DEVELOP
 
+- V3.1.1
+- Bump version number to 3.1.1 in version.hpp and branch for release.
+- New tests for lazy functions using existing phoenix/function capability.
+  lazy_argument_tests, lazy_make_pair_tests, lazy_templated_struct_tests
+- New example bind_goose.cpp comparing boost.bind and boost.phoenix.bind.
+- Changes to let_tests and more_let_tests to avoid failing cases.
+- Updates to documentation.
+
 - V3.1.0
 - Bump version number to 3.1.0 in version.hpp and branch for release.
 - New file boost/phoenix/config.hpp to centralise configuration issues.
