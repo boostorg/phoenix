@@ -1,7 +1,7 @@
 [library Phoenix
     [quickbook 1.6]
     [compatibility-mode 1.3]
-    [version 3.1.0]
+    [version 3.1.1]
     [authors [de Guzman, Joel], [Marsden, Dan], [Heller, Thomas], [Fletcher, John] ]
     [copyright 2002 2003 2004 2005 2010 2014 2015 Joel de Guzman, Dan Marsden, Thomas Heller, John Fletcher]
     [category string-text]
@@ -89,4 +89,4 @@
 [include acknowledgment.qbk]
 [include references.qbk]
 
-[endsect] [/added because it was complaining!]
+[/endsect] [/added because it was complaining!]
