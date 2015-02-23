@@ -9,7 +9,7 @@
 
 [section What's New]
 
-=======
+
 [section Phoenix - warning on *lambda and let*]
 
 * There are a number of bugs in the implementation of *lambda* and *let* constructs in the current version of Boost Phoenix (Boost release 1.57.0).
@@ -18,13 +18,22 @@
 * Some usage may work with some compilers but not others.
 * More information will be made available as soon as possible.
 * Workarounds for different compilers are being made available.
-* These are currently on test in develop and will move to master when tested.
+* These are currently on test in develop and are moving to master in version 3.1.1.
+
+[endsect]
+
+[section Phoenix 3.1.1]
+
+* This is the start of a series of changes which continue the fixing of the bugs.
+* There are new examples and tests which show the capability of phoenix.
+* A new example bind_goose shows the compatibility between boost bind and boost phoenix bind.
+* New tests lazy_argument_tests, lazy_make_pair_tests, lazy_templated_struct_tests show different possible uses of boost phoenix function objects.
 
 [endsect]
 
 [section Phoenix 3.1.0]
 
-This is the latest in a series of updates to Phoenix to fix some bugs and
+This contains a series of updates to Phoenix to fix some bugs and
 to extend the examples. Details of the changes will be found in the __changelog__
 and the release number will be increased for each set of changes released.
 

@@ -6,6 +6,8 @@
 ===============================================================================/]
 
 [/ January 2015]
+[/ February 2015]
+
 
 [section Maintenance]
 
@@ -27,6 +29,10 @@ Unfortunately, while most things now work, there are a number of subtle bugs whe
 
 The remainder of this page is found from the index above.
 
+John Fletcher
+
+January and February 2015
+
 [/endsect]
 
 [section Background]
@@ -37,6 +43,11 @@ At the end of 2014 I came back to the task anew. In the meantime I have learned 
 
 I have still not solved all the problems in Boost Phoenix. I think I am closing in on some of the remaining ones. I now know that some of the problems in Phoenix V3 were also present in Phoenix V2. This has changed the approach to how to solve them as I know that the problems cannot be in the use of Boost Proto as it was not used in V2.
 
+<<<<<<< HEAD
+=======
+I have made further progress during 2015 on understanding what the problems are and how to avoid them or work around them. That has given me the confidence to explore further applications of the code, which I expect will develop a lot in the next few months.
+
+>>>>>>> release-3.1.1
 I want in this document to share some of what I have been doing and how I have solved some of the problems. One reason for doing this is that there may be other people who are considering taking on library maintenance of a library they did not themselves write. I hope I can make that easier for people to do.
 
 [endsect]
@@ -82,6 +93,11 @@ My experience has been that not all the tools and knowledge to be a maintainer a
 
 The bugs to be fixed have come from several sources.
 
+<<<<<<< HEAD
+=======
+One type of bug which has been very difficult to understand has been that some test cases failed when compiled with optimisation and not without it. I now believe that this is related to the use of references in the arguments passed back, and I have one test where the cure is demonstrated, lazy_make_pair_tests.
+
+>>>>>>> release-3.1.1
 [endsect]
 
 [section Compilers]
@@ -107,8 +123,7 @@ I have been attempting to understand the differences between compilers and envir
 
 [endsect]
 
-John Fletcher
 
-January 2015
+[endsect]
 
 [endsect]
