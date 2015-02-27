@@ -222,6 +222,7 @@ test-suite phoenix_include :
     [ run include/core/value.cpp ]
     [ run include/core/visit_each.cpp ]
     [ run include/function/function.cpp : : : : function_function ]
+ #   [ run include/function/lazy_headers.cpp ]
     [ run include/fusion/at.cpp ]
     [ run include/object/const_cast.cpp ]
     [ run include/object/construct.cpp ]
