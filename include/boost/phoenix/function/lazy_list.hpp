@@ -918,7 +918,7 @@ public:
        static fun0_odd_list_T /*<odd_list<T> >*/ the_blackhole;
        static fun0_odd_list_T& blackhole() {
          static fun0_odd_list_T the_blackhole;
-         ( make_fun0_odd_list<T>()( blackhole_helper() ) );
+         //( make_fun0_odd_list<T>()( blackhole_helper() ) );
           return the_blackhole;
        }
 
