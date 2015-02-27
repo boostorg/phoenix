@@ -79,6 +79,7 @@
 #define BOOST_PHOENIX_LAZY_PRELUDE
 
 #include <exception>
+#include <vector>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/function.hpp>
 #include "lazy_operator.hpp" //  (absorb definition of RefCountType)
