@@ -89,7 +89,7 @@ My experience has been that not all the tools and knowledge to be a maintainer a
 
 [section Bugs to be fixed]
 
-The bugs to be fixed have come from several sources
+The bugs to be fixed have come from several sources.
 
 One type of bug which has been very difficult to understand has been that some test cases failed when compiled with optimisation and not without it. I now believe that this is related to the use of references in the arguments passed back, and I have one test where the cure is demonstrated, lazy_make_pair_tests.
 
