@@ -1157,37 +1157,41 @@ bool operator<( a_unique_type_for_nil, const list<T>& b ) {
       template <class T, class F, class L>
       struct ConsHelp2<T,F,L,true>
       {
+         typedef typename boost::remove_reference<T>::type TT;
          typedef typename L::force_result_type type;
-         static type go( const T& x, const F& f ) {
+         static type go( const TT& x, const F& f ) {
             return type( x, f );
          }
       };
       template <class T, class F>
       struct ConsHelp2<T,F,list<T>,true>
       {
-         typedef list<T> L;
+         typedef typename boost::remove_reference<T>::type TT;
+         typedef list<TT> L;
          typedef typename L::force_result_type type;
-         static type go( const T& x, const F& f ) {
-            return odd_list<T>(x, list<T>(
-            boost::intrusive_ptr<Cache<T> >(new Cache<T>(
-            typename Cache<T>::CvtFxn(),f))));
+         static type go( const TT& x, const F& f ) {
+            return odd_list<TT>(x, list<TT>(
+            boost::intrusive_ptr<Cache<TT> >(new Cache<T>(
+            typename Cache<TT>::CvtFxn(),f))));
          }
        };
        template <class T, class F>
        struct ConsHelp2<T,F,odd_list<T>,true>
        {
-          typedef odd_list<T> L;
+          typedef typename boost::remove_reference<T>::type TT;
+          typedef odd_list<TT> L;
           typedef typename L::force_result_type type;
-          static type go( const T& x, const F& f ) {
-              return odd_list<T>(x, list<T>( ListRaw(), new Cache<T>(f) ));
+          static type go( const TT& x, const F& f ) {
+              return odd_list<TT>(x, list<TT>( ListRaw(), new Cache<T>(f) ));
           }
        };
        template <class T, class F>
        struct ConsHelp2<T,F,a_unique_type_for_nil,false>
        {
-          typedef odd_list<T> type;
-          static type go( const T& x, const F& f ) {
-             return odd_list<T>(x, list<T>( ListRaw(), new Cache<T>(f) ));
+          typedef typename boost::remove_reference<T>::type TT;
+          typedef odd_list<TT> type;
+          static type go( const TT& x, const F& f ) {
+             return odd_list<TT>(x, list<TT>( ListRaw(), new Cache<T>(f) ));
           }
        };
 
@@ -1198,8 +1202,9 @@ bool operator<( a_unique_type_for_nil, const list<T>& b ) {
           }
        };
       template <class T> struct ConsHelp1<T,a_unique_type_for_nil,false> {
-        typedef odd_list<T> type;
-        static type go( const T& x, const a_unique_type_for_nil& n ) {
+        typedef typename boost::remove_reference<T>::type TT;
+        typedef odd_list<TT> type;
+        static type go( const TT& x, const a_unique_type_for_nil& n ) {
         return type(x,n);
         }
       };
@@ -1228,13 +1233,13 @@ bool operator<( a_unique_type_for_nil, const list<T>& b ) {
       template <class T>
       struct ConsHelp0<const T &,const a_unique_type_for_nil &,true> {
         typedef typename boost::remove_reference<T>::type TT;
-        typedef odd_list<T> type;
+        typedef odd_list<TT> type;
       };
 
       template <class T>
       struct ConsHelp0<T &,a_unique_type_for_nil &,true> {
         typedef typename boost::remove_reference<T>::type TT;
-        typedef odd_list<T> type;
+        typedef odd_list<TT> type;
       };
 
       template <class T, class L>
@@ -1270,7 +1275,8 @@ bool operator<( a_unique_type_for_nil, const list<T>& b ) {
         template <typename This, typename T>
         struct result<This(T,a_unique_type_for_nil)>
         {
-          typedef odd_list<T> type;
+          typedef typename boost::remove_reference<T>::type TT;
+          typedef odd_list<TT> type;
         };
 
         template <typename T, typename L>
