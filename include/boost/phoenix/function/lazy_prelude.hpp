@@ -5,6 +5,12 @@
 //
 // These are equivalents of the Boost FC++ functoids in prelude.hpp
 //
+// Usage:  All of these are functors which need various numbers of arguments.
+//         Those can be supplied as real arguments or as Phoenix arguments.
+//         Execution will happen when all the arguments are supplied.
+// e.g.
+//         take(2,list)()  or  take(2,arg1)(list)
+//
 // Implemented so far:
 //
 // id (moved back to operators.hpp)
@@ -13,7 +19,37 @@
 //
 // Now that list<T> is available I can start to build things here.
 //
+//
+// until(pred,f,start)         - if pred(start) is true, return start
+//                               apply value = f(start)
+//                               apply value = f(value)
+//                               until pred(value) is true
+//                               return value
+//
+// The predicate argument pred must be a lazy function taking one argument
+// and returning bool.
+// This can be a lazy function with an argument already.
+// This has to be declared before the call to until.
+// The type can be declated using Predicate as in this example:
+//
+//    Predicate<int>::type f(greater(arg1,10));
+//    std::cout << until(f, inc, 1)() << std::endl;
+//
+// until2(pred,f,start,value2) - if pred(start,value2) is true, return start
+//                               apply value1 = f(start)
+//                               apply value1 = f(value1)
+//                               until pred(value1,value2) is true
+//                               return value1
+//
+// NOTE: until2 has been defined because this code does not support
+//       FC++ currying, so that a partial function cannot be passed
+//       as an argument. This provides a way of passing a second parameter.
+//       There is now the option to use Predicate<T> as shown above.
+//
+// last(list)
+// all_but_last(list)
 // take(n,list)
+// drop(n,list)
 //
 ////////////////////////////////////////////////////////////////////////////
 // Interdependence:
@@ -96,6 +132,39 @@ namespace boost {
 
   namespace phoenix {
 
+    // These are in fcpp namespace as they introduce an FC++ style.
+    namespace fcpp {
+
+    template <typename T>
+    struct Predicate {
+        typedef typename boost::function1<bool,T> fun1_bool_T;
+        typedef typename boost::phoenix::function<fun1_bool_T> bool_F_T;
+        typedef bool_F_T type;
+    };
+
+    template <typename R>
+    struct Function0 {
+        typedef typename boost::function0<R> fun0_R;
+        typedef typename boost::phoenix::function<fun0_R> R_F;
+        typedef R_F type;
+    };
+
+    template <typename R,typename A0>
+    struct Function1 {
+        typedef typename boost::function1<R,A0> fun1_R_A0;
+        typedef typename boost::phoenix::function<fun1_R_A0> R_F_A0;
+        typedef R_F_A0 type;
+    };
+
+    template <typename R, typename A0, typename A1>
+    struct Function2 {
+      typedef typename boost::function2<R,A0,A1> fun2_R_A0_A1;
+        typedef typename boost::phoenix::function<fun2_R_A0_A1> R_F_A0_A1;
+        typedef R_F_A0_A1 type;
+    };
+
+    }
+
     namespace impl {
       using fcpp::INV;
       using fcpp::VAR;
@@ -104,7 +173,7 @@ namespace boost {
       using fcpp::reuser3;
       using boost::phoenix::arg_names::arg1;
 
-        struct Pow {
+         struct Pow {
 
             template <typename Sig>
             struct result;
@@ -129,7 +198,7 @@ namespace boost {
 
          };
 
-        struct Apply {
+         struct Apply {
 
             template <typename Sig>
             struct result;
@@ -153,48 +222,231 @@ namespace boost {
             }
 
          };
+    }
+    typedef boost::phoenix::function<impl::Pow>   Pow;
+    typedef boost::phoenix::function<impl::Apply> Apply;
+    Pow   pow;
+    Apply apply;
 
+    namespace impl {
+      using fcpp::INV;
+      using fcpp::VAR;
+      using fcpp::reuser1;
+      using fcpp::reuser2;
+      using fcpp::reuser3;
+      using boost::phoenix::arg_names::arg1;
 
-        struct Take {
-          //template <class N,class L>
-          //struct sig : public fun_type<typename L::force_result_type> {};
-          template <typename Sig> struct result;
+      // I cannot yet do currying to pass e.g. greater(9,arg1)
+      // as a function. This can be done using Predicate<T>::type.
+         struct Until {
 
-            template <typename This, typename N, typename L>
-            struct result<This(N,L)>
-          {
-             typedef typename result_of::ListType<L>::force_result_type type;
+             template <typename Sig> struct result;
+
+             template <typename This, typename Pred, typename Unary, typename T>
+             struct result<This(Pred,Unary,T)>
+                : boost::remove_reference<T> {};
+
+             template <class Pred, class Unary, class T>
+             T operator()( const Pred& p,const Unary& op,const T &start) const
+             {
+               T tmp = start;
+               while( !p(tmp)() ) {
+                 tmp = apply(1,op,tmp)();
+               }
+                return tmp;
+             }
+
           };
 
-          template <class N,class L>
-          typename result<Take(N,L)>::type
-          operator()( N n, const L& l,
+          struct Until2 {
+
+             template <typename Sig> struct result;
+
+             template <typename This, typename Binary, typename Unary,
+                       typename T, typename X>
+             struct result<This(Binary,Unary,T,X)>
+                : boost::remove_reference<T> {};
+
+             template <class Binary, class Unary, class T, class X>
+             typename result<Until2(Binary,Unary,T,X)>::type
+             operator()( const Binary& p, const Unary& op, const T & start,
+                        const X & check ) const
+             {
+               T tmp1 = start;
+               T tmp2;
+               while( !p(tmp1,check)() ) {
+                 tmp2 = apply(1,op,tmp1)();
+                 tmp1 = tmp2;
+                 
+               }
+               return tmp1;
+             }
+          };
+
+          struct Last {
+             template <typename Sig> struct result;
+
+             template <typename This, typename L>
+             struct result<This(L)>
+             {
+               typedef typename result_of::ListType<L>::value_type type;
+             };
+
+             template <class L>
+             typename result<Last(L)>::type
+             operator()( const L& ll ) const {
+               size_t x = 0;
+               typename result_of::ListType<L>::delay_result_type l = delay(ll);
+               while( !null( tail(l)() )() ) {
+                 l = tail(l)();
+                 ++x;
+                 if (x > MAX_LIST_LENGTH)
+                   break;
+               }
+                 if (x > MAX_LIST_LENGTH)
+                     throw lazy_exception("Your list is too long!!");
+                 return head(l)();
+             }
+          };
+
+          struct Init {
+
+             template <typename Sig> struct result;
+
+             template <typename This, typename L>
+             struct result<This(L)>
+             {
+               typedef typename result_of::ListType<L>::force_result_type type;
+             };
+
+             template <class L>
+             typename result<Init(L)>::type
+             operator()( const L& l,
+                         reuser1<INV,VAR,Init,
+                         typename result_of::ListType<L>::delay_result_type>
+                         r = NIL ) const {
+               if( null( tail( l )() )() )
+                   return NIL;
+               else
+                   return cons( head(l)(), r( Init(), tail(l)() )() )();
+               }
+          };
+
+          struct Take {
+
+             template <typename Sig> struct result;
+
+             template <typename This, typename N, typename L>
+             struct result<This(N,L)>
+             {
+               typedef typename result_of::ListType<L>::force_result_type type;
+             };
+
+             template <class N,class L>
+             typename result<Take(N,L)>::type
+             operator()( N n, const L& l,
                reuser2<INV,VAR,VAR,Take,N,
                typename result_of::ListType<L>::force_result_type>
                r = NIL
-           ) const {
-            //std::cout << "Take ( " << n << " )" << std::endl;
-            if( n <= 0 || null(l)() )
-              return NIL;
-            else {
-            //std::cout << "Take ( " << n << " ) = " << head(l)() << std::endl;
-              return cons( head(l)(), r( Take(), n-1, tail(l)() )() )();
-            }
-          }
-        };
+             ) const {
+               if( n <= 0 || null(l)() )
+                 return NIL;
+               else {
+                 return cons( head(l)(), r( Take(), n-1, tail(l)() )() )();
+               }
+             }
+          };
+
+          struct Drop {
+             template <typename Sig> struct result;
+
+             template <typename This, typename Dummy, typename L>
+             struct result<This(Dummy,L)>
+             {
+               typedef typename result_of::ListType<L>::delay_result_type type;
+             };
+   
+             template <class L>
+             typename result<Drop(size_t,L)>::type
+             operator()( size_t n, const L& ll ) const {
+               typename L::delay_result_type l = delay(ll);
+               while( n!=0 && !null(l)() ) {
+                 --n;
+                 l = tail(l)();
+               }
+               return l;
+             }
+          };
+      /*
+          template <class T>
+          struct EFH //: public Fun0Impl< odd_list<T> >
+          {
+
+              mutable T x;
+              EFH( const T& xx ) : x(xx) {}
+              template <typename Sig> struct result;
+
+              template <typename This>
+              struct result<This(T)>
+              {
+                typedef typename boost::remove_reference<T> TT;
+                typedef list<T> type;
+              };
+             typename result<EFH(T)>::type operator()() const {
+                  ++x;
+		  //typename fcpp::Function0<T>::type fun0(*this);
+                  return cons( x-1, EFH() );
+              }
+          };
+          */
+
+          struct Enum_from {
+	    // template <class T>
+	    //  struct sig : fun_type<list<T> > {};
+             template <typename Sig> struct result;
+
+             template <typename This, typename T>
+             struct result<This(T)> : boost::remove_reference<T>
+             {
+	       //typedef typename boost::remove_reference<T>::type TT;
+	       //typedef odd_list<TT> type;
+             };
+
+              template <class T>
+              //typename result<Enum_from(T)>::type operator()(T const& x ) const
+              odd_list<T> operator()( T const & x ) const
+              {
+                //typedef typename boost::remove_cv<T>::type TT;
+                //typename fcpp::Function0<TT>::type fun0(*new EFH<TT>(x));
+		//return EFH<TT>(x);//make_fun0_odd_list<T>(*new EFH<T>(x) );
+                //typename result<Enum_from(T)>::type l;
+                odd_list<T> l;// = cons(x,NIL);
+                l = cons(x,l);
+                return l;
+              }
+          };
 
     }
+
 
     //BOOST_PHOENIX_ADAPT_CALLABLE(apply, impl::apply, 3)
     // Functors to be used in reuser will have to be defined
     // using boost::phoenix::function directly
     // in order to be able to be used as arguments.
-    typedef boost::phoenix::function<impl::Pow> Pow;
-    typedef boost::phoenix::function<impl::Apply> Apply;
-    typedef boost::phoenix::function<impl::Take> Take;
-    Pow pow;
-    Apply apply;
-    Take take;
+    typedef boost::phoenix::function<impl::Until> Until;
+    typedef boost::phoenix::function<impl::Until2> Until2;
+    typedef boost::phoenix::function<impl::Last>  Last;
+    typedef boost::phoenix::function<impl::Init>  Init;
+    typedef boost::phoenix::function<impl::Take>  Take;
+    typedef boost::phoenix::function<impl::Drop>  Drop;
+    typedef boost::phoenix::function<impl::Enum_from>  Enum_from;
+    Until until;
+    Until2 until2;
+    Last  last;
+    Init  all_but_last;  // renamed from init which is not available.
+    Take  take;
+    Drop  drop;
+    Enum_from enum_from;
 
     namespace fcpp {
 
