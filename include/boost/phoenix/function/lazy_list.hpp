@@ -240,6 +240,8 @@ namespace boost {
 
     namespace impl {
 
+#define MAX_LIST_LENGTH 1000
+
       struct Head
       {
         template <typename Sig>
@@ -862,7 +864,14 @@ public:
         {
             return f;
         }
-
+	/*
+        template <class F>
+        typename boost::phoenix::function<F> operator()
+          (boost::phoenix::function<F> const& f) const
+        {
+            return f;
+        }
+	*/
 
     };
 
@@ -919,7 +928,7 @@ public:
        static fun0_odd_list_T& blackhole() {
          static fun0_odd_list_T the_blackhole;
          //( make_fun0_odd_list<T>()( blackhole_helper() ) );
-          return the_blackhole;
+         return the_blackhole;
        }
 
        odd_list<T>& cache() const {
