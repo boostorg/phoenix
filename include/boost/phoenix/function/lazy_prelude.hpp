@@ -377,55 +377,7 @@ namespace boost {
                return l;
              }
           };
-      /*
-          template <class T>
-          struct EFH //: public Fun0Impl< odd_list<T> >
-          {
-
-              mutable T x;
-              EFH( const T& xx ) : x(xx) {}
-              template <typename Sig> struct result;
-
-              template <typename This>
-              struct result<This(T)>
-              {
-                typedef typename boost::remove_reference<T> TT;
-                typedef list<T> type;
-              };
-             typename result<EFH(T)>::type operator()() const {
-                  ++x;
-		  //typename fcpp::Function0<T>::type fun0(*this);
-                  return cons( x-1, EFH() );
-              }
-          };
-          */
-
-          struct Enum_from {
-	    // template <class T>
-	    //  struct sig : fun_type<list<T> > {};
-             template <typename Sig> struct result;
-
-             template <typename This, typename T>
-             struct result<This(T)> : boost::remove_reference<T>
-             {
-	       //typedef typename boost::remove_reference<T>::type TT;
-	       //typedef odd_list<TT> type;
-             };
-
-              template <class T>
-              //typename result<Enum_from(T)>::type operator()(T const& x ) const
-              odd_list<T> operator()( T const & x ) const
-              {
-                //typedef typename boost::remove_cv<T>::type TT;
-                //typename fcpp::Function0<TT>::type fun0(*new EFH<TT>(x));
-		//return EFH<TT>(x);//make_fun0_odd_list<T>(*new EFH<T>(x) );
-                //typename result<Enum_from(T)>::type l;
-                odd_list<T> l;// = cons(x,NIL);
-                l = cons(x,l);
-                return l;
-              }
-          };
-
+ 
     }
 
 
@@ -439,14 +391,12 @@ namespace boost {
     typedef boost::phoenix::function<impl::Init>  Init;
     typedef boost::phoenix::function<impl::Take>  Take;
     typedef boost::phoenix::function<impl::Drop>  Drop;
-    typedef boost::phoenix::function<impl::Enum_from>  Enum_from;
     Until until;
     Until2 until2;
     Last  last;
     Init  all_but_last;  // renamed from init which is not available.
     Take  take;
     Drop  drop;
-    Enum_from enum_from;
 
     namespace fcpp {
 
