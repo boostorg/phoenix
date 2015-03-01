@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
-// lazy_list_tests.cpp
+// lazy_list2_tests.cpp
 //
-// tests on list<T>
+// more tests on list<T>
 //
 ////////////////////////////////////////////////////////////////////////////
 /*=============================================================================
@@ -36,7 +36,7 @@ int main()
     BOOST_TEST(head(tail(l1))() == 2);
     BOOST_TEST(last(l1)()       == 5);
     BOOST_TEST(last(l2)()       == 4);
-    BOOST_TEST(head(drop(2,l2)() == 3);
+    BOOST_TEST(head(drop(2,l2)()) == 3);
    
     return boost::report_errors();
 }
