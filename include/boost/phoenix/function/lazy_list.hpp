@@ -86,8 +86,8 @@ L<T> inherits ListLike and has
 // End of section from Boost FC++ list.hpp
 //////////////////////////////////////////////////////////////////////
 
-#ifndef BOOST_PHOENIX_LAZY_LIST
-#define BOOST_PHOENIX_LAZY_LIST
+#ifndef BOOST_PHOENIX_FUNCTION_LAZY_LIST
+#define BOOST_PHOENIX_FUNCTION_LAZY_LIST
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/function.hpp>

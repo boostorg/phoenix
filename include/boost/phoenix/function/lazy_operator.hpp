@@ -32,8 +32,8 @@
 ==============================================================================*/
 
 
-#ifndef BOOST_PHOENIX_LAZY_OPERATOR
-#define BOOST_PHOENIX_LAZY_OPERATOR
+#ifndef BOOST_PHOENIX_FUNCTION_LAZY_OPERATOR
+#define BOOST_PHOENIX_FUNCTION_LAZY_OPERATOR
 
 #include <cmath>
 #include <cstdlib>

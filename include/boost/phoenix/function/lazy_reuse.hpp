@@ -28,8 +28,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef BOOST_PHOENIX_LAZY_REUSE
-#define BOOST_PHOENIX_LAZY_REUSE
+#ifndef BOOST_PHOENIX_FUNCTION_LAZY_REUSE
+#define BOOST_PHOENIX_FUNCTION_LAZY_REUSE
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/function.hpp>

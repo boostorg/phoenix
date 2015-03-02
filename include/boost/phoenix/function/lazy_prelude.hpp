@@ -111,8 +111,8 @@
 ==============================================================================*/
 
 
-#ifndef BOOST_PHOENIX_LAZY_PRELUDE
-#define BOOST_PHOENIX_LAZY_PRELUDE
+#ifndef BOOST_PHOENIX_FUNCTION_LAZY_PRELUDE
+#define BOOST_PHOENIX_FUNCTION_LAZY_PRELUDE
 
 #include <exception>
 #include <vector>
@@ -120,13 +120,13 @@
 #include <boost/phoenix/function.hpp>
 #include <boost/phoenix/scope.hpp>
 #include <boost/phoenix/operator.hpp>
-#include <boost/phoenix/lazy_operator.hpp"
-#include <boost/phoenix/lazy_reuse.hpp>
-#include <boost/phoenix/lazy_list.hpp>
+#include <boost/phoenix/function/lazy_operator.hpp>
+#include <boost/phoenix/function/lazy_reuse.hpp>
+#include <boost/phoenix/function/lazy_list.hpp>
 
 ////////////////////////////////////////////////////////////////////////////
 // To come here, the Haskell Prelude things which need list<T>.
-// Things which do not need list<T> can be in operator.hpp.
+// Things which do not need list<T> are in lazy_operator.hpp.
 ////////////////////////////////////////////////////////////////////////////
 
 namespace boost {
