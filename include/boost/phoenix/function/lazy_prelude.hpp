@@ -118,10 +118,11 @@
 #include <vector>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/function.hpp>
-#include "lazy_operator.hpp" //  (absorb definition of RefCountType)
-//#include "lazy_function.hpp" // Not currently in use.
-#include "lazy_reuse.hpp" // (implemented without use of FC++ functions)
-#include "lazy_list.hpp"
+#include <boost/phoenix/scope.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/lazy_operator.hpp"
+#include <boost/phoenix/lazy_reuse.hpp>
+#include <boost/phoenix/lazy_list.hpp>
 
 ////////////////////////////////////////////////////////////////////////////
 // To come here, the Haskell Prelude things which need list<T>.
