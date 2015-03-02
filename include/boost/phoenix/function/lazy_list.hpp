@@ -238,9 +238,11 @@ namespace boost {
 // Implement lazy functions for list types. cat and cons come later.
 //////////////////////////////////////////////////////////////////////
 
-    namespace impl {
-
+#ifndef BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH
 #define BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH 1000
+#endif
+
+    namespace impl {
 
       struct Head
       {
