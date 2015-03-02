@@ -301,10 +301,10 @@ namespace boost {
                while( !null( tail(l)() )() ) {
                  l = tail(l)();
                  ++x;
-                 if (x > MAX_LIST_LENGTH)
+                 if (x > BOOST_PHOENIX_FUNCTION_MAX_LIST_LENGTH)
                    break;
                }
-                 if (x > MAX_LIST_LENGTH)
+                 if (x > BOOST_PHOENIX_FUNCTION_MAX_LIST_LENGTH)
                      throw lazy_exception("Your list is too long!!");
                  return head(l)();
              }

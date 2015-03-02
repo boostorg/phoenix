@@ -240,7 +240,7 @@ namespace boost {
 
     namespace impl {
 
-#define MAX_LIST_LENGTH 1000
+#define BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH 1000
 
       struct Head
       {
