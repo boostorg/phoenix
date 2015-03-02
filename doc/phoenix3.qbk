@@ -1,7 +1,7 @@
 [library Phoenix
     [quickbook 1.6]
     [compatibility-mode 1.3]
-    [version 3.1.1]
+    [version 3.2.0]
     [authors [de Guzman, Joel], [Marsden, Dan], [Heller, Thomas], [Fletcher, John] ]
     [copyright 2002 2003 2004 2005 2010 2014 2015 Joel de Guzman, Dan Marsden, Thomas Heller, John Fletcher]
     [category string-text]
@@ -77,6 +77,7 @@
 [/ Defines for compilers.]
 [def __clang__ [@http://clang.llvm.org Clang ]]
 [def __gcc__ [@https://gcc.gnu.org gcc ]]
+[def __msvc__ [@https://msdn.microsoft.com/en-us/vstudio/hh386302.aspx MSVC]]
 
 [include preface.qbk]
 [include what_s_new.qbk]

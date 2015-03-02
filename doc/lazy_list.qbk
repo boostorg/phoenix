@@ -125,7 +125,53 @@ Further functions are in development from the resources available in __fcpp__.
 
 [endsect]
 
-[section Examples]
+[section Tutorial with examples]
+
+These examples require the following header:
+
+    boost/phoenix/function/lazy_prelude.hpp
+
+The following statements should be in the execution code:
+
+    using boost::phoenix::arg_names::arg1;
+    using boost::phoenix::arg_names::arg2;
+    using namespace boost::phoenix;
+
+
+[section Arithmetic functions]
+
+Assume the values
+
+    int a = 123;
+    int b = 256;
+
+The following are all valid expressions returning a+b
+
+    plus(arg1, arg2)(a, b)
+    plus(arg1, b)(a)
+    plus(a, arg2)(a,b)
+    plus(a, arg1)(b)
+    plus(a, b)()
+
+The expressions can be combined like this
+
+    plus(minus(a, b),b)()
+    plus(minus(arg1, b),b)(a)
+    plus(minus(arg1, arg2),b)(a,b)
+    plus(minus(arg1, arg2),arg2)(a,b)
+
+Other numerical operators can be used like this
+
+    multiplies(arg1,arg2)(3,6)
+    divides(arg2,arg1)(3,6)
+    modulus(arg2,arg1)(4,6)
+    min(arg1,arg2)(4,6)
+    max(arg1,arg2)(4,6)
+    inc(arg1)(a)
+    dec(arg1)(a)
+    negate(arg1)(a)
+
+[endsect]
 
 To be developed.
 
@@ -134,7 +180,7 @@ To be developed.
 [section Implementation Details]
 
 [h2 Introduction]
-The implementation has depended on close study of the existing code of __fcpp__. The __fcpp_list__ is a carefully crafted code which allows for efficient processing of a number of different cases. In particular it makes use of the __fcpp_reusers__ for processing of repetitive cases.
+The implementation has depended on close study of the existing code of __fcpp__. The __fcpp_list__ is a carefully crafted code which allows for efficient processing of a number of different cases. In particular it makes use of the __fcpp_reusers__ for processing of repetitive evaluations.
 
 __fcpp__ uses a combination of polymorphic and single type functions which can be passed as arguments to other functions.
 
@@ -236,6 +282,14 @@ Sometimes it is necessary to define a function using a templated struct, where t
 [h2 Conclusion]
 
 These implementation mechanisms have been carried through consistently in the implementation.
+
+[endsect]
+
+[section Testing]
+
+Several tests are currently on develop with the hope of release to master in time for Boost 1.58.0.
+
+At present all tests pass except for list<T> tests on __msvc__ 8.0 and 9.0 which reject a reference of a reference. Corrections for this have now been made.
 
 [endsect]
 
