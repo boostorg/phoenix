@@ -152,7 +152,7 @@ main()
     {
         // show that we can return a local from an outer scope
         int y = 0;
-#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+#if defined(__OPTIMIZE__) && __OPTIMIZE__
         int x = (let(_a = _2)[let(_b = _1)[ _a ]])(y,1);
 #else
         int x = (let(_a = 1)[let(_b = _1)[ _a ]])(y);
