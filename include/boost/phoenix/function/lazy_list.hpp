@@ -864,14 +864,6 @@ public:
         {
             return f;
         }
-	/*
-        template <class F>
-        typename boost::phoenix::function<F> operator()
-          (boost::phoenix::function<F> const& f) const
-        {
-            return f;
-        }
-	*/
 
     };
 
@@ -1196,8 +1188,9 @@ bool operator<( a_unique_type_for_nil, const list<T>& b ) {
        };
 
        template <class T, class L, bool b> struct ConsHelp1 {
+          typedef typename boost::remove_reference<T>::type TT;
           typedef typename L::force_result_type type;
-          static type go( const T& x, const L& l ) {
+          static type go( const TT& x, const L& l ) {
              return type(x,l);
           }
        };
