@@ -50,6 +50,8 @@
 // all_but_last(list)
 // take(n,list)
 // drop(n,list)
+// enum_from(x)
+// enum_from_to(x,y)
 //
 ////////////////////////////////////////////////////////////////////////////
 // Interdependence:
@@ -223,11 +225,41 @@ namespace boost {
             }
 
          };
+
+        // This will apply f() at least once.
+        struct Apply0 {
+
+            template <typename Sig>
+            struct result;
+
+            template <typename This, typename N, typename F>
+            struct result<This(N,F)>
+            {
+              // Need result type from F
+              typedef typename F::result_type type;
+            };
+
+            template <typename N, typename F, typename A0>
+            typename result<Apply0(F)>::type  operator()(N n, const F &f,
+                     reuser2<INV,VAR,INV,Apply,N,F> r = NIL ) const {
+              if ( n <= 1 )
+                return f()();
+              else {
+                A0 a1 = r( Apply(), n-1, f)();
+                return f()();
+              }
+            }
+
+         };
+
+
     }
     typedef boost::phoenix::function<impl::Pow>   Pow;
     typedef boost::phoenix::function<impl::Apply> Apply;
+    typedef boost::phoenix::function<impl::Apply> Apply0;
     Pow   pow;
     Apply apply;
+    Apply apply0;
 
     namespace impl {
       using fcpp::INV;
@@ -379,6 +411,136 @@ namespace boost {
              }
           };
  
+          template <class T>
+          struct EFH
+          {
+              typedef typename boost::remove_reference<T> TT;
+              typedef typename boost::remove_const<TT>::type TTT;
+              mutable T x;
+              EFH( const T& xx) : x(xx) {}
+              template <typename Sig> struct result;
+
+              template <typename This>
+              struct result<This(T)>
+              {
+                typedef typename boost::phoenix::UseList::template
+                        List<T>::type LType;
+                typedef typename boost::phoenix::result_of::
+                        ListType<LType>::delay_result_type type;
+              };
+              typename result<EFH(T)>::type operator()() const {
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> fun1_R_TTT;
+                //std::cout << "EFH (" << x << ")" << std::endl;
+                ++x;
+                fun1_R_TTT efh_R_TTT = EFH<T>(x);
+                typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
+                EFH_R_T efh_R_T(efh_R_TTT);
+                if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+                     throw lazy_exception("Running away in EFH!!");
+                return cons( x-1, efh_R_T() );
+              }
+          };
+
+          struct Enum_from {
+             template <typename Sig> struct result;
+
+             template <typename This, typename T>
+             struct result<This(T)>
+             {
+               typedef typename boost::remove_reference<T>::type TT;
+               typedef typename boost::remove_const<TT>::type TTT;
+               typedef typename UseList::template List<TTT>::type LType;
+               typedef typename result_of::ListType<LType>::
+                       delay_result_type type;
+             };
+
+             template <class T>
+             typename result<Enum_from(T)>::type operator()
+                (const T & x) const
+              {
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> fun1_R_TTT;
+                fun1_R_TTT efh_R_TTT = EFH<TTT>(x);
+                typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
+                EFH_R_T efh_R_T(efh_R_TTT);
+                //std::cout << "enum_from (" << x << ")" << std::endl;
+                return efh_R_T();
+              }
+          };
+
+       template <class T>
+         struct EFTH
+          {
+              typedef typename boost::remove_reference<T> TT;
+              typedef typename boost::remove_const<TT>::type TTT;
+              mutable T x;
+              T y;
+              EFTH( const T& xx, const T& yy) : x(xx), y(yy) {}
+              template <typename Sig> struct result;
+
+              template <typename This>
+              struct result<This(T)>
+              {
+                typedef typename boost::phoenix::UseList::template
+                        List<T>::type LType;
+                typedef typename boost::phoenix::result_of::
+                        ListType<LType>::delay_result_type type;
+              };
+              typename result<EFTH(T)>::type operator()() const {
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> fun1_R_TTT;
+                //std::cout << "EFTH (" << x << ")" << std::endl;
+                if (x > y ) return NIL;
+                ++x;
+                fun1_R_TTT efth_R_TTT = EFTH<T>(x,y);
+                typedef boost::phoenix::function<fun1_R_TTT> EFTH_R_T;
+                EFTH_R_T efth_R_T(efth_R_TTT);
+                if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+                     throw lazy_exception("Running away in EFTH!!");
+                return cons( x-1, efth_R_T() );
+              }
+          };
+
+          struct Enum_from_to {
+             template <typename Sig> struct result;
+
+             template <typename This, typename T>
+             struct result<This(T,T)>
+             {
+               typedef typename boost::remove_reference<T>::type TT;
+               typedef typename boost::remove_const<TT>::type TTT;
+               typedef typename UseList::template List<TTT>::type LType;
+               typedef typename result_of::ListType<LType>::
+                       delay_result_type type;
+             };
+
+             template <class T>
+             typename result<Enum_from(T,T)>::type operator()
+             (const T & x, const T & y) const
+              {
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> fun1_R_TTT;
+                fun1_R_TTT efth_R_TTT = EFTH<TTT>(x,y);
+                typedef boost::phoenix::function<fun1_R_TTT> EFTH_R_T;
+                EFTH_R_T efth_R_T(efth_R_TTT);
+                //std::cout << "enum_from (" << x << ")" << std::endl;
+                return efth_R_T();
+              }
+          };
+
     }
 
 
@@ -392,12 +554,16 @@ namespace boost {
     typedef boost::phoenix::function<impl::Init>  Init;
     typedef boost::phoenix::function<impl::Take>  Take;
     typedef boost::phoenix::function<impl::Drop>  Drop;
+    typedef boost::phoenix::function<impl::Enum_from>     Enum_from;
+    typedef boost::phoenix::function<impl::Enum_from_to>  Enum_from_to;
     Until until;
     Until2 until2;
     Last  last;
     Init  all_but_last;  // renamed from init which is not available.
     Take  take;
     Drop  drop;
+    Enum_from enum_from;
+    Enum_from_to enum_from_to;
 
     namespace fcpp {
 
