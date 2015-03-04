@@ -46,8 +46,14 @@
 //       as an argument. This provides a way of passing a second parameter.
 //       There is now the option to use Predicate<T> as shown above.
 //
+// odd(n)     true if n is odd
+// even(n)    true if n is even
+//
 // last(list)
 // all_but_last(list)
+// at(list,n)
+// length(list)
+// filter(pred,list)
 // take(n,list)
 // drop(n,list)
 // enum_from(x)
@@ -252,14 +258,49 @@ namespace boost {
 
          };
 
+         struct Odd {
+            template <typename Sig>
+            struct result;
+
+            template <typename This, typename T>
+            struct result<This(T)>
+            {
+              typedef bool type;
+            };
+
+            template <class T>
+            bool operator()( const T& x ) const {
+               return x%2==1;
+            }
+         };
+
+         struct Even {
+            template <typename Sig>
+            struct result;
+
+            template <typename This, typename T>
+            struct result<This(T)>
+            {
+              typedef bool type;
+            };
+
+            template <class T>
+            bool operator()( const T& x ) const {
+               return x%2==0;
+            }
+         };
 
     }
     typedef boost::phoenix::function<impl::Pow>   Pow;
     typedef boost::phoenix::function<impl::Apply> Apply;
     typedef boost::phoenix::function<impl::Apply> Apply0;
+    typedef boost::phoenix::function<impl::Odd>   Odd;
+    typedef boost::phoenix::function<impl::Even> Even;
     Pow   pow;
     Apply apply;
     Apply apply0;
+    Odd   odd;
+    Even  even;
 
     namespace impl {
       using fcpp::INV;
@@ -363,6 +404,111 @@ namespace boost {
                else
                    return cons( head(l)(), r( Init(), tail(l)() )() )();
                }
+          };
+
+          struct Length {
+            template <typename Sig> struct result;
+
+            template <typename This, typename L>
+            struct result<This(L)>
+            {
+               typedef size_t type;
+            };
+
+            template <class L>
+            size_t operator()( const L& ll ) const {
+              typename L::delay_result_type l = delay(ll);
+              size_t x = 0;
+              while( !null(l)() ) {
+                  l = tail(l);
+                  ++x;
+                  //if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+                  if (x > MAX_LIST_LENGTH)
+                     break;
+              }
+              //if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+              if (x > MAX_LIST_LENGTH)
+                   throw lazy_exception("Your list is too long!!");
+              return x;
+            }
+          };
+
+          // at is Haskell's operator (!!)
+          // This is zero indexed.  at(l,0)() returns the first element.
+          struct At {
+            template <typename Sig> struct result;
+
+            template <typename This, typename L, typename N>
+            struct result<This(L,N)>
+            {
+               typedef typename result_of::ListType<L>::value_type type;
+            };
+
+              template <class L>
+              typename result<At(L,size_t)>::type
+              operator()( L l, size_t n ) const {
+                  while( n!=0 ) {
+                      l = tail(l);
+                      --n;
+                  }
+                  return head(l)();
+              }
+          };
+
+         template <class P,class L>
+         struct FilterH
+          {
+              P p;
+              L l;
+              FilterH( const P& pp, const L& ll) : p(pp), l(ll) {}
+              template <typename Sig> struct result;
+
+              template <typename This>
+              struct result<This(P,L)>
+              {
+                typedef typename boost::phoenix::result_of::
+                        ListType<L>::delay_result_type type;
+              };
+                typename result<FilterH(P,L)>::type operator()() const {
+                typedef typename result_of::ListType<L>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> Fun2_R_P_L;
+                typedef boost::phoenix::function<Fun2_R_P_L> FilterH_R_P_L;
+                if (null(l)() )
+                   return NIL;
+                Fun2_R_P_L fun2_R_P_L = FilterH<P,L>(p,tail(l));
+                FilterH_R_P_L filterh_R_P_L(fun2_R_P_L);
+                if( p(head(l))() )
+                   return cons( head(l)(), filterh_R_P_L() );
+                else
+                   return filterh_R_P_L();
+              }
+          };
+
+          struct Filter {
+            template <typename Sig> struct result;
+
+                template <typename This, typename P, typename L>
+                struct result<This(P,L)>
+                {
+                  typedef typename result_of::ListType<L>::delay_result_type
+                          type;
+                };
+
+                template <class P, class L>
+                typename result<Filter(P,L)>::type
+                operator()( const P& p, const L& ll)
+                {
+                     typename  result_of::ListType<L>::delay_result_type
+                     l = delay(ll);
+                     typedef typename result_of::ListType<L>::
+                           delay_result_type result_type;
+                     typedef boost::function0<result_type> Fun2_R_P_L;
+                     typedef boost::phoenix::function<Fun2_R_P_L> FilterH_R_P_L;
+                     Fun2_R_P_L fun2_R_P_L = FilterH<P,L>(p,l);
+                     FilterH_R_P_L filterh_R_P_L(fun2_R_P_L);
+                     return filterh_R_P_L();
+                }
           };
 
           struct Take {
@@ -552,6 +698,9 @@ namespace boost {
     typedef boost::phoenix::function<impl::Until2> Until2;
     typedef boost::phoenix::function<impl::Last>  Last;
     typedef boost::phoenix::function<impl::Init>  Init;
+    typedef boost::phoenix::function<impl::Length> Length;
+    typedef boost::phoenix::function<impl::At>    At;
+    typedef boost::phoenix::function<impl::Filter> Filter;
     typedef boost::phoenix::function<impl::Take>  Take;
     typedef boost::phoenix::function<impl::Drop>  Drop;
     typedef boost::phoenix::function<impl::Enum_from>     Enum_from;
@@ -560,6 +709,9 @@ namespace boost {
     Until2 until2;
     Last  last;
     Init  all_but_last;  // renamed from init which is not available.
+    Length length;
+    At at;
+    Filter filter;
     Take  take;
     Drop  drop;
     Enum_from enum_from;
