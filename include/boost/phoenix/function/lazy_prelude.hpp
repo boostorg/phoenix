@@ -374,11 +374,15 @@ namespace boost {
                while( !null( tail(l)() )() ) {
                  l = tail(l)();
                  ++x;
+#ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
                  if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                    break;
+#endif
                }
+#ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
                  if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                      throw lazy_exception("Your list is too long!!");
+#endif
                  return head(l)();
              }
           };
@@ -422,13 +426,13 @@ namespace boost {
               while( !null(l)() ) {
                   l = tail(l);
                   ++x;
-                  //if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
-                  if (x > MAX_LIST_LENGTH)
+                  if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                      break;
               }
-              //if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
-              if (x > MAX_LIST_LENGTH)
+#ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
+              if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                    throw lazy_exception("Your list is too long!!");
+#endif
               return x;
             }
           };
@@ -584,8 +588,10 @@ namespace boost {
                 fun1_R_TTT efh_R_TTT = EFH<T>(x);
                 typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
                 EFH_R_T efh_R_T(efh_R_TTT);
-                if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+#ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
+               if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                      throw lazy_exception("Running away in EFH!!");
+#endif
                 return cons( x-1, efh_R_T() );
               }
           };
@@ -650,8 +656,10 @@ namespace boost {
                 fun1_R_TTT efth_R_TTT = EFTH<T>(x,y);
                 typedef boost::phoenix::function<fun1_R_TTT> EFTH_R_T;
                 EFTH_R_T efth_R_T(efth_R_TTT);
+#ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
                 if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                      throw lazy_exception("Running away in EFTH!!");
+#endif
                 return cons( x-1, efth_R_T() );
               }
           };
