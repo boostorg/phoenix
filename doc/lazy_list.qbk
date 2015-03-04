@@ -25,6 +25,8 @@ Boost Phoenix provides many features of functional_programming. One of the thing
 
 There is a great deal of material in __fcpp__ and it is not proposed to replicate all of it. A great deal has changed since __fcpp__ was written and many things are already available in Phoenix or elsewhere. The emphasis here is to add to Phoenix in a way which will make it easier to implement functional_programming.
 
+Progress is being made in implementing both the basic list<T> and the functions needed to manipulate lists.
+
 [/endsect]
 
 [section Background]
@@ -110,6 +112,11 @@ The functions are grouped as follows:
      dec
      make_pair
 
+[h2 Logical predicates]
+
+     odd
+     even
+
 [h2 List Functions]
 
      cons
@@ -118,6 +125,15 @@ The functions are grouped as follows:
      drop
      last
      all_but_last
+     at
+     length
+     filter
+
+[h3 List Generation Functions]
+
+     enum_from
+     enum_from_to
+     list_with
 
 [h2 Futher functions]
 
@@ -170,6 +186,24 @@ Other numerical operators can be used like this
     inc(arg1)(a)
     dec(arg1)(a)
     negate(arg1)(a)
+
+[endsect]
+
+[section List Generation]
+
+One of the most interesting capabilities of __fcpp__ is the generation of infinite lazy lists which are evaluated only at need. The most simple example of this is 
+
+    enum_from(1)
+
+which returns the generator for integers 1,2,3,..... infinity.
+
+    take(4,enum_from(1))
+
+returns a list of the first 4 of the list.
+
+    at(enum_from(1),3)
+
+returns the fourth member using zero indexed access. Both of the lists returned are lazy and only evaluated when the list members are accessed.
 
 [endsect]
 
@@ -279,6 +313,87 @@ Sometimes it is necessary to define a function using a templated struct, where t
   typedef boost::phoenix::function<fun0_int> What0_arg;
   What0_arg what0_arg(what0_int);
 
+[h2 List Generation Implementation]
+
+The implementation of the function
+
+    enum_from(1)
+
+requires a functor which will evaluate the successive numbers on demand. The code from __fcpp__ has been reimplemented using internal functors as follows.
+
+This code has to carefully manipulate the input type T to construct the result type which is a list.
+
+The code in EFH is used to build a series of objects which each add one element to the list and return the function which will add the next element. That only gets called when it is needed.
+
+          template <class T>
+          struct EFH
+          {
+              typedef typename boost::remove_reference<T> TT;
+              typedef typename boost::remove_const<TT>::type TTT;
+              mutable T x;
+              EFH( const T& xx) : x(xx) {}
+              template <typename Sig> struct result;
+
+              template <typename This>
+              struct result<This(T)>
+              {
+                typedef typename boost::phoenix::UseList::template
+                        List<T>::type LType;
+                typedef typename boost::phoenix::result_of::
+                        ListType<LType>::delay_result_type type;
+              };
+              typename result<EFH(T)>::type operator()() const {
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> fun1_R_TTT;
+                //std::cout << "EFH (" << x << ")" << std::endl;
+                ++x;
+                fun1_R_TTT efh_R_TTT = EFH<T>(x);
+                typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
+                EFH_R_T efh_R_T(efh_R_TTT);
+                if (x > MAX_LIST_LENGTH)
+                     throw lazy_exception("Running away in EFH!!");
+                return cons( x-1, efh_R_T() );
+              }
+          };
+
+          struct Enum_from {
+             template <typename Sig> struct result;
+
+             template <typename This, typename T>
+             struct result<This(T)>
+             {
+               typedef typename boost::remove_reference<T>::type TT;
+               typedef typename boost::remove_const<TT>::type TTT;
+               typedef typename UseList::template List<TTT>::type LType;
+               typedef typename result_of::ListType<LType>::
+                       delay_result_type type;
+             };
+
+             template <class T>
+             typename result<Enum_from(T)>::type operator()
+                (const T & x) const
+              {
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> fun1_R_TTT;
+                fun1_R_TTT efh_R_TTT = EFH<TTT>(x);
+                typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
+                EFH_R_T efh_R_T(efh_R_TTT);
+                //std::cout << "enum_from (" << x << ")" << std::endl;
+                return efh_R_T();
+              }
+          };
+ 
+Similar code is used in the related functors
+
+          enum_from_to
+          filter
+
 [h2 Conclusion]
 
 These implementation mechanisms have been carried through consistently in the implementation.
@@ -289,7 +404,7 @@ These implementation mechanisms have been carried through consistently in the im
 
 Several tests are currently on develop with the hope of release to master in time for Boost 1.58.0.
 
-At present all tests pass except for list<T> tests on __msvc__ 8.0 and 9.0 which reject a reference of a reference. Corrections for this have now been made.
+At present all tests pass except for list<T> tests on __msvc__ 8.0 and 9.0 which reject a reference of a reference. Corrections for this have now been sucessfuly made.
 
 [endsect]
 
