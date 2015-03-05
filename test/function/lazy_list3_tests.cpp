@@ -34,7 +34,11 @@ int main()
     list<int> ll2  = take(4,l2);
     list<int> lll2 = take(12,l2);
     list<int> evens = filter(even,l);
+    list<int> odds  = filter(odd,l);
     list<int> even4 = take(4,evens)();
+    list<int> odd4  = take(4,odds)();
+    list<int> itersome = take(4,iterate(dec,1))();
+    list<int> repeatsome = take(4,repeat(1))();
     
     BOOST_TEST(last(ll)()   == 5);
     BOOST_TEST(last(lll)()  == 13);
@@ -42,6 +46,9 @@ int main()
     BOOST_TEST(last(lll2)() == 10);
     BOOST_TEST(length(lll2)() == 9);
     BOOST_TEST(at(even4,3)() == 8);
+    BOOST_TEST(at(odd4,2)()  == 7);
+    BOOST_TEST(at(itersome,3)()   == -3);
+    BOOST_TEST(at(repeatsome,3)() == 1);
 
     return boost::report_errors();
 }
