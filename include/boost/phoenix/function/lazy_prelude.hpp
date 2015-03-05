@@ -469,11 +469,11 @@ namespace boost {
               FilterH( const P& pp, const L& ll) : p(pp), l(ll) {}
               template <typename Sig> struct result;
 
-              template <typename This>
-              struct result<This(P,L)>
+              template <typename This, class PP, class LL>
+              struct result<This(PP,LL)>
               {
                 typedef typename boost::phoenix::result_of::
-                        ListType<L>::delay_result_type type;
+                        ListType<LL>::delay_result_type type;
               };
                 typename result<FilterH(P,L)>::type operator()() const {
                 typedef typename result_of::ListType<L>::
@@ -525,10 +525,10 @@ namespace boost {
               IterateH( const F& ff, const T& tt) : f(ff), t(tt) {}
               template <typename Sig> struct result;
 
-              template <typename This>
-              struct result<This(F,T)>
+              template <typename This,class F2,class T2>
+              struct result<This(F2,T2)>
               {
-                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_reference<T2>::type TT;
                 typedef typename boost::remove_const<TT>::type TTT;
                 typedef typename UseList::template List<TTT>::type LType;
                 typedef typename result_of::ListType<LType>::
@@ -674,11 +674,11 @@ namespace boost {
               EFH( const T& xx) : x(xx) {}
               template <typename Sig> struct result;
 
-              template <typename This>
-              struct result<This(T)>
+              template <typename This, class TT>
+              struct result<This(TT)>
               {
                 typedef typename boost::phoenix::UseList::template
-                        List<T>::type LType;
+                        List<TT>::type LType;
                 typedef typename boost::phoenix::result_of::
                         ListType<LType>::delay_result_type type;
               };
@@ -741,11 +741,11 @@ namespace boost {
               EFTH( const T& xx, const T& yy) : x(xx), y(yy) {}
               template <typename Sig> struct result;
 
-              template <typename This>
-              struct result<This(T)>
+              template <typename This, class TT>
+              struct result<This(TT)>
               {
                 typedef typename boost::phoenix::UseList::template
-                        List<T>::type LType;
+                        List<TT>::type LType;
                 typedef typename boost::phoenix::result_of::
                         ListType<LType>::delay_result_type type;
               };
