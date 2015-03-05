@@ -54,6 +54,8 @@
 // at(list,n)
 // length(list)
 // filter(pred,list)
+// iterate(function,value)
+// repeat(value)
 // take(n,list)
 // drop(n,list)
 // enum_from(x)
@@ -269,7 +271,7 @@ namespace boost {
             };
 
             template <class T>
-            bool operator()( const T& x ) const {
+            typename result<Odd(T)>::type operator()( const T& x ) const {
                return x%2==1;
             }
          };
@@ -285,7 +287,7 @@ namespace boost {
             };
 
             template <class T>
-            bool operator()( const T& x ) const {
+            typename result<Even(T)>::type operator()( const T& x ) const {
                return x%2==0;
             }
          };
@@ -515,6 +517,108 @@ namespace boost {
                 }
           };
 
+         template <class F,class T>
+         struct IterateH
+          {
+              F f;
+              T t;
+              IterateH( const F& ff, const T& tt) : f(ff), t(tt) {}
+              template <typename Sig> struct result;
+
+              template <typename This>
+              struct result<This(F,T)>
+              {
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename UseList::template List<TTT>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type type;
+              };
+
+                typename result<IterateH(F,T)>::type operator()() const {
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> Fun2_R_F_T;
+                typedef boost::phoenix::function<Fun2_R_F_T> IterateH_R_F_T;
+                Fun2_R_F_T fun2_R_F_T = IterateH<F,T>(f,f(t)());
+                IterateH_R_F_T iterateh_R_F_T(fun2_R_F_T);
+                   return cons( t, iterateh_R_F_T() );
+              }
+          };
+
+
+          struct Iterate {
+   // Note: this does always return an odd_list; iterate() takes no ListLike
+   // parameter, and it requires that its result be lazy.
+              template <typename Sig> struct result;
+
+              template <typename This, typename F, typename T>
+              struct result<This(F,T)>
+              {
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename UseList::template List<TTT>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type type;
+              };
+
+              template <class F, class T>
+                typename result<Iterate(F,T)>::type operator()
+                (const F& f, const T& t) const {
+                typedef typename UseList::template List<T>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type result_type;
+                typedef boost::function0<result_type> Fun2_R_F_T;
+                typedef boost::phoenix::function<Fun2_R_F_T> IterateH_R_F_T;
+                Fun2_R_F_T fun2_R_F_T = IterateH<F,T>(f,f(t)());
+                IterateH_R_F_T iterateh_R_F_T(fun2_R_F_T);
+                   return iterateh_R_F_T();
+              }
+          };
+
+    }
+
+    typedef boost::phoenix::function<impl::Until> Until;
+    typedef boost::phoenix::function<impl::Until2> Until2;
+    typedef boost::phoenix::function<impl::Last>  Last;
+    typedef boost::phoenix::function<impl::Init>  Init;
+    typedef boost::phoenix::function<impl::Length> Length;
+    typedef boost::phoenix::function<impl::At>    At;
+    typedef boost::phoenix::function<impl::Filter> Filter;
+    typedef boost::phoenix::function<impl::Iterate> Iterate;
+    Until until;
+    Until2 until2;
+    Last  last;
+    Init  all_but_last;  // renamed from init which is not available.
+    Length length;
+    At at;
+    Filter filter;
+    Iterate iterate;
+
+    namespace impl {
+
+          struct Repeat {
+         // See note for iterate()
+              template <typename Sig> struct result;
+
+              template <typename This, typename T>
+              struct result<This(T)>
+              {
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename UseList::template List<TTT>::type LType;
+                typedef typename result_of::ListType<LType>::
+                        delay_result_type type;
+              };
+
+              template <class T>
+              typename result<Repeat(T)>::type operator()( const T& x) const
+              {
+                return iterate(id,x);
+              }
+          };
+
           struct Take {
 
              template <typename Sig> struct result;
@@ -702,24 +806,12 @@ namespace boost {
     // Functors to be used in reuser will have to be defined
     // using boost::phoenix::function directly
     // in order to be able to be used as arguments.
-    typedef boost::phoenix::function<impl::Until> Until;
-    typedef boost::phoenix::function<impl::Until2> Until2;
-    typedef boost::phoenix::function<impl::Last>  Last;
-    typedef boost::phoenix::function<impl::Init>  Init;
-    typedef boost::phoenix::function<impl::Length> Length;
-    typedef boost::phoenix::function<impl::At>    At;
-    typedef boost::phoenix::function<impl::Filter> Filter;
+    typedef boost::phoenix::function<impl::Repeat> Repeat;
     typedef boost::phoenix::function<impl::Take>  Take;
     typedef boost::phoenix::function<impl::Drop>  Drop;
     typedef boost::phoenix::function<impl::Enum_from>     Enum_from;
     typedef boost::phoenix::function<impl::Enum_from_to>  Enum_from_to;
-    Until until;
-    Until2 until2;
-    Last  last;
-    Init  all_but_last;  // renamed from init which is not available.
-    Length length;
-    At at;
-    Filter filter;
+    Repeat repeat;
     Take  take;
     Drop  drop;
     Enum_from enum_from;
