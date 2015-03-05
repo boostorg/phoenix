@@ -501,7 +501,7 @@ namespace boost {
 
                 template <class P, class L>
                 typename result<Filter(P,L)>::type
-                operator()( const P& p, const L& ll)
+                operator()( const P& p, const L& ll) const
                 {
                      typename  result_of::ListType<L>::delay_result_type
                      l = delay(ll);
