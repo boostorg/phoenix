@@ -47,12 +47,37 @@ CHANGELOG
 
 - DEVELOP
 
+- V3.2.0
+
+- Bump version number to 3.2.0 in version.hpp.
+
+- New header files in boost/phoenix/function
+  These are the first versions of the lazy functionality being introduced.
+  This is reimplementation of the ideas in FC++ on top of Phoenix.
+  The Phoenix code used is Phoenix.Function, along with Boost.Function.
+  lazy_prelude.hpp  This is the top level header and also has prelude functions.
+  lazy_operator.hpp This defines lazy operators such as plus and minus.
+  lazy_list.hpp     This defines list<T> a lazy list class and associated code.
+  lazy_reuser.hpp   This defines the reuser functions used in the code.
+
+- New tests for lazy functionality.
+  test/include/function/lazy_headers Test of the header structure.
+  test/function/lazy_list_tests      Simple tests of list<T>.
+  test/function/lazy_list2_tests     More tests of list<T>.
+- Develop documentation for version 3.2.0
+  This includes a new section on the lazy list implementation.
+
 - V3.1.1
+
 - Bump version number to 3.1.1 in version.hpp and branch for release.
+
 - New tests for lazy functions using existing phoenix/function capability.
   lazy_argument_tests, lazy_make_pair_tests, lazy_templated_struct_tests
+
 - New example bind_goose.cpp comparing boost.bind and boost.phoenix.bind.
+
 - Changes to let_tests and more_let_tests to avoid failing cases.
+
 - Updates to documentation.
 
 - V3.1.0

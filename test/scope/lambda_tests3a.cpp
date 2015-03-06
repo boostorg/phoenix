@@ -53,7 +53,8 @@ main()
        }
 
        {
-#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+//#if defined(BOOST_GCC_VERSION) && (BOOST_GCC_VERSION >= 50000) && __OPTIMIZE__
+#if defined(__OPTIMIZE__) && __OPTIMIZE__
             int x = (let(_a = _1)[bind(_a)])(lambda[val(1)]());
 #else
             int x = (let(_a = lambda[val(1)])[bind(_a)])();
