@@ -25,6 +25,6 @@ int main()
 
     BOOST_TEST(f(0.0, 0 * eps));
     BOOST_TEST(!f(0.0, eps));
-    BOOST_TEST(fabs(x-4.) < eps );
-    BOOST_TEST(fabs(z-1.) < eps );
+    BOOST_TEST(std::fabs(x-4.) < eps );
+    BOOST_TEST(std::fabs(z-1.) < eps );
 }
