@@ -23,7 +23,11 @@
 
 [section Phoenix 3.2.0]
 
-* Phoenix now has a lazy list implementation which is very similar but not identical to the implementation provided by __fcpp__. Details can be found in __phoenix_lazy_list__. Tests have been added for the new features provided.
+* Phoenix now has a lazy list implementation which is very similar but not identical to the implementation provided by __fcpp__.
+  * Details can be found in __phoenix_lazy_list__.
+  * Tests have been added for the new features provided.
+  * This is an addition which causes no changes to the previous public interface.
+* Fixes for #10927 and #11085
 
 [endsect]
 
