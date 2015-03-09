@@ -11,17 +11,16 @@
 
 [section Phoenix - warning on *lambda and let*]
 
-* There are a number of bugs in the implementation of *lambda* and *let* constructs in the current version of Boost Phoenix (Boost release 1.57.0).
-* These are currently being investigated in the hope of providing a better version for the next Boost release.
+* There are a number of bugs in the implementation of *lambda* and *let* constructs in Boost Phoenix 3.0.6 (Boost release 1.57.0).
+* These are currently being investigated and a better version for Boost 1.58.0.
 * The constructs are not completely unusable and many of the tests run.
 * Some usage may work with some compilers but not others.
-* More information will be made available as soon as possible.
-* Workarounds for different compilers are being made available.
-* These are currently on test in develop and are moving to master in version 3.1.1.
+* Workarounds for different compilers are being made available and can be seen in the tests where they are used.
+* For Boost Phoenix 3.2.0 most tests now run and work is continuing to resolve the remaining problems.
 
 [endsect]
 
-[section Phoenix 3.2.0]
+[section Phoenix 3.2.0 (Boost 1.58.0)]
 
 * Phoenix now has a lazy list implementation which is very similar but not identical to the implementation provided by __fcpp__.
   * Details can be found in __phoenix_lazy_list__.
