@@ -75,6 +75,7 @@ phoenix/lazy_list/what_is_provided.html
 phoenix/lazy_list/tutorial_with_examples.html
 phoenix/lazy_list/tutorial_with_examples/arithmetic_functions.html
 phoenix/lazy_list/tutorial_with_examples/list_generation.html
+phoenix/lazy_list/exceptions.html
 phoenix/lazy_list/implementation_details.html
 phoenix/lazy_list/testing.html
 phoenix/lazy_list/where_next_.html
