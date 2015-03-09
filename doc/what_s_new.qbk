@@ -7,6 +7,23 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
+[section Release Notes]
+
+[/ These are included here and have also been submitted for the release page.]
+
+[/* [phrase library..[@/libs/phoenix/ Phoenix]:] ]
+* ['Version] 3.2.0
+* ['New Features:]
+  * Phoenix now has a *lazy list* implementation as an optional extension.
+* ['New Example:]
+  * A new example *bind_goose* shows the compatibility between *boost bind* and *boost phoenix bind*.
+* ['Fixed Bugs:]
+  * [@http://svn.boost.org/trac/boost/ticket/10927 #10927] Missing std:: qualifier for fabs in phoenix/test/stdlib/cmath.cpp
+  * [@http://svn.boost.org/trac/boost/ticket/11085 #11085] Missing qualifier for pow call in phoenix/test/function/function_tests.cpp
+  * Fixes for a number of cases failing with *bind*, *lambda* and *let*.
+
+[endsect]
+
 [section What's New]
 
 [section Phoenix - warning on *lambda and let*]
