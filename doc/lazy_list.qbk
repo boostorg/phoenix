@@ -14,9 +14,19 @@
 [h1 Summary]
 Phoenix now has a lazy list implementation which is very similar but not identical to the implementation provided by __fcpp__. This provides a set of objects defined by list<type>, for example this which defines an empty list of type int.
 
-     list<int> l0;
+     list<int> example;
 
 A list can contain zero or more elements of the same type. It can also be declared using a function returning values of the correct type. Such lists are only evaluated on demand. A set of functions are defined which enable many ways of manipulating and using lists. Examples are provided for the features available.
+
+Exceptions are provided to deal with certain cases and these can be turned off if desired. There is a check on the maximum list length which has a default of 1000 which can be changed by the user.
+
+This is an extension to Boost Phoenix which does not change the public interface except to define new features in the namespace
+
+    boost::phoenix
+
+It has to be explicitly included using the header
+
+    boost/phoenix/function/lazy_prelude.hpp
 
 [/section Introduction]
 [h1 Introduction]
@@ -55,7 +65,7 @@ The functions are in the namespace
 
     boost::phoenix
 
-by the header file
+defined by the header file
 
     boost/phoenix/function/lazy_prelude.hpp
 
@@ -211,6 +221,59 @@ To be developed.
 
 [endsect]
 
+[section Exceptions]
+
+Exceptions are used when there is a danger of a runaway or illegal operations on an empty list.
+
+The key example is to take the length of a non-terminating list, e.g.
+
+    length(enum_from(1))
+
+This is protected using an exception:
+
+    lazy_exception
+
+Note that this is implemented such that defining
+
+    BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
+
+will enable the user to turn off the exceptions at their own risk.
+
+    BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH
+
+is currently defined as 1000 and again the user can define their own value.
+
+In the length function this how it is implemented:
+
+          struct Length {
+            template <typename Sig> struct result;
+
+            template <typename This, typename L>
+            struct result<This(L)>
+            {
+               typedef size_t type;
+            };
+
+            template <class L>
+            size_t operator()( const L& ll ) const {
+              typename L::delay_result_type l = delay(ll);
+              size_t x = 0;
+              while( !null(l)() ) {
+                  l = tail(l);
+                  ++x;
+                  if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+                     break;
+              }
+  #ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
+              if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+                   throw lazy_exception("Your list is too long!!");
+  #endif
+              return x;
+            }
+          };
+
+[endsect]
+
 [section Implementation Details]
 
 [h2 Introduction]
@@ -328,17 +391,15 @@ The code in EFH is used to build a series of objects which each add one element 
           template <class T>
           struct EFH
           {
-              typedef typename boost::remove_reference<T> TT;
-              typedef typename boost::remove_const<TT>::type TTT;
               mutable T x;
               EFH( const T& xx) : x(xx) {}
               template <typename Sig> struct result;
 
-              template <typename This>
-              struct result<This(T)>
+              template <typename This, class TT>
+              struct result<This(TT)>
               {
                 typedef typename boost::phoenix::UseList::template
-                        List<T>::type LType;
+                        List<TT>::type LType;
                 typedef typename boost::phoenix::result_of::
                         ListType<LType>::delay_result_type type;
               };
@@ -347,13 +408,14 @@ The code in EFH is used to build a series of objects which each add one element 
                 typedef typename result_of::ListType<LType>::
                         delay_result_type result_type;
                 typedef boost::function0<result_type> fun1_R_TTT;
-                //std::cout << "EFH (" << x << ")" << std::endl;
                 ++x;
                 fun1_R_TTT efh_R_TTT = EFH<T>(x);
                 typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
                 EFH_R_T efh_R_T(efh_R_TTT);
-                if (x > MAX_LIST_LENGTH)
+    #ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
+                if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                      throw lazy_exception("Running away in EFH!!");
+    #endif
                 return cons( x-1, efh_R_T() );
               }
           };
@@ -402,9 +464,7 @@ These implementation mechanisms have been carried through consistently in the im
 
 [section Testing]
 
-Several tests are currently on develop with the hope of release to master in time for Boost 1.58.0.
-
-At present all tests pass except for list<T> tests on __msvc__ 8.0 and 9.0 which reject a reference of a reference. Corrections for this have now been sucessfuly made.
+Several tests are currently on develop and master in time for Boost 1.58.0.
 
 [endsect]
 

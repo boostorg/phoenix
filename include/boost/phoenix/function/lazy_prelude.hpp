@@ -668,8 +668,6 @@ namespace boost {
           template <class T>
           struct EFH
           {
-              typedef typename boost::remove_reference<T> TT;
-              typedef typename boost::remove_const<TT>::type TTT;
               mutable T x;
               EFH( const T& xx) : x(xx) {}
               template <typename Sig> struct result;
@@ -693,7 +691,7 @@ namespace boost {
                 typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
                 EFH_R_T efh_R_T(efh_R_TTT);
 #ifndef BOOST_PHOENIX_NO_LAZY_EXCEPTIONS
-               if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
+                if (x > BOOST_PHOENIX_FUNCTION_MAX_LAZY_LIST_LENGTH)
                      throw lazy_exception("Running away in EFH!!");
 #endif
                 return cons( x-1, efh_R_T() );
@@ -734,8 +732,6 @@ namespace boost {
        template <class T>
          struct EFTH
           {
-              typedef typename boost::remove_reference<T> TT;
-              typedef typename boost::remove_const<TT>::type TTT;
               mutable T x;
               T y;
               EFTH( const T& xx, const T& yy) : x(xx), y(yy) {}

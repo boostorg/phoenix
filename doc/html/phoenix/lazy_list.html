@@ -37,6 +37,7 @@
 <dt><span class="section"><a href="lazy_list/tutorial_with_examples/list_generation.html">List
         Generation</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="lazy_list/exceptions.html">Exceptions</a></span></dt>
 <dt><span class="section"><a href="lazy_list/implementation_details.html">Implementation
       Details</a></span></dt>
 <dt><span class="section"><a href="lazy_list/testing.html">Testing</a></span></dt>
@@ -52,7 +53,7 @@
       This provides a set of objects defined by list&lt;type&gt;, for example this
       which defines an empty list of type int.
     </p>
-<pre class="programlisting"><span class="identifier">list</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">l0</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">list</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">example</span><span class="special">;</span>
 </pre>
 <p>
       A list can contain zero or more elements of the same type. It can also be declared
@@ -60,6 +61,22 @@
       evaluated on demand. A set of functions are defined which enable many ways
       of manipulating and using lists. Examples are provided for the features available.
     </p>
+<p>
+      Exceptions are provided to deal with certain cases and these can be turned
+      off if desired. There is a check on the maximum list length which has a default
+      of 1000 which can be changed by the user.
+    </p>
+<p>
+      This is an extension to Boost Phoenix which does not change the public interface
+      except to define new features in the namespace
+    </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span>
+</pre>
+<p>
+      It has to be explicitly included using the header
+    </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">function</span><span class="special">/</span><span class="identifier">lazy_prelude</span><span class="special">.</span><span class="identifier">hpp</span>
+</pre>
 <h2>
 <a name="phoenix.lazy_list.h1"></a>
       <span><a name="phoenix.lazy_list.introduction"></a></span><a class="link" href="lazy_list.html#phoenix.lazy_list.introduction">Introduction</a>
