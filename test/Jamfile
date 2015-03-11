@@ -22,6 +22,7 @@ local multi-threading = <library>/boost/thread
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
 test-suite detail :
+    [ run detail/aa_hello.cpp ]
     [ run detail/aa_test0.cpp ]
     [ run detail/aa_test1.cpp ]
     [ run detail/aa_test2.cpp ]
