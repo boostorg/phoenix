@@ -300,7 +300,7 @@ namespace boost {
     typedef boost::phoenix::function<impl::Even> Even;
     Pow   pow;
     Apply apply;
-    Apply apply0;
+    Apply0 apply0;
     Odd   odd;
     Even  even;
 
