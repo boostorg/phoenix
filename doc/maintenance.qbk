@@ -99,9 +99,9 @@ I have been attempting to understand the differences between compilers and envir
 
 * Some environments are limited in the memory available for testing and I have broken some large tests into smaller pieces.
 * Some of the problems experienced in testing are specific to particular compilers being used.
-* Some problems have occurred with more recent several compilers.
+* Some problems have occurred with several more recent compilers.
 * One problem is that I do not have access to all of the compilers used in the tests or by users.
-  * My system is __ubuntu__ 12.04 
+  * My system is __ubuntu__ 12.04
   * I have expanded the compilers I have available to include the following
   * __gcc__ 4.6,  4.8.2,  4.9.0 &  4.9.2 (I will add 5.0 when released)
   * __clang__ 3.4,  3.5 &  3.6 (pre-release in the last case)
@@ -112,7 +112,6 @@ I have been attempting to understand the differences between compilers and envir
   * It is not usually documented which tests are optimized.
   * This means that a lot of tests run there which fail when optimized.
   * This has made the identification of the cause of the problems more difficult.
-[endsect]
 
 [endsect]
 
