@@ -234,32 +234,6 @@ namespace boost {
 
          };
 
-        // This will apply f() at least once.
-        struct Apply0 {
-
-            template <typename Sig>
-            struct result;
-
-            template <typename This, typename N, typename F>
-            struct result<This(N,F)>
-            {
-              // Need result type from F
-              typedef typename F::result_type type;
-            };
-
-            template <typename N, typename F, typename A0>
-            typename result<Apply0(F)>::type  operator()(N n, const F &f,
-                     reuser2<INV,VAR,INV,Apply,N,F> r = NIL ) const {
-              if ( n <= 1 )
-                return f()();
-              else {
-                A0 a1 = r( Apply(), n-1, f)();
-                return f()();
-              }
-            }
-
-         };
-
          struct Odd {
             template <typename Sig>
             struct result;
@@ -295,12 +269,10 @@ namespace boost {
     }
     typedef boost::phoenix::function<impl::Pow>   Pow;
     typedef boost::phoenix::function<impl::Apply> Apply;
-    typedef boost::phoenix::function<impl::Apply> Apply0;
     typedef boost::phoenix::function<impl::Odd>   Odd;
-    typedef boost::phoenix::function<impl::Even> Even;
+    typedef boost::phoenix::function<impl::Even>  Even;
     Pow   pow;
     Apply apply;
-    Apply0 apply0;
     Odd   odd;
     Even  even;
 
