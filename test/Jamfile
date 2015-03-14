@@ -142,6 +142,7 @@ test-suite phoenix_scope :
 
 test-suite phoenix_algorithm :
     [ run algorithm/for_each.cpp ]
+    [ run algorithm/for_each2.cpp ]
     [ run algorithm/for_test.cpp ]
     [ run algorithm/iteration.cpp ]
     [ run algorithm/transformation1.cpp ]
