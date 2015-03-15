@@ -20,13 +20,14 @@
 #ifdef BOOST_HAS_HASH
 // This does not work for Clang when using stdlib from gcc 4.9
 // as Clang thinks it is gcc 4.2.1
-#ifndef BOOST_COMP_CLANG
+//#ifndef BOOST_COMP_CLANG
+#define _GLIBCXX_PERMIT_BACKWARD_HASH
 #include BOOST_HASH_SET_HEADER
 #include BOOST_HASH_MAP_HEADER
-#else
-#include <backward/hash_set>
-#include <backward/hash_map>
-#endif
+//#else
+//#include <backward/hash_set>
+//#include <backward/hash_map>
+//#endif
 #define BOOST_PHOENIX_HAS_HASH
 #define BOOST_PHOENIX_HASH_NAMESPACE BOOST_STD_EXTENSION_NAMESPACE
 #elif defined(BOOST_DINKUMWARE_STDLIB) && (BOOST_DINKUMWARE_STDLIB < 610)

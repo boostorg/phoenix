@@ -15,6 +15,7 @@
 #include <boost/config.hpp>
 
 #ifdef BOOST_HAS_HASH
+#define _GLIBCXX_PERMIT_BACKWARD_HASH
 #include BOOST_HASH_SET_HEADER
 #include BOOST_HASH_MAP_HEADER
 #define BOOST_PHOENIX_HAS_HASH
