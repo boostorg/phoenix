@@ -46,10 +46,11 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
-- patch for #10927 in test/stdlib/cmath.cpp
-- patch for #11085 in test/function/function_tests.cpp
 
 - V3.2.0
+
+- patch for #10927 in test/stdlib/cmath.cpp
+- patch for #11085 in test/function/function_tests.cpp
 
 - Bump version number to 3.2.0 in version.hpp.
 
