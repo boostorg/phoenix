@@ -53,6 +53,7 @@ namespace
     {
         using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
+        int marray[] = {1,1,2,3,3};
         BOOST_TEST(boost::phoenix::find(arg1,2)(array) == array + 1);
 
         std::set<int> s(array, array + 3);
