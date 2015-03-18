@@ -4,14 +4,16 @@
     "authors": [
         "Joel de Guzman",
         "Dan Marsden",
-        "Thomas Heller"
+        "Thomas Heller",
+        "John Fletcher"
     ],
     "description": "Define small unnamed function objects at the actual call site, and more.",
     "category": [
         "Function-objects"
     ],
     "maintainers": [
-        "Joel de Guzman <joel -at- boost-consulting.com>",
-        "Thomas Heller <thom.heller -at- gmail.com>"
+        "Joel de Guzman <djowel -at- gmail.com>",
+        "Thomas Heller <thom.heller -at- gmail.com>",
+        "John Fletcher <J.P.Fletcher -at- aston.ac.uk>"
     ]
 }
