@@ -47,6 +47,37 @@ CHANGELOG
 
 - DEVELOP
 
+- Support for <unordered_set> and <unordered_map>
+  This involves the following changes.
+  phoenix/config.hpp - New section with the following description:
+
+  This section is to sort out whether hash types or unordered types
+  are available. This depends on whether stdlib or libc++ is being used
+  and also whether C++11 or C++03 is being used.
+
+  Client code should contain this:
+
+  #ifdef BOOST_PHOENIX_HAS_HASH
+  #include BOOST_PHOENIX_HASH_SET_HEADER
+  #include BOOST_PHOENIX_HASH_MAP_HEADER
+  #endif
+
+  #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+  #define BOOST_PHOENIX_UNORDERED_SET_HEADER <unordered_set>
+  #define BOOST_PHOENIX_UNORDERED_MAP_HEADER <unordered_map>
+  #endif
+
+  The client code can then chose the implementation provided.
+  See the example in test/stl/querying_find2.cpp
+
+  Modified files:
+     phoenix/stl/algorithm/detail/has_find.hpp
+  New files:
+     phoenix/stl/algorithm/detail/is_unordered_set_or_map.hpp
+     phoenix/stl/algorithm/detail/std_unordered_set_or_map_fwd.hpp
+  New test file:
+     phoenix/test/algorithm/querying_find2.cpp
+
 - V3.2.0
 
 - patch for #10927 in test/stdlib/cmath.cpp
