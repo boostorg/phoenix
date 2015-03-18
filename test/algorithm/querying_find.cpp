@@ -37,7 +37,7 @@
 #define BOOST_PHOENIX_HASH_NAMESPACE stdext
 #endif
 #else
-#define BOOST_PHOENIX_HAS_UNDORDERED_SET_AND_MAP
+#define BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 #include <unordered_set>
 #include <unordered_map>
 #endif
@@ -82,7 +82,7 @@ namespace
         BOOST_TEST(boost::phoenix::find(arg1, 2)(m) == m.find(2));
         //#endif
 
-#ifdef BOOST_PHOENIX_HAS_UNDORDERED_SET_AND_MAP
+#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
         std::unordered_set<int> hs(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(hs) == hs.find(2));
 

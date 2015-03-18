@@ -62,7 +62,7 @@ namespace
                                convert_to_container<std::map<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(m) == m.find(2));
 
-#ifdef BOOST_PHOENIX_HAS_UNDORDERED_SET_AND_MAP
+#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 
         std::unordered_set<int> us(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(us) == us.find(2));
@@ -70,13 +70,15 @@ namespace
         std::unordered_multiset<int> ums(marray, marray + 5);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(ums) == ums.find(2));
 
-        std::unordered_map<int, int> um = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
-	convert_to_container<std::unordered_map<int, int> >();
-	BOOST_TEST(boost::phoenix::find(arg1, 2)(um) == um.find(2));
+        std::unordered_map<int, int> um =
+             boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
+             convert_to_container<std::unordered_map<int, int> >();
+        BOOST_TEST(boost::phoenix::find(arg1, 2)(um) == um.find(2));
 
-        std::unordered_multimap<int, int> umm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5)(4, 6).
-	convert_to_container<std::unordered_multimap<int, int> >();
-	BOOST_TEST(boost::phoenix::find(arg1, 2)(umm) == umm.find(2));
+        std::unordered_multimap<int, int> umm =
+             boost::assign::map_list_of(0, 1)(2, 3)(4, 5)(4, 6).
+             convert_to_container<std::unordered_multimap<int, int> >();
+        BOOST_TEST(boost::phoenix::find(arg1, 2)(umm) == umm.find(2));
 
 
 #else
