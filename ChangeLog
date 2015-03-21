@@ -78,6 +78,10 @@ CHANGELOG
   New test file:
      phoenix/test/algorithm/querying_find2.cpp
 
+  Support for retrieving the return type of boost::phoenix::function objects.
+  This is needed in the lazy functionality.
+  Modified file: boost/phoenix/function/function.hpp
+
 - V3.2.0
 
 - patch for #10927 in test/stdlib/cmath.cpp
