@@ -53,6 +53,39 @@ namespace boost { namespace phoenix
         // Bring in the rest
         #include <boost/phoenix/function/detail/function_operator.hpp>
 
+      // Solves the result problem for F(X)
+        template <typename This, typename A0>
+        struct result<This(A0)>
+          : detail::expression::function_eval<F,
+            typename boost::remove_reference<A0>::type>
+        {};
+      // Solves the result problem for F(X,Y)
+        template <typename This, typename A0, typename A1>
+        struct result<This(A0,A1)>
+          : detail::expression::function_eval<F,
+            typename boost::remove_reference<A0>::type,
+            typename boost::remove_reference<A1>::type>
+        {};
+      // Solves the result problem for F(X,Y,Z)
+        template <typename This, typename A0, typename A1, typename A2>
+        struct result<This(A0,A1,A2)>
+          : detail::expression::function_eval<F,
+            typename boost::remove_reference<A0>::type,
+            typename boost::remove_reference<A1>::type,
+            typename boost::remove_reference<A2>::type>
+        {};
+
+      // Solves the result problem for F(W,X,Y,Z)
+      template <typename This, typename A0, typename A1,
+                               typename A2, typename A3>
+      struct result<This(A0,A1,A2,A3)>
+          : detail::expression::function_eval<F,
+            typename boost::remove_reference<A0>::type,
+            typename boost::remove_reference<A1>::type,
+            typename boost::remove_reference<A2>::type,
+            typename boost::remove_reference<A3>::type>
+        {};
+
         F f;
     };
 }
