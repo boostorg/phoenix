@@ -22,11 +22,11 @@
 #ifdef BOOST_PHOENIX_HAS_HASH
 #include BOOST_PHOENIX_HASH_SET_HEADER
 #include BOOST_PHOENIX_HASH_MAP_HEADER
-#endif
-
+#else
 #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 #include BOOST_PHOENIX_UNORDERED_SET_HEADER
 #include BOOST_PHOENIX_UNORDERED_MAP_HEADER
+#endif
 #endif
 
 namespace
@@ -63,6 +63,16 @@ namespace
                                convert_to_container<std::map<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(m) == m.find(2));
 
+#ifdef BOOST_PHOENIX_HAS_HASH
+
+        BOOST_PHOENIX_HASH_NAMESPACE::hash_set<int> hs(array, array + 3);
+        BOOST_TEST(boost::phoenix::find(arg1, 2)(hs) == hs.find(2));
+
+        BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
+        convert_to_container<BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> >();
+        BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
+
+#else
 #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 
         std::unordered_set<int> us(array, array + 3);
@@ -80,17 +90,6 @@ namespace
              boost::assign::map_list_of(0, 1)(2, 3)(4, 5)(4, 6).
              convert_to_container<std::unordered_multimap<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(umm) == umm.find(2));
-
-
-#else
-#ifdef BOOST_PHOENIX_HAS_HASH
-
-        BOOST_PHOENIX_HASH_NAMESPACE::hash_set<int> hs(array, array + 3);
-        BOOST_TEST(boost::phoenix::find(arg1, 2)(hs) == hs.find(2));
-
-        BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
-        convert_to_container<BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> >();
-        BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
 
 #endif
 #endif
