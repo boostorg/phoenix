@@ -199,13 +199,13 @@ namespace boost {
 
             template <typename N, typename A0>
             A0 operator()(N n, const A0 & a0,
-            reuser2<INV,VAR,INV,Pow,N,A0> r = NIL ) const {
+            reuser2<INV,VAR,INV,XPow,N,A0> r = NIL ) const {
               if ( n <= 0 )
                  return A0(1);
               else if ( n==1 )
                  return a0;
               else {
-                A0 a1 = r( Pow(), n-1, a0)();
+                A0 a1 = r( XPow(), n-1, a0)();
                 return a0*a1;
               }
             }
@@ -516,7 +516,7 @@ namespace boost {
                 : boost::remove_reference<T> {};
 
              template <class Binary, class Unary, class T, class X>
-             typename result<Until2(Binary,Unary,T,X)>::type
+             typename result<XUntil2(Binary,Unary,T,X)>::type
              operator()( const Binary& p, const Unary& op, const T & start,
                         const X & check ) const
              {
@@ -572,15 +572,15 @@ namespace boost {
              };
 
              template <class L>
-             typename result<Init(L)>::type
+             typename result<XInit(L)>::type
              operator()( const L& l,
-                         reuser1<INV,VAR,Init,
+                         reuser1<INV,VAR,XInit,
                          typename result_of::ListType<L>::delay_result_type>
                          r = NIL ) const {
                if( null( tail( l )() )() )
                    return NIL;
                else
-                   return cons( head(l)(), r( Init(), tail(l)() )() )();
+                   return cons( head(l)(), r( XInit(), tail(l)() )() )();
                }
           };
 
@@ -623,7 +623,7 @@ namespace boost {
             };
 
               template <class L>
-              typename result<At(L,size_t)>::type
+              typename result<XAt(L,size_t)>::type
               operator()( L l, size_t n ) const {
                   while( n!=0 ) {
                       l = tail(l);
