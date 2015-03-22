@@ -88,6 +88,8 @@ CHANGELOG
     lazy_operator.hpp lazy_prelude.hpp lazy_reuse.hpp
   New files:
     lazy_signature.hpp lazy_smart.hpp
+  New test file:
+    lazy_compose_tests.cpp
 
 - V3.2.0
 
