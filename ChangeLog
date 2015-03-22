@@ -69,6 +69,7 @@ CHANGELOG
 
   The client code can then chose the implementation provided.
   See the example in test/stl/querying_find2.cpp
+  This example file has been adjusted for a problem with MSVC 10
 
   Modified files:
      phoenix/stl/algorithm/detail/has_find.hpp
@@ -81,6 +82,12 @@ CHANGELOG
   Support for retrieving the return type of boost::phoenix::function objects.
   This is needed in the lazy functionality.
   Modified file: boost/phoenix/function/function.hpp
+
+  Revised version of lazy functionality with added functions.
+  Modified files in boost/phoenix/function:
+    lazy_operator.hpp lazy_prelude.hpp lazy_reuse.hpp
+  New files:
+    lazy_signature.hpp lazy_smart.hpp
 
 - V3.2.0
 
