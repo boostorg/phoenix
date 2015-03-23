@@ -37,7 +37,7 @@ int main()
     BOOST_TEST(head(scanr(plus,0,even4))() == 20);
     BOOST_TEST(last(scanl(plus,0,even4))() == 20);
     BOOST_TEST(head(scanr1(plus,even4))()  == 20);
-    BOOST_TEST(last(scanl2(plus,even4))()  == 20);
+    BOOST_TEST(last(scanl1(plus,even4))()  == 20);
 
     list<int> map_result = map(inc,even4)();
     list<int> zip_with_result = zip_with(plus,even4,odd4)();
