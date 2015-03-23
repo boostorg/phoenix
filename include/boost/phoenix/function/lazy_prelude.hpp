@@ -871,7 +871,7 @@ namespace boost {
     Last  last;
     Init  all_but_last;  // renamed from init which is not available.
     Length length;
-    At at;
+    At at_; // renamed from at because of name clash.
     Filter filter;
     Foldr   foldr;
     Foldl   foldl;
