@@ -76,8 +76,7 @@ namespace
         convert_to_container<BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
 
-#else
-#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+#elif defined BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 
         std::unordered_set<int> us(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(us) == us.find(2));
@@ -95,7 +94,6 @@ namespace
              convert_to_container<std::unordered_multimap<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(umm) == umm.find(2));
 
-#endif
 #endif
         return;
     }
