@@ -54,6 +54,7 @@ test-suite phoenix_function :
     [ run function/function_tests.cpp ]
     [ run function/lazy_argument_tests.cpp ]
     [ run function/lazy_compose_tests.cpp ]
+    [ run function/lazy_fold_tests.cpp ]
     [ run function/lazy_list_tests.cpp ]
     [ run function/lazy_list2_tests.cpp ]
     [ run function/lazy_list3_tests.cpp ]
