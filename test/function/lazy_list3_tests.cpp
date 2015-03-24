@@ -45,10 +45,10 @@ int main()
     BOOST_TEST(last(ll2)()  == 5);
     BOOST_TEST(last(lll2)() == 10);
     BOOST_TEST(length(lll2)() == 9);
-    BOOST_TEST(at(even4,3)() == 8);
-    BOOST_TEST(at(odd4,2)()  == 7);
-    BOOST_TEST(at(itersome,3)()   == -3);
-    BOOST_TEST(at(repeatsome,3)() == 1);
+    BOOST_TEST(at_(even4,3)() == 8);
+    BOOST_TEST(at_(odd4,2)()  == 7);
+    BOOST_TEST(at_(itersome,3)()   == -3);
+    BOOST_TEST(at_(repeatsome,3)() == 1);
 
     return boost::report_errors();
 }
