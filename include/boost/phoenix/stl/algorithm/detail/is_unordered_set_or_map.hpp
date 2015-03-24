@@ -136,7 +136,7 @@ namespace boost
     };
   
    
-};
+}
 
 #endif
 
