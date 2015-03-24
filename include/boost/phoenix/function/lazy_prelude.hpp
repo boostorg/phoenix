@@ -564,7 +564,7 @@ namespace boost {
     Last  last;
     Init  all_but_last;  // renamed from init which is not available.
     Length length;
-    At at;
+    At at_;  //Renamed from at.
     Filter filter;
     Iterate iterate;
 
