@@ -12,6 +12,8 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/scope/local_variable.hpp>
+#include <boost/phoenix/bind/bind_member_function.hpp>
 
 #include <boost/detail/lightweight_test.hpp>
 
@@ -20,9 +22,12 @@ int main()
     using boost::phoenix::throw_;
     using boost::phoenix::try_;
     using boost::phoenix::ref;
+    using boost::phoenix::local_names::_e;
+    using boost::phoenix::bind;
     using std::exception;
     using std::string;
     using std::runtime_error;
+    namespace phx = boost::phoenix;
 
     {
         try
@@ -57,13 +62,19 @@ int main()
 
     {
         bool caught_exception = false;
+        string what;
 
         try_
         [ throw_(runtime_error("error")) ]
-        .catch_<exception>()
-        [ ref(caught_exception) = true ]();
+        .catch_<exception>(_e)
+        [
+            ref(caught_exception) = true
+            // ambiguous with std::ref
+          , phx::ref(what) = bind(&exception::what, _e)
+        ]();
 
         BOOST_TEST(caught_exception);
+        BOOST_TEST(what == string("error"));
     }
 
     {
@@ -78,15 +89,21 @@ int main()
 
     {
         bool caught_correct_exception = false;
+        string what;
 
         try_
             [ throw_(runtime_error("error")) ]
         .catch_<string>()
             [ ref(caught_correct_exception) = false ]
-        .catch_<exception>()
-            [ ref(caught_correct_exception) = true]();
+        .catch_<exception>(_e)
+        [
+            ref(caught_correct_exception) = true
+            // ambiguous with std::ref
+          , phx::ref(what) = bind(&exception::what, _e)
+        ]();
 
         BOOST_TEST(caught_correct_exception);
+        BOOST_TEST(what == string("error"));
     }
 
     {
