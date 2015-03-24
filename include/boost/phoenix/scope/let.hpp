@@ -177,7 +177,7 @@ namespace boost { namespace phoenix
             , Map
             , Expr
            >::type let_type;
-           typedef is_value<let_type> is_val;
+           //typedef is_value<let_type> is_val;
 
            let_type let_exp = expression::let_<Locals, Map, Expr>::make(locals, Map(), expr);
            //if(is_val::value) //This seems always to be true
