@@ -83,7 +83,7 @@ namespace boost {
       struct remove_RC
       {
           typedef typename boost::remove_reference<T>::type TT;
-          typedef typename boost::remove_const<TT>::type type;;
+          typedef typename boost::remove_const<TT>::type type;
       };
 
       struct XId
