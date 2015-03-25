@@ -208,7 +208,7 @@ namespace boost {
   
       template <>
       bool is_a_unique_type_for_nil<a_unique_type_for_nil>
-      (const a_unique_type_for_nil& n) {
+      (const a_unique_type_for_nil& /* n */) {
          return true;
       }
 
@@ -1420,7 +1420,7 @@ bool operator<( a_unique_type_for_nil, const list<T>& b ) {
       }
 
       template <class L>
-      typename result<Cat(L,a_unique_type_for_nil)>::type operator()( const L& l, const a_unique_type_for_nil& n ) const
+      typename result<Cat(L,a_unique_type_for_nil)>::type operator()( const L& l, const a_unique_type_for_nil& /* n */ ) const
       {
          listlike::EnsureListLike<L>();
          return l;
