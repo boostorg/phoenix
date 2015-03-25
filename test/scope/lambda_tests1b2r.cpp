@@ -63,7 +63,7 @@ main()
         int z;
         BOOST_TEST(
         (
-                _3 = _1 +
+                _1 +
                 lambda(_a = _1)
                 [
                   _a + lambda[_a + 2]
