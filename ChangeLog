@@ -84,8 +84,6 @@ CHANGELOG
   Modified file: boost/phoenix/function/function.hpp
 
   Revised version of lazy functionality with added functions.
-  Fixed name clash by renaming 'at' to be 'at_' because the name 'at' is
-  used in phoenix/stl/container/container.hpp.
   Modified files in boost/phoenix/function:
     lazy_operator.hpp lazy_prelude.hpp lazy_reuse.hpp
   New files:
@@ -93,7 +91,7 @@ CHANGELOG
   New test files:
     lazy_compose_tests.cpp lazy_fold_tests.cpp lazy_scan_tests.cpp
 
-- V3.2.0
+- V3.2.0 - in Boost 1.58.0
 
 - patch for #10927 in test/stdlib/cmath.cpp
 - patch for #11085 in test/function/function_tests.cpp
@@ -115,6 +113,12 @@ CHANGELOG
   test/function/lazy_list2_tests     More tests of list<T>.
 - Develop documentation for version 3.2.0
   This includes a new section on the lazy list implementation.
+
+- Fixed name clash by renaming 'at' to be 'at_' because the name 'at' is
+  used in phoenix/stl/container/container.hpp.
+
+- Fixed an unused typedef in phoenix/scope/let.hpp
+  - contributed by Kohei Takahashi
 
 - V3.1.1
 
