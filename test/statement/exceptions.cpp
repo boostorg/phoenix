@@ -17,6 +17,46 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
+struct base_exception : std::exception
+{
+    explicit
+    base_exception(char const *msg)
+        : _sliced(true), _what(msg)
+    {}
+
+    base_exception(base_exception const &other)
+        : _sliced(true), _what(other._what)
+    {
+    }
+
+    char const *what() const BOOST_NOEXCEPT_OR_NOTHROW
+    {
+        if (_sliced) { return "sliced ..."; }
+        return _what;
+    }
+
+    bool        _sliced;
+    char const *_what;
+};
+
+struct extended_exception : base_exception
+{
+    explicit
+    extended_exception(char const *msg)
+        : base_exception(msg)
+    {
+        // mark as not sliced
+        _sliced = false;
+    }
+
+    extended_exception(extended_exception const &other)
+        : base_exception(other)
+    {
+        // mark as not sliced
+        _sliced = false;
+    }
+};
+
 int main()
 {
     using boost::phoenix::throw_;
@@ -62,11 +102,41 @@ int main()
 
     {
         bool caught_exception = false;
+
+        try_
+        [ throw_(runtime_error("error")) ]
+        .catch_<exception>(_e) // captured but unused
+        [
+            ref(caught_exception) = true
+        ]();
+
+        BOOST_TEST(caught_exception);
+    }
+
+    {
+        bool caught_exception = false;
         string what;
 
         try_
         [ throw_(runtime_error("error")) ]
         .catch_<exception>(_e)
+        [
+            ref(caught_exception) = true
+            // ambiguous with std::ref
+          , phx::ref(what) = bind(&exception::what, _e)
+        ]();
+
+        BOOST_TEST(caught_exception);
+        BOOST_TEST(what == string("error"));
+    }
+
+    {
+        bool caught_exception = false;
+        string what;
+
+        try_
+        [ throw_(extended_exception("error")) ]
+        .catch_<base_exception>(_e) // A thrown object should not be copied due to slicing.
         [
             ref(caught_exception) = true
             // ambiguous with std::ref
