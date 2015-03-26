@@ -53,7 +53,7 @@ namespace boost { namespace phoenix
     {};
 
     template <typename T>
-    bool is_val(T const &t)
+    bool is_val(T const & /* t */)
     {
       return is_value<T>::value;
     }
