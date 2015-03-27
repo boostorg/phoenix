@@ -13,7 +13,7 @@
 #include <boost/preprocessor/repetition/repeat.hpp>
 
 #define BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY(RESULT, NAME, FUNC)                \
-    namespace detail                                                            \
+    namespace detail0                                                            \
     {                                                                           \
         struct BOOST_PP_CAT(NAME, _impl_nullary)                                \
         {                                                                       \
@@ -29,13 +29,13 @@
                                                                                 \
     inline                                                                      \
     boost::phoenix::detail::expression::function_eval<                          \
-        detail:: BOOST_PP_CAT(NAME, _impl_nullary)                              \
+        detail0:: BOOST_PP_CAT(NAME, _impl_nullary)                              \
     >::type const                                                               \
     NAME()                                                                      \
     {                                                                           \
         return boost::phoenix::detail::expression::                             \
-                function_eval<detail:: BOOST_PP_CAT(NAME, _impl_nullary)>       \
-                    ::make(detail:: BOOST_PP_CAT(NAME, _impl_nullary)());       \
+                function_eval<detail0:: BOOST_PP_CAT(NAME, _impl_nullary)>       \
+                    ::make(detail0:: BOOST_PP_CAT(NAME, _impl_nullary)());       \
     }                                                                           \
 /**/
 
