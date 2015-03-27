@@ -1,7 +1,8 @@
 /*=============================================================================
   Copyright (c) 2011 Thomas Heller
+  Copyright (c) 2015 John Fletcher
 
-  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
   ==============================================================================*/
 #include <iostream>
@@ -55,6 +56,12 @@ BOOST_PHOENIX_ADAPT_FUNCTION(
 )
 BOOST_PHOENIX_ADAPT_FUNCTION(int, plus4, impl::plus4, 4)
 
+// Test of solution to bug when using namespace
+using namespace boost::phoenix;
+
+BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY(void, test2, impl::test)
+
+
 int
 main()
 {
@@ -65,6 +72,7 @@ main()
     int b = 256;
 
     test()();
+    test2()();
     BOOST_TEST(::negate(arg1)(a) == -a);
     BOOST_TEST(::plus(arg1, arg2)(a, b) == a+b);
     BOOST_TEST(::plus(arg1, arg2, 3)(a, b) == a+b+3);
