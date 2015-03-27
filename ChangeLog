@@ -91,6 +91,14 @@ CHANGELOG
   New test files:
     lazy_compose_tests.cpp lazy_fold_tests.cpp lazy_scan_tests.cpp
 
+- Feature enhancements #5604 Sequenced statements of a catch_ statement is
+  now able to handle thrown exception via local variables.
+
+  Modified files:
+    boost/phoenix/statement/try_catch.hpp
+  Modified test files:
+    exceptions.cpp
+
 - V3.2.0 - in Boost 1.58.0
 
 - patch for #10927 in test/stdlib/cmath.cpp
