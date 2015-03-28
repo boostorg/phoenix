@@ -57,7 +57,7 @@ BOOST_PHOENIX_ADAPT_FUNCTION(
 BOOST_PHOENIX_ADAPT_FUNCTION(int, plus4, impl::plus4, 4)
 
 // Test of solution to bug when using namespace
-using namespace boost::phoenix;
+// using namespace boost::phoenix;
 
 BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY(void, test2, impl::test)
 
