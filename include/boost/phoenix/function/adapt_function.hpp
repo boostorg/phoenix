@@ -40,7 +40,7 @@
 /**/
 
 #define BOOST_PHOENIX_ADAPT_FUNCTION(RESULT, NAME, FUNC, N)                     \
-    namespace detail                                                            \
+    namespace detail1                                                            \
     {                                                                           \
         struct BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)                      \
         {                                                                       \
@@ -64,16 +64,16 @@
     inline                                                                      \
     typename                                                                    \
         boost::phoenix::detail::expression::function_eval<                      \
-        detail:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)                    \
+        detail1:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)                    \
           , BOOST_PHOENIX_A(N)>::type const                                     \
     NAME(BOOST_PHOENIX_A_const_ref_a(N))                                        \
     {                                                                           \
         return boost::phoenix::detail::expression::                             \
             function_eval<                                                      \
-                detail:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)            \
+                detail1:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)            \
               , BOOST_PHOENIX_A(N)                                              \
             >::make(                                                            \
-                detail:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)()          \
+                detail1:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)()          \
               , BOOST_PHOENIX_a(N)                                              \
             );                                                                  \
     }                                                                           \
