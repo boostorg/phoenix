@@ -1,8 +1,9 @@
 /*=============================================================================
     Copyright (c) 2005-2007 Dan Marsden
     Copyright (c) 2005-2007 Joel de Guzman
+    Copyright (c) 2015      John Fletcher
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
@@ -123,7 +124,7 @@ int main()
         [
             ref(caught_exception) = true
             // ambiguous with std::ref
-          , phx::ref(what) = bind(&exception::what, _e)
+          , phx::ref(what) = phx::bind(&exception::what, _e)
         ]();
 
         BOOST_TEST(caught_exception);
@@ -140,7 +141,7 @@ int main()
         [
             ref(caught_exception) = true
             // ambiguous with std::ref
-          , phx::ref(what) = bind(&exception::what, _e)
+          , phx::ref(what) = phx::bind(&exception::what, _e)
         ]();
 
         BOOST_TEST(caught_exception);
@@ -169,7 +170,7 @@ int main()
         [
             ref(caught_correct_exception) = true
             // ambiguous with std::ref
-          , phx::ref(what) = bind(&exception::what, _e)
+          , phx::ref(what) = phx::bind(&exception::what, _e)
         ]();
 
         BOOST_TEST(caught_correct_exception);
