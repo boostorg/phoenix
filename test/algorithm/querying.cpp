@@ -2,8 +2,9 @@
     Copyright (c) 2005 Dan Marsden
     Copyright (c) 2005-2007 Joel de Guzman
     Copyright (c) 2007 Hartmut Kaiser
+    Copyright (c) 2015 John Fletcher
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
@@ -15,6 +16,7 @@
 #include <boost/config.hpp>
 
 #ifdef BOOST_HAS_HASH
+#define _GLIBCXX_PERMIT_BACKWARD_HASH
 #include BOOST_HASH_SET_HEADER
 #include BOOST_HASH_MAP_HEADER
 #define BOOST_PHOENIX_HAS_HASH
