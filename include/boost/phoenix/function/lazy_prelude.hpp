@@ -1619,6 +1619,213 @@ namespace boost {
     Ptr_to_fun  ptr_to_fun;
     Ptr_to_mem_fun  ptr_to_mem_fun;
 
+    namespace impl {
+
+      template <class F, class X>
+      class XThunk1Helper
+      {
+        F f;
+        X x;
+      public:
+        XThunk1Helper( const F& a, const X &b) : f(a), x(b) {}
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF,typename XX>
+        struct result<This(FF,XX)>
+        {
+          typedef typename RTFFX<FF,XX>::type type;
+        };
+
+        typename result<XThunk1Helper(F,X)>::type
+        operator()() const {
+          return f( x )();
+        }
+ 
+     };
+
+      template <class F, class X, class Y>
+      class XThunk2Helper
+      {
+        F f;
+        X x;
+        Y y;
+      public:
+        XThunk2Helper( const F& a, const X &b, const Y& c) :
+                       f(a), x(b), y(c) {}
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF,typename XX, typename YY>
+        struct result<This(FF,XX,YY)>
+        {
+          typedef typename RTFFXY<FF,XX,YY>::type type;
+        };
+
+        typename result<XThunk2Helper(F,X,Y)>::type
+        operator()() const {
+          return f( x, y )();
+        }
+ 
+     };
+
+      template <class F, class X, class Y, class Z>
+      class XThunk3Helper
+      {
+        F f;
+        X x;
+        Y y;
+        Z z;
+      public:
+        XThunk3Helper( const F& a, const X &b, const Y& c, const Z& d) :
+                       f(a), x(b), y(c), z(d) {}
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF,typename XX,
+                                 typename YY, typename ZZ>
+        struct result<This(FF,XX,YY,ZZ)>
+        {
+          typedef typename RTFFXYZ<FF,XX,YY,ZZ>::type type;
+        };
+
+        typename result<XThunk3Helper(F,X,Y,Z)>::type
+        operator()() const {
+          return f( x, y, z )();
+        }
+ 
+     };
+
+      class XThunk1 {
+
+      template <class F, class X> struct Helper
+      {
+        typedef typename remove_RC<F>::type FType;
+        typedef typename remove_RC<X>::type XType;
+        typedef XThunk1Helper<FType,XType> CType;
+        typedef typename RTFFX<FType,XType>::type result_type;
+        typedef MonomorphicWrapper0<result_type,CType> fun_type;
+        typedef fun_type Result;
+        static Result go( const F& f, const X& x)
+        {
+          return fun_type(CType(f,x));
+        }
+      };
+
+      public:
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF, typename XX>
+        struct result<This(FF,XX)>
+        {
+          typedef typename remove_RC<FF>::type FType;
+          typedef typename remove_RC<XX>::type XType;
+          typedef typename Helper<FType,XType>::Result type;
+        };
+
+        template <class F, class X>
+        typename result<XThunk1(F,X)>::type operator()
+                 ( const F& f, const X& x) const
+        {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          return Helper<FType,XType>::go( f, x );
+        }
+
+     };
+
+      class XThunk2 {
+
+      template <class F, class X, class Y> struct Helper
+      {
+        typedef typename remove_RC<F>::type FType;
+        typedef typename remove_RC<X>::type XType;
+        typedef typename remove_RC<Y>::type YType;
+        typedef XThunk2Helper<FType,XType,YType> CType;
+        typedef typename RTFFXY<FType,XType,YType>::type result_type;
+        typedef MonomorphicWrapper0<result_type,CType> fun_type;
+        typedef fun_type Result;
+        static Result go( const F& f, const X& x, const Y& y)
+        {
+          return fun_type(CType(f,x,y));
+        }
+      };
+
+      public:
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF, typename XX, typename YY>
+        struct result<This(FF,XX,YY)>
+        {
+          typedef typename remove_RC<FF>::type FType;
+          typedef typename remove_RC<XX>::type XType;
+          typedef typename remove_RC<YY>::type YType;
+          typedef typename Helper<FType,XType,YType>::Result type;
+        };
+
+        template <class F, class X, class Y>
+        typename result<XThunk2(F,X,Y)>::type operator()
+                 ( const F& f, const X& x, const Y& y) const
+        {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename remove_RC<Y>::type YType;
+          return Helper<FType,XType,YType>::go( f, x, y );
+        }
+
+     };
+
+      class XThunk3 {
+
+      template <class F, class X, class Y, class Z> struct Helper
+      {
+        typedef typename remove_RC<F>::type FType;
+        typedef typename remove_RC<X>::type XType;
+        typedef typename remove_RC<Y>::type YType;
+        typedef typename remove_RC<Z>::type ZType;
+        typedef XThunk3Helper<FType,XType,YType,ZType> CType;
+        typedef typename RTFFXYZ<FType,XType,YType,ZType>::type result_type;
+        typedef MonomorphicWrapper0<result_type,CType> fun_type;
+        typedef fun_type Result;
+        static Result go( const F& f, const X& x, const Y& y, const Z& z)
+        {
+          return fun_type(CType(f,x,y,z));
+        }
+      };
+
+      public:
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF, typename XX,
+                                 typename YY, typename ZZ>
+        struct result<This(FF,XX,YY,ZZ)>
+        {
+          typedef typename remove_RC<FF>::type FType;
+          typedef typename remove_RC<XX>::type XType;
+          typedef typename remove_RC<YY>::type YType;
+          typedef typename remove_RC<ZZ>::type ZType;
+          typedef typename Helper<FType,XType,YType,ZType>::Result type;
+        };
+
+        template <class F, class X, class Y, class Z>
+        typename result<XThunk3(F,X,Y,Z)>::type operator()
+            ( const F& f, const X& x, const Y& y, const Z& z) const
+        {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename remove_RC<Y>::type YType;
+          typedef typename remove_RC<Z>::type ZType;
+          return Helper<FType,XType,YType,ZType>::go( f, x, y, z );
+        }
+
+     };
+
+    }
+
+    typedef boost::phoenix::function<impl::XThunk1> Thunk1;
+    typedef boost::phoenix::function<impl::XThunk2> Thunk2;
+    typedef boost::phoenix::function<impl::XThunk3> Thunk3;
+    Thunk1 thunk1;
+    Thunk2 thunk2;
+    Thunk3 thunk3;
+
     namespace fcpp {
 
 
