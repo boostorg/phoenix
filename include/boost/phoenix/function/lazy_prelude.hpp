@@ -19,6 +19,23 @@
 //
 // Now that list<T> is available I can start to build things here.
 //
+// pow(n,x)      x^n
+// apply(n,f,x)  f^n(x)
+//
+/////////////////////////////////////////////
+// compose is Haskell's operator (.)       //
+// compose(f,g)(x)        = f( g(x) )      //
+// compose(f,g)(x,y)      = f( g(x,y) )    //
+// compose(f,g)(x,y,z)    = f( g(x,y,z) )  //
+//////////////////////////////////////////////////////
+// compose also applies f(a,b) to the results of    //
+// 2 functions g and h to the same argument(s).     //
+// e.g. a = g(x,y) and b = h(x,y)                   //
+//////////////////////////////////////////////////////
+// compose(f,g,h)(x)     = f( g(x),     h(x) )      //
+// compose(f,g,h)(x,y)   = f( g(x,y),   h(x,y) )    //
+// compose(f,g,h)(x,y,z) = f( g(x,y,z), h(x,y,z) )  //
+//////////////////////////////////////////////////////
 //
 // until(pred,f,start)         - if pred(start) is true, return start
 //                               apply value = f(start)
@@ -51,7 +68,7 @@
 //
 // last(list)
 // all_but_last(list)
-// at(list,n)
+// at_(list,n) (renamed from at because of at in stl/container/container.hpp)
 // length(list)
 // filter(pred,list)
 // iterate(function,value)
@@ -60,7 +77,43 @@
 // drop(n,list)
 // enum_from(x)
 // enum_from_to(x,y)
+// foldr fold_right (synonyms)
+// foldl fold_left  (synonyms)
+// scanr scan_right (synonyms)
+// scanl scan_left  (synonyms)
+// foldr1 fold_right_one (synonyms)
+// foldl1 fold_left_one  (synonyms)
+// scanr1 scan_right_one (synonyms)
+// scanl1 scan_left_one  (synonyms)
+// iterate
 //
+// Things to build lazy functors from non-lazy code.
+//
+// ptr_to_fun  for 1, 2 3 or 4 arguments
+// ptr_to_fun0 for nullary functions
+// ptr_to_mem_fun for member functions with 0 to 3 arguments.
+//
+// NOTE: ptr_to_fun0 is not needed in FC++. Here the nullary case is handled
+//       separately, as is the case in phoenix/function. The internal structure
+//       is quite different.
+//       Also, ptr_to_mem_fun is not separate in FC++ but is needed here.
+//
+// These bind all the arguments to create an object of
+// type boost::function0<void>
+//
+// thunk1 - thunk1(function,argument1)
+// thunk2 - thunk2(function,argument1,argument2)
+// thunk3 - thunk3(function,argument1,argument2,argument3)
+//
+// The function can be ptr_to_fun or ptr_to_mem_fun.
+//
+// See examples of usage where the code is located at the end of the file.
+//
+////////////////////////////////////////////////////////////////////////////
+//                         Change of policy:
+// I am going to follow FC++ practice and give all structs
+// inside namespace impl a leading X to the name for clarity.
+// This is not in 3.2.0 (Boost 1.58.0) and will go into the next release.
 ////////////////////////////////////////////////////////////////////////////
 // Interdependence:
 // The old Boost FC++ has a set of headers which interelate and call each
@@ -87,7 +140,6 @@
 // on the basis that files need what they call.
 //
 // lazy_config.hpp    (If needed)* probably not needed.
-// lazy_signature.hpp (If needed)*
 // lazy_smart.hpp     (If needed)*
 // lazy_curry.hpp     (If needed)*
 // lazy_full.hpp      (If needed)*
@@ -95,6 +147,7 @@
 // lazy_function.hpp  (may not now be needed)
 // lazy_reuse.hpp     (implemented without use of FC++ functions)
 // lazy_list.hpp
+// lazy_signature.hpp (hold structs for return types)
 //
 // * file does not yet exist.
 ////////////////////////////////////////////////////////////////////////////
@@ -109,7 +162,7 @@
 // Some of function and reuse are needed for the list type.
 // I will review later whether they are part of the external interface.
 //
-// John Fletcher  February 2015.
+// John Fletcher  February to April 2015.
 ////////////////////////////////////////////////////////////////////////////
 /*=============================================================================
     Copyright (c) 2000-2003 Brian McNamara and Yannis Smaragdakis
@@ -798,11 +851,10 @@ namespace boost {
               IterateH( const F& ff, const T& tt) : f(ff), t(tt) {}
               template <typename Sig> struct result;
 
-              template <typename This,class F2,class T2>
-              struct result<This(F2,T2)>
+              template <typename This,class FF,class TT>
+              struct result<This(FF,TT)>
               {
-                typedef typename boost::remove_reference<T2>::type TT;
-                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename remove_RC<TT>::type TTT;
                 typedef typename UseList::template List<TTT>::type LType;
                 typedef typename result_of::ListType<LType>::
                         delay_result_type type;
@@ -873,10 +925,10 @@ namespace boost {
     Length length;
     At at_; // renamed from at because of name clash.
     Filter filter;
-    Foldr   foldr;
-    Foldl   foldl;
-    Scanr   scanr;
-    Scanl   scanl;
+    Foldr   foldr, fold_right;
+    Foldl   foldl, fold_left;
+    Scanr   scanr, scan_right;
+    Scanl   scanl, scan_left;
     Iterate iterate;
 
     namespace impl {
@@ -1139,8 +1191,7 @@ namespace boost {
              template <typename This, typename T>
              struct result<This(T)>
              {
-               typedef typename boost::remove_reference<T>::type TT;
-               typedef typename boost::remove_const<TT>::type TTT;
+               typedef typename remove_RC<T>::type TTT;
                typedef typename UseList::template List<TTT>::type LType;
                typedef typename result_of::ListType<LType>::
                        delay_result_type type;
@@ -1150,8 +1201,7 @@ namespace boost {
              typename result<XEnum_from(T)>::type operator()
                 (const T & x) const
               {
-                typedef typename boost::remove_reference<T>::type TT;
-                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename remove_RC<T>::type TTT;
                 typedef typename UseList::template List<T>::type LType;
                 typedef typename result_of::ListType<LType>::
                         delay_result_type result_type;
@@ -1159,7 +1209,6 @@ namespace boost {
                 fun1_R_TTT efh_R_TTT = EFH<TTT>(x);
                 typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
                 EFH_R_T efh_R_T(efh_R_TTT);
-                //std::cout << "enum_from (" << x << ")" << std::endl;
                 return efh_R_T();
               }
           };
@@ -1185,7 +1234,6 @@ namespace boost {
                 typedef typename result_of::ListType<LType>::
                         delay_result_type result_type;
                 typedef boost::function0<result_type> fun1_R_TTT;
-                //std::cout << "EFTH (" << x << ")" << std::endl;
                 if (x > y ) return NIL;
                 ++x;
                 fun1_R_TTT efth_R_TTT = EFTH<T>(x,y);
@@ -1205,8 +1253,7 @@ namespace boost {
              template <typename This, typename T>
              struct result<This(T,T)>
              {
-               typedef typename boost::remove_reference<T>::type TT;
-               typedef typename boost::remove_const<TT>::type TTT;
+               typedef typename remove_RC<T>::type TTT;
                typedef typename UseList::template List<TTT>::type LType;
                typedef typename result_of::ListType<LType>::
                        delay_result_type type;
@@ -1216,8 +1263,7 @@ namespace boost {
              typename result<XEnum_from(T,T)>::type operator()
              (const T & x, const T & y) const
               {
-                typedef typename boost::remove_reference<T>::type TT;
-                typedef typename boost::remove_const<TT>::type TTT;
+                typedef typename remove_RC<T>::type TTT;
                 typedef typename UseList::template List<T>::type LType;
                 typedef typename result_of::ListType<LType>::
                         delay_result_type result_type;
