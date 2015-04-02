@@ -62,6 +62,7 @@ test-suite phoenix_function :
     [ run function/lazy_ptr_tests.cpp ]
     [ run function/lazy_scan_tests.cpp ]
     [ run function/lazy_templated_struct_tests.cpp ]
+    [ run function/lazy_thunk_tests.cpp ]
     [ run function/lazy_operator_tests.cpp ]
 #    [ run function/function_tests_phx2.cpp ]
     ;
