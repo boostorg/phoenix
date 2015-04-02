@@ -11,6 +11,14 @@
 //
 //   RTEFH    == ReturnTypeEnumFromHelper    (used in enum_from, enum_from_to)
 //   RTFD     == ReturnTypeFunctionDelay     (used in repeat)
+//   RTFFX    == ReturnTypeFunctoidFwithX     (used in thunk1)
+//   RTFFXY   == ReturnTypeFunctoidFwithXandY (used in thunk2)
+//   RTFFXYZ  == ReturnTypeFunctoidFwithXandYandZ (used in thunk3)
+//   RTF      == ReturnTypeF                  (used in ptr_to_fun0)
+//   RTFX     == ReturnTypeFwithX          (used in ptr_to_fun, ptr_to_mem_fun)
+//   RTFXY    == ReturnTypeFwithXandY      (used in ptr_to_fun, ptr_to_mem_fun)
+//   RTFXYZ   == ReturnTypeFwithXandYandZ  (used in ptr_to_fun, ptr_to_mem_fun)
+//   RTFWXYZ  == ReturnTypeFwithWandXandYandZ (used in ptr_to_fun)
 //   RTFGHX   == ReturnTypeFandGandHwithX    (used in compose)
 //   RTFGHXY  == ReturnTypeFandGandHwithXY   (used in compose)
 //   RTFGHXYZ == ReturnTypeFandGandHwithXYZ  (used in compose)
@@ -58,6 +66,99 @@ namespace boost {
           typedef typename UseList::template List<TTT>::type LType;
           typedef typename result_of::ListType<LType>::
                            delay_result_type type;
+      };
+
+
+      //   RTFFX   == ReturnTypeFunctoidFwithX   (used in thunk1)
+      template <class F,class X>
+      struct RTFFX {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename boost::result_of<FType(XType)>::type FR;
+          typedef typename boost::result_of<FR()>::type RR;
+          typedef typename remove_RC<RR>::type RType;
+          typedef RType type;
+      };
+
+      //   RTFFXY   == ReturnTypeFunctoidFwithXandY   (used in thunk2)
+      template <class F,class X,class Y>
+      struct RTFFXY {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename remove_RC<Y>::type YType;
+          typedef typename boost::result_of<FType(XType,YType)>::type FR;
+          typedef typename boost::result_of<FR()>::type RR;
+          typedef typename remove_RC<RR>::type RType;
+          typedef RType type;
+      };
+
+      //   RTFFXYZ  == ReturnTypeFunctoidFwithXandYandZ  (used in thunk3)
+      template <class F,class X,class Y,class Z>
+      struct RTFFXYZ {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename remove_RC<Y>::type YType;
+          typedef typename remove_RC<Z>::type ZType;
+          typedef typename boost::result_of<FType(XType,YType,ZType)>::type FR;
+          typedef typename boost::result_of<FR()>::type RR;
+          typedef typename remove_RC<RR>::type RType;
+          typedef RType type;
+      };
+
+      //   RTF   == ReturnTypeF     (used in ptr_to_fun0)
+      template <class F>
+      struct RTF {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename boost::result_of<FType()>::type FR;
+          typedef typename remove_RC<FR>::type RType;
+          typedef RType type;
+      };
+
+      //   RTFX   == ReturnTypeFwithX     (used in ptr_to_fun)
+      template <class F,class X>
+      struct RTFX {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename boost::result_of<FType(XType)>::type FR;
+          typedef typename remove_RC<FR>::type RType;
+          typedef RType type;
+      };
+
+      //   RTFXY  == ReturnTypeFwithXandY     (used in ptr_to_fun)
+      template <class F,class X,class Y>
+      struct RTFXY {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename remove_RC<Y>::type YType;
+          typedef typename boost::result_of<FType(XType,YType)>::type FR;
+          typedef typename remove_RC<FR>::type RType;
+          typedef RType type;
+      };
+
+      //   RTFXYZ  == ReturnTypeFwithXandYandZ  (used in ptr_to_fun)
+      template <class F,class X,class Y,class Z>
+      struct RTFXYZ {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename remove_RC<Y>::type YType;
+          typedef typename remove_RC<Z>::type ZType;
+          typedef typename boost::result_of<FType(XType,YType,ZType)>::type FR;
+          typedef typename remove_RC<FR>::type RType;
+          typedef RType type;
+      };
+
+      //   RTFWXYZ  == ReturnTypeFwithWandXandYandZ  (used in ptr_to_fun)
+      template <class F,class W,class X,class Y,class Z>
+      struct RTFWXYZ {
+          typedef typename remove_RC<F>::type FType;
+          typedef typename remove_RC<W>::type WType;
+          typedef typename remove_RC<X>::type XType;
+          typedef typename remove_RC<Y>::type YType;
+          typedef typename remove_RC<Z>::type ZType;
+          typedef typename boost::result_of<FType(WType,XType,YType,ZType)>::
+                  type FR;
+          typedef typename remove_RC<FR>::type RType;
+          typedef RType type;
       };
 
       //   RTFGHX  == ReturnTypeFandGandHwithX (used in compose)
