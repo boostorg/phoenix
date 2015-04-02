@@ -599,6 +599,19 @@ namespace boost {
 
     };
 
+
+      template <class Result, class F>
+      class MonomorphicWrapper0 /* : public c_fun_type<Res> */
+      {
+          F f;
+      public:
+          typedef Result result_type;
+          MonomorphicWrapper0( const F& g ) : f(g) {}
+             Result operator()() const {
+             return f();
+          }
+      };
+
   }
     /////////////////////////////////////////////////////////
     // Look at this. How to use Phoenix with a templated
