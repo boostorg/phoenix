@@ -1278,11 +1278,6 @@ namespace boost {
 
     }
 
-
-    //BOOST_PHOENIX_ADAPT_CALLABLE(apply, impl::apply, 3)
-    // Functors to be used in reuser will have to be defined
-    // using boost::phoenix::function directly
-    // in order to be able to be used as arguments.
     typedef boost::phoenix::function<impl::XFoldr1> Foldr1;
     typedef boost::phoenix::function<impl::XFoldl1> Foldl1;
     typedef boost::phoenix::function<impl::XScanr1> Scanr1;
@@ -1294,10 +1289,10 @@ namespace boost {
     typedef boost::phoenix::function<impl::XDrop>   Drop;
     typedef boost::phoenix::function<impl::XEnum_from>     Enum_from;
     typedef boost::phoenix::function<impl::XEnum_from_to>  Enum_from_to;
-    Foldr1 foldr1;
-    Foldl1 foldl1;
-    Scanr1 scanr1;
-    Scanl1 scanl1;
+    Foldr1 foldr1, fold_right_one;
+    Foldl1 foldl1, fold_left_one;
+    Scanr1 scanr1, scan_right_one;
+    Scanl1 scanl1, scan_left_one;
     Repeat repeat;
     Map   map;
     ZipWith zip_with;
@@ -1305,6 +1300,7 @@ namespace boost {
     Drop  drop;
     Enum_from enum_from;
     Enum_from_to enum_from_to;
+
     namespace impl {
 
           struct XZip {
@@ -1341,6 +1337,287 @@ namespace boost {
     {
       return zip_with(minus,x,y);
     }
+
+    namespace impl {
+
+      ///////////////////////////////////////////////
+      //// ptr_to_fun IS NOW IN OPERATION        ////
+      //// ptr_to_fun0 for the nullary case      ////
+      ///////////////////////////////////////////////////////////////
+      // ptr_to_fun0(&f)()()                          = f()        //
+      // ptr_to_fun(&f)(arg1)(x)                      = f(x)       //
+      // ptr_to_fun(&f)(arg1,arg2)(x,y)               = f(x,y)     //
+      // ptr_to_fun(&f)(arg1,arg2,arg3)(x,y,z)        = f(x,y,z)   //
+      // ptr_to_fun(&f)(arg1,arg2,arg3,arg4)(w,x,y,z) = f(w,x,y,z) //
+      ///////////////////////////////////////////////////////////////
+
+      template <class F>
+      class XPtrHelper
+      {
+         F f;
+      public:
+         XPtrHelper( const F& a) : f(a) {}
+
+        template <typename Sig> struct result;
+
+        template <typename This, typename X>
+        struct result<This(X)>
+        {
+          typedef typename RTFX<F,X>::type type;
+        };
+
+        template <typename This, typename X, typename Y>
+        struct result<This(X,Y)>
+        {
+          typedef typename RTFXY<F,X,Y>::type type;
+        };
+
+        template <typename This, typename X, typename Y, typename Z>
+        struct result<This(X,Y,Z)>
+        {
+          typedef typename RTFXYZ<F,X,Y,Z>::type type;
+        };
+
+        template <typename This, typename W,typename X, typename Y, typename Z>
+        struct result<This(W,X,Y,Z)>
+        {
+          typedef typename RTFWXYZ<F,W,X,Y,Z>::type type;
+        };
+
+        template <class X>
+        typename result<XPtrHelper(X)>::type
+        operator()(const X & x) const {
+          return f(x);
+        }
+
+        template <class X, class Y>
+        typename result<XPtrHelper(X,Y)>::type
+        operator()(const X & x, const Y & y) const {
+          return f(x,y);
+        }
+
+        template <class X, class Y, class Z>
+        typename result<XPtrHelper(X,Y,Z)>::type
+        operator()(const X & x, const Y & y, const Z & z) const {
+          return f(x,y,z);
+        }
+
+        template <class W, class X, class Y, class Z>
+        typename result<XPtrHelper(W,X,Y,Z)>::type
+        operator()(const W& w,const X & x, const Y & y, const Z & z) const {
+          return f(w,x,y,z);
+        }
+
+      };
+
+      class XPtr_to_fun {
+
+      template <class F> struct Helper
+      {
+        typedef typename remove_RC<F>::type FType;
+        typedef XPtrHelper<FType> CType;
+        typedef boost::phoenix::function<CType> P_F;
+        typedef P_F Result;
+        static Result go( const F& f)
+        {
+          P_F p_f((CType(f)));
+          return p_f;
+        }
+      };
+
+      public:
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF>
+        struct result<This(FF)>
+        {
+          typedef typename remove_RC<FF>::type FType;
+          typedef typename Helper<FType>::Result type;
+        };
+
+        template <class F>
+        typename result<XPtr_to_fun(F)>::type operator()
+                 ( const F& f) const
+        {
+          typedef typename remove_RC<F>::type FType;
+          return Helper<FType>::go( f );
+        }
+      };
+
+      class XPtr_to_fun0 {
+
+      public:
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF>
+        struct result<This(FF)>
+        {
+          typedef typename remove_RC<FF>::type FType;
+          typedef typename RTF<FType>::type result_type;
+          typedef MonomorphicWrapper0<result_type,FType> type;
+        };
+
+        template <class F>
+        typename result<XPtr_to_fun0(F)>::type operator()
+                 ( const F& f) const
+        {
+            typedef typename remove_RC<F>::type FType;
+            typedef typename RTF<FType>::type result_type;
+            typedef MonomorphicWrapper0<result_type,FType> fun_type;
+            return fun_type(f);
+        }
+      };
+
+      ///////////////////////////////////////////////////
+      //// ptr_to_mem_fun IS NOW IN OPERATION        ////
+      ///////////////////////////////////////////////////////////////
+      // ptr_to_mem_fun(&f)(&m)()                     = m.f()      //
+      // ptr_to_mem_fun(&f)(&m,arg1)(x)               = m.f(x)     //
+      // ptr_to_mem_fun(&f)(&m,arg1,arg2)(x,y)        = m.f(x,y)   //
+      // ptr_to_mem_fun(&f)(&m,arg1,arg2,arg3)(x,y,z) = m.f(x,y,z) //
+      ///////////////////////////////////////////////////////////////
+      // Here &f is the address of the member function code
+      // and  &m is the address of an instance of the object.
+      //
+      // NOTE: The object is defined in terms of &f and &m supplied as an
+      // argument. This gives a freedom not available using the Phoenix
+      // macro BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY where an instance
+      // is needed when the macro is invoked. The return type must also be
+      // supplied:
+      //
+      //(int, bar_xx, example::bar.xx)
+      //
+      //
+      // Example of use:
+      //
+      // class Foo {
+      //    int x() const { return 0; }
+      //    int f( int y ) const { return y; }
+      //    int h( int a, int b ) const { return a+b; }
+      //    int j( int a, int b, int c ) const { return a+b+c; }
+      // };
+      //
+      // An instance is located somewhere:
+      //
+      // Foo bar;
+      //
+      // ptr_to_mem_fun(&Foo::x)(&bar)()
+      // ptr_to_mem_fun(&Foo::f)(&bar,arg1)(2)
+      // ptr_to_mem_fun(&Foo::h)(&bar,arg1,arg2)(2,3)
+      // ptr_to_mem_fun(&Foo::j)(&bar,arg1,arg2,arg3)(2,3,4)
+      //
+      // NOTE: The object is defined in terms of &f and &m is supplied as
+      // the first argument.
+      // This gives a freedom not available using the Phoenix
+      // macro BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY where an instance
+      // is needed when the macro is invoked. The return type must also be
+      // supplied:
+      //
+      // BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY(int, bar_xx, bar.xx)
+      //
+      //////////////////////////////////////////////////////////////////
+
+      template <class F>
+      class XPtrMemHelper
+      {
+         F f;
+      public:
+         XPtrMemHelper( const F& a) : f(a) {}
+
+        template <typename Sig> struct result;
+
+        template <typename This, typename M>
+        struct result<This(M)>
+        {
+          typedef typename RTF<F>::type type;
+        };
+
+        template <typename This, typename M, typename X>
+        struct result<This(M,X)>
+        {
+          typedef typename RTFX<F,X>::type type;
+        };
+
+        template <typename This, typename M, typename X, typename Y>
+        struct result<This(M,X,Y)>
+        {
+          typedef typename RTFXY<F,X,Y>::type type;
+        };
+
+        template <typename This, typename M, typename X, typename Y, typename Z>
+        struct result<This(M,X,Y,Z)>
+        {
+          typedef typename RTFXYZ<F,X,Y,Z>::type type;
+        };
+
+        template <class M>
+        typename result<XPtrMemHelper(M)>::type
+        operator()(const M& m) const {
+          return ((*m).*f)();
+        }
+
+        template <class M,class X>
+        typename result<XPtrMemHelper(M,X)>::type
+        operator()(const M& m, const X & x) const {
+          return ((*m).*f)(x);
+        }
+
+        template <class M,class X,class Y>
+        typename result<XPtrMemHelper(M,X,Y)>::type
+        operator()(const M& m, const X & x, const Y & y) const {
+          return ((*m).*f)(x,y);
+        }
+
+        template <class M,class X,class Y,class Z>
+        typename result<XPtrMemHelper(M,X,Y,Z)>::type
+        operator()(const M& m, const X & x, const Y & y, const Z & z) const {
+          return ((*m).*f)(x,y,z);
+        }
+
+      };
+
+      class XPtr_to_mem_fun {
+
+      template <class F> struct Helper
+      {
+        typedef typename remove_RC<F>::type FType;
+        typedef XPtrMemHelper<FType> CType;
+        typedef boost::phoenix::function<CType> P_F;
+        typedef P_F Result;
+        static Result go( const F& f)
+        {
+          P_F p_f((CType(f)));
+          return p_f;
+        }
+      };
+
+      public:
+        template <typename Sig> struct result;
+
+        template <typename This, typename FF>
+        struct result<This(FF)>
+        {
+          typedef typename remove_RC<FF>::type FType;
+          typedef typename Helper<FType>::Result type;
+        };
+
+        template <class F>
+        typename result<XPtr_to_mem_fun(F)>::type operator()
+                 ( const F& f) const
+        {
+          typedef typename remove_RC<F>::type FType;
+          return Helper<FType>::go( f );
+        }
+      };
+
+    }
+
+    typedef boost::phoenix::function<impl::XPtr_to_fun0>  Ptr_to_fun0;
+    typedef impl::XPtr_to_fun  Ptr_to_fun;  // This does not need to be wrapped.
+    typedef impl::XPtr_to_mem_fun   Ptr_to_mem_fun;  // This does not need to be wrapped.
+    Ptr_to_fun0 ptr_to_fun0;
+    Ptr_to_fun  ptr_to_fun;
+    Ptr_to_mem_fun  ptr_to_mem_fun;
 
     namespace fcpp {
 
