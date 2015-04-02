@@ -985,10 +985,10 @@ namespace boost {
             MapH( const F& ff, const L& ll) : f(ff), l(ll) {}
             template <typename Sig> struct result;
 
-            template <typename This>
-            struct result<This(F,L)>
+	template <typename This, typename FF, typename LL>
+            struct result<This(FF,LL)>
             {
-                typedef typename RTFL<F,L>::type type;
+                typedef typename RTFL<FF,LL>::type type;
             };
 
             typename result<MapH(F,L)>::type operator()() const {
