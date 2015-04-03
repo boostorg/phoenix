@@ -4,14 +4,13 @@
     Copyright (c) 2010 Thomas Heller
     Copyright (c) 2014 John Fletcher
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef BOOST_PHOENIX_CORE_ACTOR_HPP
 #define BOOST_PHOENIX_CORE_ACTOR_HPP
 
-#include <boost/phoenix/core/limits.hpp>
-
+#include <boost/config.hpp>
 #include <boost/is_placeholder.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -26,6 +25,15 @@
 #include <boost/utility/result_of.hpp>
 #include <boost/mpl/void.hpp>
 #include <cstring>
+
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || \
+    defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#   include <boost/phoenix/core/limits.hpp>
+#   define BOOST_PHOENIX_NO_VARIADIC_ACTOR
+#else
+#   include <boost/mpl/if.hpp>
+#   include <boost/type_traits/is_reference.hpp>
+#endif
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
@@ -46,7 +54,7 @@ namespace boost { namespace phoenix
             template <typename T>
             error_expecting_arguments(T const&) {}
         };
-        
+
         struct error_invalid_lambda_expr
         {
             template <typename T>
@@ -87,8 +95,48 @@ namespace boost { namespace phoenix
         #include <boost/phoenix/core/detail/cpp03/assign.hpp>
     }
 
-    // Bring in the result_of::actor<>
-    #include <boost/phoenix/core/detail/cpp03/actor_result_of.hpp>
+    namespace result_of
+    {
+#ifdef BOOST_PHOENIX_NO_VARIADIC_ACTOR
+        // Bring in the result_of::actor<>
+        #include <boost/phoenix/core/detail/cpp03/actor_result_of.hpp>
+#else
+        template <typename Expr, typename... A>
+        struct actor_impl
+        {
+            typedef
+                typename boost::phoenix::evaluator::impl<
+                    Expr const&
+                  , vector2<
+                        typename vector_chooser<sizeof...(A) + 1>::
+                          template apply<const ::boost::phoenix::actor<Expr> *, A...>::type&
+                      , default_actions
+                    > const &
+                  , proto::empty_env
+                >::result_type
+                type;
+        };
+
+        template <typename Expr, typename... A>
+        struct actor : actor_impl<Expr, A...> {};
+
+        template <typename Expr>
+        struct nullary_actor_result : actor_impl<Expr> {};
+#endif
+
+        template <typename Expr>
+        struct actor<Expr>
+        {
+            typedef
+                // avoid calling result_of::actor when this is false
+                typename mpl::eval_if_c<
+                    result_of::is_nullary<Expr>::value
+                  , nullary_actor_result<Expr>
+                  , mpl::identity<detail::error_expecting_arguments>
+                >::type
+            type;
+        };
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     //
@@ -112,7 +160,7 @@ namespace boost { namespace phoenix
               , mpl::identity<Expr>
             >::type
             expr_type;
-        
+
         BOOST_PROTO_BASIC_EXTENDS(expr_type, actor<expr_type>, phoenix_domain)
 
         // providing operator= to be assignable
@@ -150,7 +198,7 @@ namespace boost { namespace phoenix
         {
             return proto::make_expr<proto::tag::assign, phoenix_domain>(this->proto_expr_, a0);
         }
-        
+
         template <typename A0>
         typename proto::result_of::make_expr<
             proto::tag::subscript
@@ -183,7 +231,7 @@ namespace boost { namespace phoenix
         {
             typedef vector1<const actor<Expr> *> env_type;
             env_type env = {this};
-            
+
             return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
@@ -192,7 +240,7 @@ namespace boost { namespace phoenix
         {
             typedef vector1<const actor<Expr> *> env_type;
             env_type env = {this};
-            
+
             return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
 
@@ -209,11 +257,50 @@ namespace boost { namespace phoenix
         {
             return phoenix::eval(*this, phoenix::context(env, default_actions()));
         }
-        
+
+#ifdef BOOST_PHOENIX_NO_VARIADIC_ACTOR
         // Bring in the rest
         #include <boost/phoenix/core/detail/cpp03/actor_operator.hpp>
-    };
+#else
+        template <typename This, typename... A>
+        struct result<This(A...)>
+            : result_of::actor<
+                proto_base_expr
+              , typename mpl::if_<is_reference<A>, A, A const &>::type...
+            >
+        {};
 
+        template <typename... A>
+        typename result<actor(A...)>::type
+        operator()(A &&... a)
+        {
+            typedef
+                typename vector_chooser<sizeof...(A) + 1>::template apply<
+                    const actor<Expr> *
+                  , typename mpl::if_<is_reference<A>, A, A const &>::type...
+                >::type
+            env_type;
+
+            env_type env = {this, a...};
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
+        }
+
+        template <typename... A>
+        typename result<actor(A...)>::type
+        operator()(A &&... a) const
+        {
+            typedef
+                typename vector_chooser<sizeof...(A) + 1>::template apply<
+                    const actor<Expr> *
+                  , typename mpl::if_<is_reference<A>, A, A const &>::type...
+                >::type
+            env_type;
+
+            env_type env = {this, a...};
+            return phoenix::eval(*this, phoenix::context(env, default_actions()));
+        }
+#endif
+    };
 }}
 
 namespace boost
@@ -223,7 +310,7 @@ namespace boost
     struct result_of<phoenix::actor<Expr>()>
         : phoenix::result_of::actor<typename phoenix::actor<Expr>::proto_base_expr>
     {};
-    
+
     template <typename Expr>
     struct result_of<phoenix::actor<Expr> const()>
         : phoenix::result_of::actor<typename phoenix::actor<Expr>::proto_base_expr>

@@ -33,8 +33,6 @@
 #pragma wave option(preserve: 1)
 #endif
 
-    namespace result_of
-    {
         template <typename Expr
             , BOOST_PHOENIX_typename_A_void(BOOST_PHOENIX_ACTOR_LIMIT)
             , typename Dummy = void>
@@ -55,25 +53,10 @@
                 type;
         };
 
-        template <typename Expr>
-        struct actor<Expr>
-        {
-            typedef
-                // avoid calling result_of::actor when this is false
-                typename mpl::eval_if_c<
-                    result_of::is_nullary<Expr>::value
-                  , nullary_actor_result<Expr>
-                  , mpl::identity<detail::error_expecting_arguments>
-                >::type
-            type;
-        };
-
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                          \
     <boost/phoenix/core/detail/cpp03/actor_result_of.hpp>))
 #include BOOST_PHOENIX_ITERATE()
-
-    }
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)
