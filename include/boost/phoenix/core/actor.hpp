@@ -33,6 +33,7 @@
 #else
 #   include <boost/mpl/if.hpp>
 #   include <boost/type_traits/is_reference.hpp>
+#   include <boost/phoenix/core/detail/index_sequence.hpp>
 #endif
 
 #ifdef BOOST_MSVC
@@ -92,7 +93,36 @@ namespace boost { namespace phoenix
             }
         };
 
+#ifdef BOOST_PHOENIX_NO_VARIADIC_ACTOR
         #include <boost/phoenix/core/detail/cpp03/assign.hpp>
+#else
+        struct assign : proto::transform<assign>
+        {
+            typedef assign proto_grammer;
+
+            template <typename Expr, typename State, typename Data
+                    , typename Indices = typename detail::make_index_sequence<proto::arity_of<Expr>::value>::type >
+            struct impl;
+
+            template <std::size_t>
+            struct proto_expr { typedef proto::_ type; };
+
+            template <typename Expr, typename State, typename Data
+                    , std::size_t... Indices>
+            struct impl<Expr, State, Data, detail::index_sequence<Indices...> >
+                : proto::when<
+                    proto::nary_expr<typename proto_expr<Indices>::type...>
+                  , proto::and_<
+                      assign(
+                          proto::_child_c<Indices>
+                        , proto::call<proto::_child_c<Indices>(proto::_state)>
+                      )...
+                    >
+                >::template impl<Expr, State, Data>
+            {
+            };
+        };
+#endif
     }
 
     namespace result_of
