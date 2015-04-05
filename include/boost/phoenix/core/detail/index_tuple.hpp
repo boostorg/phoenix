@@ -10,6 +10,8 @@
 
 #include <cstddef>
 #include <boost/config.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/identity.hpp>
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
 #   error "Require C++11 variadic templates."
@@ -24,15 +26,13 @@ namespace boost { namespace phoenix { namespace detail
     template <std::size_t N, typename T>
     struct make_index_tuple_impl_;
 
-    template <typename T>
-    struct make_index_tuple_impl_<0, T>
-    {
-        typedef T type;
-    };
-
     template <std::size_t N, std::size_t... Indices>
     struct make_index_tuple_impl_<N, index_tuple<Indices...> >
-        : make_index_tuple_impl_<N - 1, index_tuple<N - 1, Indices...> >
+        : mpl::if_c<
+            N == 0
+          , mpl::identity<index_tuple<Indices...> >
+          , make_index_tuple_impl_<N - 1, index_tuple<N - 1, Indices...> >
+        >::type
     {
     };
 
