@@ -39,7 +39,7 @@ namespace
         int size = v.size();
             for_(ref(iii) = 0, ref(iii) < size, ++ref(iii) )
             [ ref(x) += arg1[ref(iii)] ] (v);
-	    BOOST_TEST(x == 45);
+            BOOST_TEST(x == 45);
         return;
     }
 
