@@ -110,7 +110,7 @@ struct functoid_traits {
    typedef
       typename impl::NeededASmartFunctoidButInsteadGot<MaybeASmartFunctoidT,
          boost::is_base_and_derived<SmartFunctoid,
-	 MaybeASmartFunctoidT>::value>::type F;
+         MaybeASmartFunctoidT>::value>::type F;
       template <int i> struct accepts {
       static const bool args = F::template crazy_accepts<int,i>::args;
    };
