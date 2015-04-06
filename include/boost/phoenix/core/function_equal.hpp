@@ -14,6 +14,10 @@
 #include <boost/phoenix/core/terminal.hpp>
 #include <boost/proto/matches.hpp>
 
+#ifndef BOOST_PHOENIX_NO_VARIADIC_FUNCTION_EQUAL
+#   include <boost/phoenix/core/detail/index_sequence.hpp>
+#endif
+
 namespace boost
 {
     template <typename> class weak_ptr;
@@ -36,7 +40,7 @@ namespace boost { namespace phoenix
             {
                 return a0 == a1;
             }
-            
+
             // hard wiring reference_wrapper and weak_ptr here ...
             // **TODO** find out why boost bind does this ...
             template <typename A0, typename A1>
@@ -90,6 +94,7 @@ namespace boost { namespace phoenix
                 return false;
             }
 
+#ifdef BOOST_PHOENIX_NO_VARIADIC_FUNCTION_EQUAL
             template <typename Expr1>
             result_type operator()(Expr1 const& e1, Expr1 const& e2) const
             {
@@ -103,6 +108,38 @@ namespace boost { namespace phoenix
 
             private:
             #include <boost/phoenix/core/detail/cpp03/function_equal.hpp>
+#else
+            template <typename Expr1>
+            result_type operator()(Expr1 const& e1, Expr1 const& e2) const
+            {
+                return
+                    this->evaluate(
+                        e1
+                      , e2
+                      , typename make_index_sequence<proto::arity_of<Expr1>::value>::type()
+                    );
+            }
+
+            private:
+            template <typename Expr1>
+            result_type
+            evaluate(Expr1 const& /*e1*/, Expr1 const& /*e2*/, index_sequence<>) const
+            {
+                return true;
+            }
+            template <typename Expr1, std::size_t Head, std::size_t... Tail>
+            result_type
+            evaluate(Expr1 const& e1, Expr1 const& e2, index_sequence<Head, Tail...>) const
+            {
+                return
+                  function_equal_()(proto::child_c<Head>(e1), proto::child_c<Head>(e2)) &&
+                  this->evaluate(
+                      e1
+                    , e2
+                    , index_sequence<Tail...>()
+                  );
+            }
+#endif
         };
     }
 
