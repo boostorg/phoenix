@@ -127,7 +127,7 @@ namespace boost { namespace phoenix
             private:
             template <typename Expr1>
             result_type
-            evaluate(Expr1 const& e1, Expr1 const& e2, index_tuple<>) const
+            evaluate(Expr1 const&, Expr1 const&, index_tuple<>) const
             {
                 return true;
             }
