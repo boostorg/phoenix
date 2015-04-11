@@ -9,6 +9,7 @@
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/mpl/has_xxx.hpp>
+#include <boost/mpl/bool.hpp>
 
 namespace boost { namespace phoenix {
     namespace detail
@@ -23,8 +24,7 @@ namespace boost { namespace phoenix {
 
             template <typename A>
             static yes check_(typename A::type *);
-            
-            
+
             template <typename A>
             static no check_(...);
 
@@ -32,7 +32,36 @@ namespace boost { namespace phoenix {
             typedef boost::mpl::bool_<value> type;
         };
 
+#ifdef BOOST_PHOENIX_NO_VARIADIC_PHX2_RESULT
         #include <boost/phoenix/core/detail/cpp03/phx2_result.hpp>
+#else
+        template <typename F, typename... A>
+        struct has_phx2_result
+            : mpl::eval_if<
+                has_result_type<F>
+              , mpl::false_
+              , has_phx2_result_impl<typename F::template result<F(A...)> >
+            >::type
+        {};
+
+        template <typename F, typename... A>
+        struct phx2_result
+        {
+            typedef typename F::template result<A...>::type type;
+        };
+
+        template <typename F, typename... A>
+        struct phx2_result<F, A &...>
+        {
+            typedef typename F::template result<A...>::type type;
+        };
+
+        template <typename F, typename... A>
+        struct phx2_result<F, A const &...>
+        {
+            typedef typename F::template result<A...>::type type;
+        };
+#endif
     }
 }}
 
