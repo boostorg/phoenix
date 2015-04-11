@@ -10,7 +10,8 @@
 #ifndef BOOST_PHOENIX_CORE_ACTOR_HPP
 #define BOOST_PHOENIX_CORE_ACTOR_HPP
 
-#include <boost/config.hpp>
+#include <boost/phoenix/core/limits.hpp>
+
 #include <boost/is_placeholder.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -25,12 +26,7 @@
 #include <boost/utility/result_of.hpp>
 #include <boost/mpl/void.hpp>
 #include <cstring>
-
-#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || \
-    defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-#   include <boost/phoenix/core/limits.hpp>
-#   define BOOST_PHOENIX_NO_VARIADIC_ACTOR
-#else
+#ifndef BOOST_PHOENIX_NO_VARIADIC_ACTOR
 #   include <boost/mpl/if.hpp>
 #   include <boost/type_traits/is_reference.hpp>
 #   include <boost/phoenix/core/detail/index_sequence.hpp>
