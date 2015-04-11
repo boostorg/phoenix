@@ -8,16 +8,13 @@
 #ifndef BOOST_PHOENIX_CORE_FUNCTION_EQUAL_HPP
 #define BOOST_PHOENIX_CORE_FUNCTION_EQUAL_HPP
 
-#include <boost/config.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/is_placeholder.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/phoenix/core/terminal.hpp>
 #include <boost/proto/matches.hpp>
-
-#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
-#   include <boost/phoenix/core/limits.hpp>
+#ifdef BOOST_PHOENIX_NO_VARIADIC_FUNCTION_EQUAL
 #   include <boost/preprocessor/arithmetic/inc.hpp>
-#   define BOOST_PHOENIX_NO_VARIADIC_FUNCTION_EQUAL
 #else
 #   include <boost/phoenix/core/detail/index_tuple.hpp>
 #endif

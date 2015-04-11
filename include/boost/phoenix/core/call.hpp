@@ -8,15 +8,12 @@
 #ifndef BOOST_PHOENIX_CORE_CALL_HPP
 #define BOOST_PHOENIX_CORE_CALL_HPP
 
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/environment.hpp>
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/traits.hpp>
 #include <boost/proto/transform/impl.hpp>
-
-#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
-#   include <boost/phoenix/core/limits.hpp>
-#   define BOOST_PHOENIX_NO_VARIADIC_CALL
-#else
+#ifndef BOOST_PHOENIX_NO_VARIADIC_CALL
 #   include <boost/phoenix/core/detail/index_tuple.hpp>
 #endif
 

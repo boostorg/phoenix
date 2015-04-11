@@ -6,14 +6,9 @@
 ==============================================================================*/
 #ifndef BOOST_PHOENIX_CORE_DETAIL_PHX2_RESULT_HPP
 #define BOOST_PHOENIX_CORE_DETAIL_PHX2_RESULT_HPP
-#include <boost/config.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/mpl/has_xxx.hpp>
-
-#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
-#   include <boost/phoenix/core/limits.hpp>
-#   define BOOST_PHOENIX_NO_VARIADIC_PHX2_RESULT
-#endif
 
 namespace boost { namespace phoenix {
     namespace detail

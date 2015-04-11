@@ -8,19 +8,14 @@
 #ifndef BOOST_PHOENIX_CORE_DETAIL_FUNCTION_EVAL_HPP
 #define BOOST_PHOENIX_CORE_DETAIL_FUNCTION_EVAL_HPP
 
-#include <boost/config.hpp>
+#include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
 // #include <boost/phoenix/core/detail/phx2_result.hpp>
 #include <boost/utility/result_of.hpp>
-
-#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || \
-     defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-#   include <boost/phoenix/core/limits.hpp>
-#   define BOOST_PHOENIX_NO_VARIADIC_FUNCTION_EVAL
-#else
+#ifndef BOOST_PHOENIX_NO_VARIADIC_FUNCTION_EVAL
 #   include <boost/mpl/if.hpp>
 #   include <boost/type_traits/is_reference.hpp>
 #endif
@@ -29,7 +24,7 @@
 #   include <boost/phoenix/core/detail/preprocessed/function_eval_expression.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/function_eval_expression_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 1, line: 0, output: "preprocessed/function_eval_expression_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 // XXX: Currently, following definition should be preprocessed since
 // core/expression.hpp does not support c++11 variadic templates yet.
