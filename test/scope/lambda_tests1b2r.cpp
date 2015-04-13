@@ -69,7 +69,7 @@ main()
                   _a + lambda[_a + 2]
                 ]
             )
-        (x)() == 1+1+1+2
+        (x)()() == 1+1+1+2
         );
 #else
         BOOST_TEST(
