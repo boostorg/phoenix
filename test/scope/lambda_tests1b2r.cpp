@@ -66,10 +66,10 @@ main()
                 _1 +
                 lambda(_a = _1)
                 [
-                  _a + lambda[_a + 2]
+                  _a + lambda[_1 + 2]
                 ]
             )
-        (x)()() == 1+1+1+2
+        (x)()(x) == 1+1+1+2
         );
 #else
         BOOST_TEST(

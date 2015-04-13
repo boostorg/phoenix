@@ -44,8 +44,8 @@ main()
         //BOOST_TEST(lambda[_1](x)(y) == y);
         //BOOST_TEST(lambda(_a = _1)[_a](x)(y) == x);
 #if defined(BOOST_MSVC) && (BOOST_MSVC >= 1700)
-        int xx = x;
-        BOOST_TEST(lambda(_a = _1)[lambda[_a + 0]](x)(y)() == xx);
+        int xx = 20;
+        BOOST_TEST(lambda(_a = _1)[lambda[_1]](x)(y)(xx) == xx);
 #else
         BOOST_TEST(lambda(_a = _1)[lambda[_a]](x)(y)(z) == x);
 #endif
