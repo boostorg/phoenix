@@ -11,6 +11,10 @@
 #include <vector>
 
 #include <typeinfo>
+// Test of workaround for MSVC 12 and 14
+#if defined(BOOST_MSVC) && (BOOST_MSVC >= 1700)
+#define BOOST_RESULT_OF_USE_TR1
+#endif
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
@@ -45,7 +49,7 @@ main()
         //BOOST_TEST(lambda(_a = _1)[_a](x)(y) == x);
 #if defined(BOOST_MSVC) && (BOOST_MSVC >= 1700)
         int xx = 20;
-        BOOST_TEST(lambda(_a = _1)[lambda[_1]](x)(y)(xx) == xx);
+        BOOST_TEST(lambda(_a = _1)[lambda[_a]](x)(y)(xx) == x);
 #else
         BOOST_TEST(lambda(_a = _1)[lambda[_a]](x)(y)(z) == x);
 #endif
