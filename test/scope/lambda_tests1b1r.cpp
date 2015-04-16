@@ -11,7 +11,9 @@
 #include <vector>
 
 #include <typeinfo>
+
 // Test of workaround for MSVC 12 and 14
+#include <boost/config.hpp>
 #if defined(BOOST_MSVC) && (BOOST_MSVC >= 1700)
 #define BOOST_RESULT_OF_USE_TR1
 #endif
