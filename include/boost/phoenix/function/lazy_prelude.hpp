@@ -19,23 +19,6 @@
 //
 // Now that list<T> is available I can start to build things here.
 //
-// pow(n,x)      x^n
-// apply(n,f,x)  f^n(x)
-//
-/////////////////////////////////////////////
-// compose is Haskell's operator (.)       //
-// compose(f,g)(x)        = f( g(x) )      //
-// compose(f,g)(x,y)      = f( g(x,y) )    //
-// compose(f,g)(x,y,z)    = f( g(x,y,z) )  //
-//////////////////////////////////////////////////////
-// compose also applies f(a,b) to the results of    //
-// 2 functions g and h to the same argument(s).     //
-// e.g. a = g(x,y) and b = h(x,y)                   //
-//////////////////////////////////////////////////////
-// compose(f,g,h)(x)     = f( g(x),     h(x) )      //
-// compose(f,g,h)(x,y)   = f( g(x,y),   h(x,y) )    //
-// compose(f,g,h)(x,y,z) = f( g(x,y,z), h(x,y,z) )  //
-//////////////////////////////////////////////////////
 //
 // until(pred,f,start)         - if pred(start) is true, return start
 //                               apply value = f(start)
@@ -68,7 +51,7 @@
 //
 // last(list)
 // all_but_last(list)
-// at_(list,n) (renamed from at because of at in stl/container/container.hpp)
+// at(list,n)
 // length(list)
 // filter(pred,list)
 // iterate(function,value)
@@ -77,43 +60,7 @@
 // drop(n,list)
 // enum_from(x)
 // enum_from_to(x,y)
-// foldr fold_right (synonyms)
-// foldl fold_left  (synonyms)
-// scanr scan_right (synonyms)
-// scanl scan_left  (synonyms)
-// foldr1 fold_right_one (synonyms)
-// foldl1 fold_left_one  (synonyms)
-// scanr1 scan_right_one (synonyms)
-// scanl1 scan_left_one  (synonyms)
-// iterate
 //
-// Things to build lazy functors from non-lazy code.
-//
-// ptr_to_fun  for 1, 2 3 or 4 arguments
-// ptr_to_fun0 for nullary functions
-// ptr_to_mem_fun for member functions with 0 to 3 arguments.
-//
-// NOTE: ptr_to_fun0 is not needed in FC++. Here the nullary case is handled
-//       separately, as is the case in phoenix/function. The internal structure
-//       is quite different.
-//       Also, ptr_to_mem_fun is not separate in FC++ but is needed here.
-//
-// These bind all the arguments to create an object of
-// type boost::function0<void>
-//
-// thunk1 - thunk1(function,argument1)
-// thunk2 - thunk2(function,argument1,argument2)
-// thunk3 - thunk3(function,argument1,argument2,argument3)
-//
-// The function can be ptr_to_fun or ptr_to_mem_fun.
-//
-// See examples of usage where the code is located at the end of the file.
-//
-////////////////////////////////////////////////////////////////////////////
-//                         Change of policy:
-// I am going to follow FC++ practice and give all structs
-// inside namespace impl a leading X to the name for clarity.
-// This is not in 3.2.0 (Boost 1.58.0) and will go into the next release.
 ////////////////////////////////////////////////////////////////////////////
 // Interdependence:
 // The old Boost FC++ has a set of headers which interelate and call each
@@ -140,6 +87,7 @@
 // on the basis that files need what they call.
 //
 // lazy_config.hpp    (If needed)* probably not needed.
+// lazy_signature.hpp (If needed)*
 // lazy_smart.hpp     (If needed)*
 // lazy_curry.hpp     (If needed)*
 // lazy_full.hpp      (If needed)*
@@ -147,7 +95,6 @@
 // lazy_function.hpp  (may not now be needed)
 // lazy_reuse.hpp     (implemented without use of FC++ functions)
 // lazy_list.hpp
-// lazy_signature.hpp (hold structs for return types)
 //
 // * file does not yet exist.
 ////////////////////////////////////////////////////////////////////////////
@@ -162,7 +109,7 @@
 // Some of function and reuse are needed for the list type.
 // I will review later whether they are part of the external interface.
 //
-// John Fletcher  February to April 2015.
+// John Fletcher  February 2015.
 ////////////////////////////////////////////////////////////////////////////
 /*=============================================================================
     Copyright (c) 2000-2003 Brian McNamara and Yannis Smaragdakis
@@ -183,11 +130,9 @@
 #include <boost/phoenix/function.hpp>
 #include <boost/phoenix/scope.hpp>
 #include <boost/phoenix/operator.hpp>
-#include <boost/phoenix/function/lazy_smart.hpp>
 #include <boost/phoenix/function/lazy_operator.hpp>
 #include <boost/phoenix/function/lazy_reuse.hpp>
 #include <boost/phoenix/function/lazy_list.hpp>
-#include <boost/phoenix/function/lazy_signature.hpp>
 
 ////////////////////////////////////////////////////////////////////////////
 // To come here, the Haskell Prelude things which need list<T>.
@@ -237,10 +182,9 @@ namespace boost {
       using fcpp::reuser1;
       using fcpp::reuser2;
       using fcpp::reuser3;
-      using fcpp::reuser4;
       using boost::phoenix::arg_names::arg1;
 
-         struct XPow {
+         struct Pow {
 
             template <typename Sig>
             struct result;
@@ -252,20 +196,20 @@ namespace boost {
 
             template <typename N, typename A0>
             A0 operator()(N n, const A0 & a0,
-            reuser2<INV,VAR,INV,XPow,N,A0> r = NIL ) const {
+            reuser2<INV,VAR,INV,Pow,N,A0> r = NIL ) const {
               if ( n <= 0 )
                  return A0(1);
               else if ( n==1 )
                  return a0;
               else {
-                A0 a1 = r( XPow(), n-1, a0)();
+                A0 a1 = r( Pow(), n-1, a0)();
                 return a0*a1;
               }
             }
 
          };
 
-         struct XApply {
+         struct Apply {
 
             template <typename Sig>
             struct result;
@@ -277,20 +221,20 @@ namespace boost {
 
             template <typename N, typename F, typename A0>
             A0 operator()(N n, const F &f, const A0 & a0,
-            reuser3<INV,VAR,INV,INV,XApply,N,F,A0> r = NIL ) const {
+            reuser3<INV,VAR,INV,INV,Apply,N,F,A0> r = NIL ) const {
               if ( n <= 0 )
                  return a0;
               else if ( n==1 )
                  return f(arg1)(a0);
               else {
-                A0 a1 = r( XApply(), n-1, f, a0)();
+                A0 a1 = r( Apply(), n-1, f, a0)();
                 return f(a1)();
               }
             }
 
          };
 
-         struct XOdd {
+         struct Odd {
             template <typename Sig>
             struct result;
 
@@ -301,12 +245,12 @@ namespace boost {
             };
 
             template <class T>
-            typename result<XOdd(T)>::type operator()( const T& x ) const {
+            typename result<Odd(T)>::type operator()( const T& x ) const {
                return x%2==1;
             }
          };
 
-         struct XEven {
+         struct Even {
             template <typename Sig>
             struct result;
 
@@ -317,16 +261,16 @@ namespace boost {
             };
 
             template <class T>
-            typename result<XEven(T)>::type operator()( const T& x ) const {
+            typename result<Even(T)>::type operator()( const T& x ) const {
                return x%2==0;
             }
          };
 
     }
-    typedef boost::phoenix::function<impl::XPow>   Pow;
-    typedef boost::phoenix::function<impl::XApply> Apply;
-    typedef boost::phoenix::function<impl::XOdd>   Odd;
-    typedef boost::phoenix::function<impl::XEven>  Even;
+    typedef boost::phoenix::function<impl::Pow>   Pow;
+    typedef boost::phoenix::function<impl::Apply> Apply;
+    typedef boost::phoenix::function<impl::Odd>   Odd;
+    typedef boost::phoenix::function<impl::Even>  Even;
     Pow   pow;
     Apply apply;
     Odd   odd;
@@ -339,207 +283,10 @@ namespace boost {
       using fcpp::reuser2;
       using fcpp::reuser3;
       using boost::phoenix::arg_names::arg1;
-      using boost::phoenix::arg_names::arg2;
-      using boost::phoenix::arg_names::arg3;
-
-      ///////////////////////////////////////////////
-      //// COMPOSE IS NOW IN OPERATION           ////
-      ///////////////////////////////////////////////
-      // compose is Haskell's operator (.)         //
-      // compose(f,g)(x)     = f( g(x) )           //
-      // compose(f,g)(x,y)   = f( g(x,y) )         //
-      // compose(f,g)(x,y,z) = f( g(x,y,z) )       //
-      //////////////////////////////////////////////////////
-      // compose also applies f(a,b) to the results of    //
-      // 2 functions g and h to the same argument(s).     //
-      // e.g. a = g(x,y) and b = h(x,y)                   //
-      //////////////////////////////////////////////////////
-      // compose(f,g,h)(x)     = f( g(x),     h(x) )      //
-      // compose(f,g,h)(x,y)   = f( g(x,y),   h(x,y) )    //
-      // compose(f,g,h)(x,y,z) = f( g(x,y,z), h(x,y,z) )  //
-      //////////////////////////////////////////////////////
-      // The structure can be simpler than in FC++ //
-      // because the number of arguments can be    //
-      // dealt with by overloading in this helper. //
-      // It is not then needed to know how many    //
-      // arguments there are for function g().     //
-      ///////////////////////////////////////////////
-      template <class F, class G>
-      class XComposeHelper
-      {
-         F f;
-         G g;
-      public:
-         XComposeHelper( const F& a, const G& b ) : f(a), g(b) {}
-        template <typename Sig> struct result;
-
-        template <typename This, typename X>
-        struct result<This(X)>
-        {
-          typedef typename RTFGX<F,G,X>::type type;
-        };
-
-        template <typename This, typename X, typename Y>
-        struct result<This(X,Y)>
-        {
-          typedef typename RTFGXY<F,G,X,Y>::type type;
-        };
-
-        template <typename This, typename X, typename Y, typename Z>
-        struct result<This(X,Y,Z)>
-        {
-          typedef typename RTFGXYZ<F,G,X,Y,Z>::type type;
-        };
-
-        template <class X>
-        typename result<XComposeHelper(X)>::type
-        operator()(const X & x) const {
-          return f( g(x) )();
-        }
-
-        template <class X, class Y>
-        typename result<XComposeHelper(X,Y)>::type
-        operator()(const X & x,const Y & y) const {
-          return f( g(x,y) )();
-        }
-
-        template <class X, class Y, class Z>
-        typename result<XComposeHelper(X,Y,Z)>::type
-        operator()(const X & x,const Y & y,const Z & z) const {
-          return f( g(x,y,z) )();
-        }
-     };
-
-      template <class F, class G, class H>
-      class XCompose2Helper
-      {
-         F f;
-         G g;
-         H h;
-      public:
-         XCompose2Helper( const F& a, const G& b, const H& c ) :
-             f(a), g(b), h(c) {}
-         template <typename Sig> struct result;
-
-         template <typename This, typename X>
-         struct result<This(X)>
-         {
-           typedef typename RTFGHX<F,G,H,X>::type type;
-         };
-
-         template <typename This, typename X, typename Y>
-         struct result<This(X,Y)>
-         {
-           typedef typename RTFGHXY<F,G,H,X,Y>::type type;
-         };
-
-         template <typename This, typename X, typename Y, typename Z>
-         struct result<This(X,Y,Z)>
-         {
-           typedef typename RTFGHXYZ<F,G,H,X,Y,Z>::type type;
-         };
-
-         template <class X>
-         typename result<XCompose2Helper(X)>::type
-         operator()(const X & x) const {
-           return f( g(x), h(x) )();
-         }
-
-         template <class X, class Y>
-         typename result<XCompose2Helper(X,Y)>::type
-         operator()(const X & x,const Y & y) const {
-           return f( g(x,y), h(x,y) )();
-         }
-
-         template <class X, class Y, class Z>
-         typename result<XCompose2Helper(X,Y,Z)>::type
-         operator()(const X & x,const Y & y,const Z & z) const {
-           return f( g(x,y,z), h(x,y,z) )();
-         }
-     };
-
-     /////////////////////////////////////////////////////////////
-     // As an exception, this class does not need to be wrapped //
-     // in boost::phoenix::function as the object returned      //
-     // by the Helper is already wrapped.                       //
-     /////////////////////////////////////////////////////////////
-     class XCompose {
-
-      template <class F, class G> struct Helper
-      {
-        typedef typename remove_RC<F>::type FType;
-        typedef typename remove_RC<G>::type GType;
-        typedef XComposeHelper<FType,GType> CType;
-        typedef typename boost::phoenix::function<CType> F_C_F_G;
-        typedef F_C_F_G Result;
-        static Result go( const F& f, const G& g )
-        {
-          F_C_F_G f_c_f_g(CType(f,g));
-          //std::cout << "Helper<F,G>" << std::endl;
-          return f_c_f_g;
-        }
-      };
-
-       template <class F, class G, class H> struct Helper2
-      {
-        typedef typename remove_RC<F>::type FType;
-        typedef typename remove_RC<G>::type GType;
-        typedef typename remove_RC<H>::type HType;
-        typedef XCompose2Helper<FType,GType,HType> CType;
-        typedef typename boost::phoenix::function<CType> F_C_F_G_H;
-        typedef F_C_F_G_H Result;
-        static Result go( const F& f, const G& g, const H& h )
-        {
-          F_C_F_G_H f_c_f_g_h(CType(f,g,h));
-          //std::cout << "Helper<F,G>" << std::endl;
-          return f_c_f_g_h;
-        }
-      };
-
-      public:
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF,typename GG>
-        struct result<This(FF,GG)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename remove_RC<GG>::type GType;
-          typedef typename Helper<FType,GType>::Result type;
-        };
-
-        template <typename This, typename FF,typename GG, typename HH>
-        struct result<This(FF,GG,HH)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename remove_RC<GG>::type GType;
-          typedef typename remove_RC<HH>::type HType;
-          typedef typename Helper2<FType,GType,HType>::Result type;
-        };
-
-        template <class F, class G>
-        typename result<XCompose(F,G)>::type operator()
-                 ( const F& f, const G& g ) const
-        {
-          typedef typename remove_RC<F>::type FType;
-          typedef typename remove_RC<G>::type GType;
-          return Helper<FType,GType>::go( f, g );
-        }
-
-        template <class F, class G, class H>
-        typename result<XCompose(F,G,H)>::type operator()
-                 ( const F& f, const G& g, const H& h ) const
-        {
-          typedef typename remove_RC<F>::type FType;
-          typedef typename remove_RC<G>::type GType;
-          typedef typename remove_RC<H>::type HType;
-          return Helper2<FType,GType,HType>::go( f, g, h );
-        }
-
-     };
 
       // I cannot yet do currying to pass e.g. greater(9,arg1)
       // as a function. This can be done using Predicate<T>::type.
-         struct XUntil {
+         struct Until {
 
              template <typename Sig> struct result;
 
@@ -559,7 +306,7 @@ namespace boost {
 
           };
 
-          struct XUntil2 {
+          struct Until2 {
 
              template <typename Sig> struct result;
 
@@ -569,7 +316,7 @@ namespace boost {
                 : boost::remove_reference<T> {};
 
              template <class Binary, class Unary, class T, class X>
-             typename result<XUntil2(Binary,Unary,T,X)>::type
+             typename result<Until2(Binary,Unary,T,X)>::type
              operator()( const Binary& p, const Unary& op, const T & start,
                         const X & check ) const
              {
@@ -584,7 +331,7 @@ namespace boost {
              }
           };
 
-          struct XLast {
+          struct Last {
              template <typename Sig> struct result;
 
              template <typename This, typename L>
@@ -594,7 +341,7 @@ namespace boost {
              };
 
              template <class L>
-             typename result<XLast(L)>::type
+             typename result<Last(L)>::type
              operator()( const L& ll ) const {
                size_t x = 0;
                typename result_of::ListType<L>::delay_result_type l = delay(ll);
@@ -614,7 +361,7 @@ namespace boost {
              }
           };
 
-          struct XInit {
+          struct Init {
 
              template <typename Sig> struct result;
 
@@ -625,19 +372,19 @@ namespace boost {
              };
 
              template <class L>
-             typename result<XInit(L)>::type
+             typename result<Init(L)>::type
              operator()( const L& l,
-                         reuser1<INV,VAR,XInit,
+                         reuser1<INV,VAR,Init,
                          typename result_of::ListType<L>::delay_result_type>
                          r = NIL ) const {
                if( null( tail( l )() )() )
                    return NIL;
                else
-                   return cons( head(l)(), r( XInit(), tail(l)() )() )();
+                   return cons( head(l)(), r( Init(), tail(l)() )() )();
                }
           };
 
-          struct XLength {
+          struct Length {
             template <typename Sig> struct result;
 
             template <typename This, typename L>
@@ -666,7 +413,7 @@ namespace boost {
 
           // at is Haskell's operator (!!)
           // This is zero indexed.  at(l,0)() returns the first element.
-          struct XAt {
+          struct At {
             template <typename Sig> struct result;
 
             template <typename This, typename L, typename N>
@@ -676,7 +423,7 @@ namespace boost {
             };
 
               template <class L>
-              typename result<XAt(L,size_t)>::type
+              typename result<At(L,size_t)>::type
               operator()( L l, size_t n ) const {
                   while( n!=0 ) {
                       l = tail(l);
@@ -715,109 +462,8 @@ namespace boost {
                    return filterh_R_P_L();
               }
           };
-      // Note: this isn't lazy (even if 'op' is 'cons').
-      // That is because it works from the end backwards.
-          struct XFoldr {
-              template <typename Sig> struct result;
- 
-              template <typename This, typename Op, typename E,typename L>
-              struct result<This(Op,E,L)> : boost::remove_reference<E>
-              {
-              };
 
-              template <class Op, class E, class L>
-              typename result<XFoldr(Op,E,L)>::type
-              operator()( const Op& op, const E& e, const L& l ) const {
-                  if ( null(l)() )
-                      return e;
-                  else
-                      return op( head(l), XFoldr()( op, e, tail(l)() ) )();
-              }
-          };
-
-          struct XFoldl {
-              template <typename Sig> struct result;
-
-              template <typename This, typename Op, typename E,typename L>
-              struct result<This(Op,E,L)> : boost::remove_reference<E>
-              {
-              };
-
-              template <class Op, class E, class L>
-              typename result<XFoldl(Op,E,L)>::type
-              operator()( const Op& op, const E & e, const L& ll ) const {
-                  typename result_of::ListType<L>::delay_result_type
-                       l = delay(ll);
-                  E tmp = e;
-                  while( !null(l)() ) {
-                     tmp = op(tmp,head(l))();
-                     l = tail(l);
-                  }
-                  return tmp;
-              }
-          };
-
-          struct XScanr {
-              template <typename Sig> struct result;
-
-              template <typename This, typename Op, typename E,typename L>
-              struct result<This(Op,E,L)>
-              {
-                  typedef typename boost::remove_reference<E>::type EE;
-                  typedef typename boost::remove_const<EE>::type EEE;
-                  typedef typename boost::remove_reference<L>::type LL;
-                  typedef typename LL::template cons_rebind<EEE>::type type;
-              };
-
-               template <class Op, class E, class L>
-               typename result<XScanr(Op,E,L)>::type
-               operator()( const Op& op, const E& e, const L& l ) const {
-                   typedef typename boost::remove_reference<E>::type EE;
-                   typedef typename boost::remove_const<EE>::type EEE;
-                   typedef typename boost::remove_reference<L>::type LL;
-                   typedef typename LL::template cons_rebind<EEE>::type EL;
-                   if( null(l)() ) {
-                       EL empty;
-                       return cons( e, empty )();
-                   }
-                   else {
-                       EL temp = XScanr()( op, e, tail(l)() );
-                       return cons( op( head(l)(), head(temp)() ), temp )();
-                   }
-               }
-          };
-
-          struct XScanl {
-              template <typename Sig> struct result;
-
-              template <typename This, typename Op, typename E,typename L>
-              struct result<This(Op,E,L)>
-              {
-                  typedef typename boost::remove_reference<E>::type EE;
-                  typedef typename boost::remove_const<EE>::type EEE;
-                  typedef typename boost::remove_reference<L>::type LL;
-                  typedef typename LL::template cons_rebind<EEE>::type type;
-              };
-
-              template <class Op, class E, class L>
-              typename result<XScanl(Op,E,L)>::type
-              operator()( const Op& op, const E& e, const L& l,
-                          reuser3<INV,INV,VAR,VAR,XScanl,Op,
-                          typename boost::remove_const<E>::type,
-               typename result_of::ListType<L>::delay_result_type> r = NIL )
-              const {
-                 typedef typename result_of::ListType<L>::force_result_type OL;
-                 if( null(l)() ) {
-                     OL empty;
-                     return cons( e, empty )();
-                 }
-                 else
-                     return cons( e, r( XScanl(), op,
-                            op(e,head(l)())(), tail(l)() )() )();
-              }
-          };
-
-          struct XFilter {
+          struct Filter {
             template <typename Sig> struct result;
 
                 template <typename This, typename P, typename L>
@@ -828,7 +474,7 @@ namespace boost {
                 };
 
                 template <class P, class L>
-                typename result<XFilter(P,L)>::type
+                typename result<Filter(P,L)>::type
                 operator()( const P& p, const L& ll) const
                 {
                      typename  result_of::ListType<L>::delay_result_type
@@ -851,10 +497,11 @@ namespace boost {
               IterateH( const F& ff, const T& tt) : f(ff), t(tt) {}
               template <typename Sig> struct result;
 
-              template <typename This,class FF,class TT>
-              struct result<This(FF,TT)>
+              template <typename This,class F2,class T2>
+              struct result<This(F2,T2)>
               {
-                typedef typename remove_RC<TT>::type TTT;
+                typedef typename boost::remove_reference<T2>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
                 typedef typename UseList::template List<TTT>::type LType;
                 typedef typename result_of::ListType<LType>::
                         delay_result_type type;
@@ -873,7 +520,7 @@ namespace boost {
           };
 
 
-          struct XIterate {
+          struct Iterate {
    // Note: this does always return an odd_list; iterate() takes no ListLike
    // parameter, and it requires that its result be lazy.
               template <typename Sig> struct result;
@@ -889,7 +536,7 @@ namespace boost {
               };
 
               template <class F, class T>
-                typename result<XIterate(F,T)>::type operator()
+                typename result<Iterate(F,T)>::type operator()
                 (const F& f, const T& t) const {
                 typedef typename UseList::template List<T>::type LType;
                 typedef typename result_of::ListType<LType>::
@@ -904,110 +551,26 @@ namespace boost {
 
     }
 
-    typedef impl::XCompose  Compose;  // This does not need to be wrapped.
-    typedef boost::phoenix::function<impl::XUntil>  Until;
-    typedef boost::phoenix::function<impl::XUntil2> Until2;
-    typedef boost::phoenix::function<impl::XLast>   Last;
-    typedef boost::phoenix::function<impl::XInit>   Init;
-    typedef boost::phoenix::function<impl::XLength> Length;
-    typedef boost::phoenix::function<impl::XAt>     At;
-    typedef boost::phoenix::function<impl::XFilter> Filter;
-    typedef boost::phoenix::function<impl::XFoldr>  Foldr;
-    typedef boost::phoenix::function<impl::XFoldl>  Foldl;
-    typedef boost::phoenix::function<impl::XScanr>  Scanr;
-    typedef boost::phoenix::function<impl::XScanl>  Scanl;
-    typedef boost::phoenix::function<impl::XIterate> Iterate;
-    Compose  compose;
+    typedef boost::phoenix::function<impl::Until> Until;
+    typedef boost::phoenix::function<impl::Until2> Until2;
+    typedef boost::phoenix::function<impl::Last>  Last;
+    typedef boost::phoenix::function<impl::Init>  Init;
+    typedef boost::phoenix::function<impl::Length> Length;
+    typedef boost::phoenix::function<impl::At>    At;
+    typedef boost::phoenix::function<impl::Filter> Filter;
+    typedef boost::phoenix::function<impl::Iterate> Iterate;
     Until until;
     Until2 until2;
     Last  last;
     Init  all_but_last;  // renamed from init which is not available.
     Length length;
-    At at_; // renamed from at because of name clash.
+    At at_;  //Renamed from at.
     Filter filter;
-    Foldr   foldr, fold_right;
-    Foldl   foldl, fold_left;
-    Scanr   scanr, scan_right;
-    Scanl   scanl, scan_left;
     Iterate iterate;
 
     namespace impl {
-          // These use earlier items so come here.
-         struct XFoldr1 {
-              template <typename Sig> struct result;
 
-              template <typename This, typename Op, typename L>
-              struct result<This(Op,L)>
-              {
-                  typedef typename result_of::ListType<L>::value_type type;
-              };
-
-              template <class Op, class L>
-              typename result<XFoldr1(Op,L)>::type
-              operator()( const Op& op, const L& l ) const
-              {
-                  return foldr( op, head(l)(), tail(l)() )();
-              }
-          };
-
-          struct XFoldl1 {
-              template <typename Sig> struct result;
-
-              template <typename This, typename Op, typename L>
-              struct result<This(Op,L)>
-              {
-                  typedef typename result_of::ListType<L>::value_type type;
-              };
-
-              template <class Op, class L>
-              typename result<XFoldl1(Op,L)>::type
-              operator()( const Op& op, const L& l ) const
-              {
-                  return foldl( op, head(l)(), tail(l)() )();
-              }
-          };
-
-          struct XScanr1 {
-              template <typename Sig> struct result;
-
-              template <typename This, typename Op, typename L>
-              struct result<This(Op,L)>
-              {
-                  typedef typename result_of::ListType<L>::force_result_type
-                                   type;
-              };
-
-             template <class Op, class L>
-             typename result<XScanr1(Op,L)>::type
-             operator()( const Op& op, const L& l ) const {
-                 if( null( tail(l)() )() )
-                     return l.force();
-                 else {
-                     typename result<XScanr1(Op,L)>::type temp = XScanr1()
-                              ( op, tail(l)() );
-                     return cons( op( head(l)(), head(temp)() )(), temp )();
-                }
-             }
-          };
-
-          struct XScanl1 {
-              template <typename Sig> struct result;
-
-              template <typename This, typename Op, typename L>
-              struct result<This(Op,L)>
-              {
-                  typedef typename result_of::ListType<L>::force_result_type
-                                   type;
-              };
-
-              template <class Op, class L>
-              typename result<XScanl1(Op,L)>::type
-              operator()( const Op& op, const L& l ) const {
-                  return scanl( op, head(l)(), tail(l)() )();
-              }
-          };
-
-          struct XRepeat {
+          struct Repeat {
          // See note for iterate()
               template <typename Sig> struct result;
 
@@ -1022,91 +585,13 @@ namespace boost {
               };
 
               template <class T>
-              typename result<XRepeat(T)>::type operator()( const T& x) const
+              typename result<Repeat(T)>::type operator()( const T& x) const
               {
                 return iterate(id,x);
               }
           };
 
-
-      template <class F,class L>
-      struct MapH
-      {
-            F f;
-            L l;
-            MapH( const F& ff, const L& ll) : f(ff), l(ll) {}
-            template <typename Sig> struct result;
-
-	template <typename This, typename FF, typename LL>
-            struct result<This(FF,LL)>
-            {
-                typedef typename RTFL<FF,LL>::type type;
-            };
-
-            typename result<MapH(F,L)>::type operator()() const {
-                  typedef typename RTFL<F,L>::type result_type;
-                  typedef boost::function0<result_type> Fun2_R_F_L;
-                  typedef boost::phoenix::function<Fun2_R_F_L> MapH_R_F_L;
-                  if (null(l)() )
-                     return NIL;
-                  Fun2_R_F_L fun2_R_F_L = MapH<F,L>(f,tail(l));
-                  MapH_R_F_L maph_R_F_L(fun2_R_F_L);
-                  if( null(l)() )
-                      return NIL;
-                  else
-                      return cons( f(head(l))(), maph_R_F_L() );
-             }
-      };
-
-      struct XMap {
-           template <typename Sig> struct result;
-
-           template <typename This, typename F, typename L>
-           struct result<This(F,L)>
-           {
-               typedef typename RTFL<F,L>::type type;
-           };
-               template <class F, class L>
-                typename result<XMap(F,L)>::type
-                operator()( const F& f, const L& ll) const
-                {
-                    typedef typename RTFL<F,L>::type result_type;
-                    typename  result_of::ListType<L>::delay_result_type
-                        l = delay(ll);
-                    typedef boost::function0<result_type> Fun2_R_F_L;
-                    typedef boost::phoenix::function<Fun2_R_F_L> MapH_R_F_L;
-                    Fun2_R_F_L fun2_R_F_L = MapH<F,L>(f,l);
-                    MapH_R_F_L maph_R_F_L(fun2_R_F_L);
-                    return maph_R_F_L();
-                }
-          };
-
-          struct XZipWith {
-              template <typename Sig> struct result;
-
-              template <typename This, typename Z, typename LA, typename LB>
-              struct result<This(Z,LA,LB)>
-              {
-                  typedef typename RTZAB<Z,LA,LB>::type type;
-              };
-
-              template <class Z, class LA, class LB>
-              typename result<XZipWith(Z,LA,LB)>::type
-              operator()( const Z& z, const LA& a, const LB& b,
-               reuser3<INV,INV,VAR,VAR,XZipWith,Z,
-                  typename result_of::ListType<LA>::tail_result_type,
-                  typename result_of::ListType<LB>::tail_result_type >
-                  r = NIL ) const
-              {
-                  if( null(a)() || null(b)() )
-                       return NIL;
-                   else
-                       return cons( z(head(a)(),head(b)()),
-                       r( XZipWith(), z, tail(a)(), tail(b)() )() )();
-              }
-          };
-
-          struct XTake {
+          struct Take {
 
              template <typename Sig> struct result;
 
@@ -1117,21 +602,21 @@ namespace boost {
              };
 
              template <class N,class L>
-             typename result<XTake(N,L)>::type
+             typename result<Take(N,L)>::type
              operator()( N n, const L& l,
-               reuser2<INV,VAR,VAR,XTake,N,
+               reuser2<INV,VAR,VAR,Take,N,
                typename result_of::ListType<L>::force_result_type>
                r = NIL
              ) const {
                if( n <= 0 || null(l)() )
                  return NIL;
                else {
-                 return cons( head(l)(), r( XTake(), n-1, tail(l)() )() )();
+                 return cons( head(l)(), r( Take(), n-1, tail(l)() )() )();
                }
              }
           };
 
-          struct XDrop {
+          struct Drop {
              template <typename Sig> struct result;
 
              template <typename This, typename Dummy, typename L>
@@ -1141,7 +626,7 @@ namespace boost {
              };
    
              template <class L>
-             typename result<XDrop(size_t,L)>::type
+             typename result<Drop(size_t,L)>::type
              operator()( size_t n, const L& ll ) const {
                typename L::delay_result_type l = delay(ll);
                while( n!=0 && !null(l)() ) {
@@ -1185,23 +670,25 @@ namespace boost {
               }
           };
 
-          struct XEnum_from {
+          struct Enum_from {
              template <typename Sig> struct result;
 
              template <typename This, typename T>
              struct result<This(T)>
              {
-               typedef typename remove_RC<T>::type TTT;
+               typedef typename boost::remove_reference<T>::type TT;
+               typedef typename boost::remove_const<TT>::type TTT;
                typedef typename UseList::template List<TTT>::type LType;
                typedef typename result_of::ListType<LType>::
                        delay_result_type type;
              };
 
              template <class T>
-             typename result<XEnum_from(T)>::type operator()
+             typename result<Enum_from(T)>::type operator()
                 (const T & x) const
               {
-                typedef typename remove_RC<T>::type TTT;
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
                 typedef typename UseList::template List<T>::type LType;
                 typedef typename result_of::ListType<LType>::
                         delay_result_type result_type;
@@ -1209,6 +696,7 @@ namespace boost {
                 fun1_R_TTT efh_R_TTT = EFH<TTT>(x);
                 typedef boost::phoenix::function<fun1_R_TTT> EFH_R_T;
                 EFH_R_T efh_R_T(efh_R_TTT);
+                //std::cout << "enum_from (" << x << ")" << std::endl;
                 return efh_R_T();
               }
           };
@@ -1234,6 +722,7 @@ namespace boost {
                 typedef typename result_of::ListType<LType>::
                         delay_result_type result_type;
                 typedef boost::function0<result_type> fun1_R_TTT;
+                //std::cout << "EFTH (" << x << ")" << std::endl;
                 if (x > y ) return NIL;
                 ++x;
                 fun1_R_TTT efth_R_TTT = EFTH<T>(x,y);
@@ -1247,23 +736,25 @@ namespace boost {
               }
           };
 
-          struct XEnum_from_to {
+          struct Enum_from_to {
              template <typename Sig> struct result;
 
              template <typename This, typename T>
              struct result<This(T,T)>
              {
-               typedef typename remove_RC<T>::type TTT;
+               typedef typename boost::remove_reference<T>::type TT;
+               typedef typename boost::remove_const<TT>::type TTT;
                typedef typename UseList::template List<TTT>::type LType;
                typedef typename result_of::ListType<LType>::
                        delay_result_type type;
              };
 
              template <class T>
-             typename result<XEnum_from(T,T)>::type operator()
+             typename result<Enum_from(T,T)>::type operator()
              (const T & x, const T & y) const
               {
-                typedef typename remove_RC<T>::type TTT;
+                typedef typename boost::remove_reference<T>::type TT;
+                typedef typename boost::remove_const<TT>::type TTT;
                 typedef typename UseList::template List<T>::type LType;
                 typedef typename result_of::ListType<LType>::
                         delay_result_type result_type;
@@ -1278,553 +769,21 @@ namespace boost {
 
     }
 
-    typedef boost::phoenix::function<impl::XFoldr1> Foldr1;
-    typedef boost::phoenix::function<impl::XFoldl1> Foldl1;
-    typedef boost::phoenix::function<impl::XScanr1> Scanr1;
-    typedef boost::phoenix::function<impl::XScanl1> Scanl1;
-    typedef boost::phoenix::function<impl::XRepeat> Repeat;
-    typedef boost::phoenix::function<impl::XMap>    Map;
-    typedef boost::phoenix::function<impl::XZipWith> ZipWith;
-    typedef boost::phoenix::function<impl::XTake>   Take;
-    typedef boost::phoenix::function<impl::XDrop>   Drop;
-    typedef boost::phoenix::function<impl::XEnum_from>     Enum_from;
-    typedef boost::phoenix::function<impl::XEnum_from_to>  Enum_from_to;
-    Foldr1 foldr1, fold_right_one;
-    Foldl1 foldl1, fold_left_one;
-    Scanr1 scanr1, scan_right_one;
-    Scanl1 scanl1, scan_left_one;
+
+    //BOOST_PHOENIX_ADAPT_CALLABLE(apply, impl::apply, 3)
+    // Functors to be used in reuser will have to be defined
+    // using boost::phoenix::function directly
+    // in order to be able to be used as arguments.
+    typedef boost::phoenix::function<impl::Repeat> Repeat;
+    typedef boost::phoenix::function<impl::Take>  Take;
+    typedef boost::phoenix::function<impl::Drop>  Drop;
+    typedef boost::phoenix::function<impl::Enum_from>     Enum_from;
+    typedef boost::phoenix::function<impl::Enum_from_to>  Enum_from_to;
     Repeat repeat;
-    Map   map;
-    ZipWith zip_with;
     Take  take;
     Drop  drop;
     Enum_from enum_from;
     Enum_from_to enum_from_to;
-
-    namespace impl {
-
-          struct XZip {
-               template <typename Sig> struct result;
-
-               template <typename This, typename LA, typename LB>
-               struct result<This(LA,LB)>
-               {
-                  typedef typename RTAB<LA,LB>::type type;
-               };
-
-               template <class LA, class LB>
-               typename result<XZip(LA,LB)>::type
-               operator()( const LA& a, const LB& b ) const {
-                   return zip_with(make_pair, a, b )();
-               }
-          };
-
-    }
-    typedef boost::phoenix::function<impl::XZip> Zip;
-    Zip zip;
-
-    ///////////////////////////////////////////////////////////////////
-    // These operators must come after definition of zip_with
-    ///////////////////////////////////////////////////////////////////
-    template <class T>
-    list<T> operator+(const list<T>& x, const list<T>& y)
-    {
-      return zip_with(plus,x,y);
-    }
-
-    template <class T>
-    list<T> operator-(const list<T>& x, const list<T>& y)
-    {
-      return zip_with(minus,x,y);
-    }
-
-    namespace impl {
-
-      ///////////////////////////////////////////////
-      //// ptr_to_fun IS NOW IN OPERATION        ////
-      //// ptr_to_fun0 for the nullary case      ////
-      ///////////////////////////////////////////////////////////////
-      // ptr_to_fun0(&f)()()                          = f()        //
-      // ptr_to_fun(&f)(arg1)(x)                      = f(x)       //
-      // ptr_to_fun(&f)(arg1,arg2)(x,y)               = f(x,y)     //
-      // ptr_to_fun(&f)(arg1,arg2,arg3)(x,y,z)        = f(x,y,z)   //
-      // ptr_to_fun(&f)(arg1,arg2,arg3,arg4)(w,x,y,z) = f(w,x,y,z) //
-      ///////////////////////////////////////////////////////////////
-
-      template <class F>
-      class XPtrHelper
-      {
-         F f;
-      public:
-         XPtrHelper( const F& a) : f(a) {}
-
-        template <typename Sig> struct result;
-
-        template <typename This, typename X>
-        struct result<This(X)>
-        {
-          typedef typename RTFX<F,X>::type type;
-        };
-
-        template <typename This, typename X, typename Y>
-        struct result<This(X,Y)>
-        {
-          typedef typename RTFXY<F,X,Y>::type type;
-        };
-
-        template <typename This, typename X, typename Y, typename Z>
-        struct result<This(X,Y,Z)>
-        {
-          typedef typename RTFXYZ<F,X,Y,Z>::type type;
-        };
-
-        template <typename This, typename W,typename X, typename Y, typename Z>
-        struct result<This(W,X,Y,Z)>
-        {
-          typedef typename RTFWXYZ<F,W,X,Y,Z>::type type;
-        };
-
-        template <class X>
-        typename result<XPtrHelper(X)>::type
-        operator()(const X & x) const {
-          return f(x);
-        }
-
-        template <class X, class Y>
-        typename result<XPtrHelper(X,Y)>::type
-        operator()(const X & x, const Y & y) const {
-          return f(x,y);
-        }
-
-        template <class X, class Y, class Z>
-        typename result<XPtrHelper(X,Y,Z)>::type
-        operator()(const X & x, const Y & y, const Z & z) const {
-          return f(x,y,z);
-        }
-
-        template <class W, class X, class Y, class Z>
-        typename result<XPtrHelper(W,X,Y,Z)>::type
-        operator()(const W& w,const X & x, const Y & y, const Z & z) const {
-          return f(w,x,y,z);
-        }
-
-      };
-
-      class XPtr_to_fun {
-
-      template <class F> struct Helper
-      {
-        typedef typename remove_RC<F>::type FType;
-        typedef XPtrHelper<FType> CType;
-        typedef boost::phoenix::function<CType> P_F;
-        typedef P_F Result;
-        static Result go( const F& f)
-        {
-          P_F p_f((CType(f)));
-          return p_f;
-        }
-      };
-
-      public:
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF>
-        struct result<This(FF)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename Helper<FType>::Result type;
-        };
-
-        template <class F>
-        typename result<XPtr_to_fun(F)>::type operator()
-                 ( const F& f) const
-        {
-          typedef typename remove_RC<F>::type FType;
-          return Helper<FType>::go( f );
-        }
-      };
-
-      class XPtr_to_fun0 {
-
-      public:
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF>
-        struct result<This(FF)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename RTF<FType>::type result_type;
-          typedef MonomorphicWrapper0<result_type,FType> type;
-        };
-
-        template <class F>
-        typename result<XPtr_to_fun0(F)>::type operator()
-                 ( const F& f) const
-        {
-            typedef typename remove_RC<F>::type FType;
-            typedef typename RTF<FType>::type result_type;
-            typedef MonomorphicWrapper0<result_type,FType> fun_type;
-            return fun_type(f);
-        }
-      };
-
-      ///////////////////////////////////////////////////
-      //// ptr_to_mem_fun IS NOW IN OPERATION        ////
-      ///////////////////////////////////////////////////////////////
-      // ptr_to_mem_fun(&f)(&m)()                     = m.f()      //
-      // ptr_to_mem_fun(&f)(&m,arg1)(x)               = m.f(x)     //
-      // ptr_to_mem_fun(&f)(&m,arg1,arg2)(x,y)        = m.f(x,y)   //
-      // ptr_to_mem_fun(&f)(&m,arg1,arg2,arg3)(x,y,z) = m.f(x,y,z) //
-      ///////////////////////////////////////////////////////////////
-      // Here &f is the address of the member function code
-      // and  &m is the address of an instance of the object.
-      //
-      // NOTE: The object is defined in terms of &f and &m supplied as an
-      // argument. This gives a freedom not available using the Phoenix
-      // macro BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY where an instance
-      // is needed when the macro is invoked. The return type must also be
-      // supplied:
-      //
-      //(int, bar_xx, example::bar.xx)
-      //
-      //
-      // Example of use:
-      //
-      // class Foo {
-      //    int x() const { return 0; }
-      //    int f( int y ) const { return y; }
-      //    int h( int a, int b ) const { return a+b; }
-      //    int j( int a, int b, int c ) const { return a+b+c; }
-      // };
-      //
-      // An instance is located somewhere:
-      //
-      // Foo bar;
-      //
-      // ptr_to_mem_fun(&Foo::x)(&bar)()
-      // ptr_to_mem_fun(&Foo::f)(&bar,arg1)(2)
-      // ptr_to_mem_fun(&Foo::h)(&bar,arg1,arg2)(2,3)
-      // ptr_to_mem_fun(&Foo::j)(&bar,arg1,arg2,arg3)(2,3,4)
-      //
-      // NOTE: The object is defined in terms of &f and &m is supplied as
-      // the first argument.
-      // This gives a freedom not available using the Phoenix
-      // macro BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY where an instance
-      // is needed when the macro is invoked. The return type must also be
-      // supplied:
-      //
-      // BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY(int, bar_xx, bar.xx)
-      //
-      //////////////////////////////////////////////////////////////////
-
-      template <class F>
-      class XPtrMemHelper
-      {
-         F f;
-      public:
-         XPtrMemHelper( const F& a) : f(a) {}
-
-        template <typename Sig> struct result;
-
-        template <typename This, typename M>
-        struct result<This(M)>
-        {
-          typedef typename RTF<F>::type type;
-        };
-
-        template <typename This, typename M, typename X>
-        struct result<This(M,X)>
-        {
-          typedef typename RTFX<F,X>::type type;
-        };
-
-        template <typename This, typename M, typename X, typename Y>
-        struct result<This(M,X,Y)>
-        {
-          typedef typename RTFXY<F,X,Y>::type type;
-        };
-
-        template <typename This, typename M, typename X, typename Y, typename Z>
-        struct result<This(M,X,Y,Z)>
-        {
-          typedef typename RTFXYZ<F,X,Y,Z>::type type;
-        };
-
-        template <class M>
-        typename result<XPtrMemHelper(M)>::type
-        operator()(const M& m) const {
-          return ((*m).*f)();
-        }
-
-        template <class M,class X>
-        typename result<XPtrMemHelper(M,X)>::type
-        operator()(const M& m, const X & x) const {
-          return ((*m).*f)(x);
-        }
-
-        template <class M,class X,class Y>
-        typename result<XPtrMemHelper(M,X,Y)>::type
-        operator()(const M& m, const X & x, const Y & y) const {
-          return ((*m).*f)(x,y);
-        }
-
-        template <class M,class X,class Y,class Z>
-        typename result<XPtrMemHelper(M,X,Y,Z)>::type
-        operator()(const M& m, const X & x, const Y & y, const Z & z) const {
-          return ((*m).*f)(x,y,z);
-        }
-
-      };
-
-      class XPtr_to_mem_fun {
-
-      template <class F> struct Helper
-      {
-        typedef typename remove_RC<F>::type FType;
-        typedef XPtrMemHelper<FType> CType;
-        typedef boost::phoenix::function<CType> P_F;
-        typedef P_F Result;
-        static Result go( const F& f)
-        {
-          P_F p_f((CType(f)));
-          return p_f;
-        }
-      };
-
-      public:
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF>
-        struct result<This(FF)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename Helper<FType>::Result type;
-        };
-
-        template <class F>
-        typename result<XPtr_to_mem_fun(F)>::type operator()
-                 ( const F& f) const
-        {
-          typedef typename remove_RC<F>::type FType;
-          return Helper<FType>::go( f );
-        }
-      };
-
-    }
-
-    typedef boost::phoenix::function<impl::XPtr_to_fun0>  Ptr_to_fun0;
-    typedef impl::XPtr_to_fun  Ptr_to_fun;  // This does not need to be wrapped.
-    typedef impl::XPtr_to_mem_fun   Ptr_to_mem_fun;  // This does not need to be wrapped.
-    Ptr_to_fun0 ptr_to_fun0;
-    Ptr_to_fun  ptr_to_fun;
-    Ptr_to_mem_fun  ptr_to_mem_fun;
-
-    namespace impl {
-
-      template <class F, class X>
-      class XThunk1Helper
-      {
-        F f;
-        X x;
-      public:
-        XThunk1Helper( const F& a, const X &b) : f(a), x(b) {}
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF,typename XX>
-        struct result<This(FF,XX)>
-        {
-          typedef typename RTFFX<FF,XX>::type type;
-        };
-
-        typename result<XThunk1Helper(F,X)>::type
-        operator()() const {
-          return f( x )();
-        }
- 
-     };
-
-      template <class F, class X, class Y>
-      class XThunk2Helper
-      {
-        F f;
-        X x;
-        Y y;
-      public:
-        XThunk2Helper( const F& a, const X &b, const Y& c) :
-                       f(a), x(b), y(c) {}
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF,typename XX, typename YY>
-        struct result<This(FF,XX,YY)>
-        {
-          typedef typename RTFFXY<FF,XX,YY>::type type;
-        };
-
-        typename result<XThunk2Helper(F,X,Y)>::type
-        operator()() const {
-          return f( x, y )();
-        }
- 
-     };
-
-      template <class F, class X, class Y, class Z>
-      class XThunk3Helper
-      {
-        F f;
-        X x;
-        Y y;
-        Z z;
-      public:
-        XThunk3Helper( const F& a, const X &b, const Y& c, const Z& d) :
-                       f(a), x(b), y(c), z(d) {}
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF,typename XX,
-                                 typename YY, typename ZZ>
-        struct result<This(FF,XX,YY,ZZ)>
-        {
-          typedef typename RTFFXYZ<FF,XX,YY,ZZ>::type type;
-        };
-
-        typename result<XThunk3Helper(F,X,Y,Z)>::type
-        operator()() const {
-          return f( x, y, z )();
-        }
- 
-     };
-
-      class XThunk1 {
-
-      template <class F, class X> struct Helper
-      {
-        typedef typename remove_RC<F>::type FType;
-        typedef typename remove_RC<X>::type XType;
-        typedef XThunk1Helper<FType,XType> CType;
-        typedef typename RTFFX<FType,XType>::type result_type;
-        typedef MonomorphicWrapper0<result_type,CType> fun_type;
-        typedef fun_type Result;
-        static Result go( const F& f, const X& x)
-        {
-          return fun_type(CType(f,x));
-        }
-      };
-
-      public:
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF, typename XX>
-        struct result<This(FF,XX)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename remove_RC<XX>::type XType;
-          typedef typename Helper<FType,XType>::Result type;
-        };
-
-        template <class F, class X>
-        typename result<XThunk1(F,X)>::type operator()
-                 ( const F& f, const X& x) const
-        {
-          typedef typename remove_RC<F>::type FType;
-          typedef typename remove_RC<X>::type XType;
-          return Helper<FType,XType>::go( f, x );
-        }
-
-     };
-
-      class XThunk2 {
-
-      template <class F, class X, class Y> struct Helper
-      {
-        typedef typename remove_RC<F>::type FType;
-        typedef typename remove_RC<X>::type XType;
-        typedef typename remove_RC<Y>::type YType;
-        typedef XThunk2Helper<FType,XType,YType> CType;
-        typedef typename RTFFXY<FType,XType,YType>::type result_type;
-        typedef MonomorphicWrapper0<result_type,CType> fun_type;
-        typedef fun_type Result;
-        static Result go( const F& f, const X& x, const Y& y)
-        {
-          return fun_type(CType(f,x,y));
-        }
-      };
-
-      public:
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF, typename XX, typename YY>
-        struct result<This(FF,XX,YY)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename remove_RC<XX>::type XType;
-          typedef typename remove_RC<YY>::type YType;
-          typedef typename Helper<FType,XType,YType>::Result type;
-        };
-
-        template <class F, class X, class Y>
-        typename result<XThunk2(F,X,Y)>::type operator()
-                 ( const F& f, const X& x, const Y& y) const
-        {
-          typedef typename remove_RC<F>::type FType;
-          typedef typename remove_RC<X>::type XType;
-          typedef typename remove_RC<Y>::type YType;
-          return Helper<FType,XType,YType>::go( f, x, y );
-        }
-
-     };
-
-      class XThunk3 {
-
-      template <class F, class X, class Y, class Z> struct Helper
-      {
-        typedef typename remove_RC<F>::type FType;
-        typedef typename remove_RC<X>::type XType;
-        typedef typename remove_RC<Y>::type YType;
-        typedef typename remove_RC<Z>::type ZType;
-        typedef XThunk3Helper<FType,XType,YType,ZType> CType;
-        typedef typename RTFFXYZ<FType,XType,YType,ZType>::type result_type;
-        typedef MonomorphicWrapper0<result_type,CType> fun_type;
-        typedef fun_type Result;
-        static Result go( const F& f, const X& x, const Y& y, const Z& z)
-        {
-          return fun_type(CType(f,x,y,z));
-        }
-      };
-
-      public:
-        template <typename Sig> struct result;
-
-        template <typename This, typename FF, typename XX,
-                                 typename YY, typename ZZ>
-        struct result<This(FF,XX,YY,ZZ)>
-        {
-          typedef typename remove_RC<FF>::type FType;
-          typedef typename remove_RC<XX>::type XType;
-          typedef typename remove_RC<YY>::type YType;
-          typedef typename remove_RC<ZZ>::type ZType;
-          typedef typename Helper<FType,XType,YType,ZType>::Result type;
-        };
-
-        template <class F, class X, class Y, class Z>
-        typename result<XThunk3(F,X,Y,Z)>::type operator()
-            ( const F& f, const X& x, const Y& y, const Z& z) const
-        {
-          typedef typename remove_RC<F>::type FType;
-          typedef typename remove_RC<X>::type XType;
-          typedef typename remove_RC<Y>::type YType;
-          typedef typename remove_RC<Z>::type ZType;
-          return Helper<FType,XType,YType,ZType>::go( f, x, y, z );
-        }
-
-     };
-
-    }
-
-    typedef boost::phoenix::function<impl::XThunk1> Thunk1;
-    typedef boost::phoenix::function<impl::XThunk2> Thunk2;
-    typedef boost::phoenix::function<impl::XThunk3> Thunk3;
-    Thunk1 thunk1;
-    Thunk2 thunk2;
-    Thunk3 thunk3;
 
     namespace fcpp {
 
