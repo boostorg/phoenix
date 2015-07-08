@@ -13,6 +13,9 @@
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/traits.hpp>
 #include <boost/proto/transform/impl.hpp>
+#ifndef BOOST_PHOENIX_NO_VARIADIC_CALL
+#   include <boost/phoenix/core/detail/index_tuple.hpp>
+#endif
 
 namespace boost { namespace phoenix
 {
@@ -26,7 +29,7 @@ namespace boost { namespace phoenix
           , long Arity = proto::arity_of<Expr>::value
         >
         struct call_impl;
-        
+
         template <typename Fun, typename Expr, typename State, typename Data>
         struct call_impl<Fun, Expr, State, Data, 0>
             : proto::transform_impl<Expr, State, Data>
@@ -34,13 +37,13 @@ namespace boost { namespace phoenix
             typedef
                 typename boost::phoenix::result_of::context<State, Data>::type
                 context_type;
-            
+
             typedef
                 typename boost::result_of<
                     Fun(Expr, context_type)
                 >::type
                 result_type;
-            
+
             result_type operator()(
                 typename call_impl::expr_param e
               , typename call_impl::state_param s
@@ -50,6 +53,50 @@ namespace boost { namespace phoenix
                 return Fun()(e, boost::phoenix::context(s, d));
             }
         };
+
+#ifdef BOOST_PHOENIX_NO_VARIADIC_CALL
+        #include <boost/phoenix/core/detail/cpp03/call.hpp>
+#else
+        template <typename Fun, typename Expr, typename State, typename Data
+                , typename Indices>
+        struct call_impl_;
+
+        template <typename Fun, typename Expr, typename State, typename Data
+                , std::size_t... Indices>
+        struct call_impl_<Fun, Expr, State, Data, index_tuple<Indices...> >
+            : proto::transform_impl<Expr, State, Data>
+        {
+            typedef
+                typename boost::phoenix::result_of::context<State, Data>::type
+                context_type;
+            typedef
+                typename boost::result_of<
+                    Fun(
+                        typename proto::result_of::child_c<Expr, Indices>::type...
+                      , context_type
+                    )
+                >::type
+                result_type;
+            result_type operator()(
+                typename call_impl_::expr_param e
+              , typename call_impl_::state_param s
+              , typename call_impl_::data_param d
+            ) const
+            {
+                return
+                    Fun()(
+                        proto::child_c<Indices>(e)...
+                      , boost::phoenix::context(s, d)
+                    );
+            }
+        };
+
+        template <typename Fun, typename Expr, typename State, typename Data, long Arity>
+        struct call_impl
+            : call_impl_<Fun, Expr, State, Data, typename make_index_tuple<Arity>::type>
+        {
+        };
+#endif
     }
 
     template <typename Fun, typename Dummy = void>
@@ -62,7 +109,6 @@ namespace boost { namespace phoenix
         {};
     };
 
-    #include <boost/phoenix/core/detail/call.hpp>
 
 }
     namespace proto

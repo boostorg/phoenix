@@ -14,7 +14,7 @@
 #define BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/call_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "../preprocessed/call_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -41,13 +41,10 @@
 /**/
     
 
-    namespace detail
-    {
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_LIMIT,                                                \
-    <boost/phoenix/core/detail/call.hpp>))
+    <boost/phoenix/core/detail/cpp03/call.hpp>))
 #include BOOST_PHOENIX_ITERATE()
-    }
 
 #undef M0
 #undef M1
