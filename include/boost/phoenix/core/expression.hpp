@@ -18,12 +18,12 @@
 
 #if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
 
-#include <boost/phoenix/core/preprocessed/expression.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/expression.hpp>
 
 #else
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/expression_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "detail/cpp03/preprocessed/expression_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*=============================================================================

@@ -5,7 +5,7 @@
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#include <boost/phoenix/core/detail/preprocessed/actor_operator.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/actor_operator.hpp>
 
 #endif
 #else
@@ -18,7 +18,7 @@
 #include <boost/phoenix/support/iterate.hpp>
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_operator_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "cpp03/preprocessed/actor_operator_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman

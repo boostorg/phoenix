@@ -3,7 +3,7 @@
 #ifndef BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
 #define BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
 
-#include <boost/phoenix/core/detail/preprocessed/call.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/call.hpp>
 
 #endif
 #else
@@ -14,7 +14,7 @@
 #define BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/call_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "cpp03/preprocessed/call_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================

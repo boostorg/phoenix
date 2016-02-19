@@ -104,10 +104,10 @@ namespace boost { namespace phoenix
 
             private:
 #if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#include <boost/phoenix/core/preprocessed/function_equal.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/function_equal.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/function_equal_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "detail/cpp03/preprocessed/function_equal_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*==============================================================================
     Copyright (c) 2001-2010 Joel de Guzman

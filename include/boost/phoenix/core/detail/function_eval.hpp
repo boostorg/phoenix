@@ -11,7 +11,7 @@
 #include <boost/phoenix/core/detail/phx2_result.hpp>
 #include <boost/utility/result_of.hpp>
 
-#include <boost/phoenix/core/detail/preprocessed/function_eval.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/function_eval.hpp>
 
 #endif
 #else
@@ -30,7 +30,7 @@
 #include <boost/utility/result_of.hpp>
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/function_eval_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "cpp03/preprocessed/function_eval_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman

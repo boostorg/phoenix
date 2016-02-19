@@ -122,10 +122,10 @@ namespace boost { namespace phoenix
     /**/
  
 #if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
-#include <boost/phoenix/core/preprocessed/actor.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/assign.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "detail/cpp03/preprocessed/assign_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
