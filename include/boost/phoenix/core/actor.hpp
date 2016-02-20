@@ -88,7 +88,7 @@ namespace boost { namespace phoenix
     }
 
     // Bring in the result_of::actor<>
-    #include <boost/phoenix/core/detail/actor_result_of.hpp>
+    #include <boost/phoenix/core/detail/cpp03/actor_result_of.hpp>
 
     ////////////////////////////////////////////////////////////////////////////
     //
@@ -211,7 +211,7 @@ namespace boost { namespace phoenix
         }
         
         // Bring in the rest
-        #include <boost/phoenix/core/detail/actor_operator.hpp>
+        #include <boost/phoenix/core/detail/cpp03/actor_operator.hpp>
     };
 
 }}

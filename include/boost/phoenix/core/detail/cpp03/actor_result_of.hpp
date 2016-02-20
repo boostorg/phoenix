@@ -18,7 +18,7 @@
 #include <boost/phoenix/support/iterate.hpp>
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "cpp03/preprocessed/actor_result_of_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/actor_result_of_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 
 /*==============================================================================
@@ -70,7 +70,7 @@
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                          \
-    <boost/phoenix/core/detail/actor_result_of.hpp>))
+    <boost/phoenix/core/detail/cpp03/actor_result_of.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
     }
