@@ -62,7 +62,7 @@ namespace boost { namespace phoenix
         {};
     };
 
-    #include <boost/phoenix/core/detail/call.hpp>
+    #include <boost/phoenix/core/detail/cpp03/call.hpp>
 
 }
     namespace proto

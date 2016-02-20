@@ -3,7 +3,7 @@
 #ifndef BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
 #define BOOST_PHOENIX_CORE_DETAIL_CALL_HPP
 
-#include <boost/phoenix/core/detail/preprocessed/call.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/call.hpp>
 
 #endif
 #else
@@ -45,7 +45,7 @@
     {
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_LIMIT,                                                \
-    <boost/phoenix/core/detail/call.hpp>))
+    <boost/phoenix/core/detail/cpp03/call.hpp>))
 #include BOOST_PHOENIX_ITERATE()
     }
 

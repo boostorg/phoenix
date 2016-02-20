@@ -5,7 +5,7 @@
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#include <boost/phoenix/core/detail/preprocessed/actor_result_of.hpp>
+#include <boost/phoenix/core/detail/cpp03/preprocessed/actor_result_of.hpp>
 
 #endif
 #else
@@ -70,7 +70,7 @@
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                          \
-    <boost/phoenix/core/detail/actor_result_of.hpp>))
+    <boost/phoenix/core/detail/cpp03/actor_result_of.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
     }
