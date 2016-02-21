@@ -41,13 +41,10 @@
 /**/
     
 
-    namespace detail
-    {
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_LIMIT,                                                \
     <boost/phoenix/core/detail/cpp03/call.hpp>))
 #include BOOST_PHOENIX_ITERATE()
-    }
 
 #undef M0
 #undef M1
