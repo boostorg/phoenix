@@ -18,7 +18,7 @@
 #include <boost/phoenix/core/detail/cpp03/preprocessed/phx2_result.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "cpp03/preprocessed/phx2_result_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/phx2_result_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*=============================================================================
     Copyright (c) 2011 Thomas Heller
