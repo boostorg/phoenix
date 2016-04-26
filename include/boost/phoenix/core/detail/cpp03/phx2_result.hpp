@@ -18,7 +18,7 @@
 #include <boost/phoenix/core/detail/cpp03/preprocessed/phx2_result.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "cpp03/preprocessed/phx2_result_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/phx2_result_" BOOST_PHOENIX_LIMIT_STR ".hpp")
 #endif
 /*=============================================================================
     Copyright (c) 2011 Thomas Heller
@@ -30,10 +30,9 @@
 #pragma wave option(preserve: 1)
 #endif
 
-
         #define BOOST_PHOENIX_ITERATION_PARAMS                                  \
             (3, (1, BOOST_PP_DEC(BOOST_PHOENIX_COMPOSITE_LIMIT),                \
-            <boost/phoenix/core/detail/cpp03/preprocessed/phx2_result.hpp>))
+            <boost/phoenix/core/detail/cpp03/phx2_result.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
@@ -53,19 +52,18 @@
             >::type
         {};
 
-
         template <typename F, BOOST_PHOENIX_typename_A>
         struct phx2_result<F, BOOST_PHOENIX_A>
         {
             typedef typename F::template result<BOOST_PHOENIX_A>::type type;
         };
-        
+
         template <typename F, BOOST_PHOENIX_typename_A>
         struct phx2_result<F, BOOST_PHOENIX_A_ref>
         {
             typedef typename F::template result<BOOST_PHOENIX_A>::type type;
         };
-        
+
         template <typename F, BOOST_PHOENIX_typename_A>
         struct phx2_result<F, BOOST_PHOENIX_A_const_ref>
         {
