@@ -3,7 +3,7 @@
 #ifndef BOOST_PHOENIX_OBJECT_DETAIL_NEW_EVAL_HPP
 #define BOOST_PHOENIX_OBJECT_DETAIL_NEW_EVAL_HPP
 
-#include <boost/phoenix/object/detail/preprocessed/new_eval.hpp>
+#include <boost/phoenix/object/detail/cpp03/preprocessed/new_eval.hpp>
 
 #endif
 #else
@@ -33,7 +33,7 @@
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (2, BOOST_PHOENIX_COMPOSITE_LIMIT,                                      \
-    <boost/phoenix/object/detail/new_eval.hpp>))
+    <boost/phoenix/object/detail/cpp03/new_eval.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
