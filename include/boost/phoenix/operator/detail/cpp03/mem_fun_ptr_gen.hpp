@@ -1,16 +1,9 @@
 
 #if !BOOST_PHOENIX_IS_ITERATING
 
-#ifndef BOOST_PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
-#define BOOST_PHOENIX_OPERATOR_MEMBER_DETAIL_MEM_FUN_PTR_GEN_HPP
-
-#include <boost/phoenix/core/limits.hpp>
-#include <boost/phoenix/support/iterate.hpp>
-#include <boost/phoenix/core/expression.hpp>
-
 #if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
 
-#include <boost/phoenix/operator/detail/preprocessed/mem_fun_ptr_gen.hpp>
+#include <boost/phoenix/operator/detail/cpp03/preprocessed/mem_fun_ptr_gen.hpp>
 
 #else
 
@@ -56,7 +49,7 @@ namespace boost { namespace phoenix
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
         (3, (1, BOOST_PHOENIX_MEMBER_LIMIT,                                     \
-        <boost/phoenix/operator/detail/mem_fun_ptr_gen.hpp>))                   \
+        <boost/phoenix/operator/detail/cpp03/mem_fun_ptr_gen.hpp>))             \
 
 #include BOOST_PHOENIX_ITERATE()
 
@@ -96,8 +89,6 @@ namespace boost { namespace phoenix
 #endif
 
 #endif // BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES
-
-#endif
 
 #else
             template <BOOST_PHOENIX_typename_A>

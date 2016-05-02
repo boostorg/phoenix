@@ -23,7 +23,7 @@
 
         #define BOOST_PHOENIX_ITERATION_PARAMS                                  \
             (3, (2, BOOST_PHOENIX_LIMIT,                                        \
-                 <boost/phoenix/operator/detail/mem_fun_ptr_eval_result_of.hpp>))
+                 <boost/phoenix/operator/detail/cpp03/mem_fun_ptr_eval_result_of.hpp>))
         #include BOOST_PHOENIX_ITERATE()
 
 #undef BOOST_PHOENIX_MEM_FUN_PTR_EVAL_RESULT_OF_CHILD
