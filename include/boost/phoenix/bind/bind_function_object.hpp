@@ -13,6 +13,26 @@
 #if defined(BOOST_PHOENIX_NO_VARIADIC_BIND)
 # include <boost/phoenix/bind/detail/cpp03/bind_function_object.hpp>
 #else
-// TODO:
+
+#include <boost/phoenix/core/expression.hpp>
+#include <boost/phoenix/core/detail/function_eval.hpp>
+
+namespace boost { namespace phoenix
+{
+    template <typename F>
+    inline typename detail::expression::function_eval<F>::type const
+    bind(F f)
+    {
+        return detail::expression::function_eval<F>::make(f);
+    }
+
+    template <typename F, typename... A>
+    inline typename detail::expression::function_eval<F, A...>::type const
+    bind(F f, A const&... a)
+    {
+        return detail::expression::function_eval<F, A...>::make(f, a...);
+    }
+}} // namespace boost::phoenix
+
 #endif
 #endif
