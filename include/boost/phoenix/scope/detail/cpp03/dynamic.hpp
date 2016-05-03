@@ -5,7 +5,7 @@
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#include <boost/phoenix/scope/detail/preprocessed/dynamic.hpp>
+#include <boost/phoenix/scope/detail/cpp03/preprocessed/dynamic.hpp>
 
 #endif
 #else
@@ -44,7 +44,7 @@
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_DYNAMIC_LIMIT,                                        \
-    <boost/phoenix/scope/detail/dynamic.hpp>))
+    <boost/phoenix/scope/detail/cpp03/dynamic.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
 #undef BOOST_PHOENIX_SCOPE_DYNAMIC_MEMBER

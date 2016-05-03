@@ -5,7 +5,7 @@
 
 #include <boost/phoenix/support/iterate.hpp>
 
-#include <boost/phoenix/scope/detail/preprocessed/make_locals.hpp>
+#include <boost/phoenix/scope/detail/cpp03/preprocessed/make_locals.hpp>
 
 #endif
 #else
@@ -63,7 +63,7 @@
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_LOCAL_LIMIT,                                          \
-    <boost/phoenix/scope/detail/make_locals.hpp>))
+    <boost/phoenix/scope/detail/cpp03/make_locals.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)

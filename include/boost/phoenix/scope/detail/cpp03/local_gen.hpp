@@ -35,7 +35,7 @@
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_LOCAL_LIMIT,                                          \
-    <boost/phoenix/scope/detail/local_gen.hpp>))
+    <boost/phoenix/scope/detail/cpp03/local_gen.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
 #else
