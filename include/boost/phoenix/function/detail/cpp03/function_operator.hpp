@@ -3,7 +3,7 @@
 #ifndef BOOST_PHOENIX_FUNCTION_DETAIL_FUNCTION_OPERATOR_HPP
 #define BOOST_PHOENIX_FUNCTION_DETAIL_FUNCTION_OPERATOR_HPP
 
-#include <boost/phoenix/function/detail/preprocessed/function_operator.hpp>
+#include <boost/phoenix/function/detail/cpp03/preprocessed/function_operator.hpp>
 
 #endif
 #else
@@ -31,7 +31,7 @@
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_ACTOR_LIMIT,                                          \
-    <boost/phoenix/function/detail/function_operator.hpp>))
+    <boost/phoenix/function/detail/cpp03/function_operator.hpp>))
 #include BOOST_PHOENIX_ITERATE()
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
