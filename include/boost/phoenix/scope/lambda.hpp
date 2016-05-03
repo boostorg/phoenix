@@ -307,11 +307,13 @@ namespace boost { namespace phoenix
         : call<lambda_actor_eval, Dummy>
     {};
     
-    template <typename Locals = void, typename Map = void, typename Dummy = void>
+    template <typename Locals = vector0<>,
+              typename Map = detail::map_local_index_to_tuple<>,
+              typename Dummy = void>
     struct lambda_actor_gen;
 
     template <>
-    struct lambda_actor_gen<void, void, void>
+    struct lambda_actor_gen<vector0<>, detail::map_local_index_to_tuple<>, void>
     {
         template <typename Expr>
         typename expression::lambda_actor<vector0<>, detail::map_local_index_to_tuple<>, Expr>::type const
@@ -360,7 +362,13 @@ namespace boost { namespace phoenix
 
         #include <boost/phoenix/scope/detail/cpp03/lambda.hpp>
 #else
-        // TODO:
+#define BOOST_PHOENIX_SCOPE_ACTOR_GEN_NAME lambda_actor_gen
+#define BOOST_PHOENIX_SCOPE_ACTOR_GEN_FUNCTION operator()
+#define BOOST_PHOENIX_SCOPE_ACTOR_GEN_CONST const
+        #include <boost/phoenix/scope/detail/local_gen.hpp>
+#undef BOOST_PHOENIX_SCOPE_ACTOR_GEN_NAME
+#undef BOOST_PHOENIX_SCOPE_ACTOR_GEN_FUNCTION
+#undef BOOST_PHOENIX_SCOPE_ACTOR_GEN_CONST
 #endif
     };
 
