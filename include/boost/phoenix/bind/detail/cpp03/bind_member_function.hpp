@@ -13,7 +13,7 @@
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/reference.hpp>
 #include <boost/phoenix/core/detail/function_eval.hpp>
-#include <boost/phoenix/bind/detail/member_function_ptr.hpp>
+#include <boost/phoenix/bind/detail/cpp03/member_function_ptr.hpp>
 
 namespace boost { namespace phoenix
 {

@@ -9,7 +9,7 @@
 
 #include <boost/phoenix/core/expression.hpp>
 #include <boost/phoenix/core/detail/function_eval.hpp>
-#include <boost/phoenix/bind/detail/function_ptr.hpp>
+#include <boost/phoenix/bind/detail/cpp03/function_ptr.hpp>
 
 namespace boost { namespace phoenix {
 
