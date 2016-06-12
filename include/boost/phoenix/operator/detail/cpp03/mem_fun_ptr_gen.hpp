@@ -23,15 +23,6 @@
 #pragma wave option(preserve: 1)
 #endif
 
-BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
-    (boost)(phoenix)(mem_fun_ptr)
-  , (meta_grammar)
-    (meta_grammar)
-  , BOOST_PHOENIX_LIMIT
-)
-
-namespace boost { namespace phoenix
-{
     namespace detail {
         template <typename Object, typename MemPtr>
         struct mem_fun_ptr_gen
@@ -82,7 +73,6 @@ namespace boost { namespace phoenix
             }
         };
     }
-}}
 
 #if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)

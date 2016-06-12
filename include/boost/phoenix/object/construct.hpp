@@ -16,12 +16,16 @@
 #include <boost/phoenix/support/iterate.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 
+#ifdef BOOST_PHOENIX_NO_VARIADIC_EXPRESSION
+#   include <boost/phoenix/object/detail/cpp03/construct_expr.hpp>
+#else
 BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
     (boost)(phoenix)(construct)
   , (proto::terminal<detail::target<proto::_> >)
     (meta_grammar)
-  , BOOST_PHOENIX_COMPOSITE_LIMIT
+  , _
 )
+#endif
 
 namespace boost { namespace phoenix
 {

@@ -19,17 +19,28 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
 #include <boost/proto/operators.hpp>
-#if defined(BOOST_PHOENIX_NO_VARIADIC_OPERATOR)
 #include <boost/phoenix/support/iterate.hpp>
-#include <boost/phoenix/operator/detail/cpp03/mem_fun_ptr_gen.hpp>
+
+#ifdef BOOST_PHOENIX_NO_VARIADIC_EXPRESSION
+#   include <boost/phoenix/operator/detail/cpp03/mem_fun_ptr_expr.hpp>
 #else
-// TODO
+BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
+    (boost)(phoenix)(mem_fun_ptr)
+  , (meta_grammar)(meta_grammar)
+  , _
+)
 #endif
 
 #include <boost/phoenix/operator/detail/define_operator.hpp>
 
 namespace boost { namespace phoenix
 {
+#if defined(BOOST_PHOENIX_NO_VARIADIC_OPERATOR)
+    #include <boost/phoenix/operator/detail/cpp03/mem_fun_ptr_gen.hpp>
+#else
+    // TODO
+#endif
+
     BOOST_PHOENIX_BINARY_OPERATORS((mem_ptr))
 
     template<>
