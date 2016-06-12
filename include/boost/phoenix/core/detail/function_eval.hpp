@@ -22,9 +22,15 @@
 #   include <boost/type_traits/is_reference.hpp>
 #endif
 
-// XXX: Currently, we should use preprocessed files since
-// core/expression.hpp does not support c++11 variadic templates yet.
-#include <boost/phoenix/core/detail/cpp03/function_eval_expr.hpp>
+#ifdef BOOST_PHOENIX_NO_VARIADIC_EXPRESSION
+#   include <boost/phoenix/core/detail/cpp03/function_eval_expr.hpp>
+#else
+BOOST_PHOENIX_DEFINE_EXPRESSION_VARARG(
+    (boost)(phoenix)(detail)(function_eval)
+  , (meta_grammar)(meta_grammar)
+  , _
+)
+#endif
 
 namespace boost { namespace phoenix {
     namespace detail
