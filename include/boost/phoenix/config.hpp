@@ -38,38 +38,33 @@
 // There is no specific thing in Boost Config for libc++
 #ifdef _LIBCPP_VERSION
 #define BOOST_PHOENIX_USING_LIBCPP
-// This may not be true for some very old version of libc++
-// Current libc++ supports unordered_set and unordered_map without C++11.
-#undef BOOST_NO_CXX11_HDR_UNORDERED_MAP
-#undef BOOST_NO_CXX11_HDR_UNORDERED_SET
 #endif
 
-#if (!defined(BOOST_PHOENIX_USING_LIBCPP) \
-  && (defined (BOOST_NO_CXX11_HDR_UNORDERED_MAP) || \
-     defined (BOOST_NO_CXX11_HDR_UNORDERED_SET) ) )
+// This may not be true for some very old version of libc++
+// Current libc++ supports unordered_set and unordered_map without C++11.
+#if defined(BOOST_PHOENIX_USING_LIBCPP) \
+ && !(defined(BOOST_NO_CXX11_HDR_UNORDERED_MAP) || defined(BOOST_NO_CXX11_HDR_UNORDERED_SET))
+// This is either libc++ or C++11 or later
+#define BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+#define BOOST_PHOENIX_UNORDERED_SET_HEADER <unordered_set>
+#define BOOST_PHOENIX_UNORDERED_MAP_HEADER <unordered_map>
+#define BOOST_PHOENIX_UNORDERED_NAMESPACE std
+#else
 #ifdef BOOST_HAS_HASH
 // This is to sort out case of Clang when using stdlib from gcc
 // as Clang thinks it is gcc 4.2.1
 // This prevents the failure to include a header with a warning.
 #define _GLIBCXX_PERMIT_BACKWARD_HASH
-#define BOOST_PHOENIX_PERMIT_BACKWARD_HASH
 #define BOOST_PHOENIX_HASH_SET_HEADER BOOST_HASH_SET_HEADER
 #define BOOST_PHOENIX_HASH_MAP_HEADER BOOST_HASH_MAP_HEADER
 #define BOOST_PHOENIX_HAS_HASH
 #define BOOST_PHOENIX_HASH_NAMESPACE BOOST_STD_EXTENSION_NAMESPACE
-
 #elif defined(BOOST_DINKUMWARE_STDLIB) && (BOOST_DINKUMWARE_STDLIB < 610)
 #define BOOST_PHOENIX_HASH_SET_HEADER <hash_set>
 #define BOOST_PHOENIX_HASH_MAP_HEADER <hash_map>
 #define BOOST_PHOENIX_HAS_HASH
 #define BOOST_PHOENIX_HASH_NAMESPACE stdext
 #endif
-#else
-// This is either libc++ or C++11 or later
-#define BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
-#define BOOST_PHOENIX_UNORDERED_SET_HEADER <unordered_set>
-#define BOOST_PHOENIX_UNORDERED_MAP_HEADER <unordered_map>
-#define BOOST_PHOENIX_UNORDERED_NAMESPACE std
 #endif
 
 #endif
