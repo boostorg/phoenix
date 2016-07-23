@@ -49,8 +49,9 @@
 #define BOOST_PHOENIX_UNORDERED_SET_HEADER <unordered_set>
 #define BOOST_PHOENIX_UNORDERED_MAP_HEADER <unordered_map>
 #define BOOST_PHOENIX_UNORDERED_NAMESPACE std
-#else
-#ifdef BOOST_HAS_HASH
+#endif
+
+#if defined(BOOST_HAS_HASH)
 // This is to sort out case of Clang when using stdlib from gcc
 // as Clang thinks it is gcc 4.2.1
 // This prevents the failure to include a header with a warning.
@@ -64,7 +65,6 @@
 #define BOOST_PHOENIX_HASH_MAP_HEADER <hash_map>
 #define BOOST_PHOENIX_HAS_HASH
 #define BOOST_PHOENIX_HASH_NAMESPACE stdext
-#endif
 #endif
 
 #endif

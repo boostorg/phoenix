@@ -16,10 +16,10 @@
 #include <boost/config.hpp>
 
 #ifdef BOOST_PHOENIX_HAS_HASH
-#define _GLIBCXX_PERMIT_BACKWARD_HASH
 #include BOOST_PHOENIX_HASH_SET_HEADER
 #include BOOST_PHOENIX_HASH_MAP_HEADER
-#elif defined BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+#endif
+#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 #include BOOST_PHOENIX_UNORDERED_SET_HEADER
 #include BOOST_PHOENIX_UNORDERED_MAP_HEADER
 #endif
@@ -73,7 +73,9 @@ namespace
         convert_to_container<BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> >();
         BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
 
-#elif defined BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+#endif
+#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+
         std::unordered_set<int> us(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(us) == us.find(2));
 
