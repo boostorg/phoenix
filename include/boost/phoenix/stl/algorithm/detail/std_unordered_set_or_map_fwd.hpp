@@ -22,8 +22,8 @@
 #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 #ifdef BOOST_PHOENIX_USING_LIBCPP
 // Advance declaration not working for libc++
-#include <unordered_set>
-#include <unordered_map>
+#include BOOST_PHOENIX_UNORDERED_SET_HEADER
+#include BOOST_PHOENIX_UNORDERED_MAP_HEADER
 #else
 
 

@@ -15,29 +15,13 @@
 
 #include <boost/config.hpp>
 
-#if defined(BOOST_DINKUMWARE_STDLIB) && (BOOST_DINKUMWARE_STDLIB < 610)
-#include <hash_set>
-#include <hash_map>
-#define BOOST_PHOENIX_HAS_HASH
-#define BOOST_PHOENIX_HASH_NAMESPACE stdext
-#else
-#if (defined (BOOST_NO_CXX11_HDR_UNORDERED_MAP) || \
-     defined (BOOST_NO_CXX11_HDR_UNORDERED_SET) )
-#ifdef BOOST_HAS_HASH
-// This does not work for Clang when using stdlib from gcc 4.9
-// as Clang thinks it is gcc 4.2.1
-//#ifndef BOOST_COMP_CLANG
+#ifdef BOOST_PHOENIX_HAS_HASH
 #define _GLIBCXX_PERMIT_BACKWARD_HASH
-#include BOOST_HASH_SET_HEADER
-#include BOOST_HASH_MAP_HEADER
-#define BOOST_PHOENIX_HAS_HASH
-#define BOOST_PHOENIX_HASH_NAMESPACE BOOST_STD_EXTENSION_NAMESPACE
-#endif
-#else
-#define BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
-#include <unordered_set>
-#include <unordered_map>
-#endif
+#include BOOST_PHOENIX_HASH_SET_HEADER
+#include BOOST_PHOENIX_HASH_MAP_HEADER
+#elif defined BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+#include BOOST_PHOENIX_UNORDERED_SET_HEADER
+#include BOOST_PHOENIX_UNORDERED_MAP_HEADER
 #endif
 
 #include <set>

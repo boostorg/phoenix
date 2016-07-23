@@ -2,6 +2,7 @@
     Copyright (c) 2001-2010 Joel de Guzman
     Copyright (c) 2010      Eric Niebler
     Copyright (c) 2014-2015 John Fletcher
+    Copyright (c) 2016      Kohei Takahashi
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -27,15 +28,13 @@
 // #endif
 //
 // #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
-// #define BOOST_PHOENIX_UNORDERED_SET_HEADER <unordered_set>
-// #define BOOST_PHOENIX_UNORDERED_MAP_HEADER <unordered_map>
+// #include BOOST_PHOENIX_UNORDERED_SET_HEADER
+// #include BOOST_PHOENIX_UNORDERED_MAP_HEADER
 // #endif
 //
 // The client code can then chose the implementation provided.
 // See the example in test/stl/querying_find2.cpp
-//
-//////////////////////////////////////////////////////////////////////////
-//
+
 // There is no specific thing in Boost Config for libc++
 #ifdef _LIBCPP_VERSION
 #define BOOST_PHOENIX_USING_LIBCPP
