@@ -23,8 +23,8 @@
 #if defined(BOOST_PHOENIX_USING_LIBCPP) \
   || (defined(BOOST_DINKUMWARE_STDLIB) && (BOOST_DINKUMWARE_STDLIB < 540))
 // Advance declaration not working for libc++ and MSVC 10
-#include <unordered_set>
-#include <unordered_map>
+#include BOOST_PHOENIX_UNORDERED_SET_HEADER
+#include BOOST_PHOENIX_UNORDERED_MAP_HEADER
 #else
 
 
