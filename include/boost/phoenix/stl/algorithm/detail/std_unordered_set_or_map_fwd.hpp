@@ -20,8 +20,9 @@
 #include <boost/phoenix/config.hpp>
 
 #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
-#ifdef BOOST_PHOENIX_USING_LIBCPP
-// Advance declaration not working for libc++
+#if defined(BOOST_PHOENIX_USING_LIBCPP) \
+  || (defined(BOOST_DINKUMWARE_STDLIB) && (BOOST_DINKUMWARE_STDLIB < 540))
+// Advance declaration not working for libc++ and MSVC 10
 #include <unordered_set>
 #include <unordered_map>
 #else
