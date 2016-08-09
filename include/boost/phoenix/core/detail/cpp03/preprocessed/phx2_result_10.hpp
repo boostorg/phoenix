@@ -24,13 +24,11 @@
         {
             typedef typename F::template result<A0>::type type;
         };
-        
         template <typename F, typename A0>
         struct phx2_result<F, A0 &>
         {
             typedef typename F::template result<A0>::type type;
         };
-        
         template <typename F, typename A0>
         struct phx2_result<F, A0 const&>
         {
@@ -56,13 +54,11 @@
         {
             typedef typename F::template result<A0 , A1>::type type;
         };
-        
         template <typename F, typename A0 , typename A1>
         struct phx2_result<F, A0 & , A1 &>
         {
             typedef typename F::template result<A0 , A1>::type type;
         };
-        
         template <typename F, typename A0 , typename A1>
         struct phx2_result<F, A0 const& , A1 const&>
         {
@@ -88,13 +84,11 @@
         {
             typedef typename F::template result<A0 , A1 , A2>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2>
         struct phx2_result<F, A0 & , A1 & , A2 &>
         {
             typedef typename F::template result<A0 , A1 , A2>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2>
         struct phx2_result<F, A0 const& , A1 const& , A2 const&>
         {
@@ -120,13 +114,11 @@
         {
             typedef typename F::template result<A0 , A1 , A2 , A3>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3>
         struct phx2_result<F, A0 & , A1 & , A2 & , A3 &>
         {
             typedef typename F::template result<A0 , A1 , A2 , A3>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3>
         struct phx2_result<F, A0 const& , A1 const& , A2 const& , A3 const&>
         {
@@ -152,13 +144,11 @@
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4>
         struct phx2_result<F, A0 & , A1 & , A2 & , A3 & , A4 &>
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4>
         struct phx2_result<F, A0 const& , A1 const& , A2 const& , A3 const& , A4 const&>
         {
@@ -184,13 +174,11 @@
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5>
         struct phx2_result<F, A0 & , A1 & , A2 & , A3 & , A4 & , A5 &>
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5>
         struct phx2_result<F, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const&>
         {
@@ -216,13 +204,11 @@
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5 , A6>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6>
         struct phx2_result<F, A0 & , A1 & , A2 & , A3 & , A4 & , A5 & , A6 &>
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5 , A6>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6>
         struct phx2_result<F, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const& , A6 const&>
         {
@@ -248,13 +234,11 @@
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7>
         struct phx2_result<F, A0 & , A1 & , A2 & , A3 & , A4 & , A5 & , A6 & , A7 &>
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7>
         struct phx2_result<F, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const& , A6 const& , A7 const&>
         {
@@ -280,13 +264,11 @@
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8>
         struct phx2_result<F, A0 & , A1 & , A2 & , A3 & , A4 & , A5 & , A6 & , A7 & , A8 &>
         {
             typedef typename F::template result<A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>::type type;
         };
-        
         template <typename F, typename A0 , typename A1 , typename A2 , typename A3 , typename A4 , typename A5 , typename A6 , typename A7 , typename A8>
         struct phx2_result<F, A0 const& , A1 const& , A2 const& , A3 const& , A4 const& , A5 const& , A6 const& , A7 const& , A8 const&>
         {

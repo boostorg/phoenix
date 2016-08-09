@@ -5,8 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-    namespace result_of
-    {
         template <typename Expr
             , typename A0 = void , typename A1 = void , typename A2 = void , typename A3 = void , typename A4 = void , typename A5 = void , typename A6 = void , typename A7 = void , typename A8 = void , typename A9 = void , typename A10 = void , typename A11 = void , typename A12 = void , typename A13 = void , typename A14 = void , typename A15 = void , typename A16 = void , typename A17 = void , typename A18 = void , typename A19 = void
             , typename Dummy = void>
@@ -24,18 +22,6 @@
                   , proto::empty_env
                 >::result_type
                 type;
-        };
-        template <typename Expr>
-        struct actor<Expr>
-        {
-            typedef
-                
-                typename mpl::eval_if_c<
-                    result_of::is_nullary<Expr>::value
-                  , nullary_actor_result<Expr>
-                  , mpl::identity<detail::error_expecting_arguments>
-                >::type
-            type;
         };
     
     
@@ -477,4 +463,3 @@
                     >::result_type
                 type;
         };
-    }

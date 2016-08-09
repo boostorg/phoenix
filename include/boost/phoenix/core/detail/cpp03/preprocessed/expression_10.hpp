@@ -3,13 +3,9 @@
     Copyright (c) 2010 Eric Niebler
     Copyright (c) 2010 Thomas Heller
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-namespace boost { namespace phoenix
-{
-    template <typename Expr> struct actor;
-    
     template <
         template <typename> class Actor
       , typename Tag
@@ -44,7 +40,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0)
       { 
         
@@ -61,7 +56,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0;
     };
@@ -87,7 +81,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1)
       { 
         
@@ -104,7 +97,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1;
     };
@@ -130,7 +122,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2)
       { 
         
@@ -147,7 +138,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2;
     };
@@ -173,7 +163,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2 , A3>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2 , typename call_traits<A3>::param_type a3)
       { 
         
@@ -190,7 +179,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2; typedef A3 proto_child3;
     };
@@ -216,7 +204,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2 , A3 , A4>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2 , typename call_traits<A3>::param_type a3 , typename call_traits<A4>::param_type a4)
       { 
         
@@ -233,7 +220,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2; typedef A3 proto_child3; typedef A4 proto_child4;
     };
@@ -259,7 +245,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2 , A3 , A4 , A5>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2 , typename call_traits<A3>::param_type a3 , typename call_traits<A4>::param_type a4 , typename call_traits<A5>::param_type a5)
       { 
         
@@ -276,7 +261,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2; typedef A3 proto_child3; typedef A4 proto_child4; typedef A5 proto_child5;
     };
@@ -302,7 +286,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2 , A3 , A4 , A5 , A6>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2 , typename call_traits<A3>::param_type a3 , typename call_traits<A4>::param_type a4 , typename call_traits<A5>::param_type a5 , typename call_traits<A6>::param_type a6)
       { 
         
@@ -319,7 +302,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2; typedef A3 proto_child3; typedef A4 proto_child4; typedef A5 proto_child5; typedef A6 proto_child6;
     };
@@ -345,7 +327,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2 , typename call_traits<A3>::param_type a3 , typename call_traits<A4>::param_type a4 , typename call_traits<A5>::param_type a5 , typename call_traits<A6>::param_type a6 , typename call_traits<A7>::param_type a7)
       { 
         
@@ -362,7 +343,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2; typedef A3 proto_child3; typedef A4 proto_child4; typedef A5 proto_child5; typedef A6 proto_child6; typedef A7 proto_child7;
     };
@@ -388,7 +368,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2 , typename call_traits<A3>::param_type a3 , typename call_traits<A4>::param_type a4 , typename call_traits<A5>::param_type a5 , typename call_traits<A6>::param_type a6 , typename call_traits<A7>::param_type a7 , typename call_traits<A8>::param_type a8)
       { 
         
@@ -405,7 +384,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2; typedef A3 proto_child3; typedef A4 proto_child4; typedef A5 proto_child5; typedef A6 proto_child6; typedef A7 proto_child7; typedef A8 proto_child8;
     };
@@ -431,7 +409,6 @@ namespace boost { namespace phoenix
         typedef
             typename proto::nary_expr<Tag, A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , A8 , A9>::proto_grammar
             proto_grammar;
-        
         static type make(typename call_traits<A0>::param_type a0 , typename call_traits<A1>::param_type a1 , typename call_traits<A2>::param_type a2 , typename call_traits<A3>::param_type a3 , typename call_traits<A4>::param_type a4 , typename call_traits<A5>::param_type a5 , typename call_traits<A6>::param_type a6 , typename call_traits<A7>::param_type a7 , typename call_traits<A8>::param_type a8 , typename call_traits<A9>::param_type a9)
       { 
         
@@ -448,8 +425,6 @@ namespace boost { namespace phoenix
         struct impl
           : proto::pass_through<expr_ext>::template impl<Expr, State, Data>
         {};
-        
         typedef Tag proto_tag;
         typedef A0 proto_child0; typedef A1 proto_child1; typedef A2 proto_child2; typedef A3 proto_child3; typedef A4 proto_child4; typedef A5 proto_child5; typedef A6 proto_child6; typedef A7 proto_child7; typedef A8 proto_child8; typedef A9 proto_child9;
     };
-}}
