@@ -98,16 +98,21 @@ namespace boost { namespace phoenix {
                     >::type
                     fn;
 
+                template <typename T>
+                struct result_of_evaluator
+                {
+                    typedef typename boost::add_reference<
+                        typename boost::add_const<
+                            typename boost::result_of<
+                                boost::phoenix::evaluator(T, Context)
+                            >::type
+                        >::type
+                    >::type type;
+                };
 
                 typedef typename
                     boost::result_of<
-                        fn(
-                            typename boost::add_reference<
-                                typename boost::add_const<
-                                    typename boost::result_of<boost::phoenix::evaluator(A, Context)>::type
-                                >::type
-                            >::type...
-                        )
+                        fn(typename result_of_evaluator<A>::type...)
                     >::type
                     type;
 

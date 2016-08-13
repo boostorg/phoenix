@@ -70,10 +70,17 @@ namespace boost { namespace phoenix
             typedef
                 typename boost::phoenix::result_of::context<State, Data>::type
                 context_type;
+            template <std::size_t Index>
+            struct result_of_expr
+            {
+                typedef
+                    typename proto::result_of::child_c<Expr, Index>::type
+                    type;
+            };
             typedef
                 typename boost::result_of<
                     Fun(
-                        typename proto::result_of::child_c<Expr, Indices>::type...
+                        typename result_of_expr<Indices>::type...
                       , context_type
                     )
                 >::type

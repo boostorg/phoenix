@@ -103,17 +103,23 @@ namespace boost { namespace phoenix
             template <std::size_t>
             struct proto_expr { typedef proto::_ type; };
 
+            template <std::size_t Index>
+            struct nth_assign
+            {
+                typedef
+                    assign type(
+                        proto::_child_c<Index>
+                      , proto::call<proto::_child_c<Index>(proto::_state)>
+                    )
+                ;
+            };
+
             template <typename Expr, typename State, typename Data
                     , std::size_t... Indices>
             struct impl<Expr, State, Data, detail::index_sequence<Indices...> >
                 : proto::when<
                     proto::nary_expr<typename proto_expr<Indices>::type...>
-                  , proto::and_<
-                      assign(
-                          proto::_child_c<Indices>
-                        , proto::call<proto::_child_c<Indices>(proto::_state)>
-                      )...
-                    >
+                  , proto::and_<typename nth_assign<Indices>::type...>
                 >::template impl<Expr, State, Data>
             {
             };
