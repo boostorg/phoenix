@@ -52,7 +52,6 @@ namespace
     {
         using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
-        int marray[] = {1,1,2,3,3};
         BOOST_TEST(boost::phoenix::find(arg1,2)(array) == array + 1);
 
         std::set<int> s(array, array + 3);
@@ -77,6 +76,7 @@ namespace
         std::unordered_set<int> us(array, array + 3);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(us) == us.find(2));
 
+        int marray[] = {1,1,2,3,3};
         std::unordered_multiset<int> ums(marray, marray + 5);
         BOOST_TEST(boost::phoenix::find(arg1, 2)(ums) == ums.find(2));
 
