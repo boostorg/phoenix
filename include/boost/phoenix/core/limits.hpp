@@ -8,6 +8,7 @@
 #define BOOST_PHOENIX_CORE_LIMITS_HPP
 
 #include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
 #include <boost/preprocessor/arithmetic/add.hpp>
 #include <boost/preprocessor/inc.hpp>
 #include <boost/preprocessor/dec.hpp>
@@ -47,6 +48,11 @@
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
 # define BOOST_PHOENIX_NO_VARIADIC_ACTOR
 # define BOOST_PHOENIX_NO_VARIADIC_FUNCTION_EVAL
+#endif
+
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1800)
+// FIXME: temporary disable on MSVC 2013.
+# define BOOST_PHOENIX_NO_VARIADIC_SCOPE
 #endif
 
 # define BOOST_PHOENIX_NO_VARIADIC_OBJECT
