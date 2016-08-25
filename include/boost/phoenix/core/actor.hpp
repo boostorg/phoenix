@@ -114,6 +114,15 @@ namespace boost { namespace phoenix
                 ;
             };
 
+            template <typename Expr, typename State, typename Data>
+            struct impl<Expr, State, Data, detail::index_sequence<> >
+                : proto::when<
+                    proto::terminal<proto::_>
+                  , do_assign(proto::_, proto::_state)
+                >::template impl<Expr, State, Data>
+            {
+            };
+
             template <typename Expr, typename State, typename Data
                     , std::size_t... Indices>
             struct impl<Expr, State, Data, detail::index_sequence<Indices...> >
