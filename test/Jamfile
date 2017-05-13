@@ -97,6 +97,10 @@ test-suite phoenix_container :
     [ run container/container_tests5b.cpp ] 
     [ run container/container_tests6a.cpp ] 
     [ run container/container_tests6b.cpp ] 
+    [ run container/container_tests7a.cpp ]
+    [ run container/container_tests7b.cpp ]
+    [ run container/container_tests8a.cpp ]
+    [ run container/container_tests8b.cpp ]
     ;
 
 test-suite phoenix_scope :

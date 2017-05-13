@@ -16,6 +16,7 @@
 #include <deque>
 #include <list>
 #include <map>
+#include <set>
 #include <vector>
 #include <utility>
 
@@ -31,6 +32,8 @@ std::list<int> const build_list();
 std::map<int, int> const build_map();
 std::multimap<int, int> const build_multimap();
 std::vector<int> const build_vector();
+std::set<int> const build_set();
+std::multiset<int> const build_multiset();
 
 inline bool
 test(bool fail)
@@ -328,6 +331,27 @@ void test_map_erase(Container c)
 }
 
 template <typename Container>
+void test_set_erase(Container c)
+{
+    test_erase(c);
+    if (boost::report_errors() != 0)
+      return;
+
+    using phx::arg_names::arg1;
+    using phx::arg_names::arg2;
+    using phx::erase;
+
+    typename Container::value_type const value = *c.begin();
+    typename Container::key_type const key = value;
+    typename Container::size_type const removed =
+        erase(arg1, arg2)(c, key);
+    if (test(removed != 1)) {
+        cerr << "Failed " << typeid(Container).name() << " test_set_erase 1\n";
+        return;
+    }
+}
+
+template <typename Container>
 void test_front(Container c)
 {
     using phx::arg_names::arg1;
@@ -490,6 +514,93 @@ inline void test_multimap_insert(std::multimap<int, int> c)
     if (test(c.size() != size + const_c.size())) {
         cerr << "Failed " << typeid(Multimap).name()
        << " test_multimap_insert 3\n";
+        return;
+    }
+}
+
+inline void test_set_insert(std::set<int> c)
+{
+    using phx::arg_names::arg1;
+    using phx::arg_names::arg2;
+    using phx::arg_names::arg3;
+
+    typedef std::set<int> Set;
+
+    Set::value_type const value = *c.begin();
+    Set::iterator c_begin = c.begin();
+    // wrapper for
+    // iterator insert(iterator where, const value_type& val);
+    Set::iterator it =
+        phx::insert(arg1, arg2, arg3)(c, c_begin, value);
+
+    if (test(it != c.begin() /*|| *it != *(++it)*/)) {
+        cerr << "Failed " << typeid(Set).name() << " test_set_insert 1\n";
+        return;
+    }
+
+    // wrapper for
+    // pair<iterator, bool> insert(const value_type& val);
+    Set::value_type const value2(1400);
+    std::pair<Set::iterator, bool> result =
+      phx::insert(arg1, arg2)(c, value2);
+    if (test(!result.second)) {
+        cerr << "Failed " << typeid(Set).name() << " test_set_insert 2\n";
+        return;
+    }
+
+    // wrapper for
+    // template<class InIt>
+    // void insert(InIt first, InIt last);
+    Set const const_c = build_set();
+    Set::size_type size = c.size();
+    phx::insert(arg1, const_c.begin(), const_c.end())(c);
+    if (test(c.size() != size + const_c.size())) {
+        cerr << "Failed " << typeid(Set).name() << " test_set_insert 3\n";
+        return;
+    }
+}
+
+inline void test_multiset_insert(std::multiset<int> c)
+{
+    using phx::arg_names::arg1;
+    using phx::arg_names::arg2;
+    using phx::arg_names::arg3;
+
+    typedef std::multiset<int> Multiset;
+
+    Multiset::value_type const value = *c.begin();
+    Multiset::iterator c_begin = c.begin();
+    std::size_t old_size = c.size();
+    // wrapper for
+    // iterator insert(iterator where, const value_type& val);
+    Multiset::iterator it =
+        phx::insert(arg1, arg2, arg3)(c, c_begin, value);
+
+    if (test(*it != value || c.size() != old_size + 1)) {
+        cerr << "Failed " << typeid(Multiset).name()
+       << " test_multiset_insert 1\n";
+        return;
+    }
+
+    // wrapper for
+    // iterator insert(const value_type& val);
+    Multiset::value_type const value2(1400);
+    it = phx::insert(arg1, arg2)(c, value2);
+    if (test(it == c.end())) {
+        cerr << "Failed " << typeid(Multiset).name()
+       << " test_multiset_insert 2\n";
+        return;
+    }
+
+    // wrapper for
+    // template<class InIt>
+    // void insert(InIt first, InIt last);
+    Multiset const const_c = build_multiset();
+    Multiset::size_type size = c.size();
+    phx::insert(arg1, const_c.begin(), const_c.end())(c);
+    if (test(c.size() != size + const_c.size())) {
+        cerr << "Failed " << typeid(Multiset).name()
+       << " test_multiset_insert 3\n";
         return;
     }
 }
