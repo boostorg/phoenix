@@ -53,6 +53,7 @@ int
 main()
 {
     BOOST_STATIC_ASSERT((!phx::stl::has_mapped_type<std::multiset<int> >::value));
+    BOOST_STATIC_ASSERT((phx::stl::has_key_type<std::multiset<int> >::value));
 
     std::multiset<int> const data = build_multiset();
     test_begin(data);

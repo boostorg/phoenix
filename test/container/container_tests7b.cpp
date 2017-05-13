@@ -45,6 +45,7 @@ int
 main()
 {
     BOOST_STATIC_ASSERT((!phx::stl::has_mapped_type<std::set<int> >::value));
+    BOOST_STATIC_ASSERT((phx::stl::has_key_type<std::set<int> >::value));
 
     std::set<int> const data = build_set();
     test_set_insert(data);

@@ -294,24 +294,21 @@ namespace boost { namespace phoenix
                 //  returning a value. Oh well... :*
 
                 typedef
-                    boost::mpl::eval_if_c<
-                        boost::is_same<
-                            typename remove_reference<Arg1>::type
-                          , typename iterator_of<C>::type
-                        >::value
+                    boost::mpl::eval_if<
+                        is_key_type_of<C, Arg1>
+                      , size_type_of<C>
 #if defined(BOOST_MSVC)// && (BOOST_MSVC <= 1500)
                       , iterator_of<C>
 #else
                       , boost::mpl::identity<void>
 #endif
-                      , size_type_of<C>
                     >
-                map_erase_result;
+                assoc_erase_result;
 
                 typedef typename
                     boost::mpl::eval_if_c<
-                        has_mapped_type<C>::value
-                      , map_erase_result
+                        has_key_type<C>::value
+                      , assoc_erase_result
                       , iterator_of<C>
                     >::type
                 type;
