@@ -39,6 +39,73 @@
 
 namespace boost { namespace phoenix { namespace impl
 {
+namespace compat
+{
+#ifdef BOOST_NO_CXX98_RANDOM_SHUFFLE
+
+    // wrap std::rand as UniformRandomBitGenerator
+    struct wrap_rand
+    {
+        typedef unsigned int result_type;
+
+        static result_type (min)()
+        {
+            return 0;
+        }
+
+        static result_type (max)()
+        {
+            return RAND_MAX;
+        }
+
+        result_type operator()()
+        {
+            return std::rand();
+        }
+    };
+
+    template< class RandomIt >
+    inline void random_shuffle(RandomIt first, RandomIt last)
+    {
+        std::shuffle(first, last, wrap_rand());
+    }
+
+    // wrap Generator as UniformRandomBitGenerator
+    template< class Generator >
+    struct wrap_generator
+    {
+        typedef unsigned int result_type;
+        static const int max_arg = ((0u - 1u) >> 2) + 1;
+        Generator& g;
+
+        wrap_generator(Generator& gen) : g(gen) {}
+
+        static result_type (min)()
+        {
+            return 0;
+        }
+
+        static result_type (max)()
+        {
+            return max_arg - 1;
+        }
+
+        result_type operator()()
+        {
+            return static_cast<result_type>(g(max_arg));
+        }
+    };
+
+    template< class RandomIt, class Generator >
+    inline void random_shuffle(RandomIt first, RandomIt last, Generator& gen)
+    {
+        std::shuffle(first, last, wrap_generator< Generator >(gen));
+    }
+#else
+    using std::random_shuffle;
+#endif  
+} // namespace compat
+
     struct swap
     {
         typedef void result_type;
@@ -522,13 +589,13 @@ namespace boost { namespace phoenix { namespace impl
         template<class R>
         void operator()(R& r) const
         {
-            return std::random_shuffle(detail::begin_(r), detail::end_(r));
+            return compat::random_shuffle(detail::begin_(r), detail::end_(r));
         }
 
         template<class R, class G>
         void operator()(R& r, G g) const
         {
-            return std::random_shuffle(detail::begin_(r), detail::end_(r), g);
+            return compat::random_shuffle(detail::begin_(r), detail::end_(r), g);
         }
     };
 
