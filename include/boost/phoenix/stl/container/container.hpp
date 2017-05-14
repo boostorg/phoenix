@@ -33,7 +33,7 @@ namespace boost { namespace phoenix
 //      Lazy functions are provided for all of the member functions of the
 //      following containers:
 //
-//      deque - list - map - multimap - vector.
+//      deque - list - map - multimap - vector - set - multiset.
 //
 //      Indeed, should *your* class have member functions with the same names
 //      and signatures as those listed below, then it will automatically be
@@ -319,14 +319,14 @@ namespace boost { namespace phoenix
         {
             //  This mouthful can differentiate between the generic erase
             //  functions (Container == std::deque, std::list, std::vector) and
-            //  that specific to the two map-types, std::map and std::multimap.
+            //  that specific to Associative Containers.
             //
             //  where C is a std::deque, std::list, std::vector:
             //
             //      1) iterator C::erase(iterator where);
             //      2) iterator C::erase(iterator first, iterator last);
             //
-            //  where M is a std::map or std::multimap:
+            //  where A is a std::map, std::multimap, std::set, or std::multiset:
             //
             //      3) size_type M::erase(const Key& keyval);
             //      4) void M::erase(iterator where);
