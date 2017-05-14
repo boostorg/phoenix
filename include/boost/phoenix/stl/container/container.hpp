@@ -286,18 +286,14 @@ namespace boost { namespace phoenix
             template <typename C, typename Arg1, typename Arg2 = mpl::void_>
             struct erase
             {
-                //  BOOST_MSVC #if branch here in map_erase_result non-
-                //  standard behavior. The return type should be void but
-                //  VC7.1 prefers to return iterator_of<C>. As a result,
-                //  VC7.1 complains of error C2562:
-                //  boost::phoenix::stl::erase::operator() 'void' function
-                //  returning a value. Oh well... :*
-
+                // MSVC and libc++ always returns iterator even in C++03 mode.
                 typedef
                     boost::mpl::eval_if<
                         is_key_type_of<C, Arg1>
                       , size_type_of<C>
-#if defined(BOOST_MSVC)// && (BOOST_MSVC <= 1500)
+#if defined(BOOST_MSVC) /*&& (BOOST_MSVC <= 1500)*/ \
+ && (defined(BOOST_LIBSTDCXX11) && 40500 <= BOOST_LIBSTDCXX_VERSION) \
+ && defined(_LIBCPP_VERSION)
                       , iterator_of<C>
 #else
                       , boost::mpl::identity<void>
@@ -326,11 +322,13 @@ namespace boost { namespace phoenix
             //      1) iterator C::erase(iterator where);
             //      2) iterator C::erase(iterator first, iterator last);
             //
-            //  where A is a std::map, std::multimap, std::set, or std::multiset:
+            //  where C is a std::map, std::multimap, std::set, or std::multiset:
             //
             //      3) size_type M::erase(const Key& keyval);
-            //      4) void M::erase(iterator where);
-            //      5) void M::erase(iterator first, iterator last);
+            //      4-a) void M::erase(iterator where);
+            //      4-b) iterator M::erase(iterator where);
+            //      5-a) void M::erase(iterator first, iterator last);
+            //      5-b) iterator M::erase(iterator first, iterator last);
 
             template <typename Sig>
             struct result;
