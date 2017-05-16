@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2004 Angus Leeming
+    Copyright (c) 2017 Kohei Takahashi
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,9 +8,9 @@
 #include "container_tests.hpp"
 #include <boost/static_assert.hpp>
 
-std::map<int, int> const build_map()
+std::unordered_map<int, int> const build_unordered_map()
 {
-    typedef std::map<int, int> int_map;
+    typedef std::unordered_map<int, int> int_map;
     typedef std::vector<int> int_vector;
 
     int_map result;
@@ -23,11 +24,11 @@ std::map<int, int> const build_map()
     return result;
 }
 
-std::multimap<int, int> const build_multimap()
+std::unordered_multimap<int, int> const build_unordered_multimap()
 {
-    typedef std::map<int, int> int_map;
-    typedef std::multimap<int, int> int_multimap;
-    int_map const data = build_map();
+    typedef std::unordered_map<int, int> int_map;
+    typedef std::unordered_multimap<int, int> int_multimap;
+    int_map const data = build_unordered_map();
     return int_multimap(data.begin(), data.end());
 }
 
@@ -54,17 +55,17 @@ std::vector<int> const build_vector()
 int
 main()
 {
-    BOOST_STATIC_ASSERT((phx::stl::has_mapped_type<std::multimap<int, int> >::value));
-    BOOST_STATIC_ASSERT((phx::stl::has_key_type<std::multimap<int, int> >::value));
+    BOOST_STATIC_ASSERT((phx::stl::has_mapped_type<std::unordered_multimap<int, int> >::value));
+    BOOST_STATIC_ASSERT((phx::stl::has_key_type<std::unordered_multimap<int, int> >::value));
 
-    std::multimap<int, int> const data = build_multimap();
+    std::unordered_multimap<int, int> const data = build_unordered_multimap();
     test_multimap_insert(data);
-    test_key_comp(data);
+    //test_key_comp(data);
     test_max_size(data);
-    test_rbegin(data);
-    test_rend(data);
+    //test_rbegin(data);
+    //test_rend(data);
     test_size(data);
-    test_value_comp(data);
+    //test_value_comp(data);
     return boost::report_errors();
 }
 

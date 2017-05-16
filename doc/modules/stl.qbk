@@ -31,6 +31,8 @@ containers:
 * map
 * multimap
 * vector
+* set
+* multiset
 
 Indeed, should your class have member functions with the same names and
 signatures as those listed below, then it will automatically be supported. To
