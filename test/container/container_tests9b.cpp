@@ -1,11 +1,28 @@
 /*=============================================================================
     Copyright (c) 2004 Angus Leeming
+    Copyright (c) 2017 Kohei Takahashi
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include "container_tests.hpp"
 #include <boost/static_assert.hpp>
+
+std::unordered_map<int, int> const build_unordered_map()
+{
+    typedef std::unordered_map<int, int> int_map;
+    typedef std::vector<int> int_vector;
+
+    int_map result;
+    int_vector const data = build_vector();
+    int_vector::const_iterator it = data.begin();
+    int_vector::const_iterator const end = data.end();
+    for (; it != end; ++it) {
+      int const value = *it;
+      result[value] = 100 * value;
+    }
+    return result;
+}
 
 std::vector<int> const init_vector()
 {
@@ -30,20 +47,17 @@ std::vector<int> const build_vector()
 int
 main()
 {
-    BOOST_STATIC_ASSERT((!phx::stl::has_mapped_type<std::vector<int> >::value));
-    BOOST_STATIC_ASSERT((!phx::stl::has_key_type<std::vector<int> >::value));
+    BOOST_STATIC_ASSERT((phx::stl::has_mapped_type<std::unordered_map<int, int> >::value));
+    BOOST_STATIC_ASSERT((phx::stl::has_key_type<std::unordered_map<int, int> >::value));
 
-    std::vector<int> const data = build_vector();
-    test_get_allocator(data);
-    test_insert(data);
+    std::unordered_map<int, int> const data = build_unordered_map();
+    test_map_insert(data);
+    //test_key_comp(data);
     test_max_size(data);
-    test_pop_back(data);
-    test_push_back(data);
-    test_rbegin(data);
-    test_rend(data);
-    test_reserve(data);
-    test_resize(data);
+    //test_rbegin(data);
+    //test_rend(data);
     test_size(data);
+    //test_value_comp(data);
     return boost::report_errors();
 }
 

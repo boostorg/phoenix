@@ -10,6 +10,8 @@
 # bring in rules for testing
 import testing ;
 
+import ../../config/checks/config : requires ;
+
 project
     : requirements
         <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
@@ -97,6 +99,18 @@ test-suite phoenix_container :
     [ run container/container_tests5b.cpp ] 
     [ run container/container_tests6a.cpp ] 
     [ run container/container_tests6b.cpp ] 
+    [ run container/container_tests7a.cpp ]
+    [ run container/container_tests7b.cpp ]
+    [ run container/container_tests8a.cpp ]
+    [ run container/container_tests8b.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests9a.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests9b.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests10a.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests10b.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests11a.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
+    [ run container/container_tests11b.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
+    [ run container/container_tests12a.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
+    [ run container/container_tests12b.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
     ;
 
 test-suite phoenix_scope :
