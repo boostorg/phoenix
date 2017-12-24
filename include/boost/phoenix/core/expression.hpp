@@ -27,22 +27,26 @@ namespace boost { namespace phoenix
     template <template <typename> class Actor, typename Tag, typename... A>
     struct expr_ext;
 
-    // This void filter is necessary to avoid forming reference to void
-    // because most of other expressions are not based on variadics.
-    template <typename Tag, typename F, typename... T>
+    // This filter cuts arguments of a template pack after a first void.
+    // It is necessary because the interface can be used in C++03 style.
+    template <typename Tag, typename... A>
     struct expr_impl;
 
+    // Helper template. Used to store filtered argument types.
+    template <typename... A>
+    struct expr_arg_types {};
+
     template <typename Tag, typename... A>
-    struct expr_impl<Tag, void(A...)> : expr_ext<actor, Tag, A...> {};
+    struct expr_impl<Tag, expr_arg_types<A...>> : expr_ext<actor, Tag, A...> {};
 
     template <typename Tag, typename... A, typename... T>
-    struct expr_impl<Tag, void(A...), void, T...> : expr_impl<Tag, void(A...)> {};
+    struct expr_impl<Tag, expr_arg_types<A...>, void, T...> : expr_ext<actor, Tag, A...> {};
 
     template <typename Tag, typename... A, typename H, typename... T>
-    struct expr_impl<Tag, void(A...), H, T...> : expr_impl<Tag, void(A..., H), T...> {};
+    struct expr_impl<Tag, expr_arg_types<A...>, H, T...> : expr_impl<Tag, expr_arg_types<A..., H>, T...> {};
 
     template <typename Tag, typename... A>
-    struct expr : expr_impl<Tag, void(), A...> {};
+    struct expr : expr_impl<Tag, expr_arg_types<>, A...> {};
 
     template <template <typename> class Actor, typename Tag, typename... A>
     struct expr_ext
