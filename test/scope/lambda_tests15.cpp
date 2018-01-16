@@ -17,7 +17,7 @@
 
 int main()
 {
-#if defined(RUNNING_ON_APPVEYOR) && BOOST_WORKAROUND(BOOST_MSVC, == 1700)
+#if defined(RUNNING_ON_APPVEYOR) && BOOST_WORKAROUND(BOOST_MSVC, == 1800)
     // skip test
 #else
     using boost::phoenix::lambda;
