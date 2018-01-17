@@ -136,13 +136,17 @@ namespace boost { namespace phoenix
 
         F f;
     };
-}
-
+}}
+namespace boost
+{
     template<typename F>
-    struct result_of<phoenix::function<F>()>
-      : phoenix::detail::expression::function_eval<F>
+    struct tr1_result_of<phoenix::function<F>()>
+        : phoenix::detail::expression::function_eval<F>
     {};
-
+    template<typename F>
+    struct tr1_result_of<phoenix::function<F> const()>
+        : phoenix::detail::expression::function_eval<F>
+    {};
 }
 
 #endif

@@ -346,14 +346,14 @@ namespace boost { namespace phoenix
 
 namespace boost
 {
-    // specialize boost::result_of to return the proper result type
+    // specialize boost::tr1_result_of to return the proper result type
     template <typename Expr>
-    struct result_of<phoenix::actor<Expr>()>
+    struct tr1_result_of<phoenix::actor<Expr>()>
         : phoenix::result_of::actor<typename phoenix::actor<Expr>::proto_base_expr>
     {};
 
     template <typename Expr>
-    struct result_of<phoenix::actor<Expr> const()>
+    struct tr1_result_of<phoenix::actor<Expr> const()>
         : phoenix::result_of::actor<typename phoenix::actor<Expr>::proto_base_expr>
     {};
 }
