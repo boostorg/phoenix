@@ -27,6 +27,7 @@ test-suite phoenix_core :
     [ run core/custom_terminal.cpp ]
     [ run core/intel_test.cpp ]
     [ run core/primitives_tests.cpp ]
+    [ compile core/actor_result_of.cpp ]
     ;
 
 test-suite phoenix_stdlib :
