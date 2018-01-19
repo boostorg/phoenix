@@ -16,8 +16,8 @@ int main()
     using boost::phoenix::arg_names::_1;
 
     int x = 1;
-    int y = lambda[_1]()(x);
-    BOOST_TEST(x == y);
+    char const* y = "hello";
+    BOOST_TEST(lambda[_1](x)(y) == y);
 
     return boost::report_errors();
 }
