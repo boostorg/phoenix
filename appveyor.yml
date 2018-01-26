@@ -117,4 +117,4 @@ install:
 build: off
 
 test_script:
-  - b2 libs/phoenix/test toolset=%TOOLSET% define=RUNNING_ON_APPVEYOR=1
+  - b2 -j%NUMBER_OF_PROCESSORS% libs/phoenix/test toolset=%TOOLSET% define=RUNNING_ON_APPVEYOR=1
