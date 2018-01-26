@@ -203,66 +203,8 @@ namespace boost { namespace phoenix
             expr_type;
 
         BOOST_PROTO_BASIC_EXTENDS(expr_type, actor<expr_type>, phoenix_domain)
-
-        // providing operator= to be assignable
-        actor& operator=(actor const& other)
-        {
-            detail::assign()(*this, other);
-            return *this;
-        }
-        actor& operator=(actor & other)
-        {
-            detail::assign()(*this, other);
-            return *this;
-        }
-
-        template <typename A0>
-        typename proto::result_of::make_expr<
-            proto::tag::assign
-          , phoenix_domain
-          , proto_base_expr
-          , A0
-        >::type const
-        operator=(A0 const & a0) const
-        {
-            return proto::make_expr<proto::tag::assign, phoenix_domain>(this->proto_expr_, a0);
-        }
-
-        template <typename A0>
-        typename proto::result_of::make_expr<
-            proto::tag::assign
-          , phoenix_domain
-          , proto_base_expr
-          , A0
-        >::type const
-        operator=(A0 & a0) const
-        {
-            return proto::make_expr<proto::tag::assign, phoenix_domain>(this->proto_expr_, a0);
-        }
-
-        template <typename A0>
-        typename proto::result_of::make_expr<
-            proto::tag::subscript
-          , phoenix_domain
-          , proto_base_expr
-          , A0
-        >::type const
-        operator[](A0 const & a0) const
-        {
-            return proto::make_expr<proto::tag::subscript, phoenix_domain>(this->proto_expr_, a0);
-        }
-
-        template <typename A0>
-        typename proto::result_of::make_expr<
-            proto::tag::subscript
-          , phoenix_domain
-          , proto_base_expr
-          , A0
-        >::type const
-        operator[](A0 & a0) const
-        {
-            return proto::make_expr<proto::tag::subscript, phoenix_domain>(this->proto_expr_, a0);
-        }
+        BOOST_PROTO_EXTENDS_SUBSCRIPT()
+        BOOST_PROTO_EXTENDS_ASSIGN()
 
         template <typename Sig>
         struct result;
