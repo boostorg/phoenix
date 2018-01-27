@@ -117,4 +117,4 @@ install:
 build: off
 
 test_script:
-  - b2 -j%NUMBER_OF_PROCESSORS% libs/phoenix/test toolset=%TOOLSET%
+  - b2 -j%NUMBER_OF_PROCESSORS% --hash libs/phoenix/test toolset=%TOOLSET%
