@@ -9,8 +9,16 @@
 
 # bring in rules for testing
 import testing ;
+import os ;
 
 import ../../config/checks/config : requires ;
+
+if [ os.environ CI ]
+{
+    CI_DEFINES = <define>CI_SKIP_KNOWN_FAILURE=1 ;
+    CI_DEFINES += <define>RUNNING_ON_TRAVIS=1 ;   # for backward compatibility
+    CI_DEFINES += <define>RUNNING_ON_APPVEYOR=1 ; # for backward compatibility
+}
 
 project
     : requirements
@@ -18,6 +26,7 @@ project
         <toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
         <toolset>msvc:<define>_CRT_SECURE_NO_DEPRECATE
         <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS
+        $(CI_DEFINES)
     ;
 
 local multi-threading = <library>/boost/thread
