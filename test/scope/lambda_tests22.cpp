@@ -18,10 +18,6 @@
 
 int main()
 {
-#if defined(RUNNING_ON_APPVEYOR) && BOOST_WORKAROUND(BOOST_MSVC, >= 1900)
-    // skip test
-    // see https://github.com/boostorg/phoenix/issues/62
-#else
     using boost::phoenix::lambda;
     using boost::phoenix::let;
     using boost::phoenix::val;
@@ -31,5 +27,4 @@ int main()
    BOOST_TEST(x == 1);
 
     return boost::report_errors();
-#endif
 }
