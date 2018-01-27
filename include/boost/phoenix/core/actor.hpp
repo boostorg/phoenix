@@ -75,65 +75,6 @@ namespace boost { namespace phoenix
         {
             typedef T const & type;
         };
-
-        struct do_assign
-        {
-            BOOST_PROTO_CALLABLE()
-
-            typedef void result_type;
-
-            template <typename T1, typename T2>
-            void operator()(T1 & t1, T2 const & t2) const
-            {
-                proto::value(t1) = proto::value(t2);
-            }
-        };
-
-#ifdef BOOST_PHOENIX_NO_VARIADIC_ACTOR
-        #include <boost/phoenix/core/detail/cpp03/assign.hpp>
-#else
-        struct assign : proto::transform<assign>
-        {
-            typedef assign proto_grammer;
-
-            template <typename Expr, typename State, typename Data
-                    , typename Indices = typename detail::make_index_sequence<proto::arity_of<Expr>::value>::type >
-            struct impl;
-
-            template <std::size_t>
-            struct proto_expr { typedef proto::_ type; };
-
-            template <std::size_t Index>
-            struct nth_assign
-            {
-                typedef
-                    assign type(
-                        proto::_child_c<Index>
-                      , proto::call<proto::_child_c<Index>(proto::_state)>
-                    )
-                ;
-            };
-
-            template <typename Expr, typename State, typename Data>
-            struct impl<Expr, State, Data, detail::index_sequence<> >
-                : proto::when<
-                    proto::terminal<proto::_>
-                  , do_assign(proto::_, proto::_state)
-                >::template impl<Expr, State, Data>
-            {
-            };
-
-            template <typename Expr, typename State, typename Data
-                    , std::size_t... Indices>
-            struct impl<Expr, State, Data, detail::index_sequence<Indices...> >
-                : proto::when<
-                    proto::nary_expr<typename proto_expr<Indices>::type...>
-                  , proto::and_<typename nth_assign<Indices>::type...>
-                >::template impl<Expr, State, Data>
-            {
-            };
-        };
-#endif
     }
 
     namespace result_of
