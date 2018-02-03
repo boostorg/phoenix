@@ -143,7 +143,7 @@ namespace boost { namespace phoenix
             >::type
             expr_type;
 
-        BOOST_PROTO_BASIC_EXTENDS(expr_type, actor<expr_type>, phoenix_domain)
+        BOOST_PROTO_BASIC_EXTENDS(expr_type, actor<Expr>, phoenix_domain)
         BOOST_PROTO_EXTENDS_SUBSCRIPT()
         BOOST_PROTO_EXTENDS_ASSIGN()
 
