@@ -7,7 +7,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/config.hpp>
-#include <boost/detail/workaround.hpp>
+#include <boost/config/workaround.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
