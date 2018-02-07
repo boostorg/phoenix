@@ -226,6 +226,7 @@ test-suite phoenix_regression :
     [ compile-fail regression/bug7166.cpp ]
     [ run regression/bug7624.cpp ]
     [ compile regression/from_array.cpp ]
+    [ run regression/actor_assignment.cpp ]
     ;
 
 test-suite phoenix_include :
