@@ -8,7 +8,6 @@
 #define BOOST_PHOENIX_CORE_EXPRESSION_HPP
 
 #include <boost/phoenix/core/limits.hpp>
-#include <boost/call_traits.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/phoenix/core/as_actor.hpp>
 #include <boost/phoenix/core/detail/expression.hpp>
@@ -56,7 +55,7 @@ namespace boost { namespace phoenix
             typename proto::result_of::make_expr<
                 Tag
               , phoenix_default_domain //proto::basic_default_domain
-              , typename proto::detail::uncvref<typename call_traits<A>::value_type>::type...
+              , typename proto::detail::uncvref<A>::type...
             >::type
         base_type;
 
@@ -64,7 +63,7 @@ namespace boost { namespace phoenix
 
         typedef typename proto::nary_expr<Tag, A...>::proto_grammar proto_grammar;
 
-        static type make(typename call_traits<A>::param_type... a)
+        static type make(A const&... a)
         { //?? actor or Actor??
             //Actor<base_type> const e =
             actor<base_type> const e =
