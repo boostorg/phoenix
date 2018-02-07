@@ -10,7 +10,7 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
 #include <boost/ref.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 struct X
 {

@@ -11,7 +11,7 @@
 #include <boost/range/irange.hpp>
 #include <boost/range/adaptors.hpp>
 #include <boost/phoenix.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost::phoenix::arg_names;
 using namespace boost::adaptors;

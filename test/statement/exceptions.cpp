@@ -16,7 +16,7 @@
 #include <boost/phoenix/scope/local_variable.hpp>
 #include <boost/phoenix/bind/bind_member_function.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 struct base_exception : std::exception
 {

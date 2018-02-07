@@ -6,7 +6,7 @@
 
 #include <boost/phoenix.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 namespace phoenix = boost::phoenix;
 using namespace phoenix::local_names;

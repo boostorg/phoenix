@@ -8,7 +8,7 @@
 ==============================================================================*/
 #include <vector>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator/self.hpp>
 #include <boost/phoenix/operator/arithmetic.hpp>

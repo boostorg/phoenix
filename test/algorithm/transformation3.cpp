@@ -9,7 +9,7 @@
 #include <functional>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/stl/algorithm/transformation.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include <list>
 

@@ -9,7 +9,7 @@
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 //#include <boost/move/unique_ptr.hpp>
 
 #include <memory>

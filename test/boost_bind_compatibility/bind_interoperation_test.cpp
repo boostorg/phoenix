@@ -21,7 +21,7 @@
 #include <boost/bind.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/bind.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 #pragma warning(push, 3)

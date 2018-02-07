@@ -8,7 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <boost/shared_ptr.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/object.hpp>
 #include <boost/phoenix/operator.hpp>

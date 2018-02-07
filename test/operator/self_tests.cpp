@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 #include <map>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 

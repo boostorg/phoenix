@@ -12,7 +12,7 @@
 #include <boost/phoenix/operator.hpp>
 
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 bool
 f(bool x)

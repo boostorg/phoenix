@@ -30,7 +30,7 @@
 #pragma warning(pop)
 #endif
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 template<class F, class A1, class R> void tester( F f, A1 a1, R r )
 {

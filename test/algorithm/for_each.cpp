@@ -10,7 +10,7 @@
 #include <boost/phoenix.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/stl/algorithm/iteration.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include <functional>
 #include <vector>

@@ -10,7 +10,7 @@
 #include <boost/phoenix/core/argument.hpp>
 #include <boost/phoenix/core/reference.hpp>
 #include <boost/phoenix/core/value.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using boost::phoenix::cref;
 using boost::phoenix::ref;

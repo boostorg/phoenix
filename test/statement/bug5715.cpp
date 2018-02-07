@@ -12,7 +12,7 @@
 #include <boost/phoenix/statement/sequence.hpp>
 #include <boost/phoenix/bind.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 namespace test
 {

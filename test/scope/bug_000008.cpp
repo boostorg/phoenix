@@ -17,7 +17,7 @@
 #include <iostream>
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
  // Testing problems in thread/future
 //#include <boost/move/move.hpp>
 //#include <boost/move/detail/type_traits.hpp>
