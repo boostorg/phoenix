@@ -8,16 +8,19 @@
 ==============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator/arithmetic.hpp>
+#include <boost/phoenix/operator/self.hpp>
 #include <boost/phoenix/scope/lambda.hpp>
 
 int main()
 {
     using boost::phoenix::lambda;
     using boost::phoenix::arg_names::_1;
+    using boost::phoenix::local_names::_a;
 
     int x = 1;
-    int y = lambda[_1]()(x);
-    BOOST_TEST(x == y);
+    char const* y = "hello";
+    BOOST_TEST(lambda(_a = _1)[lambda[_a + _1]](x)(y)(x) == 2);
 
     return boost::report_errors();
 }
