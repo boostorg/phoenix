@@ -37,6 +37,14 @@ bool check_tuple(int n, const T& t)
   return (t.get_head() == n) && check_tuple(n+1, t.get_tail()); 
 }
 
+template<class T>
+bool check_tuple(int n, T * t) 
+{
+  bool ok = check_tuple(n, *t);
+  delete t;
+  return ok;
+}
+
 template <>
 bool check_tuple(int /*n*/, const null_type& ) { return true; }
 
@@ -114,63 +122,63 @@ void new_ptr_all_lengths()
   bool ok;
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int> >(),
+    (bind(new_ptr<tuple<int> >(),
        1))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int> >(),
+    (bind(new_ptr<tuple<int, int> >(),
        1, 2))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int, int> >(),
+    (bind(new_ptr<tuple<int, int, int> >(),
        1, 2, 3))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int, int, int> >(),
+    (bind(new_ptr<tuple<int, int, int, int> >(),
        1, 2, 3, 4))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int, int, int, int> >(),
+    (bind(new_ptr<tuple<int, int, int, int, int> >(),
        1, 2, 3, 4, 5))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int, int, int, int, int> >(),
+    (bind(new_ptr<tuple<int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int, int, int, int, int, int> >(),
+    (bind(new_ptr<tuple<int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int, int, int, int, int, int, int> >(),
+    (bind(new_ptr<tuple<int, int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7, 8))()
   );
   BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
-    *(bind(new_ptr<tuple<int, int, int, int, int, int, int, int, int> >(),
+    (bind(new_ptr<tuple<int, int, int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7, 8, 9))()
   );
   BOOST_TEST(ok);
@@ -217,6 +225,7 @@ void test_news_and_deletes ()
 
   std::for_each(i, i+10, (*_1 == 2) || ++var(count_errors));
   BOOST_TEST_EQ(count_errors, 0);
+  std::for_each(i, i+10, bind(delete_ptr(), _1));
 
 
   count_deletes* ct[10];
