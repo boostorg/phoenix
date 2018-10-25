@@ -12,7 +12,7 @@
 // -----------------------------------------------------------------------
 
 
-#include <boost/test/minimal.hpp>    // see "Header Implementation Option"
+#include <boost/core/lightweight_test.hpp>
 
 
 #include "boost/lambda/lambda.hpp"
@@ -49,63 +49,63 @@ void constructor_all_lengths()
     bind(constructor<tuple<int> >(),
        1)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int> >(),
        1, 2)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int, int> >(),
        1, 2, 3)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int, int, int> >(),
        1, 2, 3, 4)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int, int, int, int> >(),
        1, 2, 3, 4, 5)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7, 8)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     bind(constructor<tuple<int, int, int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7, 8, 9)()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
 }
 
@@ -117,63 +117,63 @@ void new_ptr_all_lengths()
     *(bind(new_ptr<tuple<int> >(),
        1))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int> >(),
        1, 2))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int, int> >(),
        1, 2, 3))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int, int, int> >(),
        1, 2, 3, 4))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int, int, int, int> >(),
        1, 2, 3, 4, 5))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7, 8))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
   ok = check_tuple(
     1, 
     *(bind(new_ptr<tuple<int, int, int, int, int, int, int, int, int> >(),
        1, 2, 3, 4, 5, 6, 7, 8, 9))()
   );
-  BOOST_CHECK(ok);
+  BOOST_TEST(ok);
 
 }
 
@@ -190,14 +190,14 @@ void test_destructor ()
   bool flag = false;
 
   is_destructor_called* idc = new(space) is_destructor_called(flag);
-  BOOST_CHECK(flag == false);
+  BOOST_TEST_EQ(flag, false);
   bind(destructor(), _1)(idc);
-  BOOST_CHECK(flag == true);
+  BOOST_TEST_EQ(flag, true);
 
   idc = new(space) is_destructor_called(flag);
-  BOOST_CHECK(flag == false);
+  BOOST_TEST_EQ(flag, false);
   bind(destructor(), _1)(*idc);
-  BOOST_CHECK(flag == true);
+  BOOST_TEST_EQ(flag, true);
 }
 
 
@@ -216,14 +216,14 @@ void test_news_and_deletes ()
   int count_errors = 0;
 
   std::for_each(i, i+10, (*_1 == 2) || ++var(count_errors));
-  BOOST_CHECK(count_errors == 0);
+  BOOST_TEST_EQ(count_errors, 0);
 
 
   count_deletes* ct[10];
   std::for_each(ct, ct+10, _1 = bind(new_ptr<count_deletes>()));
   count_deletes::count = 0;
   std::for_each(ct, ct+10, bind(delete_ptr(), _1));
-  BOOST_CHECK(count_deletes::count == 10);
+  BOOST_TEST_EQ(count_deletes::count, 10);
    
 }
 
@@ -234,7 +234,7 @@ void test_array_new_and_delete()
   count_deletes::count = 0;
 
   bind(delete_array(), _1)(c);
-  BOOST_CHECK(count_deletes::count == 5);
+  BOOST_TEST_EQ(count_deletes::count, 5);
 }
 
 
@@ -252,8 +252,8 @@ void delayed_construction()
             bl::bind(constructor<std::pair<int, int> >(), _1, _2) );
 }
 
-int test_main(int, char *[]) {
-
+int main()
+{
   constructor_all_lengths();
   new_ptr_all_lengths();
   delayed_construction();
@@ -261,5 +261,5 @@ int test_main(int, char *[]) {
   test_news_and_deletes();  
   test_array_new_and_delete();
   
-  return 0;
+  return boost::report_errors();
 }
