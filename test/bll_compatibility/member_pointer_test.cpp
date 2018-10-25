@@ -110,6 +110,8 @@ void pointer_to_member_function_tests() {
   // member functions with default values do not work (inherent language issue)
   //  BOOST_TEST_EQ( (_1 ->* &my_struct::foo3default)(y)(), (y->mem+1+2+3));
 
+  delete y;
+
 }
 
 class A {};
