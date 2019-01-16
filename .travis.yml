@@ -469,7 +469,7 @@ install:
   - git submodule init libs/xpressive
 
   - git submodule init libs/headers tools/boost_install tools/build
-  - git submodule update
+  - git submodule update --jobs `(nproc || sysctl -n hw.ncpu)`
 
   - rm -rf libs/phoenix
   - mv $TRAVIS_BUILD_DIR libs/phoenix
