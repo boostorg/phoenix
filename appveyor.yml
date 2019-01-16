@@ -1,5 +1,5 @@
 # Copyright 2016, 2017 Peter Dimov
-# Copyright 2017, 2018 Kohei Takahashi
+# Copyright 2017-2019 Kohei Takahashi
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -36,6 +36,12 @@ environment:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       TOOLSET: msvc-14.1
       CXXSTD: latest
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      TOOLSET: clang-win
+      CXXSTD: 14
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      TOOLSET: clang-win
+      CXXSTD: 17
 
 install:
   - set BOOST_BRANCH=develop
