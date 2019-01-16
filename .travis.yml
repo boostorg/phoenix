@@ -431,6 +431,7 @@ install:
   - git submodule init libs/log
   - git submodule init libs/math
   - git submodule init libs/move
+  - git submodule init libs/mp11
   - git submodule init libs/mpl
   - git submodule init libs/multi_index
   - git submodule init libs/numeric/conversion
