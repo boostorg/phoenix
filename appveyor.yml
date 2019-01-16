@@ -126,7 +126,7 @@ install:
   - git submodule init libs/xpressive
 
   - git submodule init libs/headers tools/boost_install tools/build
-  - git submodule update --jobs %NUMBER_OF_PROCESSORS%
+  - git submodule update --jobs 8
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\phoenix
   - cmd /c bootstrap
   - b2 headers
