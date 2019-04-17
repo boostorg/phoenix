@@ -143,6 +143,11 @@ namespace boost { namespace phoenix
             >::type
             expr_type;
 
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        actor() = default;
+        actor(const actor&) = default;
+#endif
+
         BOOST_PROTO_BASIC_EXTENDS(expr_type, actor<Expr>, phoenix_domain)
         BOOST_PROTO_EXTENDS_SUBSCRIPT()
         BOOST_PROTO_EXTENDS_ASSIGN()
