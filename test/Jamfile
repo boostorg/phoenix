@@ -75,13 +75,11 @@ test-suite phoenix_function :
     [ run function/lazy_templated_struct_tests.cpp ]
 #    [ run function/lazy_thunk_tests.cpp ]
     [ run function/lazy_operator_tests.cpp ]
-#    [ run function/function_tests_phx2.cpp ]
     ;
 
 test-suite phoenix_bind :
     [ run bind/bind_function_tests.cpp ]
     [ run bind/bind_function_object_tests.cpp ]
-#    [ run bind/bind_function_object_tests_phx2.cpp ]
     [ run bind/bind_member_function_tests.cpp ]
     [ run bind/bind_member_variable_tests.cpp ]
     [ run bind/bug5782.cpp ]
@@ -146,7 +144,6 @@ test-suite phoenix_scope :
     [ run scope/lambda_tests21.cpp ]
     [ run scope/lambda_tests22.cpp ]
     [ run scope/lambda_tests23.cpp ]
-#    [ run scope/lambda_tests_phx2.cpp ]
     [ run scope/let_tests.cpp ]
     [ run scope/let_tests_113.cpp ]
 #    [ run scope/let_tests_113a.cpp ]
