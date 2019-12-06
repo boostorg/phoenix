@@ -16,7 +16,6 @@
 #include <boost/phoenix/core/reference.hpp>
 #include <boost/phoenix/core/nothing.hpp>
 #include <boost/phoenix/core/function_equal.hpp>
-#include <boost/phoenix/core/visit_each.hpp>
 #include <boost/phoenix/core/v2_eval.hpp>
 #include <boost/phoenix/scope/local_variable.hpp> // to fix 5824
 #include <boost/proto/generate.hpp> // attempt to fix problems in intel 14.0.1
