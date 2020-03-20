@@ -7,6 +7,8 @@ language: cpp
 
 sudo: false
 
+cache: ccache
+
 os:
   - linux
   - osx
@@ -370,7 +372,7 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=clang-7.0 CXXSTD=03,11
+      env: TOOLSET=clang-7 CXXSTD=03,11
       addons:
         apt:
           packages:
@@ -526,6 +528,14 @@ install:
 
   - ./bootstrap.sh
   - ./b2 headers
+
+  - |
+    if [ $TRAVIS_OS_NAME = osx ]; then
+      export PATH="/usr/local/opt/ccache/libexec:$PATH"
+      brew install ccache
+    fi
+  - |-
+    echo "using ${TOOLSET%%-*} : ${TOOLSET#*-} : ccache `echo $TOOLSET | sed 's/clang/clang++/;s/gcc/g++/'` ;" > ~/user-config.jam
 
 script:
   - ./b2 libs/phoenix/test toolset=$TOOLSET cxxstd=$CXXSTD
