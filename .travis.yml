@@ -193,7 +193,7 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=gcc-9 CXXSTD=03,11,14
+      env: TOOLSET=gcc-9 CXXSTD=03,11,14 SANITIZED
       addons:
         apt:
           packages:
@@ -203,7 +203,7 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=gcc-9 CXXSTD=17,2a
+      env: TOOLSET=gcc-9 CXXSTD=17,2a SANITIZED
       addons:
         apt:
           packages:
@@ -380,7 +380,7 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=clang-7.0 CXXSTD=14,17
+      env: TOOLSET=clang-7 CXXSTD=14,17
       addons:
         apt:
           packages:
@@ -390,7 +390,7 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=clang-7.0 CXXSTD=2a
+      env: TOOLSET=clang-7 CXXSTD=2a
       addons:
         apt:
           packages:
@@ -416,7 +416,7 @@ matrix:
 
     - os: linux
       dist: bionic
-      env: TOOLSET=clang-9 CXXSTD=03,11,14
+      env: TOOLSET=clang-9 CXXSTD=03,11,14 SANITIZED
       addons:
         apt:
           packages:
@@ -424,7 +424,7 @@ matrix:
 
     - os: linux
       dist: bionic
-      env: TOOLSET=clang-9 CXXSTD=17,2a
+      env: TOOLSET=clang-9 CXXSTD=17,2a SANITIZED
       addons:
         apt:
           packages:
@@ -529,3 +529,5 @@ install:
 
 script:
   - ./b2 libs/phoenix/test toolset=$TOOLSET cxxstd=$CXXSTD
+      ${SANITIZED+cxxflags=-fsanitize=address,undefined}
+      ${SANITIZED+'linkflags=-fsanitize=address,undefined -fuse-ld=gold'}
