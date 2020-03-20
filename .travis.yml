@@ -193,6 +193,26 @@ matrix:
 
     - os: linux
       dist: xenial
+      env: TOOLSET=gcc-9 CXXSTD=03,11,14
+      addons:
+        apt:
+          packages:
+            - g++-9
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
+      dist: xenial
+      env: TOOLSET=gcc-9 CXXSTD=17,2a
+      addons:
+        apt:
+          packages:
+            - g++-9
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
+      dist: xenial
       env: TOOLSET=clang-3.5 CXXSTD=03,11
       addons:
         apt:
@@ -377,6 +397,38 @@ matrix:
             - clang-7
           sources:
             - llvm-toolchain-xenial-7
+
+    - os: linux
+      dist: xenial
+      env: TOOLSET=clang-8 CXXSTD=03,11,14
+      addons:
+        apt:
+          packages:
+            - clang-8
+
+    - os: linux
+      dist: xenial
+      env: TOOLSET=clang-8 CXXSTD=17,2a
+      addons:
+        apt:
+          packages:
+            - clang-8
+
+    - os: linux
+      dist: bionic
+      env: TOOLSET=clang-9 CXXSTD=03,11,14
+      addons:
+        apt:
+          packages:
+            - clang-9
+
+    - os: linux
+      dist: bionic
+      env: TOOLSET=clang-9 CXXSTD=17,2a
+      addons:
+        apt:
+          packages:
+            - clang-9
 
     - os: osx
       env: TOOLSET=clang COMPILER=clang++ CXXSTD=03,11
