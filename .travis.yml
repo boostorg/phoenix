@@ -476,4 +476,4 @@ install:
   - ./b2 headers
 
 script:
-  - ./b2 -j`(nproc || sysctl -n hw.ncpu) 2> /dev/null` libs/phoenix/test toolset=$TOOLSET cxxstd=$CXXSTD
+  - ./b2 libs/phoenix/test toolset=$TOOLSET cxxstd=$CXXSTD
