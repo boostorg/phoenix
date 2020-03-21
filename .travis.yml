@@ -7,6 +7,8 @@ language: cpp
 
 sudo: false
 
+cache: ccache
+
 os:
   - linux
   - osx
@@ -193,19 +195,40 @@ matrix:
 
     - os: linux
       dist: xenial
+      env: TOOLSET=gcc-9 CXXSTD=03,11,14 SANITIZED
+      addons:
+        apt:
+          packages:
+            - g++-9
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
+      dist: xenial
+      env: TOOLSET=gcc-9 CXXSTD=17,2a SANITIZED
+      addons:
+        apt:
+          packages:
+            - g++-9
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
+      dist: xenial
       env: TOOLSET=clang-3.5 CXXSTD=03,11
       addons:
         apt:
           packages:
             - clang-3.5
 
-    - os: linux
-      dist: xenial
-      env: TOOLSET=clang-3.5 CXXSTD=14,1z
-      addons:
-        apt:
-          packages:
-            - clang-3.5
+    # Disable due to: error: debug information for auto is not yet supported
+    #- os: linux
+    #  dist: xenial
+    #  env: TOOLSET=clang-3.5 CXXSTD=14,1z
+    #  addons:
+    #    apt:
+    #      packages:
+    #        - clang-3.5
 
     - os: linux
       dist: xenial
@@ -349,7 +372,7 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=clang-7.0 CXXSTD=03,11
+      env: TOOLSET=clang-7 CXXSTD=03,11
       addons:
         apt:
           packages:
@@ -359,7 +382,7 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=clang-7.0 CXXSTD=14,17
+      env: TOOLSET=clang-7 CXXSTD=14,17
       addons:
         apt:
           packages:
@@ -369,13 +392,45 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: TOOLSET=clang-7.0 CXXSTD=2a
+      env: TOOLSET=clang-7 CXXSTD=2a
       addons:
         apt:
           packages:
             - clang-7
           sources:
             - llvm-toolchain-xenial-7
+
+    - os: linux
+      dist: xenial
+      env: TOOLSET=clang-8 CXXSTD=03,11,14
+      addons:
+        apt:
+          packages:
+            - clang-8
+
+    - os: linux
+      dist: xenial
+      env: TOOLSET=clang-8 CXXSTD=17,2a
+      addons:
+        apt:
+          packages:
+            - clang-8
+
+    - os: linux
+      dist: bionic
+      env: TOOLSET=clang-9 CXXSTD=03,11,14 SANITIZED
+      addons:
+        apt:
+          packages:
+            - clang-9
+
+    - os: linux
+      dist: bionic
+      env: TOOLSET=clang-9 CXXSTD=17,2a SANITIZED
+      addons:
+        apt:
+          packages:
+            - clang-9
 
     - os: osx
       env: TOOLSET=clang COMPILER=clang++ CXXSTD=03,11
@@ -474,5 +529,15 @@ install:
   - ./bootstrap.sh
   - ./b2 headers
 
+  - |
+    if [ $TRAVIS_OS_NAME = osx ]; then
+      export PATH="/usr/local/opt/ccache/libexec:$PATH"
+      brew install ccache
+    fi
+  - |-
+    echo "using ${TOOLSET%%-*} : ${TOOLSET#*-} : ccache `echo $TOOLSET | sed 's/clang/clang++/;s/gcc/g++/'` ;" > ~/user-config.jam
+
 script:
-  - ./b2 -j`(nproc || sysctl -n hw.ncpu) 2> /dev/null` libs/phoenix/test toolset=$TOOLSET cxxstd=$CXXSTD
+  - ./b2 libs/phoenix/test toolset=$TOOLSET cxxstd=$CXXSTD
+      ${SANITIZED+cxxflags=-fsanitize=address,undefined}
+      ${SANITIZED+'linkflags=-fsanitize=address,undefined -fuse-ld=gold'}
