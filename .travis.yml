@@ -199,13 +199,14 @@ matrix:
           packages:
             - clang-3.5
 
-    - os: linux
-      dist: xenial
-      env: TOOLSET=clang-3.5 CXXSTD=14,1z
-      addons:
-        apt:
-          packages:
-            - clang-3.5
+    # Disable due to: error: debug information for auto is not yet supported
+    #- os: linux
+    #  dist: xenial
+    #  env: TOOLSET=clang-3.5 CXXSTD=14,1z
+    #  addons:
+    #    apt:
+    #      packages:
+    #        - clang-3.5
 
     - os: linux
       dist: xenial
