@@ -509,6 +509,11 @@ namespace boost { namespace phoenix
         catch_all_gen<base_type> const catch_all;
     };
 
+    template <typename Expr>
+    struct is_actor<try_catch_actor<Expr> >
+        : mpl::true_
+    {};
+
     struct try_gen
     {
         template <typename Try>
