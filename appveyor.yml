@@ -9,16 +9,16 @@ shallow_clone: true
 
 environment:
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-9.0
       CXXSTD: latest # fake
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-10.0
       CXXSTD: latest # fake
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-11.0
       CXXSTD: latest # fake
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-12.0
       CXXSTD: latest # fake
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
@@ -134,4 +134,4 @@ install:
 build: off
 
 test_script:
-  - b2 -j%NUMBER_OF_PROCESSORS% --hash libs/phoenix/test toolset=%TOOLSET% cxxstd=%CXXSTD%
+  - b2 --hash libs/phoenix/test toolset=%TOOLSET% cxxstd=%CXXSTD%
