@@ -31,7 +31,6 @@ namespace {
 
 int main() {
     tuple_get_test();
-    boost::report_errors();
-    return 0;
+    return boost::report_errors();
 }
 #endif
