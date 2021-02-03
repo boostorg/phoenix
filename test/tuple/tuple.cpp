@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#if __cplusplus >= 201103L
+#if __cplusplus >= 201103L  || (defined(_MSC_VER) && _MSC_VER >= 1900)
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/stl/tuple.hpp>

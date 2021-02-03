@@ -10,7 +10,7 @@
 
 #ifndef BOOST_PHOENIX_STL_TUPLE_H_
 #define BOOST_PHOENIX_STL_TUPLE_H_
-#if __cplusplus >= 201103L
+#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900)
 
 #include <tuple>
 
