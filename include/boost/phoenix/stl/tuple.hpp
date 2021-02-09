@@ -47,7 +47,7 @@ namespace impl {
 struct get_with_type {
     // Don't need to use result_of protocol since this only works with C++11+ anyway
     template <typename T, typename Expr, typename Context>
-    const auto& operator()(T, const Expr& t, const Context& ctx) const {
+    typename proto::result_of::value<T>::type::type& operator()(T, const Expr& t, const Context& ctx) const {
         using std::get; // Prevents the next line from being a syntax error < C++20
         using T_ = typename proto::result_of::value<T>::type;
         return get<typename T_::type>(boost::phoenix::eval(t, ctx));
@@ -57,7 +57,7 @@ struct get_with_type {
 struct get_with_idx {
     // Don't need to use result_of protocol since this only works with C++11+ anyway
     template <typename T, typename Expr, typename Context>
-    const auto& operator()(T, const Expr& t, const Context& ctx) const {
+    typename proto::result_of::value<T>::type::idx& operator()(T, const Expr& t, const Context& ctx) const {
         using std::get; // Prevents the next line from being a syntax error < C++20
         using T_ = typename proto::result_of::value<T>::type;
         return get<T_::idx>(boost::phoenix::eval(t, ctx));
