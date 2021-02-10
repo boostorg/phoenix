@@ -10,7 +10,7 @@
 
 #ifndef BOOST_PHOENIX_STL_TUPLE_H_
 #define BOOST_PHOENIX_STL_TUPLE_H_
-#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900)
+#if __cplusplus >= 201402L || (defined(_MSC_FULL_VER) && _MSC_FULL_VER >= 190024210)
 
 #include <tuple>
 
@@ -44,12 +44,15 @@ BOOST_PHOENIX_DEFINE_EXPRESSION((boost)(phoenix)(get_with_idx),
 namespace boost {
 namespace phoenix {
 namespace impl {
+
+    template <typename t> struct ShowT;
 struct get_with_type {
     // Don't need to use result_of protocol since this only works with C++11+ anyway
     template <typename T, typename Expr, typename Context>
-    typename proto::result_of::value<T>::type::type& operator()(T, const Expr& t, const Context& ctx) const {
+    auto& operator()(T, const Expr& t, const Context& ctx) const {
         using std::get; // Prevents the next line from being a syntax error < C++20
         using T_ = typename proto::result_of::value<T>::type;
+        ShowT<decltype(get<typename T_::type>(boost::phoenix::eval(t, ctx)))> d;
         return get<typename T_::type>(boost::phoenix::eval(t, ctx));
     }
 };
@@ -57,7 +60,7 @@ struct get_with_type {
 struct get_with_idx {
     // Don't need to use result_of protocol since this only works with C++11+ anyway
     template <typename T, typename Expr, typename Context>
-    typename proto::result_of::value<T>::type::idx& operator()(T, const Expr& t, const Context& ctx) const {
+    auto& operator()(T, const Expr& t, const Context& ctx) const {
         using std::get; // Prevents the next line from being a syntax error < C++20
         using T_ = typename proto::result_of::value<T>::type;
         return get<T_::idx>(boost::phoenix::eval(t, ctx));
