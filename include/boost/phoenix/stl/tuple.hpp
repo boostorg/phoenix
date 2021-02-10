@@ -44,8 +44,6 @@ BOOST_PHOENIX_DEFINE_EXPRESSION((boost)(phoenix)(get_with_idx),
 namespace boost {
 namespace phoenix {
 namespace impl {
-
-    template <typename t> struct ShowT;
 struct get_with_type {
     // Don't need to use result_of protocol since this only works with C++11+ anyway
     template <typename T, typename Expr, typename Context>
@@ -93,7 +91,7 @@ get_(const Tuple& t) {
 namespace placeholders {
 #define BOOST_PP_LOCAL_LIMITS (1, BOOST_PHOENIX_ARG_LIMIT)
 #define BOOST_PP_LOCAL_MACRO(N)                                                          \
-    auto uarg##N = boost::phoenix::get_<(N) - 1>(boost::phoenix::placeholders::arg1);
+    auto uarg##N = boost::phoenix::get_<(N)-1>(boost::phoenix::placeholders::arg1);
 #include BOOST_PP_LOCAL_ITERATE()
 } // namespace placeholders
 } // namespace phoenix
