@@ -43,7 +43,7 @@ test-suite phoenix_stdlib :
     ;
 
 test-suite phoenix_tuple :
-    [ run tuple/tuple.cpp : : : [ requires cxx11_hdr_tuple ] ]
+    [ run tuple/tuple_test.cpp ]
     ;
 
 test-suite phoenix_operator :
