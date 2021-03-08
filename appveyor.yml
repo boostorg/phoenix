@@ -11,12 +11,15 @@ environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-9.0
+      ADDRMDL: 32
       CXXSTD: latest # fake
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-10.0
+      ADDRMDL: 32
       CXXSTD: latest # fake
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-11.0
+      ADDRMDL: 32
       CXXSTD: latest # fake
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       TOOLSET: msvc-12.0
@@ -134,4 +137,4 @@ install:
 build: off
 
 test_script:
-  - b2 --hash libs/phoenix/test toolset=%TOOLSET% cxxstd=%CXXSTD%
+  - b2 --hash libs/phoenix/test toolset=%TOOLSET% cxxstd=%CXXSTD% address-model=%ADDRMDL%
