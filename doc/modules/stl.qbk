@@ -242,7 +242,7 @@ semantics.
 [endsect]
 
 [section Tuple]
-[important This module is only available with C++ 11 and above.]
+[important This module is only available with C++ 14 and above.]
 
     #include <boost/phoenix/stl/tuple.hpp>
 
