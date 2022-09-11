@@ -3,13 +3,6 @@ name: GitHub Actions CI
 on:
   pull_request:
   push:
-    branches:
-      - master
-      - develop
-      - githubactions*
-      - feature/**
-      - fix/**
-      - pr/**
 
 jobs:
   posix:
