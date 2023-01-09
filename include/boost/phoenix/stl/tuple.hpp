@@ -108,11 +108,20 @@ namespace boost { namespace phoenix {
 
     // Make unpacked argument placeholders
     namespace placeholders {
+
+#if __cplusplus >= 201703L)
         #define BOOST_PP_LOCAL_LIMITS (1, BOOST_PHOENIX_ARG_LIMIT)
         #define BOOST_PP_LOCAL_MACRO(N)                                                \
-            auto uarg##N =                                                             \
+            inline auto uarg##N =                                                      \
             boost::phoenix::get_<(N)-1>(boost::phoenix::placeholders::arg1);
         #include BOOST_PP_LOCAL_ITERATE()
+#else // C++17
+        #define BOOST_PP_LOCAL_LIMITS (1, BOOST_PHOENIX_ARG_LIMIT)
+        #define BOOST_PP_LOCAL_MACRO(N)                                                \
+            auto uarg##N =                                                      \
+            boost::phoenix::get_<(N)-1>(boost::phoenix::placeholders::arg1);
+        #include BOOST_PP_LOCAL_ITERATE()
+#endif // C++17		
     }
 }} // namespace boost::phoenix
 
