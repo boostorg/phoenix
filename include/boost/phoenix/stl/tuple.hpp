@@ -109,7 +109,7 @@ namespace boost { namespace phoenix {
     // Make unpacked argument placeholders
     namespace placeholders {
 
-#if __cplusplus >= 201703L)
+#if __cplusplus >= 201703L
         #define BOOST_PP_LOCAL_LIMITS (1, BOOST_PHOENIX_ARG_LIMIT)
         #define BOOST_PP_LOCAL_MACRO(N)                                                \
             inline auto uarg##N =                                                      \
