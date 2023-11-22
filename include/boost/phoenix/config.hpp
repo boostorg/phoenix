@@ -50,6 +50,14 @@
 #define BOOST_PHOENIX_UNORDERED_SET_HEADER <unordered_set>
 #define BOOST_PHOENIX_UNORDERED_MAP_HEADER <unordered_map>
 #define BOOST_PHOENIX_UNORDERED_NAMESPACE std
+#if 0
+//
+// This just allows dependency trackers to find the headers
+// used in the above preprocessor magic.
+//
+#include <unordered_map>
+#include <unordered_set>
+#endif
 #endif
 
 #if defined(BOOST_HAS_HASH)
@@ -66,6 +74,14 @@
 #elif defined(BOOST_DINKUMWARE_STDLIB) && (BOOST_DINKUMWARE_STDLIB < 610)
 #define BOOST_PHOENIX_HASH_SET_HEADER <hash_set>
 #define BOOST_PHOENIX_HASH_MAP_HEADER <hash_map>
+#if 0
+//
+// This just allows dependency trackers to find the headers
+// used in the above preprocessor magic.
+//
+#include <hash_set>
+#include <hash_map>
+#endif
 #define BOOST_PHOENIX_HAS_HASH
 #define BOOST_PHOENIX_HASH_NAMESPACE stdext
 #define BOOST_PHOENIX_HASH_template_rest_param class Tr, class Alloc
