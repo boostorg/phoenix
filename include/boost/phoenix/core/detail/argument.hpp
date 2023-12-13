@@ -15,8 +15,8 @@
     /**/
     
     #define BOOST_PHOENIX_ARGUMENT_N_INSTANCE(_, N, name)                       \
-    expression::argument<BOOST_PP_INC(N)>::type const                           \
-        BOOST_ATTRIBUTE_UNUSED                                                  \
+    BOOST_ATTRIBUTE_UNUSED                                                      \
+        expression::argument<BOOST_PP_INC(N)>::type const                       \
         BOOST_PP_CAT(name, BOOST_PP_INC(N)) = {{{}}};                           \
     /**/
 
