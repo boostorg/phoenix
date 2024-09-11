@@ -11,7 +11,7 @@
 
 [$images/banner.png]
 
-The Phoenix library enables FP techniques such as higher order functions,
+The Phoenix library enables functional programming (FP) techniques such as higher order functions,
 /lambda/ (unnamed functions), /currying/ (partial function application) and lazy
 evaluation in C++. The focus is more on usefulness and practicality than purity,
 elegance and strict adherence to FP principles.
