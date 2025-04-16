@@ -121,11 +121,11 @@ int main()
         try_
         [ throw_(runtime_error("error")) ]
         .catch_<exception>(_e)
-        [
+        [(
             ref(caught_exception) = true
             // ambiguous with std::ref
           , phx::ref(what) = phx::bind(&exception::what, _e)
-        ]();
+        )]();
 
         BOOST_TEST(caught_exception);
         BOOST_TEST(what == string("error"));
@@ -138,11 +138,11 @@ int main()
         try_
         [ throw_(extended_exception("error")) ]
         .catch_<base_exception>(_e) // A thrown object should not be copied due to slicing.
-        [
+        [(
             ref(caught_exception) = true
             // ambiguous with std::ref
           , phx::ref(what) = phx::bind(&exception::what, _e)
-        ]();
+        )]();
 
         BOOST_TEST(caught_exception);
         BOOST_TEST(what == string("error"));
@@ -167,11 +167,11 @@ int main()
         .catch_<string>()
             [ ref(caught_correct_exception) = false ]
         .catch_<exception>(_e)
-        [
+        [(
             ref(caught_correct_exception) = true
             // ambiguous with std::ref
           , phx::ref(what) = phx::bind(&exception::what, _e)
-        ]();
+        )]();
 
         BOOST_TEST(caught_correct_exception);
         BOOST_TEST(what == string("error"));

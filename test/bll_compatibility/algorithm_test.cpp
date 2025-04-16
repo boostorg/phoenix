@@ -51,7 +51,7 @@ void test_foreach() {
   // var replaced with ref, protect(..) replaced with lambda[..], no need for bind
   // phoenix algorithms are range based
   std::for_each(a, a + 10,
-          phoenix::for_each(_1, lambda[_1 = ref(sum), ++ref(sum)]));
+          phoenix::for_each(_1, lambda[(_1 = ref(sum), ++ref(sum))]));
                 /*phoenix::bind(phoenix::for_each, _1,
                             lambda[_1 = ref(sum), ++ref(sum)]));*/
 
