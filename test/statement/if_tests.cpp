@@ -27,10 +27,10 @@ main()
 
     for_each(v.begin(), v.end(),
         if_(arg1 > 3 && arg1 <= 8)
-        [
+        [(
             std::cout << arg1 << ", ",
             ref(x) += arg1
-        ]
+        )]
     );
 
     std::cout << std::endl;
@@ -49,15 +49,15 @@ main()
         .else_
         [
             if_(arg1 == 5)
-            [
+            [(
                 std::cout << arg1 << " == 5\n",
                 ref(z) += arg1
-            ]
+            )]
             .else_
-            [
+            [(
                 std::cout << arg1 << " < 5\n",
                 ref(y) += arg1
-            ]
+            )]
         ]
     );
 

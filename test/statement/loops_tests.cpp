@@ -34,10 +34,10 @@ main()
     for_each(v.begin(), v.end(),
         (
             while_(arg1--)
-            [
+            [(
                 cout << arg1 << ", ",
                 ++ref(x)
-            ],
+            )],
             cout << val("\n")
         )
     );
@@ -50,10 +50,10 @@ main()
     for_each(v.begin(), v.end(),
         (
             do_
-            [
+            [(
                 cout << arg1 << ", ",
                 ++ref(x)
-            ]
+            )]
             .while_(arg1--),
             cout << val("\n")
         )
@@ -68,10 +68,10 @@ main()
     for_each(v.begin(), v.end(),
         (
             for_(ref(iii) = 0, ref(iii) < arg1, ++ref(iii))
-            [
+            [(
                 cout << arg1 << ", ",
                 ++ref(x)
-            ],
+            )],
             cout << val("\n")
         )
     );

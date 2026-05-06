@@ -51,25 +51,25 @@ main()
     
     for_each(v.begin(), v.end(),
         switch_(_1)
-        [
+        [(
             case_<1>(cout << val("<1>") << endl),
             case_<2>(cout << val("<2>") << endl),
             case_<3>(cout << val("<3>") << endl),
             case_<4>(cout << val("<4>") << endl)
-        ]
+        )]
     );
 
     cout << endl;
 
     for_each(v.begin(), v.end(),
         switch_(_1)
-        [
+        [(
             case_<1>(cout << val("<1>") << endl),
             case_<2>(cout << val("<2>") << endl),
             case_<3>(cout << val("<3>") << endl),
             case_<4>(cout << val("<4>") << endl),
             default_(cout << val("<over 4>") << endl)
-        ]
+        )]
     );
 
     return boost::report_errors();
