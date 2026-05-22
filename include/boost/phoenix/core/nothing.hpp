@@ -53,7 +53,7 @@ namespace boost { namespace phoenix
 
     typedef expression::null::type nothing_type BOOST_ATTRIBUTE_UNUSED;
 #ifndef BOOST_PHOENIX_NO_PREDEFINED_TERMINALS
-    nothing_type const BOOST_ATTRIBUTE_UNUSED nothing = {{{}}};
+    BOOST_ATTRIBUTE_UNUSED nothing_type const nothing = {{{}}};
 #endif
 }}
 
